@@ -197,6 +197,7 @@
         },
         "custom_liquid_kCE7Mc": {
           "type": "custom_liquid",
+          "disabled": true,
           "settings": {
             "custom_liquid": "{% render 'custom-product-offer' %}\n\n<style>\nspan.payment_page_snap.cashback_text_widget {\n    display: none !important;\n}\n</style>"
           }
