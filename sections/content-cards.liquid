@@ -1,0 +1,740 @@
+{{ 'section-content-cards.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'content-cards.js' | asset_url }}" defer="defer"></script>
+
+{% style %}
+  {% render 'section-padding' %}
+  {% render 'section-margin' %}
+{% endstyle %}
+
+<div
+  class="content-cards color-{{ section.settings.color_scheme }} background section-{{ section.id }}-padding content-cards--{{ section.settings.mobile_slider_layout_type }}{% if section.settings.cursor_as_button %} content-cards-with-custom-cursor{% endif %}"
+  data-layout="{{ section.settings.cards_layout }}"
+>
+  {%- if section.settings.subheading != blank
+    or section.settings.heading != blank
+    or section.settings.description != blank
+  -%}
+    <div class="container">
+      {% render 'heading-group',
+        section: section,
+        class: 'content-cards',
+        text_align: section.settings.heading_text_align
+      %}
+    </div>
+  {%- endif -%}
+
+  <div class="content-cards__base">
+    <div class="content-cards__layout container">
+      <div class="content-cards-list content-cards__{{ section.settings.cards_layout }} swiper content-cards-swiper{% if section.settings.mobile_slider_layout_type == 'visible_overflow' %} content-cards-swiper--visible-overflow{% endif %}">
+        <div class="content-cards-list__wrapper swiper-wrapper">
+          {%- for block in section.blocks -%}
+            {%- if block.settings.enable_text_block or block.settings.enable_image_block -%}
+              <div
+                class="content-card content-card__{{ block.settings.content_order }} swiper-slide"
+                {{ block.shopify_attributes }}
+              >
+                {%- if block.settings.enable_text_block == true -%}
+                  <div
+                    class="content-card__text content-card__wrapper color-{{ block.settings.block_color_scheme }}{% if block.settings.enable_image_block == false %} full-card-part{% endif %} content-card--portrait"
+                    data-c-card-color-scheme="color-{{ block.settings.block_color_scheme }}"
+                  >
+                    <div class="content-card__text-container content-card__align-{{ block.settings.text_align }} content-card--{{ block.settings.vertical_align }}">
+                      {%- if block.settings.block_subheading != blank or block.settings.block_heading != blank -%}
+                        <div class="content-card__text-titles titles">
+                          {%- if block.settings.block_subheading != blank -%}
+                            <div class="subtitle">
+                              {{- block.settings.block_subheading -}}
+                            </div>
+                          {%- endif -%}
+                          {%- if block.settings.block_heading != blank -%}
+                            {% assign block_heading_tag = block.settings.block_heading_tag %}
+                            <{{ block_heading_tag }} class="content-card__heading title size--{{ block.settings.block_heading_size }} {{ block.settings.block_heading_size }}">
+                              {{- block.settings.block_heading -}}
+                            </{{ block_heading_tag }}>
+                          {%- endif -%}
+                        </div>
+                      {%- endif -%}
+                      {%- if block.settings.block_description != blank or block.settings.show_button -%}
+                        <div class="content-card__content-bottom">
+                          {%- if block.settings.block_description != blank -%}
+                            <div class="description">
+                              {{- block.settings.block_description -}}
+                            </div>
+                          {%- endif -%}
+
+                          {%- if block.settings.show_button -%}
+                            {% render 'button', layout: block, class: 'content-card__button' %}
+                          {%- endif -%}
+                        </div>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.enable_image_block == true -%}
+                  <div class="content-card__image content-card__wrapper color-{{ block.settings.image_color_scheme }}{% if block.settings.enable_text_block == false %} full-card-part{% endif %}{% if block.settings.image != blank %} content-card__image--without-bg{% endif %}">
+                    <div
+                      class="content-card__image-overlay"
+                      style="opacity: {{ block.settings.overlay_opacity | divided_by: 100.0 }};"
+                    ></div>
+
+                    {%- if block.settings.image != blank -%}
+                      {% liquid
+                        assign calc_ratio = 1
+                        if block.settings.image.aspect_ratio > 1
+                          assign calc_ratio = block.settings.image.aspect_ratio | divided_by: 1 | round: 2
+                        endif
+                      %}
+                      {%- capture sizes -%}
+                        (min-width: 1200px) calc({{ calc_ratio }} * 524px), (min-width: 750px) calc({{ calc_ratio }} * 354px), calc({{ calc_ratio }} * 100vw)
+                      {%- endcapture -%}
+
+                      {{
+                        block.settings.image
+                        | image_url: width: block.settings.image.width
+                        | image_tag: loading: 'lazy', sizes: sizes, widths: '360, 524, 768, 1080, 1572, 1800, 2000'
+                      }}
+                    {%- else -%}
+                      {% assign number_placeholder = forloop.index | modulo: 3 | plus: 1 %}
+                      {{
+                        'blog-apparel-'
+                        | append: number_placeholder
+                        | placeholder_svg_tag: 'placeholder-svg placeholder-svg--filled'
+                      }}
+                    {%- endif -%}
+
+                    {%- if block.settings.show_button_2 -%}
+                      <div class="content-card__text-container content-card__align-{{ block.settings.text_align_2 }} content-card--{{ block.settings.vertical_align_2 }}">
+                        {% render 'button',
+                          btn_label: block.settings.button_label_2,
+                          btn_style: block.settings.button_style_2,
+                          btn_link: block.settings.button_link_2,
+                          btn_arrow: block.settings.button_arrow_2,
+                          enable_arrow: block.settings.button_arrow_2
+                        %}
+                      </div>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+        {% if section.settings.cursor_as_button and section.settings.cards_layout == 'bar' %}
+          <div class="content-cards-drag-button button button--secondary">
+            {% render 'icon-caret-left' %}
+            <span class="content-cards-drag-button__text button__label">{{ 'sections.content_cards.drag' | t }}</span>
+            {% render 'icon-caret-right' %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    {%- if section.blocks.size > 1 -%}
+      {%- if section.settings.mobile_slider_layout_type == 'with_arrows'
+        or section.settings.cards_layout == 'slider'
+      -%}
+        <div class="container content-cards__navigation navigation--{{ section.settings.cards_layout }} no-js-hidden">
+          <button class="content-cards__navigation-button content-cards__navigation-button-prev swiper-button-prev">
+            {% render 'icon-btn-arrow' %}
+          </button>
+          <button class="content-cards__navigation-button content-cards__navigation-button-next swiper-button-next">
+            {% render 'icon-btn-arrow' %}
+          </button>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- if section.settings.cards_layout == 'bar' and section.blocks.size > 1 -%}
+      <div class="container no-js-hidden">
+        <div class="content-cards__bar swiper-scrollbar"></div>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.cards_layout == 'slider' and section.blocks.size > 1 -%}
+      <div class="container container__pagination no-js-hidden">
+        <div class="content-cards__pagination swiper-pagination"></div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.content-cards.name",
+  "class": "section-content-cards",
+  "enabled_on": {
+    "templates": ["*"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "background-1",
+      "label": "t:sections.all.color_scheme.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "cursor_as_button",
+      "label": "t:sections.content-cards.settings.cursor_as_button.label",
+      "info": "t:sections.content-cards.settings.cursor_as_button.info",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "cards_layout",
+      "label": "t:sections.content-cards.settings.cards_layout.label",
+      "options": [
+        {
+          "value": "bar",
+          "label": "t:sections.content-cards.settings.cards_layout.options__1.label"
+        },
+        {
+          "value": "slider",
+          "label": "t:sections.content-cards.settings.cards_layout.options__2.label"
+        }
+      ],
+      "default": "bar"
+    },
+    {
+      "type": "select",
+      "id": "mobile_slider_layout_type",
+      "options": [
+        {
+          "value": "visible_overflow",
+          "label": "t:sections.content-cards.settings.mobile_slider_layout_type.options__1.label"
+        },
+        {
+          "value": "with_arrows",
+          "label": "t:sections.content-cards.settings.mobile_slider_layout_type.options__2.label"
+        }
+      ],
+      "default": "visible_overflow",
+      "label": "t:sections.content-cards.settings.mobile_slider_layout_type.label"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "t:sections.all.subheading.label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.all.heading.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__2.label"
+        }
+      ],
+      "default": "h3",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "t:sections.all.heading_tag.label",
+      "default": "h2",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        },
+        {
+          "value": "div",
+          "label": "div"
+        },
+        {
+          "value": "p",
+          "label": "p"
+        },
+        {
+          "value": "span",
+          "label": "span"
+        }
+      ]
+    },
+    {
+      "type": "inline_richtext",
+      "id": "description",
+      "label": "t:sections.all.text.label"
+    },
+    {
+      "type": "text_alignment",
+      "id": "heading_text_align",
+      "label": "t:sections.all.text_align.label",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.section-padding.header.content"
+    },
+    {
+      "type": "select",
+      "id": "padding_top",
+      "options": [
+        {
+          "value": "no-indent",
+          "label": "t:sections.all.section-padding.options__1.label"
+        },
+        {
+          "value": "xs",
+          "label": "t:sections.all.section-padding.options__2.label"
+        },
+        {
+          "value": "s",
+          "label": "t:sections.all.section-padding.options__3.label"
+        },
+        {
+          "value": "m",
+          "label": "t:sections.all.section-padding.options__4.label"
+        },
+        {
+          "value": "l",
+          "label": "t:sections.all.section-padding.options__5.label"
+        },
+        {
+          "value": "xl",
+          "label": "t:sections.all.section-padding.options__6.label"
+        }
+      ],
+      "default": "xl",
+      "label": "t:sections.all.section-padding.padding_top.label"
+    },
+    {
+      "type": "select",
+      "id": "padding_bottom",
+      "options": [
+        {
+          "value": "no-indent",
+          "label": "t:sections.all.section-padding.options__1.label"
+        },
+        {
+          "value": "xs",
+          "label": "t:sections.all.section-padding.options__2.label"
+        },
+        {
+          "value": "s",
+          "label": "t:sections.all.section-padding.options__3.label"
+        },
+        {
+          "value": "m",
+          "label": "t:sections.all.section-padding.options__4.label"
+        },
+        {
+          "value": "l",
+          "label": "t:sections.all.section-padding.options__5.label"
+        },
+        {
+          "value": "xl",
+          "label": "t:sections.all.section-padding.options__6.label"
+        }
+      ],
+      "default": "xl",
+      "label": "t:sections.all.section-padding.padding_bottom.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.section-margin.header.content"
+    },
+    {
+      "type": "select",
+      "id": "margin_top",
+      "options": [
+        {
+          "value": "no-indent",
+          "label": "t:sections.all.section-margin.options__1.label"
+        },
+        {
+          "value": "xs",
+          "label": "t:sections.all.section-margin.options__2.label"
+        },
+        {
+          "value": "s",
+          "label": "t:sections.all.section-margin.options__3.label"
+        },
+        {
+          "value": "m",
+          "label": "t:sections.all.section-margin.options__4.label"
+        },
+        {
+          "value": "l",
+          "label": "t:sections.all.section-margin.options__5.label"
+        },
+        {
+          "value": "xl",
+          "label": "t:sections.all.section-margin.options__6.label"
+        }
+      ],
+      "default": "no-indent",
+      "label": "t:sections.all.section-margin.margin_top.label"
+    },
+    {
+      "type": "select",
+      "id": "margin_bottom",
+      "options": [
+        {
+          "value": "no-indent",
+          "label": "t:sections.all.section-margin.options__1.label"
+        },
+        {
+          "value": "xs",
+          "label": "t:sections.all.section-margin.options__2.label"
+        },
+        {
+          "value": "s",
+          "label": "t:sections.all.section-margin.options__3.label"
+        },
+        {
+          "value": "m",
+          "label": "t:sections.all.section-margin.options__4.label"
+        },
+        {
+          "value": "l",
+          "label": "t:sections.all.section-margin.options__5.label"
+        },
+        {
+          "value": "xl",
+          "label": "t:sections.all.section-margin.options__6.label"
+        }
+      ],
+      "default": "no-indent",
+      "label": "t:sections.all.section-margin.margin_bottom.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "content-card",
+      "name": "t:sections.content-cards.blocks.column.name",
+      "settings": [
+        {
+          "type": "header",
+          "content": "t:sections.content-cards.blocks.column.settings.header__1.content"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_text_block",
+          "default": true,
+          "label": "t:sections.content-cards.blocks.column.settings.enable_text_block.label"
+        },
+        {
+          "type": "color_scheme",
+          "id": "block_color_scheme",
+          "default": "background-2",
+          "label": "t:sections.all.color_scheme.label"
+        },
+        {
+          "type": "text",
+          "id": "block_subheading",
+          "label": "t:sections.all.subheading.label"
+        },
+        {
+          "type": "textarea",
+          "id": "block_heading",
+          "label": "t:sections.all.heading.label",
+          "default": "t:sections.content-cards.blocks.column.settings.heading.default"
+        },
+        {
+          "type": "select",
+          "id": "block_heading_size",
+          "options": [
+            {
+              "value": "h3",
+              "label": "t:sections.all.heading_size.options__1.label"
+            },
+            {
+              "value": "h2",
+              "label": "t:sections.all.heading_size.options__2.label"
+            }
+          ],
+          "default": "h3",
+          "label": "t:sections.all.heading_size.label"
+        },
+        {
+          "type": "select",
+          "id": "block_heading_tag",
+          "label": "t:sections.all.heading_tag.label",
+          "default": "h3",
+          "options": [
+            {
+              "value": "h1",
+              "label": "H1"
+            },
+            {
+              "value": "h2",
+              "label": "H2"
+            },
+            {
+              "value": "h3",
+              "label": "H3"
+            },
+            {
+              "value": "h4",
+              "label": "H4"
+            },
+            {
+              "value": "h5",
+              "label": "H5"
+            },
+            {
+              "value": "h6",
+              "label": "H6"
+            },
+            {
+              "value": "div",
+              "label": "div"
+            },
+            {
+              "value": "p",
+              "label": "p"
+            },
+            {
+              "value": "span",
+              "label": "span"
+            }
+          ]
+        },
+        {
+          "type": "inline_richtext",
+          "id": "block_description",
+          "label": "t:sections.all.text.label",
+          "default": "t:sections.content-cards.blocks.column.settings.description.default"
+        },
+        {
+          "type": "text_alignment",
+          "id": "text_align",
+          "label": "t:sections.content-cards.blocks.column.settings.text_align.label",
+          "default": "left"
+        },
+        {
+          "type": "select",
+          "id": "vertical_align",
+          "options": [
+            {
+              "value": "start",
+              "label": "t:sections.content-cards.blocks.column.settings.vertical_align.options__1.label"
+            },
+            {
+              "value": "center",
+              "label": "t:sections.content-cards.blocks.column.settings.vertical_align.options__3.label"
+            },
+            {
+              "value": "end",
+              "label": "t:sections.content-cards.blocks.column.settings.vertical_align.options__2.label"
+            },
+            {
+              "value": "space-between",
+              "label": "t:sections.content-cards.blocks.column.settings.vertical_align.options__4.label"
+            }
+          ],
+          "default": "space-between",
+          "label": "t:sections.content-cards.blocks.column.settings.vertical_align.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_button",
+          "default": true,
+          "label": "t:sections.all.button.button_show.label"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "t:sections.all.button.button_label.label",
+          "default": "t:sections.content-cards.blocks.column.settings.button_label.default"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "t:sections.all.button.button_link.label"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "options": [
+            {
+              "value": "primary",
+              "label": "t:sections.all.button.button_style.options__1.label"
+            },
+            {
+              "value": "secondary",
+              "label": "t:sections.all.button.button_style.options__2.label"
+            },
+            {
+              "value": "tertiary",
+              "label": "t:sections.all.button.button_style.options__3.label"
+            }
+          ],
+          "default": "primary",
+          "label": "t:sections.all.button.button_style.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_arrow",
+          "default": true,
+          "label": "t:sections.all.button.button_arrow.label"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.content-cards.blocks.column.settings.header__2.content"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_image_block",
+          "default": true,
+          "label": "t:sections.content-cards.blocks.column.settings.enable_image_block.label"
+        },
+        {
+          "type": "color_scheme",
+          "id": "image_color_scheme",
+          "default": "background-3",
+          "label": "t:sections.all.color_scheme.label"
+        },
+        {
+          "type": "select",
+          "id": "content_order",
+          "options": [
+            {
+              "value": "image-first",
+              "label": "t:sections.content-cards.blocks.column.settings.content_order.options__1.label"
+            },
+            {
+              "value": "text-first",
+              "label": "t:sections.content-cards.blocks.column.settings.content_order.options__2.label"
+            }
+          ],
+          "default": "text-first",
+          "label": "t:sections.content-cards.blocks.column.settings.content_order.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.all.image.label"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "t:sections.all.overlay_opacity.label",
+          "default": 20
+        },
+        {
+          "type": "checkbox",
+          "id": "show_button_2",
+          "default": false,
+          "label": "t:sections.all.button.button_show.label"
+        },
+        {
+          "type": "text",
+          "id": "button_label_2",
+          "label": "t:sections.all.button.button_label.label",
+          "default": "t:sections.content-cards.blocks.column.settings.button_label.default"
+        },
+        {
+          "type": "url",
+          "id": "button_link_2",
+          "label": "t:sections.all.button.button_link.label"
+        },
+        {
+          "type": "select",
+          "id": "button_style_2",
+          "options": [
+            {
+              "value": "primary",
+              "label": "t:sections.all.button.button_style.options__1.label"
+            },
+            {
+              "value": "secondary",
+              "label": "t:sections.all.button.button_style.options__2.label"
+            },
+            {
+              "value": "tertiary",
+              "label": "t:sections.all.button.button_style.options__3.label"
+            }
+          ],
+          "default": "primary",
+          "label": "t:sections.all.button.button_style.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_arrow_2",
+          "default": true,
+          "label": "t:sections.all.button.button_arrow.label"
+        },
+        {
+          "type": "text_alignment",
+          "id": "text_align_2",
+          "label": "t:sections.content-cards.blocks.column.settings.text_align.label",
+          "default": "center"
+        },
+        {
+          "type": "select",
+          "id": "vertical_align_2",
+          "options": [
+            {
+              "value": "start",
+              "label": "t:sections.content-cards.blocks.column.settings.vertical_align.options__1.label"
+            },
+            {
+              "value": "center",
+              "label": "t:sections.content-cards.blocks.column.settings.vertical_align.options__3.label"
+            },
+            {
+              "value": "end",
+              "label": "t:sections.content-cards.blocks.column.settings.vertical_align.options__2.label"
+            }
+          ],
+          "default": "end",
+          "label": "t:sections.content-cards.blocks.column.settings.vertical_align.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.content-cards.name",
+      "blocks": [
+        {
+          "type": "content-card"
+        },
+        {
+          "type": "content-card"
+        },
+        {
+          "type": "content-card"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

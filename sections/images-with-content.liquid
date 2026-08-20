@@ -1,0 +1,596 @@
+{{ 'section-images-with-content.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  {% render 'section-padding' %}
+  {% render 'section-margin' %}
+{%- endstyle -%}
+
+{%- liquid
+  assign img_loading = 'lazy'
+
+  if section.index == 1
+    assign img_loading = 'eager'
+  endif
+
+  assign object_fit = 'object-fit: ' | append: section.settings.object_fit
+
+  if section.settings.image__1 != blank and section.settings.image__2 == blank and section.settings.images_container_aspect_ratio != 'adapt'
+    assign settings_aspect_ratio_numbers = section.settings.images_container_aspect_ratio | split: '/'
+    assign settings_aspect_ratio = settings_aspect_ratio_numbers[0] | append: '.0' | divided_by: settings_aspect_ratio_numbers[1]
+
+    assign first_image_calc_ratio = 1
+
+    if section.settings.image__1.aspect_ratio > settings_aspect_ratio
+      assign first_image_calc_ratio = section.settings.image__1.aspect_ratio | divided_by: settings_aspect_ratio
+    endif
+  endif
+
+  if section.settings.image__2 != blank and section.settings.image__1 == blank and section.settings.images_container_aspect_ratio != 'adapt'
+    assign settings_aspect_ratio_numbers = section.settings.images_container_aspect_ratio | split: '/'
+    assign settings_aspect_ratio = settings_aspect_ratio_numbers[0] | append: '.0' | divided_by: settings_aspect_ratio_numbers[1]
+
+    assign second_image_calc_ratio = 1
+
+    if section.settings.image__2.aspect_ratio > settings_aspect_ratio
+      assign second_image_calc_ratio = section.settings.image__2.aspect_ratio | divided_by: settings_aspect_ratio
+    endif
+  endif
+
+  if section.settings.image__1 != blank and section.settings.image__2 != blank and section.settings.images_container_aspect_ratio != 'adapt'
+    assign settings_aspect_ratio_numbers = section.settings.images_container_aspect_ratio | split: '/'
+
+    assign first_settings_aspect_ratio = settings_aspect_ratio_numbers[0] | append: '.0' | divided_by: 12 | times: 5 | divided_by: settings_aspect_ratio_numbers[1]
+
+    assign second_settings_aspect_ratio = settings_aspect_ratio_numbers[0] | append: '.0' | divided_by: 12 | times: 7 | divided_by: settings_aspect_ratio_numbers[1]
+
+    assign first_image_calc_ratio = 1
+
+    if section.settings.image__1.aspect_ratio > first_settings_aspect_ratio
+      assign first_image_calc_ratio = section.settings.image__1.aspect_ratio | divided_by: first_settings_aspect_ratio
+    endif
+
+    assign second_image_calc_ratio = 1
+
+    if section.settings.image__2.aspect_ratio > second_settings_aspect_ratio
+      assign second_image_calc_ratio = section.settings.image__2.aspect_ratio | divided_by: second_settings_aspect_ratio
+    endif
+  endif
+-%}
+
+{%- if section.settings.image__1 != blank and section.settings.image__2 != blank -%}
+  {%- capture first_image_sizes -%}
+    (min-width: 1440px) calc(524px * {{ first_image_calc_ratio }}), (min-width: 1200px) calc(37vw * {{ first_image_calc_ratio }}), (min-width: 990px) calc(40vw * {{ first_image_calc_ratio }}), (min-width: 750px) calc(39vw * {{ first_image_calc_ratio }}), (min-width: 576px) 95vw, 91vw
+  {%- endcapture -%}
+
+  {%- capture second_image_sizes -%}
+    (min-width: 1440px) calc(740px * {{ second_image_calc_ratio }}), (min-width: 1200px) calc(52vw * {{ second_image_calc_ratio }}), (min-width: 990px) calc(56vw * {{ second_image_calc_ratio }}), (min-width: 750px) calc(55vw * {{ second_image_calc_ratio }}), (min-width: 576px) 95vw, 91vw
+  {%- endcapture -%}
+{%- elsif section.settings.image__1 != blank -%}
+  {%- capture first_image_sizes -%}
+    (min-width: 1440px) calc(1280px * {{ first_image_calc_ratio }}), (min-width: 1200px) calc(89vw * {{ first_image_calc_ratio }}),  (min-width: 990px) calc(97vw * {{ first_image_calc_ratio }}), (min-width: 750px) calc(96vw * {{ first_image_calc_ratio }}), (min-width: 576px) calc(95vw * {{ first_image_calc_ratio }}), calc(91vw * {{ first_image_calc_ratio }})
+  {%- endcapture -%}
+{%- elsif section.settings.image__2 != blank -%}
+  {%- capture second_image_sizes -%}
+    (min-width: 1440px) calc(1280px * {{ second_image_calc_ratio }}), (min-width: 1200px) calc(89vw * {{ second_image_calc_ratio }}),  (min-width: 990px) calc(97vw * {{ second_image_calc_ratio }}), (min-width: 750px) calc(96vw * {{ second_image_calc_ratio }}), (min-width: 576px) calc(95vw * {{ second_image_calc_ratio }}), calc(91vw * {{ second_image_calc_ratio }})
+  {%- endcapture -%}
+{%- endif -%}
+
+<div class="images-with-content color-{{ section.settings.color_scheme }} background section-{{ section.id }}-padding">
+  <div class="container">
+    {% render 'heading-group',
+      section: section,
+      class: 'images-with-content__heading-group',
+      text_align: section.settings.text_align
+    %}
+    <div
+      class="images-with-content-main content"
+    >
+      {%- if section.settings.image__1 != blank or section.settings.image__2 != blank -%}
+        <div
+          class="images-with-content-images{% if section.settings.image__1 != blank and section.settings.image__2 != blank %} images-with-content-images--both-images{% endif %}"
+          {% if section.settings.images_container_aspect_ratio != 'adapt' %}
+            style="--images-aspect-ratio: {{ section.settings.images_container_aspect_ratio }}"
+          {% endif %}
+        >
+          {%- if section.settings.image__1 != blank -%}
+            <div
+              class="images-with-content-img-wrapper images-with-content-img-wrapper--1"
+              {% if section.settings.images_container_aspect_ratio != 'adapt' and section.settings.image__2 == blank %}
+                style="aspect-ratio: {{ section.settings.images_container_aspect_ratio }}"
+              {% endif %}
+            >
+              {{
+                section.settings.image__1
+                | image_url: width: 3840
+                | image_tag:
+                  width: section.settings.image__1.width,
+                  height: section.settings.image__1.height,
+                  sizes: first_image_sizes,
+                  widths: '375, 550, 750, 1000, 1280, 1500, 1780, 2560, 3000, 3840',
+                  style: object_fit,
+                  class: 'images-with-content-img images-with-content-img--1',
+                  loading: img_loading
+              }}
+            </div>
+          {%- endif -%}
+          {%- if section.settings.image__2 != blank -%}
+            <div
+              class="images-with-content-img-wrapper images-with-content-img-wrapper--2"
+              {% if section.settings.images_container_aspect_ratio != 'adapt' and section.settings.image__1 == blank %}
+                style="aspect-ratio: {{ section.settings.images_container_aspect_ratio }}"
+              {% endif %}
+            >
+              {{
+                section.settings.image__2
+                | image_url: width: 3840
+                | image_tag:
+                  width: section.settings.image__2.width,
+                  height: section.settings.image__2.height,
+                  sizes: second_image_sizes,
+                  widths: '375, 550, 750, 1000, 1280, 1500, 1780, 2560, 3000, 3840',
+                  style: object_fit,
+                  class: 'images-with-content-img images-with-content-img--2',
+                  loading: img_loading
+              }}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+      {% if section.settings.inner_subheading != blank
+        or section.settings.inner_heading != blank
+        or section.settings.inner_text__1 != blank
+        or section.settings.inner_text__2 != blank
+      %}
+        <div
+          class="images-with-content-text"
+        >
+          {% if section.settings.inner_subheading != blank or section.settings.inner_heading != blank %}
+            <div class="images-with-content-text__inner-header">
+              {%- if section.settings.inner_subheading != blank -%}
+                <span class="images-with-content-text__subheading subtitle">
+                  {{- section.settings.inner_subheading | escape -}}
+                </span>
+              {%- endif -%}
+              {%- if section.settings.inner_heading != blank -%}
+                {% assign inner_heading_tag = section.settings.inner_heading_tag %}
+                <{{ inner_heading_tag }} class="images-with-content-text__heading {{ section.settings.inner_heading_size }}">
+                  {{- section.settings.inner_heading -}}
+                </{{ inner_heading_tag }}>
+              {%- endif -%}
+            </div>
+          {% endif %}
+
+          {% if section.settings.inner_text__1 != blank or section.settings.inner_text__2 != blank %}
+            <div class="images-with-content-text__inner-content {% if section.settings.inner_text__1 != blank and section.settings.inner_text__2 != blank %} images-with-content-text__inner-content--both-texts{% endif %}{% if section.settings.inner_subheading == blank and section.settings.inner_heading == blank %} images-with-content-text__inner-content--no-headings{% if section.settings.image__1 != blank or section.settings.image__2 != blank %} images-with-content-text__inner-content--no-headings-with-images{% endif %}{% endif %}">
+              {%- if section.settings.inner_text__1 != blank -%}
+                <div class="images-with-content-text__text images-with-content-text__text--1 body-normal rte {% if settings.rte_type == 'custom' %} rte__container{% endif %}">
+                  {{ section.settings.inner_text__1 }}
+                </div>
+              {%- endif -%}
+              {%- if section.settings.inner_text__2 != blank -%}
+                <div class="images-with-content-text__text images-with-content-text__text--2 body-normal rte {% if settings.rte_type == 'custom' %} rte__container{% endif %}">
+                  {{ section.settings.inner_text__2 }}
+                </div>
+              {%- endif -%}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.images-with-content.name",
+  "class": "images-with-content-section spaced-section",
+  "enabled_on": {
+    "templates": ["*"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.images-with-content.settings.header__1.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "background-1",
+      "label": "t:sections.all.color_scheme.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.images-with-content.settings.header__2.content"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "t:sections.all.subheading.label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.all.heading.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__2.label"
+        }
+      ],
+      "default": "h2",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "t:sections.all.heading_tag.label",
+      "default": "h2",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        },
+        {
+          "value": "div",
+          "label": "div"
+        },
+        {
+          "value": "p",
+          "label": "p"
+        },
+        {
+          "value": "span",
+          "label": "span"
+        }
+      ]
+    },
+    {
+      "type": "inline_richtext",
+      "id": "description",
+      "label": "t:sections.all.text.label"
+    },
+    {
+      "type": "text_alignment",
+      "id": "text_align",
+      "label": "t:sections.all.text_align.label",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.images-with-content.settings.header__3.content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image__1",
+      "label": "t:sections.images-with-content.settings.image__1.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "image__2",
+      "label": "t:sections.images-with-content.settings.image__2.label"
+    },
+    {
+      "type": "select",
+      "id": "images_container_aspect_ratio",
+      "options": [
+        {
+          "value": "21/9",
+          "label": "t:sections.all.extended_aspect_ratio.options__3.label"
+        },
+        {
+          "value": "2/1",
+          "label": "t:sections.all.extended_aspect_ratio.options__4.label"
+        },
+        {
+          "value": "16/9",
+          "label": "t:sections.all.extended_aspect_ratio.options__5.label"
+        },
+        {
+          "value": "3/2",
+          "label": "t:sections.all.extended_aspect_ratio.options__6.label"
+        },
+        {
+          "value": "4/3",
+          "label": "t:sections.all.extended_aspect_ratio.options__7.label"
+        },
+        {
+          "value": "1/1",
+          "label": "t:sections.all.extended_aspect_ratio.options__9.label"
+        },
+        {
+          "value": "4/5",
+          "label": "t:sections.all.extended_aspect_ratio.options__10.label"
+        },
+        {
+          "value": "3/4",
+          "label": "t:sections.all.extended_aspect_ratio.options__11.label"
+        },
+        {
+          "value": "adapt",
+          "label": "t:sections.all.extended_aspect_ratio.options__15.label"
+        }
+      ],
+      "default": "2/1",
+      "label": "t:sections.images-with-content.settings.images_container_aspect_ratio.label"
+    },
+    {
+      "type": "select",
+      "id": "object_fit",
+      "options": [
+        {
+          "value": "contain",
+          "label": "t:sections.all.card.image_fit.options__1.label"
+        },
+        {
+          "value": "cover",
+          "label": "t:sections.all.card.image_fit.options__2.label"
+        }
+      ],
+      "default": "cover",
+      "label": "t:sections.all.card.image_fit.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.images-with-content.settings.header__4.content"
+    },
+    {
+      "type": "text",
+      "id": "inner_subheading",
+      "label": "t:sections.images-with-content.settings.inner_subheading.label",
+      "default": "t:sections.images-with-content.settings.inner_subheading.default"
+    },
+    {
+      "type": "textarea",
+      "id": "inner_heading",
+      "label": "t:sections.images-with-content.settings.inner_heading.label",
+      "default": "t:sections.images-with-content.settings.inner_heading.default"
+    },
+    {
+      "type": "select",
+      "id": "inner_heading_size",
+      "options": [
+        {
+          "value": "h4",
+          "label": "t:sections.all.heading_size.options__4.label"
+        },
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__2.label"
+        }
+      ],
+      "default": "h2",
+      "label": "t:sections.images-with-content.settings.inner_heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "inner_heading_tag",
+      "label": "t:sections.image-with-text.settings.inner_heading_tag.label",
+      "default": "h2",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        },
+        {
+          "value": "div",
+          "label": "div"
+        },
+        {
+          "value": "p",
+          "label": "p"
+        },
+        {
+          "value": "span",
+          "label": "span"
+        }
+      ]
+    },
+    {
+      "type": "richtext",
+      "id": "inner_text__1",
+      "label": "t:sections.images-with-content.settings.inner_text__1.label",
+      "default": "t:sections.images-with-content.settings.inner_text__1.default"
+    },
+    {
+      "type": "richtext",
+      "id": "inner_text__2",
+      "label": "t:sections.images-with-content.settings.inner_text__2.label",
+      "default": "t:sections.images-with-content.settings.inner_text__2.default"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.section-padding.header.content"
+    },
+    {
+      "type": "select",
+      "id": "padding_top",
+      "options": [
+        {
+          "value": "no-indent",
+          "label": "t:sections.all.section-padding.options__1.label"
+        },
+        {
+          "value": "xs",
+          "label": "t:sections.all.section-padding.options__2.label"
+        },
+        {
+          "value": "s",
+          "label": "t:sections.all.section-padding.options__3.label"
+        },
+        {
+          "value": "m",
+          "label": "t:sections.all.section-padding.options__4.label"
+        },
+        {
+          "value": "l",
+          "label": "t:sections.all.section-padding.options__5.label"
+        },
+        {
+          "value": "xl",
+          "label": "t:sections.all.section-padding.options__6.label"
+        }
+      ],
+      "default": "xl",
+      "label": "t:sections.all.section-padding.padding_top.label"
+    },
+    {
+      "type": "select",
+      "id": "padding_bottom",
+      "options": [
+        {
+          "value": "no-indent",
+          "label": "t:sections.all.section-padding.options__1.label"
+        },
+        {
+          "value": "xs",
+          "label": "t:sections.all.section-padding.options__2.label"
+        },
+        {
+          "value": "s",
+          "label": "t:sections.all.section-padding.options__3.label"
+        },
+        {
+          "value": "m",
+          "label": "t:sections.all.section-padding.options__4.label"
+        },
+        {
+          "value": "l",
+          "label": "t:sections.all.section-padding.options__5.label"
+        },
+        {
+          "value": "xl",
+          "label": "t:sections.all.section-padding.options__6.label"
+        }
+      ],
+      "default": "xl",
+      "label": "t:sections.all.section-padding.padding_bottom.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.section-margin.header.content"
+    },
+    {
+      "type": "select",
+      "id": "margin_top",
+      "options": [
+        {
+          "value": "no-indent",
+          "label": "t:sections.all.section-margin.options__1.label"
+        },
+        {
+          "value": "xs",
+          "label": "t:sections.all.section-margin.options__2.label"
+        },
+        {
+          "value": "s",
+          "label": "t:sections.all.section-margin.options__3.label"
+        },
+        {
+          "value": "m",
+          "label": "t:sections.all.section-margin.options__4.label"
+        },
+        {
+          "value": "l",
+          "label": "t:sections.all.section-margin.options__5.label"
+        },
+        {
+          "value": "xl",
+          "label": "t:sections.all.section-margin.options__6.label"
+        }
+      ],
+      "default": "no-indent",
+      "label": "t:sections.all.section-margin.margin_top.label"
+    },
+    {
+      "type": "select",
+      "id": "margin_bottom",
+      "options": [
+        {
+          "value": "no-indent",
+          "label": "t:sections.all.section-margin.options__1.label"
+        },
+        {
+          "value": "xs",
+          "label": "t:sections.all.section-margin.options__2.label"
+        },
+        {
+          "value": "s",
+          "label": "t:sections.all.section-margin.options__3.label"
+        },
+        {
+          "value": "m",
+          "label": "t:sections.all.section-margin.options__4.label"
+        },
+        {
+          "value": "l",
+          "label": "t:sections.all.section-margin.options__5.label"
+        },
+        {
+          "value": "xl",
+          "label": "t:sections.all.section-margin.options__6.label"
+        }
+      ],
+      "default": "no-indent",
+      "label": "t:sections.all.section-margin.margin_bottom.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.images-with-content.name",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}

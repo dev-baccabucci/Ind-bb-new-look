@@ -1,0 +1,165 @@
+{% for block in blocks %}
+  {% assign mega_menu_trigger = block.settings.mega_menu_trigger | handle | strip %}
+
+  {%- if link.handle == mega_menu_trigger and block.type == 'mega_menu' -%}
+    {% liquid
+      assign has_tabs = false
+      for i in (1..8)
+        assign enable_tab_setting = 'enable_tab_' | append: i
+        assign heading_setting = 'tab_heading_' | append: i
+
+        if block.settings[enable_tab_setting] and block.settings[heading_setting] != blank
+          assign has_tabs = true
+        endif
+      endfor
+    %}
+
+    {%- if has_tabs -%}
+      <div class="mobile-mega-menu" {{ block.shopify_attributes }}>
+        <ul class="mobile-mega-menu__tabs list-unstyled" role="list">
+          {% for i in (1..8) %}
+            {% liquid
+              assign is_visible_tab = false
+              assign enable_tab_setting = 'enable_tab_' | append: i
+              assign heading_setting = 'tab_heading_' | append: i
+              assign tab_link = 'tab_link_' | append: i
+              assign products_setting = 'tab_product_list_' | append: i
+              assign label_setting = 'products_label_' | append: i
+              assign tab_menu = 'tab_menu_' | append: i
+              assign tab_type = 'tab_type_' | append: i
+
+              if block.settings[enable_tab_setting] and block.settings[heading_setting] != blank
+                assign is_visible_tab = true
+              endif
+
+              assign has_submenu = false
+
+              if block.settings[tab_type] == 'products' and block.settings[products_setting] != blank
+                assign has_submenu = true
+              endif
+
+              if block.settings[tab_type] == 'menu' and block.settings[tab_menu] != blank
+                assign has_submenu = true
+              endif
+            %}
+            {%- if is_visible_tab -%}
+              <li class="mobile-mega-menu__item">
+                {%- if has_submenu -%}
+                  <menu-drawer>
+                    <details id="Details-MobileMegaMenu-Link-{{ forloop.index }}">
+                      <summary class="mobile-mega-menu__tab">
+                        {%- if block.settings[tab_link] != blank -%}
+                          <a
+                            href="{{ block.settings[tab_link] }}"
+                            {% if settings.links_blank and block.settings[tab_link].type == 'external_link' %}
+                              target="_blank"
+                            {% endif %}
+                            tabindex="0"
+                          >
+                            {{- block.settings[heading_setting] -}}
+                          </a>
+                        {%- else -%}
+                          <span title="{{- block.settings[heading_setting] -}}">
+                            {{- block.settings[heading_setting] -}}
+                          </span>
+                        {%- endif -%}
+                        {% render 'icon-arrow-small' %}
+                      </summary>
+                      <div
+                        id="link-{{ forloop.index }}-{{- block.settings[heading_setting] -}}"
+                        class="mobile-mega-menu__submenu motion-reduce no-js-hidden"
+                        tabindex="-1"
+                      >
+                        <div class="mobile-mega-menu__container">
+                          <div class="mobile-mega-menu__header">
+                            <button
+                              type="button"
+                              class="mobile-mega-menu__back focus-inset"
+                              aria-expanded="true"
+                            >
+                              {% render 'icon-arrow-small' %}
+                            </button>
+                            <h4>{{- block.settings[heading_setting] -}}</h4>
+                          </div>
+
+                          <div class="mobile-mega-menu__content">
+                            {%- if block.settings[tab_type] == 'products' -%}
+                              {%- if block.settings[label_setting] != blank -%}
+                                <span class="mobile-mega-menu__label body-small">
+                                  {{- block.settings[label_setting] -}}
+                                </span>
+                              {%- endif -%}
+
+                              <div class="mobile-mega-menu__products">
+                                {% for item in block.settings[products_setting] %}
+                                  <div class="mobile-mega-menu__products-card">
+                                    {% assign section_id = section.id | append: '_mega_menu_mobile' %}
+                                    {% render 'product-card',
+                                      product_card_product: item,
+                                      media_ratio: block.settings.product_image_ratio,
+                                      media_fit: block.settings.product_image_fit,
+                                      show_secondary_image: false,
+                                      show_vendor: block.settings.product_show_vendor,
+                                      show_desc: block.settings.product_show_desc,
+                                      heading_tag: block.settings.product_heading_tag,
+                                      section_id: section_id
+                                    %}
+                                  </div>
+                                {% endfor %}
+                              </div>
+                            {%- elsif block.settings[tab_type] == 'menu' -%}
+                              <div class="mega-menu__menu">
+                                <ul class="mega-menu__menu-list" role="list">
+                                  {%- for link in block.settings[tab_menu].links -%}
+                                    <li
+                                      class="mega-menu__menu-list-item"
+                                    >
+                                      <a
+                                        href="{{ link.url }}"
+                                        {% if settings.links_blank and link.type == 'http_link' %}
+                                          target="_blank"
+                                        {% endif %}
+                                        class="mega-menu__menu-list-link focus-inset{% if link.current and link.url != '/' %} mega-menu__menu-list-link--active{% endif %}"
+                                        {% if link.current and link.url != '/' %}
+                                          aria-current="page"
+                                        {% endif %}
+                                        aria-label="{{ link.title | escape }}"
+                                      >
+                                        {{ link.title | escape }}
+                                      </a>
+                                    </li>
+                                  {%- endfor -%}
+                                </ul>
+                              </div>
+                            {%- endif -%}
+                          </div>
+                        </div>
+                      </div>
+                    </details>
+                  </menu-drawer>
+                {%- else -%}
+                  {%- if block.settings[tab_link] != blank -%}
+                    <a
+                      class="mobile-mega-menu__tab body-large"
+                      href="{{ block.settings[tab_link] }}"
+                      {% if settings.links_blank and block.settings[tab_link].type == 'external_link' %}
+                        target="_blank"
+                      {% endif %}
+                      tabindex="0"
+                    >
+                      {{- block.settings[heading_setting] -}}
+                    </a>
+                  {%- else -%}
+                    <span class="mobile-mega-menu__tab body-large" title="{{- block.settings[heading_setting] -}}">
+                      {{- block.settings[heading_setting] -}}
+                    </span>
+                  {%- endif -%}
+                {%- endif -%}
+              </li>
+            {%- endif -%}
+          {% endfor %}
+        </ul>
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+{% endfor %}

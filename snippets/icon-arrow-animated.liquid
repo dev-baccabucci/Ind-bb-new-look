@@ -1,0 +1,98 @@
+<style>
+  .icon-arrow-animated {
+    position: relative;
+    width: 4rem;
+    height: 2rem;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .icon-arrow-animated-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .icon-arrow-animated-bg {
+    stroke: rgb(var(--color-border));
+  }
+  .icon-arrow-animated-fill {
+    fill: none;
+    stroke: rgba(var(--color-foreground));
+    stroke-width: 1;
+    transition: stroke-dashoffset 1s cubic-bezier(0.83, 0, 0.17, 1) 0ms;
+  }
+  .icon-arrow-animated-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transition: transform 1s cubic-bezier(0.83, 0, 0.17, 1) 0ms;
+  }
+  .icon-arrow-animated-item--1 {
+    transform: translate(-4rem, -50%);
+  }
+  .icon-arrow-animated-item--2 {
+    transform: translate(-50%, -50%);
+  }
+</style>
+<div class="icon-arrow-animated">
+  <svg
+    class="icon-arrow-animated-svg"
+    width="40"
+    height="20"
+    viewBox="0 0 40 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      class="icon-arrow-animated-bg"
+      d="M 20 0.5
+         H 30
+         A 9.5 9.5 0 0 1 39.5 10
+         A 9.5 9.5 0 0 1 30 19.5
+         H 10
+         A 9.5 9.5 0 0 1 0.5 10
+         A 9.5 9.5 0 0 1 10 0.5
+         Z"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1"
+    />
+    <path
+      class="icon-arrow-animated-fill"
+      d="M 20 0.5
+         H 30
+         A 9.5 9.5 0 0 1 39.5 10
+         A 9.5 9.5 0 0 1 30 19.5
+         H 10
+         A 9.5 9.5 0 0 1 0.5 10
+         A 9.5 9.5 0 0 1 10 0.5
+         Z"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1"
+      stroke-dasharray="220"
+      stroke-dashoffset="220"
+    />
+  </svg>
+  <svg
+    class="icon-arrow-animated-item icon-arrow-animated-item--1 motion-reduce"
+    width="12"
+    height="10"
+    viewBox="0 0 12 10"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M1 5L11 5M11 5L6.71429 1M11 5L6.71429 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="square"/>
+  </svg>
+  <svg
+    class="icon-arrow-animated-item icon-arrow-animated-item--2 motion-reduce"
+    width="12"
+    height="10"
+    viewBox="0 0 12 10"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M1 5L11 5M11 5L6.71429 1M11 5L6.71429 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="square"/>
+  </svg>
+</div>

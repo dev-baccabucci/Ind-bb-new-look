@@ -1,0 +1,193 @@
+{% comment %}
+  Renders a set of links for paginated results. Must be used within paginate tags.
+
+  Usage:
+  {% paginate results by 2 %}
+    {% render 'pagination', paginate: paginate, anchor: '#yourID' %}
+  {% endpaginate %}
+
+  Accepts:
+  - paginate: {Object}
+  - anchor: {String} (optional) This can be added so that on page reload it takes you to wherever you've placed your anchor tag.
+  - class: {String} (optional) Appended to container element's class attribute
+{% endcomment %}
+
+{{ 'component-pagination.css' | asset_url | stylesheet_tag }}
+
+{%- if paginate.parts.size > 0 -%}
+  <div class="{{ class | default: 'pagination-wrapper' }} no-js-block">
+    <nav class="pagination" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
+      <ul class="pagination__list list-unstyled" role="list">
+        {%- if paginate.previous -%}
+          <li>
+            <a
+              href="{{ paginate.previous.url }}{{ anchor }}"
+              class="pagination__item-arrow pagination__item-arrow--prev motion-reduce"
+              aria-label="{{ 'general.pagination.previous' | t }}"
+            >
+              <div class="pagination__item-arrow__circle">
+                <svg
+                  class="pagination__item-arrow__circle-svg"
+                  width="40"
+                  height="20"
+                  viewBox="0 0 40 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    class="pagination__item-arrow__circle-bg"
+                    d="M 20 0.5
+                       H 30
+                       A 9.5 9.5 0 0 1 39.5 10
+                       A 9.5 9.5 0 0 1 30 19.5
+                       H 10
+                       A 9.5 9.5 0 0 1 0.5 10
+                       A 9.5 9.5 0 0 1 10 0.5
+                       Z"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1"
+                  />
+                  <path
+                    class="pagination__item-arrow__circle-fill"
+                    d="M 20 0.5
+                       H 30
+                       A 9.5 9.5 0 0 1 39.5 10
+                       A 9.5 9.5 0 0 1 30 19.5
+                       H 10
+                       A 9.5 9.5 0 0 1 0.5 10
+                       A 9.5 9.5 0 0 1 10 0.5
+                       Z"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1"
+                    stroke-dasharray="220"
+                    stroke-dashoffset="220"
+                  />
+                </svg>
+                <svg
+                  class="pagination__item-arrow__arrow pagination__item-arrow__arrow--1"
+                  width="12"
+                  height="10"
+                  viewBox="0 0 12 10"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M1 5L11 5M11 5L6.71429 1M11 5L6.71429 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="square"/>
+                </svg>
+                <svg
+                  class="pagination__item-arrow__arrow pagination__item-arrow__arrow--2"
+                  width="12"
+                  height="10"
+                  viewBox="0 0 12 10"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M1 5L11 5M11 5L6.71429 1M11 5L6.71429 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="square"/>
+                </svg>
+              </div>
+            </a>
+          </li>
+        {%- endif -%}
+
+        {%- for part in paginate.parts -%}
+          <li>
+            {%- if part.is_link -%}
+              <a
+                href="{{ part.url }}{{ anchor }}"
+                class="pagination__item"
+                aria-label="{{ 'general.pagination.page' | t: number: part.title }}"
+              >
+                <span class="body-small" title="{{ part.title }}"> {{ part.title }}</span>
+              </a>
+            {%- else -%}
+              {%- if part.title == paginate.current_page -%}
+                <span
+                  class="pagination__item pagination__item--current body-small"
+                  aria-current="page"
+                  aria-label="{{ 'general.pagination.page' | t: number: part.title }}"
+                >
+                  {{- part.title -}}
+                </span>
+              {%- else -%}
+                <span class="pagination__item body-small">{{ part.title }}</span>
+              {%- endif -%}
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+
+        {%- if paginate.next -%}
+          <li>
+            <a
+              href="{{ paginate.next.url }}{{ anchor }}"
+              class="pagination__item-arrow pagination__item-arrow--next motion-reduce"
+              aria-label="{{ 'general.pagination.next' | t }}"
+            >
+              <div class="pagination__item-arrow__circle">
+                <svg
+                  class="pagination__item-arrow__circle-svg"
+                  width="40"
+                  height="20"
+                  viewBox="0 0 40 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    class="pagination__item-arrow__circle-bg"
+                    d="M 20 0.5
+                       H 30
+                       A 9.5 9.5 0 0 1 39.5 10
+                       A 9.5 9.5 0 0 1 30 19.5
+                       H 10
+                       A 9.5 9.5 0 0 1 0.5 10
+                       A 9.5 9.5 0 0 1 10 0.5
+                       Z"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1"
+                  />
+                  <path
+                    class="pagination__item-arrow__circle-fill"
+                    d="M 20 0.5
+                       H 30
+                       A 9.5 9.5 0 0 1 39.5 10
+                       A 9.5 9.5 0 0 1 30 19.5
+                       H 10
+                       A 9.5 9.5 0 0 1 0.5 10
+                       A 9.5 9.5 0 0 1 10 0.5
+                       Z"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1"
+                    stroke-dasharray="220"
+                    stroke-dashoffset="220"
+                  />
+                </svg>
+                <svg
+                  class="pagination__item-arrow__arrow pagination__item-arrow__arrow--1"
+                  width="12"
+                  height="10"
+                  viewBox="0 0 12 10"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M1 5L11 5M11 5L6.71429 1M11 5L6.71429 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="square"/>
+                </svg>
+                <svg
+                  class="pagination__item-arrow__arrow pagination__item-arrow__arrow--2"
+                  width="12"
+                  height="10"
+                  viewBox="0 0 12 10"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M1 5L11 5M11 5L6.71429 1M11 5L6.71429 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="square"/>
+                </svg>
+              </div>
+            </a>
+          </li>
+        {%- endif -%}
+      </ul>
+    </nav>
+  </div>
+{%- endif -%}

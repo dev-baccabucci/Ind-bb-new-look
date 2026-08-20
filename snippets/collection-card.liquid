@@ -1,0 +1,106 @@
+{% comment %}
+  Renders a collection card
+  Accepts:
+  - card_collection: {Object} Collection Liquid object
+  - show_desc: {Boolean} Show the product description. Default: false
+  - image_ratio: {String} landscape / portrait / square. Default: square
+  - image_fit: {String} contain / cover. Default: cover
+  - columns: {Integer} The number of columns to display. Default: 1
+  Usage:
+  {% render 'collection-card', card_collection: collection %}
+{% endcomment %}
+
+{% if card_collection != blank %}
+  {% liquid
+    assign card_image_ratio = 'square'
+    if image_ratio != blank
+      assign card_image_ratio = image_ratio
+    endif
+
+    assign card_image_fit = 'cover'
+    if image_fit != blank
+      assign card_image_fit = image_fit
+    endif
+
+    assign collection_product_image = card_collection.featured_image
+    if overwrite_image != blank
+      assign collection_product_image = overwrite_image
+    endif
+  %}
+
+  <div class="collection-card collection-card--{{ card_collection.id }}">
+    <div class="collection-card__image collection-card__image--{{ card_image_ratio }}">
+      {%- if collection_product_image != blank -%}
+        {% liquid
+          if card_image_ratio == 'landscape'
+            assign settings_aspect_ratio = 1.77
+          elsif card_image_ratio == 'portrait'
+            assign settings_aspect_ratio = 0.8
+          else
+            assign settings_aspect_ratio = 1
+          endif
+
+          assign calc_ratio = 1
+          if card_image_fit == 'cover' and collection_product_image.aspect_ratio > settings_aspect_ratio
+            assign calc_ratio = collection_product_image.aspect_ratio | divided_by: settings_aspect_ratio | round: 2
+          endif
+        %}
+        {%- capture sizes -%}
+          {%- if columns == 4 -%}
+            (min-width: 1440px) calc({{ calc_ratio }} * 1280px / 4), (min-width: 1200px) calc({{ calc_ratio }} * (100vw - 40px) / 4), (min-width: 990px) calc({{ calc_ratio }} * (100vw - 40px) / 3), (min-width: 750px) calc({{ calc_ratio }} * (100vw - 40px) / 2), calc({{ calc_ratio }} * (100vw - 40px))
+          {%- endif -%}
+          {%- if columns == 3 -%}
+            (min-width: 1440px) calc({{ calc_ratio }} * 1280px / 3), (min-width: 990px) calc({{ calc_ratio }} * (100vw - 40px) / 3), (min-width: 750px) calc({{ calc_ratio }} * (100vw - 40px) / 2), calc({{ calc_ratio }} * (100vw - 40px))
+          {%- endif -%}
+          {%- if columns == 2 -%}
+            (min-width: 1440px) calc({{ calc_ratio }} * 1280px / 2), (min-width: 750px) calc({{ calc_ratio }} * (100vw - 40px) / 2), calc({{ calc_ratio }} * (100vw - 40px))
+          {%- endif -%}
+          (min-width: 1440px) calc({{ calc_ratio }} * 1280px), calc({{ calc_ratio }} * (100vw - 40px))
+        {%- endcapture -%}
+        {%- capture style -%}
+          object-fit: {{ image_fit }};
+        {%- endcapture -%}
+        {{
+          collection_product_image
+          | image_url: width: collection_product_image.width
+          | image_tag:
+            loading: 'lazy',
+            sizes: sizes,
+            widths: '360, 550, 750, 900, 1100, 1420, 1700, 1920, 2200, 2400, 2600',
+            style: style,
+            class: 'collection-card-image'
+        }}
+      {%- else -%}
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg collection-card-image' }}
+      {% endif %}
+    </div>
+
+    <div class="collection-card__information">
+      {% render 'icon-arrow-animated' %}
+
+      <h3 class="collection-card__title h5">
+        {{- card_collection.title -}}
+      </h3>
+    </div>
+
+    {%- if show_desc -%}
+      {% if section.settings.alt_desc and card_collection.metafields.custom.description != blank %}
+        <p class="collection-card__desc body-small">
+          {{- card_collection.metafields.custom.description | strip_html | truncatewords: 50, '...' -}}
+        </p>
+      {%- elsif card_collection.description != blank -%}
+        <p class="collection-card__desc body-small">
+          {{- card_collection.description | strip_html | truncate: 150, '...' -}}
+        </p>
+      {%- endif -%}
+    {%- endif -%}
+
+    <a
+      href="{{ card_collection.url | default: '#' }}"
+      class=" collection-card__link-overlay"
+      aria-label="{{ card_collection.title }}"
+    >
+      <span class="visibility-hidden">{{- card_collection.title -}}</span>
+    </a>
+  </div>
+{% endif %}

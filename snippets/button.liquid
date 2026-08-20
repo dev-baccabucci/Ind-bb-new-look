@@ -1,0 +1,61 @@
+{% comment %}
+  Renders button
+  Accepts:
+  * layout: 'section' or 'block' layout
+  * btn_link: Button link
+  * btn_label: Button label
+  * btn_style: Button style
+  * btn_arrow: Enable arrow
+  * class: Class name(s) string
+  Usage:
+  * If first or only button in block or section:
+  {% render 'button', layout: 'section' %}
+  * If second/third/etc button in block or section:
+  {% render 'button', btn_link: block.settings.button_link_2, btn_label: block.settings.button_label_2, btn_style: block.settings.button_style_2, enable_arrow: block.settings.button_arrow_2 %}
+  * If you want to use custom props and class:
+  {% render 'button', btn_link: 'https://www.liquid.com', btn_label: 'Shop now', btn_style: 'primary', btn_arrow: true, class: 'optional-class' %}
+{% endcomment %}
+
+{% liquid
+  if layout != blank
+    assign btn_label = layout.settings.button_label
+    assign btn_link = layout.settings.button_link
+    if layout.settings.button_style != blank
+      assign btn_style = layout.settings.button_style
+    else
+      assign btn_style = 'primary'
+    endif
+    assign btn_arrow = layout.settings.button_arrow
+  endif
+%}
+
+{% if btn_label != blank %}
+  <a
+    {% if btn_link != blank %}
+      href="{{ btn_link }}"
+      aria-label="{{- btn_label | escape -}}"
+    {% endif %}
+    class="button button--{{ btn_style }}{% if enable_arrow %} with-arrow{% endif %} {% if class %}{{ class }}{% endif %}"
+    {% if btn_link == blank %}
+      aria-disabled="true"
+    {% endif %}
+    {% if settings.links_blank and btn_link.type == 'external_link' %}
+      target="_blank"
+    {% endif %}
+  >
+    <div class="button__content">
+      <span class="button__label" data-label="{{- btn_label | escape -}}">{{- btn_label | escape -}}</span>
+      {% if btn_arrow %}
+        <div class="button__icons">
+          <span class="button__icon">
+            {% render 'icon-button-arrow' %}
+          </span>
+          <span class="button__icon button__icon--2">
+            {% render 'icon-button-arrow' %}
+          </span>
+        </div>
+      {% endif %}
+    </div>
+    <span class="animated-button-circle"></span>
+  </a>
+{% endif %}

@@ -1,0 +1,24 @@
+.totals {
+  display: flex;
+}
+
+.totals > * {
+  font-family: var(--font-body-family);
+  margin: 0;
+}
+
+.totals * {
+  line-height: 1;
+}
+
+.totals > * + * {
+  margin-left: 0.5rem;
+}
+
+.totals__subtotal-value {
+  color: rgba(var(--color-foreground));
+}
+
+.cart__ctas + .totals {
+  margin-top: 2rem;
+}

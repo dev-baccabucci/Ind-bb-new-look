@@ -1,0 +1,130 @@
+{% assign show_bar = false %}
+
+{% comment %} Check Product Handle {% endcomment %}
+{% if product and section.settings.product_handles != blank %}
+  {% assign handles = section.settings.product_handles | split: ',' %}
+  {% for h in handles %}
+    {% assign clean_handle = h | strip %}
+    {% if product.handle == clean_handle %}
+      {% assign show_bar = true %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% comment %} Check Product Tags {% endcomment %}
+{% if product and section.settings.product_tags != blank %}
+  {% assign tags = section.settings.product_tags | split: ',' %}
+  {% for t in tags %}
+    {% assign clean_tag = t | strip %}
+    {% if product.tags contains clean_tag %}
+      {% assign show_bar = true %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% comment %} Check URL {% endcomment %}
+{% if section.settings.url_contains != blank %}
+  {% assign clean_url = section.settings.url_contains | strip %}
+  {% if request.path contains clean_url %}
+    {% assign show_bar = true %}
+  {% endif %}
+{% endif %}
+
+{% if show_bar %}
+
+<div class="announcement-marquee">
+  <div class="marquee-track">
+   {% for i in (1..8) %}
+    <span class="marquee-text">{{ section.settings.text }}</span>
+  {% endfor %}
+  </div>
+</div>
+
+<style>
+.announcement-marquee {
+  overflow: hidden;
+  width: 100%;
+  background: #e0a435;
+  color: #fff;
+  padding: 10px 0;
+  min-height: 35px;
+  display: flex;
+  align-items: center;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll {{ section.settings.speed }}s linear infinite;
+}
+
+.marquee-text {
+  white-space: nowrap;
+  margin-right: 40px;
+  font-size: 14px;
+  font-weight:600;
+  letter-spacing: 0.5px;
+}
+
+/* animation */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* mobile */
+@media (max-width: 768px) {
+  .marquee-text {
+    margin-right: 20px;
+  }
+}
+</style>
+{% endif %}
+{% schema %}
+{
+  "name": "Announcement Marquee",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Announcement Text",
+      "default": "Clearance Sale is LIVE | Flat 50% off | Use Code: BBFLAT50"
+    },
+    {
+      "type": "text",
+      "id": "product_handles",
+      "label": "Show only for Product Handles (comma separated)",
+      "info": "example: product-1,product-2"
+    },
+    {
+      "type": "text",
+      "id": "product_tags",
+      "label": "Show only for Product Tags (comma separated)",
+      "info": "example: sale,offer"
+    },
+    {
+      "type": "text",
+      "id": "url_contains",
+      "label": "Show only if URL contains",
+      "info": "example: collection or sale"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Scroll Speed",
+      "min": 5,
+      "max": 30,
+      "default": 12
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement Marquee"
+    }
+  ]
+}
+{% endschema %}

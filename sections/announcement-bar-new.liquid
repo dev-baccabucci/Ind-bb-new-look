@@ -1,0 +1,123 @@
+<div class="announcement-slider color-{{ section.settings.color_scheme }} background"
+    role="region"
+    aria-label="{{ 'sections.header.announcement' | t }}">
+  <div class="announcement-wrapper">
+    {% for block in section.blocks %}
+      <div class="announcement-item">
+        {{ block.settings.announcement_text }}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+ .announcement-slider {
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    width: 100%;
+    /* background: #f4f4f4; */
+    padding: 5px;
+  }
+
+  .announcement-wrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width:inherit;
+  }
+
+  .announcement-item {
+    min-width: 100%;
+    text-align: center;
+    font-size: 16px;
+        align-items: center;
+    display: inline-grid;
+  }
+  button#goback-btn {
+    color: white;
+}
+.announcement-slider.color-background-4.background {
+    display: flex;
+  background: #e0a435;
+}
+button#goforward-btn {
+    color: white;
+}
+  
+  @media screen and (min-width: 749px) {
+  .announcement-item br {
+    display:none;
+}}
+  @media screen and (max-width: 749px) {
+  .announcement-item {
+    font-size: 13px;
+}}
+</style>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const wrapper = document.querySelector(".announcement-wrapper");
+    const items = document.querySelectorAll(".announcement-item");
+    let index = 0;
+    const slideCount = items.length;
+
+    if (slideCount > 1) {
+      setInterval(() => {
+        index = (index + 1) % slideCount;
+        wrapper.style.transform = `translateX(-${index * 100}%)`;
+      }, 3000);
+    }
+  });
+</script>
+
+
+
+{% schema %}
+{
+  "name": "Custom Announcement Bar",
+  "settings": [
+    {
+      "type": "range",
+      "id": "height",
+      "min": 20,
+      "max": 100,
+      "step": 2,
+      "default": 34,
+      "label": "Height"
+    },
+    {
+      "type": "range",
+      "id": "height_mobile",
+      "min": 20,
+      "max": 100,
+      "step": 2,
+      "default": 34,
+      "label": "Mobile Heigh"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "background-4",
+      "label": "Color Scheme"
+    },],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Announcement",
+      "settings": [
+        {
+          "type": "text",
+          "id": "announcement_text",
+          "label": "Announcement Text",
+          "default": "Free shipping on orders over $50!"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Announcement Bar",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

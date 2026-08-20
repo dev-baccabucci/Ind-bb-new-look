@@ -1,0 +1,262 @@
+{% style %}
+  {% for scheme in settings.color_schemes -%}
+    {% assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id %}
+    {% if forloop.index == 1 -%}
+      :root,
+    {%- endif %}
+    [data-scheme=light] .color-{{ scheme.id }} {
+      --color-background: {{ scheme.settings.colors_background_1.red }},{{ scheme.settings.colors_background_1.green }},{{ scheme.settings.colors_background_1.blue }};
+      --color-background-secondary: {{ scheme.settings.colors_background_2.red }},{{ scheme.settings.colors_background_2.green }},{{ scheme.settings.colors_background_2.blue }};
+      --color-foreground: {{ scheme.settings.colors_text.red }}, {{ scheme.settings.colors_text.green }}, {{ scheme.settings.colors_text.blue }};
+      {% if scheme.settings.background_gradient != empty %}
+        --overwrite-background: {{ scheme.settings.background_gradient }};
+      {% else %}
+        --overwrite-background: {{ scheme.settings.colors_background_1 }};
+      {% endif %}
+      --color-foreground-secondary: {{ scheme.settings.colors_secondary_text.red }}, {{ scheme.settings.colors_secondary_text.green }}, {{ scheme.settings.colors_secondary_text.blue }};
+   		--color-overlay: {{ scheme.settings.colors_background_overlay.red }},{{ scheme.settings.colors_background_overlay.green }},{{ scheme.settings.colors_background_overlay.blue }};
+      --color-button-text: {{ scheme.settings.colors_solid_button_labels.red }}, {{ scheme.settings.colors_solid_button_labels.green }}, {{ scheme.settings.colors_solid_button_labels.blue }};
+      --color-button-text-hover: {{ scheme.settings.colors_solid_button_labels_hover.red }}, {{ scheme.settings.colors_solid_button_labels_hover.green }}, {{ scheme.settings.colors_solid_button_labels_hover.blue }};
+      --color-button: {{ scheme.settings.colors_solid_button_background.red }}, {{ scheme.settings.colors_solid_button_background.green }}, {{ scheme.settings.colors_solid_button_background.blue }};
+      --color-button-hover: {{ scheme.settings.colors_solid_button_background_hover.red }}, {{ scheme.settings.colors_solid_button_background_hover.green }}, {{ scheme.settings.colors_solid_button_background_hover.blue }};
+      --color-button-secondary: {{ scheme.settings.colors_secondary_button_background.red }}, {{ scheme.settings.colors_secondary_button_background.green }}, {{ scheme.settings.colors_secondary_button_background.blue }};
+      --color-button-secondary-hover: {{ scheme.settings.colors_secondary_button_background_hover.red }}, {{ scheme.settings.colors_secondary_button_background_hover.green }}, {{ scheme.settings.colors_secondary_button_background_hover.blue }};
+      --color-button-secondary-text: {{ scheme.settings.colors_secondary_button_labels.red }}, {{ scheme.settings.colors_secondary_button_labels.green }}, {{ scheme.settings.colors_secondary_button_labels.blue }};
+      --color-button-secondary-text-hover: {{ scheme.settings.colors_secondary_button_labels_hover.red }}, {{ scheme.settings.colors_secondary_button_labels_hover.green }}, {{ scheme.settings.colors_secondary_button_labels_hover.blue }};
+      --color-button-tertiary-text: {{ scheme.settings.colors_tertiary_button_labels.red }}, {{ scheme.settings.colors_tertiary_button_labels.green }}, {{ scheme.settings.colors_tertiary_button_labels.blue }};
+
+      --color-border-input: {{ scheme.settings.colors_input_border.red }}, {{ scheme.settings.colors_input_border.green }}, {{ scheme.settings.colors_input_border.blue }};
+      --color-border: {{ scheme.settings.color_border.red }}, {{ scheme.settings.color_border.green }}, {{ scheme.settings.color_border.blue }};
+      --color-scrollbar: {{ scheme.settings.color_scrollbar.red }}, {{ scheme.settings.color_scrollbar.green }}, {{ scheme.settings.color_scrollbar.blue }};
+
+      --sold-out-badge-bg: {{ scheme.settings.sold_out_badge_bg.red }},{{ scheme.settings.sold_out_badge_bg.green }},{{ scheme.settings.sold_out_badge_bg.blue }};
+      --sold-out-badge-color: {{ scheme.settings.sold_out_badge_color.red }},{{ scheme.settings.sold_out_badge_color.green }},{{ scheme.settings.sold_out_badge_color.blue }};
+      --sale-badge-bg: {{ scheme.settings.sale_badge_bg.red }},{{ scheme.settings.sale_badge_bg.green }},{{ scheme.settings.sale_badge_bg.blue }};
+      --sale-badge-color: {{ scheme.settings.sale_badge_color.red }},{{ scheme.settings.sale_badge_color.green }},{{ scheme.settings.sale_badge_color.blue }};
+      --custom-badge-bg: {{ scheme.settings.custom_badge_bg.red }},{{ scheme.settings.custom_badge_bg.green }},{{ scheme.settings.custom_badge_bg.blue }};
+    	--custom-badge-color: {{ scheme.settings.custom_badge_color.red }},{{ scheme.settings.custom_badge_color.green }},{{ scheme.settings.custom_badge_color.blue }};
+
+      --color-card-price-regular: {{ scheme.settings.card_regular_price_color.red }}, {{ scheme.settings.card_regular_price_color.green }}, {{ scheme.settings.card_regular_price_color.blue }};
+      --color-card-price-sale: {{ scheme.settings.card_sale_price_color.red }}, {{ scheme.settings.card_sale_price_color.green }}, {{ scheme.settings.card_sale_price_color.blue }};
+    }
+
+    @media (prefers-color-scheme: light) {
+      {% if forloop.index == 1 -%}
+        :root,
+      {%- endif %}
+      [data-scheme=auto] .color-{{ scheme.id }} {
+        --color-background: {{ scheme.settings.colors_background_1.red }},{{ scheme.settings.colors_background_1.green }},{{ scheme.settings.colors_background_1.blue }};
+        --color-background-secondary: {{ scheme.settings.colors_background_2.red }},{{ scheme.settings.colors_background_2.green }},{{ scheme.settings.colors_background_2.blue }};
+        {% if scheme.settings.background_gradient != empty %}
+          --overwrite-background: {{ scheme.settings.background_gradient }};
+        {% else %}
+          --overwrite-background: {{ scheme.settings.colors_background_1 }};
+        {% endif %}
+        --color-foreground: {{ scheme.settings.colors_text.red }}, {{ scheme.settings.colors_text.green }}, {{ scheme.settings.colors_text.blue }};
+        --color-foreground-secondary: {{ scheme.settings.colors_secondary_text.red }}, {{ scheme.settings.colors_secondary_text.green }}, {{ scheme.settings.colors_secondary_text.blue }};
+        --color-overlay: {{ scheme.settings.colors_background_overlay.red }},{{ scheme.settings.colors_background_overlay.green }},{{ scheme.settings.colors_background_overlay.blue }};
+        --color-button-text: {{ scheme.settings.colors_solid_button_labels.red }}, {{ scheme.settings.colors_solid_button_labels.green }}, {{ scheme.settings.colors_solid_button_labels.blue }};
+        --color-button-text-hover: {{ scheme.settings.colors_solid_button_labels_hover.red }}, {{ scheme.settings.colors_solid_button_labels_hover.green }}, {{ scheme.settings.colors_solid_button_labels_hover.blue }};
+        --color-button: {{ scheme.settings.colors_solid_button_background.red }}, {{ scheme.settings.colors_solid_button_background.green }}, {{ scheme.settings.colors_solid_button_background.blue }};
+        --color-button-hover: {{ scheme.settings.colors_solid_button_background_hover.red }}, {{ scheme.settings.colors_solid_button_background_hover.green }}, {{ scheme.settings.colors_solid_button_background_hover.blue }};
+        --color-button-secondary: {{ scheme.settings.colors_secondary_button_background.red }}, {{ scheme.settings.colors_secondary_button_background.green }}, {{ scheme.settings.colors_secondary_button_background.blue }};
+        --color-button-secondary-hover: {{ scheme.settings.colors_secondary_button_background_hover.red }}, {{ scheme.settings.colors_secondary_button_background_hover.green }}, {{ scheme.settings.colors_secondary_button_background_hover.blue }};
+        --color-button-secondary-text: {{ scheme.settings.colors_secondary_button_labels.red }}, {{ scheme.settings.colors_secondary_button_labels.green }}, {{ scheme.settings.colors_secondary_button_labels.blue }};
+        --color-button-secondary-text-hover: {{ scheme.settings.colors_secondary_button_labels_hover.red }}, {{ scheme.settings.colors_secondary_button_labels_hover.green }}, {{ scheme.settings.colors_secondary_button_labels_hover.blue }};
+
+        --color-button-tertiary-text: {{ scheme.settings.colors_tertiary_button_labels.red }}, {{ scheme.settings.colors_tertiary_button_labels.green }}, {{ scheme.settings.colors_tertiary_button_labels.blue }};
+
+        --color-border-input: {{ scheme.settings.colors_input_border.red }}, {{ scheme.settings.colors_input_border.green }}, {{ scheme.settings.colors_input_border.blue }};
+        --color-border: {{ scheme.settings.color_border.red }}, {{ scheme.settings.color_border.green }}, {{ scheme.settings.color_border.blue }};
+        --color-scrollbar: {{ scheme.settings.color_scrollbar.red }}, {{ scheme.settings.color_scrollbar.green }}, {{ scheme.settings.color_scrollbar.blue }};
+
+        --sold-out-badge-bg: {{ scheme.settings.sold_out_badge_bg.red }},{{ scheme.settings.sold_out_badge_bg.green }},{{ scheme.settings.sold_out_badge_bg.blue }};
+        --sold-out-badge-color: {{ scheme.settings.sold_out_badge_color.red }},{{ scheme.settings.sold_out_badge_color.green }},{{ scheme.settings.sold_out_badge_color.blue }};
+        --sale-badge-bg: {{ scheme.settings.sale_badge_bg.red }},{{ scheme.settings.sale_badge_bg.green }},{{ scheme.settings.sale_badge_bg.blue }};
+        --sale-badge-color: {{ scheme.settings.sale_badge_color.red }},{{ scheme.settings.sale_badge_color.green }},{{ scheme.settings.sale_badge_color.blue }};
+        --custom-badge-bg: {{ scheme.settings.custom_badge_bg.red }},{{ scheme.settings.custom_badge_bg.green }},{{ scheme.settings.custom_badge_bg.blue }};
+        --custom-badge-color: {{ scheme.settings.custom_badge_color.red }},{{ scheme.settings.custom_badge_color.green }},{{ scheme.settings.custom_badge_color.blue }};
+
+        --color-card-price-regular: {{ scheme.settings.card_regular_price_color.red }}, {{ scheme.settings.card_regular_price_color.green }}, {{ scheme.settings.card_regular_price_color.blue }};
+        --color-card-price-sale: {{ scheme.settings.card_sale_price_color.red }}, {{ scheme.settings.card_sale_price_color.green }}, {{ scheme.settings.card_sale_price_color.blue }};
+      }
+    }
+  {% endfor %}
+
+  {{ scheme_classes | prepend: 'body' }} {
+    color: rgba(var(--color-foreground));
+    background: rgb(var(--color-background));
+    background-attachment: fixed;
+  }
+
+  :root {
+    --color-shadow: var(--color-foreground);
+    --payment-terms-background-color: {{ settings.colors_background_1 }};
+    --color-modal-overlay: {{ settings.color_modal_overlay.red }},{{ settings.color_modal_overlay.green }},{{ settings.color_modal_overlay.blue }};;
+  }
+
+  {% for scheme in settings.color_schemes -%}
+    {% assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id %}
+    [data-scheme=dark] .color-{{ scheme.id }} {
+      --color-background: 31, 31, 31;
+      --color-background-secondary: 41, 41, 41;
+      --color-foreground: 255, 255, 255;
+      --color-foreground-secondary: 142, 142, 143;
+      --color-border-input: 73, 73, 73;
+      --color-border: 73, 73, 73;
+      --color-button: 0, 0, 0;
+      --color-button-hover: 0, 0, 0;
+      --color-button-text: 255, 255, 255;
+      --color-button-text-hover: 255, 255, 255;
+      --color-button-secondary: 36, 36, 36;
+      --color-button-secondary-hover: 36, 36, 36;
+      --color-button-secondary-text: 255, 255, 255;
+      --color-button-secondary-text-hover: 255, 255, 255;
+      --color-button-tertiary-text: 255, 255, 255;
+      --color-card-price-regular: 229, 229, 229;
+      --color-card-price-sale: 169, 169, 169;
+      --color-error-background: 0, 0, 0;
+      --color-shadow: 75, 75, 75;
+      --sold-out-badge-bg: 51, 51, 51;
+      --sold-out-badge-color: 255, 255, 255;
+      --sale-badge-bg: 51, 51, 51;
+      --sale-badge-color: 255, 255, 255;
+      --custom-badge-bg: 51, 51, 51;
+      --custom-badge-color: 255, 255, 255;
+      --color-overlay: 0, 0, 0;
+      --color-success: 61, 181, 18;
+      --color-error: 241, 118, 111;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      [data-scheme=auto] .color-{{ scheme.id }} {
+        --color-background: 31, 31, 31;
+        --color-background-secondary: 41, 41, 41;
+        --color-foreground: 255, 255, 255;
+        --color-foreground-secondary: 142, 142, 143;
+        --color-border-input: 73, 73, 73;
+        --color-border: 73, 73, 73;
+        --color-button: 0, 0, 0;
+        --color-button-hover: 0, 0, 0;
+        --color-button-text: 255, 255, 255;
+        --color-button-text-hover: 255, 255, 255;
+        --color-button-secondary: 36, 36, 36;
+        --color-button-secondary-hover: 36, 36, 36;
+        --color-button-secondary-text: 255, 255, 255;
+        --color-button-secondary-text-hover: 255, 255, 255;
+        --color-button-tertiary-text: 255, 255, 255;
+        --color-card-price-regular: 229, 229, 229;
+        --color-card-price-sale: 169, 169, 169;
+        --color-error-background: 0, 0, 0;
+        --color-shadow: 75, 75, 75;
+        --sold-out-badge-bg: 51, 51, 51;
+        --sold-out-badge-color: 255, 255, 255;
+        --sale-badge-bg: 51, 51, 51;
+        --sale-badge-color: 255, 255, 255;
+        --custom-badge-bg: 51, 51, 51;
+        --custom-badge-color: 255, 255, 255;
+        --color-overlay: 0, 0, 0;
+        --color-success: 61, 181, 18;
+        --color-error: 241, 118, 111;
+      }
+    }
+  {% endfor %}
+
+  [data-scheme=dark] {
+    --color-background: 31, 31, 31;
+    --color-background-secondary: 24, 24, 24;
+    --color-foreground: 255, 255, 255;
+    --color-foreground-secondary: 142, 142, 143;
+    --color-border-input: 73, 73, 73;
+    --color-border: 73, 73, 73;
+    --color-scrollbar: 165, 165, 165;
+    --color-button: 0, 0, 0;
+    --color-button-hover: 0, 0, 0;
+    --color-button-text: 255, 255, 255;
+    --color-button-text-hover: 255, 255, 255;
+    --color-button-secondary: 36, 36, 36;
+    --color-button-secondary-hover: 36, 36, 36;
+    --color-button-secondary-text: 255, 255, 255;
+    --color-button-secondary-text-hover: 255, 255, 255;
+    --color-button-tertiary-text: 255, 255, 255;
+    --color-card-price-regular: 229, 229, 229;
+    --color-card-price-sale: 169, 169, 169;
+    --color-error-background: 0, 0, 0;
+    --color-shadow: 75, 75, 75;
+    --sold-out-badge-bg: 51, 51, 51;
+    --sold-out-badge-color: 255, 255, 255;
+    --sale-badge-bg: 51, 51, 51;
+    --sale-badge-color: 255, 255, 255;
+    --custom-badge-bg: 51, 51, 51;
+    --custom-badge-color: 255, 255, 255;
+    --color-overlay: 0, 0, 0;
+    --color-success: 61, 181, 18;
+    --color-error: 241, 118, 111;
+
+    .color-background-1 {
+      --color-background: 31, 31, 31;
+    }
+    .color-background-2 {
+      --color-background: 34, 34, 34;
+      --color-background-secondary: 41, 41, 41;
+    }
+    .color-background-3 {
+      --color-background: 24, 24, 24;
+      --color-background-secondary: 31, 31, 31;
+    }
+    .color-background-4 {
+      --color-background: 24, 24, 24;
+      --color-background-secondary: 31, 31, 31;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    [data-scheme=auto] {
+      --color-background: 31, 31, 31;
+      --color-background-secondary: 24, 24, 24;
+      --color-foreground: 255, 255, 255;
+      --color-foreground-secondary: 142, 142, 143;
+      --color-border-input: 73, 73, 73;
+      --color-border: 73, 73, 73;
+      --color-scrollbar: 165, 165, 165;
+      --color-button: 0, 0, 0;
+      --color-button-hover: 0, 0, 0;
+      --color-button-text: 255, 255, 255;
+      --color-button-text-hover: 255, 255, 255;
+      --color-button-secondary: 36, 36, 36;
+      --color-button-secondary-hover: 36, 36, 36;
+      --color-button-secondary-text: 255, 255, 255;
+      --color-button-secondary-text-hover: 255, 255, 255;
+      --color-button-tertiary-text: 255, 255, 255;
+      --color-card-price-regular: 229, 229, 229;
+      --color-card-price-sale: 169, 169, 169;
+      --color-error-background: 0, 0, 0;
+      --color-shadow: 75, 75, 75;
+      --sold-out-badge-bg: 51, 51, 51;
+      --sold-out-badge-color: 255, 255, 255;
+      --sale-badge-bg: 51, 51, 51;
+      --sale-badge-color: 255, 255, 255;
+      --custom-badge-bg: 51, 51, 51;
+      --custom-badge-color: 255, 255, 255;
+      --color-overlay: 0, 0, 0;
+      --color-success: 61, 181, 18;
+      --color-error: 241, 118, 111;
+
+      .color-background-1 {
+        --color-background: 31, 31, 31;
+      }
+      .color-background-2 {
+        --color-background: 34, 34, 34;
+        --color-background-secondary: 41, 41, 41;
+      }
+      .color-background-3 {
+        --color-background: 24, 24, 24;
+        --color-background-secondary: 31, 31, 31;
+      }
+      .color-background-4 {
+        --color-background: 24, 24, 24;
+        --color-background-secondary: 31, 31, 31;
+      }
+    }
+  }
+{% endstyle %}

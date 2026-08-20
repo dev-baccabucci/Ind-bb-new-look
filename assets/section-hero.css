@@ -1,0 +1,325 @@
+.hero {
+  display: block;
+  width: 100%;
+  position: relative;
+}
+main .shopify-section:first-child:not(.not-margin) > .hero[data-header-overlay=true] {
+  margin-top: calc(-1 * (var(--header-height) + var(--breadcrumbs-height)));
+}
+
+.hero.hero-before {
+  display: flex;
+  align-items: center;
+}
+.hero.hero-before::before {
+  content: "";
+  display: block;
+  padding-bottom: var(--image-height);
+}
+
+.hero-main {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.hero-bg-image-wrapper {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.hero-bg-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-position: center;
+  object-fit: cover;
+  z-index: 1;
+}
+picture > .hero-bg-image {
+  object-position: var(--focal_point_mobile);
+}
+@media screen and (min-width: 576px) {
+  picture > .hero-bg-image {
+    object-position: var(--focal_point_desktop);
+  }
+}
+
+.hero-bg-image-overlay {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+}
+
+.hero-content-wrapper {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 6.4rem 0;
+}
+
+.hero-heading {
+  text-align: center;
+  width: 100%;
+  max-width: 72rem;
+  white-space: pre-wrap;
+  padding: 1rem 0;
+  pointer-events: all;
+}
+@media screen and (min-width: 1200px) {
+  .hero-heading {
+    max-width: 86rem;
+  }
+}
+@media screen and (min-width: 1360px) {
+  .hero-heading {
+    max-width: 94rem;
+  }
+}
+
+.hero:not(.animate) .hero-main {
+  pointer-events: auto;
+}
+.hero:not(.animate) .hero-content {
+  flex-direction: column;
+  row-gap: 2rem;
+}
+.hero:not(.animate) .hero-content-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 2.4rem;
+  width: 100%;
+}
+
+.hero-secondary-heading {
+  width: 100%;
+  white-space: pre-wrap;
+  text-align: center;
+  max-width: 58rem;
+}
+
+.hero-sticky-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
+.hero-sticky-wrapper.ended {
+  z-index: 10;
+}
+
+.hero-sticky {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.hero-sticky-image-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: var(--secondary-image-border-radius);
+  width: 180px;
+  height: auto;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.7s linear(0, 0.0035, 0.0141 10.7%, 0.0318 16.09%, 0.0566 21.51%, 0.0885 26.98%, 0.1278 32.53%, 0.2288 43.93%, 0.3563 55.48%, 0.5171 67.92%, 0.7139 81.53%, 1);
+}
+@media screen and (min-width: 750px) {
+  .hero-sticky-image-container {
+    width: 240px;
+  }
+}
+@media screen and (min-width: 990px) {
+  .hero-sticky-image-container {
+    width: 280px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .hero-sticky-image-container {
+    width: 312px;
+  }
+}
+@media screen and (min-width: 1360px) {
+  .hero-sticky-image-container {
+    width: 352px;
+  }
+}
+.hero-sticky-image-container--with-overlay::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(var(--color-overlay));
+  opacity: var(--secondary-overlay-opacity);
+  z-index: 2;
+}
+.hero-sticky-image-container.show {
+  opacity: 1;
+}
+
+.hero-sticky-image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+picture > .hero-sticky-image {
+  object-position: var(--focal_point_mobile);
+}
+@media screen and (min-width: 576px) {
+  picture > .hero-sticky-image {
+    object-position: var(--focal_point_desktop);
+  }
+}
+
+.hero-secondary-heading-container {
+  display: none;
+  z-index: 3;
+}
+
+html:not(.no-js) .hero {
+  --progress: 0;
+  --image-cont-border-radius: calc(
+    var(--secondary-image-border-radius) * (1 - var(--progress))
+  );
+  --image-initial-size: 150px;
+}
+@media screen and (min-width: 576px) {
+  html:not(.no-js) .hero {
+    --image-initial-size: 180px;
+  }
+}
+@media screen and (min-width: 750px) {
+  html:not(.no-js) .hero {
+    --image-initial-size: 240px;
+  }
+}
+@media screen and (min-width: 990px) {
+  html:not(.no-js) .hero {
+    --image-initial-size: 280px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  html:not(.no-js) .hero {
+    --image-initial-size: 312px;
+  }
+}
+@media screen and (min-width: 1360px) {
+  html:not(.no-js) .hero {
+    --image-initial-size: 408px;
+  }
+}
+html:not(.no-js) .hero.animate .hero-heading {
+  -webkit-mask-image: linear-gradient(90deg, rgba(var(--color-background)) 33.33%, transparent 66.66%);
+  mask-image: linear-gradient(90deg, rgba(var(--color-background)) 33.33%, transparent 66.66%);
+  -webkit-mask-position: 100% 0;
+  mask-position: 100% 0;
+  -webkit-mask-size: 300% 100%;
+  mask-size: 300% 100%;
+  transition: -webkit-mask-position 1.75s linear(0, 0.0035, 0.0141 10.7%, 0.0318 16.09%, 0.0566 21.51%, 0.0885 26.98%, 0.1278 32.53%, 0.2288 43.93%, 0.3563 55.48%, 0.5171 67.92%, 0.7139 81.53%, 1), mask-position 1.75s linear(0, 0.0035, 0.0141 10.7%, 0.0318 16.09%, 0.0566 21.51%, 0.0885 26.98%, 0.1278 32.53%, 0.2288 43.93%, 0.3563 55.48%, 0.5171 67.92%, 0.7139 81.53%, 1);
+}
+html:not(.no-js) .hero.animate.animated .hero-heading {
+  -webkit-mask-position: 0 0;
+  mask-position: 0 0;
+}
+html:not(.no-js) .hero.animate.hero-has-secondary-image {
+  height: 160vh;
+}
+html:not(.no-js) .hero.animate.hero-has-secondary-image .hero-sticky-image-container {
+  transition: opacity 1s linear(0, 0.0035, 0.0141 10.7%, 0.0318 16.09%, 0.0566 21.51%, 0.0885 26.98%, 0.1278 32.53%, 0.2288 43.93%, 0.3563 55.48%, 0.5171 67.92%, 0.7139 81.53%, 1) 0.8s;
+  opacity: 0.001;
+}
+html:not(.no-js) .hero.animate.hero-has-secondary-image .hero-secondary-heading-container {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100%;
+}
+html:not(.no-js) .hero.animate.hero-has-secondary-image .hero-secondary-heading-container .container {
+  height: 100%;
+}
+html:not(.no-js) .hero.animate.hero-has-secondary-image .hero-secondary-heading-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 6.4rem;
+  gap: 2.4rem;
+  -webkit-mask-image: linear-gradient(180deg, rgba(var(--color-background)) 33.33%, transparent 66.66%);
+  mask-image: linear-gradient(180deg, rgba(var(--color-background)) 33.33%, transparent 66.66%);
+  -webkit-mask-position: 0 100%;
+  mask-position: 0 100%;
+  -webkit-mask-size: 100% 300%;
+  mask-size: 100% 300%;
+}
+html:not(.no-js) .hero.animate.hero-has-secondary-image.animated .hero-main {
+  opacity: calc(1 - var(--progress) * 2);
+}
+html:not(.no-js) .hero.animate.hero-has-secondary-image.animated .hero-sticky {
+  position: sticky;
+  height: 100vh;
+}
+html:not(.no-js) .hero.animate.hero-has-secondary-image.animated .hero-sticky-image-container {
+  border-radius: var(--image-cont-border-radius);
+  width: clamp(var(--image-initial-size), var(--image-initial-size) + (var(--progress) - 0) / 1 * (100vw - var(--image-initial-size)), 100vw);
+  height: clamp(var(--image-initial-size) * 9 / 16, var(--image-initial-size) * 9 / 16 + (var(--progress) - 0) / 1 * (100vh - var(--image-initial-size) * 9 / 16), 100vh);
+  opacity: 1;
+}
+html:not(.no-js) .hero.animate.hero-has-secondary-image.animated .hero-sticky-image {
+  transform: scale(clamp(1, 1.5 + (var(--progress) - 0) / 1 * -0.5, 1.5));
+}
+html:not(.no-js) .hero.animate.hero-has-secondary-image.animated .hero-secondary-heading-wrapper {
+  -webkit-mask-position: 0 calc(100% - (max(var(--progress), 0.4) - 0.4) / 0.6 * 100%);
+  mask-position: 0 calc(100% - (max(var(--progress), 0.4) - 0.4) / 0.6 * 100%);
+}

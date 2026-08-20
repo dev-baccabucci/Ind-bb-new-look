@@ -1,0 +1,80 @@
+<div class="st-search-bar hidden-desktop">
+  <span>
+  <input type="text" id="st-search-input-mobile" name="q" placeholder="What are you looking for?" value="" autocapitalize="off" autocomplete="off" autocorrect="off" class="changedPlaceholder">
+  <span class="side-btn"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 30 30" style=" fill:#undefined;" class="st-searchicon">
+                <path d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"></path>
+            </svg></span></span>
+  <span class="input-close-btn" style="display: none;"></span>
+</div>
+
+<style>
+  @media only screen and (max-width: 1000px){
+.st-search-bar input {
+/*     height: 40px!important;
+    background-color: #fff;
+    background-position-x: 15px!important;
+    padding-left: 40px!important;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTIuOTA0IDE5Mi45MDQiPjxwYXRoIGQ9Ik0xOTAuNzA3IDE4MC4xMDFsLTQ3LjA3OC00Ny4wNzdjMTEuNzAyLTE0LjA3MiAxOC43NTItMzIuMTQyIDE4Ljc1Mi01MS44MzFDMTYyLjM4MSAzNi40MjMgMTI1Ljk1OSAwIDgxLjE5MSAwIDM2LjQyMiAwIDAgMzYuNDIzIDAgODEuMTkzYzAgNDQuNzY3IDM2LjQyMiA4MS4xODcgODEuMTkxIDgxLjE4NyAxOS42ODggMCAzNy43NTktNy4wNDkgNTEuODMxLTE4Ljc1MWw0Ny4wNzkgNDcuMDc4YTcuNDc0IDcuNDc0IDAgMDA1LjMwMyAyLjE5NyA3LjQ5OCA3LjQ5OCAwIDAwNS4zMDMtMTIuODAzek0xNSA4MS4xOTNDMTUgNDQuNjk0IDQ0LjY5MyAxNSA4MS4xOTEgMTVjMzYuNDk3IDAgNjYuMTg5IDI5LjY5NCA2Ni4xODkgNjYuMTkzIDAgMzYuNDk2LTI5LjY5MiA2Ni4xODctNjYuMTg5IDY2LjE4N0M0NC42OTMgMTQ3LjM4IDE1IDExNy42ODkgMTUgODEuMTkzeiIvPjwvc3ZnPg==)!important;
+    font-size: 16px!important;
+    border-radius: 25px;
+    border: 1px solid; */
+      height: 45px!important;
+    background-color: #fff;
+    font-size: 16px!important;
+    border-radius: 8px !important;
+    border: 1px solid;
+    background-image: none !important;
+    padding: 0 55px 0 10px !important;
+    width: 100% !important;
+}
+.st-search-root .st-autocomplete-container .st-mobile-search-container .st-search-bar .st-search-bar-inner #st-search-box {
+    height: 35px !important;
+}
+    .st-search-bar.hidden-desktop svg.st-searchicon {
+    position: relative;
+    right: 0px;
+    width: 25px;
+    top: 49%;
+    transform: translateY(-50%);
+    stroke: #282828;
+}
+   span.side-btn {
+    background: #dca23f;
+    padding: 0 15px;
+    position: absolute;
+    right: 24px;
+    height: 45px;
+    top: 0px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+    .st-search-bar.hidden-desktop svg.st-searchicon path {
+    stroke-width: 2px;
+}
+    
+  }
+
+@media (min-width:767px) and (max-width:834px){
+  span.side-btn {
+    background: #dca23f;
+    padding: 0 15px;
+    position: absolute;
+    right: 24px;
+    height: 45px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+}
+  
+  @media only screen and (max-width: 1000px){
+.st-search-bar.hidden-desktop {
+    margin: 0;
+    padding: 0 24px 10px !important;
+    background: #fff;
+    position: relative;
+}
+.st-search-bar.hidden-mobile {
+    display: none;
+}
+  }
+</style>

@@ -1,0 +1,70 @@
+<nav class="header__inline-menu">
+  {%- if section.settings.menu != blank -%}
+    <ul class="list-menu list-menu--inline" role="list">
+      {%- for link in section.settings.menu.links -%}
+        {% liquid
+          assign mega_menu = false
+          assign mega_menu_with_cards = false
+        %}
+
+        {% for block in section.blocks %}
+          {% liquid
+            assign mega_menu_trigger = block.settings.mega_menu_trigger | handle | strip
+            assign mega_menu_with_cards_trigger = block.settings.mega_menu_with_cards_trigger | handle | strip
+
+            if link.handle == mega_menu_trigger
+              assign mega_menu = true
+            endif
+
+            if link.handle == mega_menu_with_cards_trigger
+              assign mega_menu_with_cards = true
+            endif
+          %}
+        {% endfor %}
+        <li
+          class="list-menu-item {% if mega_menu or mega_menu_with_cards %}list-menu--megamenu {% elsif link.links != blank %}list-menu--submenu{% endif %}"
+          {% if mega_menu or mega_menu_with_cards %}
+            {{ block.shopify_attributes }}
+          {% endif %}
+        >
+          <a
+            href="{{ link.url }}"
+            {% if settings.links_blank and link.type == 'http_link' %}
+              target="_blank"
+            {% endif %}
+            class="header__menu-item {% if link.current and link.url != '/' %} header__menu-item--active{% endif %} list-menu__item focus-inset"
+            {% if link.current and link.url != '/' %}
+              aria-current="page"
+            {% endif %}
+            aria-label="{{ link.title | escape }}"
+          >
+            <div class="header__menu-item-content">
+              <span class="header__menu-item-title" title="{{ link.title | escape }}">
+                {{ link.title | escape }}
+              </span>
+            </div>
+          </a>
+          {% if mega_menu %}
+            {% render 'header-mega-menu', link: link, blocks: section.blocks %}
+          {% elsif mega_menu_with_cards %}
+            {% render 'header-mega-menu-with-cards', link: link, blocks: section.blocks %}
+          {% elsif link.links != blank %}
+            {% render 'header-submenu', link: link %}
+          {% endif %}
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</nav>
+
+<style>
+{% comment %} .list-menu--inline > li:nth-child(4), .list-menu--inline > li:nth-child(5) {
+    display: none;
+} {% endcomment %}
+
+@media (max-width: 1199px) {
+.menu-drawer__menu > li:nth-child(6), .menu-drawer__menu > li:nth-child(7), .menu-drawer__menu > li:nth-child(8) {
+    display: none;
+}
+}
+</style>

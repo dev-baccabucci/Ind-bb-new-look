@@ -1,0 +1,140 @@
+{% comment %}
+  	Renders a horizontal product card
+  	Accepts:
+  	- product_card_product: {Object} Product Liquid object (optional)
+  	- media_size: {String} Size of the product image card. Values are "square" and "portrait". Default is "square" (optional)
+  	- show_vendor: {Boolean} Show the product vendor. Default: true
+  	Usage:
+  {% render 'product-card-horizontal',
+  	product_card_product: product,
+  	show_vendor: true
+  %}
+{% endcomment %}
+
+{% liquid
+  if media_ratio == 'landscape'
+    assign padding_bottom = 66
+  elsif media_ratio == 'portrait'
+    assign padding_bottom = 133
+  else
+    assign padding_bottom = 100
+  endif
+%}
+
+<div
+  class="card-horizontal-wrapper js-color-swatches-wrapper {% if color_scheme != blank%}color-{{ color_scheme }}{% else %}color-{{ settings.card_color_scheme }}{% endif %}"
+  data-product="{{ product_card_product.handle }}"
+>
+  <span class="visually-hidden">{{ product_card_product.title | escape }}</span>
+  {%- if product_card_product.url -%}
+    <a
+      href="{{ product_card_product.url | default: '#' }}"
+      class="link link--overlay card-wrapper__link--overlay js-color-swatches-link"
+      aria-label="{{ "accessibility.product_link" | t }}"
+    ></a>
+  {%- endif -%}
+
+  <div class="card-horizontal__image">
+    <div
+      class="media"
+      style="padding-bottom: {{ padding_bottom }}%; object-fit: {{ media_fit }};"
+    >
+      {%- if product_card_product.featured_media -%}
+        {% liquid
+          if media_ratio == 'landscape'
+            assign settings_aspect_ratio = 1.5
+          elsif media_ratio == 'portrait'
+            assign settings_aspect_ratio = 0.75
+          else
+            assign settings_aspect_ratio = 1
+          endif
+
+          assign calc_ratio = 1
+          if product_card_product.featured_media.aspect_ratio > settings_aspect_ratio
+            assign calc_ratio = product_card_product.featured_media.aspect_ratio | divided_by: settings_aspect_ratio | round: 2
+          endif
+        %}
+        {%- capture sizes -%}
+          calc(200px * {{ calc_ratio }})
+        {%- endcapture -%}
+        {{
+          product_card_product.featured_media
+          | image_url: width: 200
+          | image_tag: loading: 'lazy', sizes: sizes, widths: '200, 300, 400', class: 'motion-reduce media--first'
+        }}
+      {%- else -%}
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="card-horizontal__information">
+    <div class="card-horizontal__information-top">
+      {%- if show_vendor -%}
+        <span class="visually-hidden">{{- 'accessibility.vendor' | t -}}</span>
+        <div class="subtitle card-horizontal__vendor subtitle{% if settings.enable_vendor_link %} card-horizontal__vendor_link{% endif %}">
+          {%- if settings.enable_vendor_link -%}
+            {{- product_card_product.vendor | link_to_vendor: class: 'focus-inset' -}}
+          {%- else -%}
+            {{- product_card_product.vendor -}}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <h3 class="card-horizontal__title body-normal">
+        {%- if product_card_product.title -%}
+          <a
+            class="full-unstyled-link"
+            href="{{ product_card_product.url | default: '#' }}"
+            title="{{- product_card_product.title | escape -}}"
+          >
+            {{- product_card_product.title | escape -}}
+          </a>
+        {% else %}
+          {{- 'products.product.product_heading' | t -}}
+        {% endif %}
+      </h3>
+
+      <div class="product-parameters">
+        {%- unless product_card_product.has_only_default_variant -%}
+          {%- for option in product_card_product.options_with_values -%}
+            {%- liquid
+              assign is_color_option = false
+              assign color_trigger = settings.trigger_swatch | strip | newline_to_br | split: '<br />'
+              assign name_option = option.name | handle | strip
+              for item in color_trigger
+                assign item_temp = item | handle | strip
+                if settings.enable_color_swatch and name_option == item_temp
+                  assign is_color_option = true
+                endif
+              endfor
+            -%}
+            {%- if is_color_option and option.values.size > 1 -%}
+              <div class="product-form__controls js-color-swatches">
+                <div class="product-form__controls-group">
+                  {% render 'product-variant-options',
+                    product: product_card_product,
+                    option: option,
+                    is_product_card: true,
+                    has_color_swatch: true
+                  %}
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endunless -%}
+      </div>
+    </div>
+
+    <div class="card-horizontal__information-bottom">
+      {% render 'price', product: product_card_product, price_class: '' %}
+
+      {%- if product_card_product.url -%}
+        <div class="card-horizontal__information-bottom-icons">
+          {% render 'icon-arrow-link-small' %}
+          {% render 'icon-arrow-link-small' %}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>

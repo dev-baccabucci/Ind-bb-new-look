@@ -1,0 +1,55 @@
+{% comment %}
+  	Renders a product card placeholder
+    Accepts:
+    - media_ratio: {String} The aspect ratio of the image,
+    - show_vendor: {Boolean} Show the product vendor. Default: false,
+    - product_number: {Integer} The number of the product.,
+    - color_scheme: {String} The color scheme of the card.
+  	Usage:
+  {% render 'product-card-placeholder' %}
+{% endcomment %}
+
+{% liquid
+  case media_ratio
+    when 'landscape'
+      assign padding_bottom = '75%'
+    when 'portrait'
+      assign padding_bottom = '135.7%'
+    when 'square'
+      assign padding_bottom = '100%'
+    else
+      assign padding_bottom = '100%'
+  endcase
+%}
+
+<div class="card-wrapper {% if color_scheme != blank %} color-{{ color_scheme }} {% else %} color-{{ settings.card_color_scheme }} {% endif %}">
+  <div class="card card--product" tabindex="-1">
+    <div class="card__inner">
+      <div
+        class="media media--transparent media--hover-effect"
+        style="padding-bottom: {{ padding_bottom }};"
+      >
+        {{ 'product-' | append: product_number | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    </div>
+  </div>
+
+  <div class="card-information">
+    <div class="card-information__wrapper">
+      <div class="card-information__group">
+        <div class="card-information__group-left">
+          {%- if show_vendor -%}
+            <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
+            <div class="card__vendor subtitle body-small">
+              {{- 'products.product.vendor' | t -}}
+            </div>
+          {%- endif -%}
+          <{{ heading_tag }} class="card__title h5">
+            {{- 'products.product.product_heading' | t -}}
+          </{{ heading_tag }}>
+        </div>
+      </div>
+      {% render 'price' %}
+    </div>
+  </div>
+</div>

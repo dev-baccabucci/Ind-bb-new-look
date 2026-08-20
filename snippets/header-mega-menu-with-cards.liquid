@@ -1,0 +1,138 @@
+{% for block in blocks %}
+  {% assign mega_menu_with_cards_trigger = block.settings.mega_menu_with_cards_trigger | handle | strip %}
+
+  {%- if link.handle == mega_menu_with_cards_trigger and block.type == 'mega_menu_with_cards' -%}
+    {% liquid
+      assign has_cards = false
+
+      for i in (1..8)
+        assign enable_card_setting = 'enable_card_' | append: i
+
+        if block.settings[enable_card_setting]
+          assign has_cards = true
+        endif
+      endfor
+    %}
+
+    {%- if has_cards -%}
+      <div
+        class="header__mega-menu header__mega-menu--with-cards mega-menu mega-menu--with-cards color-background-1"
+        {{ block.shopify_attributes }}
+      >
+        <div class="mega-menu__overlay"></div>
+
+        <div
+          class="mega-menu__wrapper"
+          tabindex="-1"
+          role="dialog"
+        >
+          <div class="mega-menu__cards-container">
+            <div class="mega-menu__cards-wrapper">
+              <div class="mega-menu__cards">
+                {%- for i in (1..8) -%}
+                  {% liquid
+                    assign enable_card_setting = 'enable_card_' | append: i
+                    assign card_image_setting = 'mega_menu_with_cards_card_image_' | append: i
+                    assign card_title_setting = 'mega_menu_with_cards_card_title_' | append: i
+                    assign card_link_setting = 'mega_menu_with_cards_card_link_' | append: i
+
+                    assign placholder_index = forloop.index | modulo: 6 | plus: 1
+
+                    assign settings_aspect_ratio = 1
+
+                    if block.settings.mega_menu_with_cards_image_ratio == 'landscape'
+                      assign settings_aspect_ratio = 1.78
+                    elsif block.settings.mega_menu_with_cards_image_ratio == 'portrait'
+                      assign settings_aspect_ratio = 0.80
+                    else
+                      assign settings_aspect_ratio = 1
+                    endif
+
+                    assign calc_ratio = 1
+
+                    if block.settings[card_image_setting].aspect_ratio > settings_aspect_ratio
+                      assign calc_ratio = block.settings[card_image_setting].aspect_ratio | divided_by: settings_aspect_ratio | round: 2
+                    endif
+
+                    assign current_url = request.origin | append: request.path
+                  %}
+
+                  {%- capture img_sizes -%}
+										(min-width: 1200px) calc({{ calc_ratio }} * 22vw), calc({{ calc_ratio }} * 24vw)
+									{%- endcapture -%}
+
+                  {%- if block.settings[enable_card_setting] -%}
+                    {%- if block.settings[card_link_setting] != blank -%}
+                      <a
+                        class="mega-menu__card mega-menu__card--link focus-inset{% if current_url == block.settings[card_link_setting] %} mega-menu__card--link--active{% endif %}"
+                        href="{{ block.settings[card_link_setting] }}"
+                      >
+                        <div class="mega-menu__card-image-wrapper mega-menu__card-image-wrapper--{{ block.settings.mega_menu_with_cards_image_ratio }}">
+                          {%- if block.settings[card_image_setting] != blank -%}
+                            {{
+                              block.settings[card_image_setting]
+                              | image_url: width: block.settings[card_image_setting].width
+                              | image_tag:
+                                width: block.settings[card_image_setting].width,
+                                height: block.settings[card_image_setting].height,
+                                loading: 'lazy',
+                                sizes: img_sizes,
+                                widths: '200, 308, 416, 535, 632, 720, 940, 1066, 1200, 1400, 1600, 1800, 2000',
+                                class: 'mega-menu__card-image',
+                                loading: 'lazy'
+                            }}
+                          {%- else -%}
+                            {{
+                              'collection-'
+                              | append: placholder_index
+                              | placeholder_svg_tag: 'placeholder-svg mega-menu__card-image'
+                            }}
+                          {%- endif -%}
+                        </div>
+                        {%- if block.settings[card_title_setting] != blank -%}
+                          <span class="mega-menu__card-title h5">
+                            {{- block.settings[card_title_setting] -}}
+                          </span>
+                        {%- endif -%}
+                      </a>
+                    {%- else -%}
+                      <div class="mega-menu__card">
+                        <div class="mega-menu__card-image-wrapper mega-menu__card-image-wrapper--{{ block.settings.mega_menu_with_cards_image_ratio }}">
+                          {%- if block.settings[card_image_setting] != blank -%}
+                            {{
+                              block.settings[card_image_setting]
+                              | image_url: width: block.settings[card_image_setting].width
+                              | image_tag:
+                                width: block.settings[card_image_setting].width,
+                                height: block.settings[card_image_setting].height,
+                                loading: 'lazy',
+                                sizes: img_sizes,
+                                widths: '200, 308, 416, 535, 632, 720, 940, 1066, 1200, 1400, 1600, 1800, 2000',
+                                class: 'mega-menu__card-image',
+                                loading: 'lazy'
+                            }}
+                          {%- else -%}
+                            {{
+                              'collection-'
+                              | append: placholder_index
+                              | placeholder_svg_tag: 'placeholder-svg mega-menu__card-image'
+                            }}
+                          {%- endif -%}
+                        </div>
+                        {%- if block.settings[card_title_setting] != blank -%}
+                          <span class="mega-menu__card-title h5">
+                            {{- block.settings[card_title_setting] -}}
+                          </span>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+{% endfor %}

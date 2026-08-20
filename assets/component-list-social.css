@@ -1,0 +1,28 @@
+.list-social {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  margin: 0;
+  padding: 0;
+}
+.list-social__item .icon {
+  height: 2rem;
+  width: 2rem;
+  color: rgba(var(--color-foreground));
+  transition: color var(--duration-default) ease;
+}
+.list-social__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border: none;
+  padding: 1rem;
+}
+@media screen and (hover: hover) and (pointer: fine) {
+  .list-social__link:hover .icon {
+    color: rgba(var(--color-foreground), var(--hover-opacity));
+  }
+}

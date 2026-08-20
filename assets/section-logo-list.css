@@ -1,0 +1,98 @@
+.logo-list {
+  overflow: hidden;
+}
+
+.logo-card {
+  display: flex;
+  height: auto;
+  position: relative;
+}
+.logo-card--with-link {
+  cursor: pointer;
+  transition: opacity var(--duration-default);
+}
+@media screen and (pointer: fine) {
+  .logo-card--with-link:hover {
+    opacity: var(--hover-opacity);
+  }
+}
+.logo-card__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: var(--border-radius-block);
+  overflow: hidden;
+}
+.logo-card__inner.logo-card--with-paddings {
+  overflow: hidden;
+  padding: var(--column_padding);
+}
+.logo-card__inner.logo-card--border {
+  border: 0.1rem solid rgb(var(--color-border));
+}
+.logo-card__inner.logo-card--bg-secondary {
+  background-color: rgb(var(--color-background-secondary));
+}
+.logo-card__image {
+  width: 100%;
+  height: 100%;
+}
+.logo-card__image--dark {
+  display: none;
+}
+.logo-card__image-wrapper {
+  width: 100%;
+}
+.logo-card__placeholder {
+  font-size: 3.2rem;
+  line-height: 1;
+  word-break: break-word;
+}
+.logo-card__link {
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity var(--duration-default) ease;
+  z-index: 2;
+}
+.logo-card__link:empty {
+  display: block;
+}
+@media screen and (pointer: fine) {
+  .logo-card__link:hover {
+    opacity: var(--hover-opacity);
+  }
+}
+
+.js-slider-logos-wrapper {
+  box-sizing: border-box;
+  -webkit-transition-timing-function: linear !important;
+  -o-transition-timing-function: linear !important;
+  transition-timing-function: linear !important;
+}
+
+.js-slider-logos:not(.swiper-initialized) .js-slider-logos-wrapper {
+  gap: var(--column_gap);
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-scheme=auto] .logo-card .logo-card__image--dark {
+    display: block;
+  }
+  [data-scheme=auto] .logo-card .logo-card__image--dark + .logo-card__image {
+    display: none;
+  }
+}
+[data-scheme=dark] .logo-card .logo-card__image--dark {
+  display: block;
+}
+[data-scheme=dark] .logo-card .logo-card__image--dark + .logo-card__image {
+  display: none;
+}

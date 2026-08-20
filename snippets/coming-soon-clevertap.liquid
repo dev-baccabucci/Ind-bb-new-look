@@ -1,0 +1,166 @@
+{% if template contains 'collection'  %}
+{% if collection.products.size > 0 %}
+  <div class="comingsoon">
+    <div class="inner-div">
+      <div class="comingsoon-btn">
+        <div id="comingBtn" class="header__icon-wrapper tap-area whatsapp_icon"
+           onclick="setProductDetails('{{ collection.products[0].title }}', 
+           '{{ collection.products[0].featured_image | img_url: 'master' | default: '//your-placeholder-image-url.jpg' }}')">
+          Coming Soon
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+  {% else %}
+  <div class="comingsoon">
+  <div class="inner-div">
+    <div class="comingsoon-btn">
+      <div id="comingBtn" class="header__icon-wrapper tap-area whatsapp_icon"
+         onclick="setProductDetails('{{ product.title }}', 
+         '{{ product.featured_image | img_url: 'master' | default: '//your-placeholder-image-url.jpg' }}')">
+        Coming Soon
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+
+<!-- <script>
+  // Function to set product details and send to CleverTap
+function setProductDetails(productName, productImage) {
+  // Ensure productName exists
+  if (!productName) {
+    console.log("Product name is missing!");
+    return;
+  }
+
+  // Ensure the full image URL is passed, prepend https if necessary
+  if (!productImage || productImage.includes("no-image")) {
+    console.log("Image not available, using placeholder.");
+    productImage = 'https://your-placeholder-image-url.jpg'; // Provide your own placeholder URL
+  } else if (productImage.startsWith("//")) {
+    productImage = "https:" + productImage;
+  }
+
+  console.log("Product Name: ", productName);
+  console.log("Product Image URL: ", productImage);
+
+  // Push the "Coming Soon" event to CleverTap
+  clevertap.event.push("Coming Soon Products", {
+    "Product Name": productName,
+    "Product Image": productImage
+  });
+
+}
+
+</script>
+ -->
+<script>
+function waitForClevertapToLoad() {
+  return new Promise((resolve) => {
+    const interval = setInterval(() => {
+      if (window.clevertap) {
+        clearInterval(interval);
+        resolve();
+      }
+    }, 200);
+  });
+}
+
+if (window.clevertap) {
+  clevertap.dismissSpamControl = true; 
+} else {
+  waitForClevertapToLoad().then(() => {
+    clevertap.dismissSpamControl = true;
+  });
+}
+
+function setProductDetails(productName, productImage) {
+  if (!productName) {
+    console.log("Product name is missing!");
+    return;
+  }
+
+  if (!productImage || productImage.includes("no-image")) {
+    console.log("Image not available, using placeholder.");
+    productImage = 'https://your-placeholder-image-url.jpg'; // Provide your own placeholder URL
+  } else if (productImage.startsWith("//")) {
+    productImage = "https:" + productImage;
+  }
+
+  console.log("Product Name: ", productName);
+  console.log("Product Image URL: ", productImage);
+
+  // Push the "Coming Soon" event to CleverTap
+  const pushEventToCleverTap = () => {
+    clevertap.event.push("Coming Soon Products", {
+      "Product Name": productName,
+      "Product Image": productImage
+    });
+  };
+
+  if (window.clevertap) {
+    pushEventToCleverTap();
+  } else {
+    waitForClevertapToLoad().then(pushEventToCleverTap);
+  }
+}
+</script>
+
+
+<style>
+.inner-div {
+    display: flex;
+    width: fit-content;
+}
+
+.comingsoon-btn {
+    background: #dca23f;
+    font-size: 18px;
+    font-family: 'Inter';
+    padding: 5px 20px;
+    border-radius: 20px;
+      font-weight: 700;
+  cursor: pointer;
+}
+  div#zooomybackinstock {
+    display: none;
+}
+  .product-form__quantity {
+    display: none;
+}
+  </style>
+
+
+
+{% comment %} <div class="comingsoon">
+  <div class="inner-div">
+    <div class="comingsoon-btn">
+      <a href="#" id="comingBtn" class="header__icon-wrapper tap-area whatsapp_icon"
+         onclick="setProductDetails('{{ product.title }}', '{{ product.featured_image | img_url: 'master' }}')">
+        Coming Soon
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  // Function to set product details and send to CleverTap
+function setProductDetails(productName, productImage) {
+  // Full image URL and product name
+  const fullImageUrl = productImage;
+  console.log("Product Name: ", productName);
+  console.log("Product Image URL: ", fullImageUrl);
+
+  // Push the "Coming Soon" event to CleverTap
+  clevertap.event.push("Coming Soon Products", {
+    "Product Name": productName,
+    "Product Image": fullImageUrl
+  });
+}
+
+</script> {% endcomment %}

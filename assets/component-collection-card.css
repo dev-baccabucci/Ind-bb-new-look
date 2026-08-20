@@ -1,0 +1,65 @@
+.collection-card {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.collection-card__image {
+  position: relative;
+  display: block;
+  border-radius: var(--border-radius-block);
+  overflow: hidden;
+  background-color: rgb(var(--color-background-secondary));
+}
+.collection-card__image--landscape {
+  aspect-ratio: 16/9;
+}
+.collection-card__image--portrait {
+  aspect-ratio: 4/5;
+}
+.collection-card__image--square {
+  aspect-ratio: 1/1;
+}
+.collection-card__image .collection-card-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-position: center;
+  border-radius: var(--border-radius-block);
+  transition: transform 700ms cubic-bezier(0.4, 0, 0.25, 1) 0ms;
+  transform: scale(1);
+}
+.collection-card__information {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+.collection-card__desc {
+  margin-top: 0.6rem;
+  margin-bottom: 0;
+  color: rgb(var(--color-foreground-secondary));
+  padding-right: 1.6rem;
+  word-break: break-word;
+}
+.collection-card__link-overlay {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+@media screen and (hover: hover) and (pointer: fine) {
+  .collection-card:hover .collection-card-image {
+    transform: scale(1.03);
+  }
+  .collection-card:hover .icon-arrow-animated-item--1 {
+    transform: translate(-50%, -50%);
+  }
+  .collection-card:hover .icon-arrow-animated-item--2 {
+    transform: translate(4rem, -50%);
+  }
+  .collection-card:hover .icon-arrow-animated-fill {
+    stroke-dashoffset: 0;
+  }
+}

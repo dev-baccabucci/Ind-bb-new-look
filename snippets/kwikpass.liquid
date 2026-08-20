@@ -1,0 +1,117 @@
+<script>
+  let token = null;
+  let isDropdownVisible = false;
+
+  function handleDrawer1() {
+    const token = getValueFromCookiesOrLocalStorage(XGokwikCoreToken(window.merchantInfo.environment))
+    if (token) {
+      const kwikpassLoggedInElement = document.getElementById("icon-kwikpass");
+      const crossIconElement = document.getElementById("icon-close-kwikpass")
+      const drawerElement = document.getElementById("kwikpass-drawer-desktop")
+      // display cross icon and hide icon-kwikpass if isDropdownVisible = true else display icon-kwikpass and hide cross icon
+      if(isDropdownVisible){
+        drawerElement.style.display = "none";
+        crossIconElement.style.display="none";
+        kwikpassLoggedInElement.style.display="flex";
+      }else{
+        drawerElement.style.display = "block";
+        crossIconElement.style.display="flex";
+        kwikpassLoggedInElement.style.display="none";
+      }
+      isDropdownVisible = !isDropdownVisible;
+    }
+  }
+
+  function updateDOM(isKwikpassLogin = true) {
+    token = getValueFromCookiesOrLocalStorage(XGokwikCoreToken(window.merchantInfo.environment));
+    const isLogout = sessionStorage.getItem('isLogout');
+    const phoneNumber = getValueFromCookiesOrLocalStorage('notify_phone_number');
+    
+    if ((!token && !isLogout) || (token && !phoneNumber)) {
+       openIframe('kp_sso_token')
+    }
+    
+    const drawerElement = document.getElementById("kwikpass-drawer-desktop")
+    if(drawerElement){
+      if(token){
+      document.getElementById("kp-login-button-header-logo").style.display = "none"
+      document.getElementById("loggedin-icons").style.display = "block"
+      }else{
+      document.getElementById("kp-login-button-header-logo").style.display = "flex"
+      document.getElementById("loggedin-icons").style.display = "none"
+      drawerElement.style.display = "none"
+      }
+    }
+    
+    // shopify logout
+    const logoutLink = document.querySelectorAll('a[href*="/account/logout"]');
+    logoutLink.forEach((element) => {
+        element.addEventListener("click", (event) => {
+          event.preventDefault()
+          handleLogout()
+        })
+    });
+    
+    const logoutElement =  document.getElementById('logout-button-desktop')
+    
+    if(logoutElement) logoutElement.addEventListener('click', handleLogout);  
+  }
+
+   let isElementsWithAccountClickable = true;
+
+    const elementsWithAccount = document.querySelectorAll('a[href="/account"]');
+    elementsWithAccount.forEach((element) => {
+        element.addEventListener('click', async (e) => {
+          e.preventDefault();
+         const customerId = getCustomerId()
+         token = getValueFromCookiesOrLocalStorage(XGokwikCoreToken(window.merchantInfo.environment));
+          if(token && customerId!=null){
+            window.location.href = "/account"
+          }else{
+            handleKpAndShopifyLogin("/account")
+          }
+        });
+    });
+
+
+  /* This code is reusable to all merchants except breakpoint */
+  
+  // Add a click event listener to the document
+  document.addEventListener('click', function(event) {
+    const dropdownButton = document.getElementsByClassName('header--icon') ?. [0]  
+    // Check if the clicked element is the dropdown button or inside the dropdown menu
+      const isClickInsideDropdown = dropdownButton?.contains(event.target);    
+    // If the click is outside the dropdown, hide the dropdown
+    const kwikpassLoggedInElement = document.getElementById("icon-kwikpass");
+    const crossIconElement = document.getElementById("icon-close-kwikpass")
+    const drawerElement = document.getElementById("kwikpass-drawer-desktop") 
+    if (!isClickInsideDropdown && isDropdownVisible && token) {
+    drawerElement.style.display = "none";
+    crossIconElement.style.display = "none";
+    kwikpassLoggedInElement.style.display = "flex";
+    isDropdownVisible = ! isDropdownVisible;
+    }
+  });
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+    updateDOM();
+  });
+  
+  window.addEventListener('update-dom', function() {
+    const kwikpassLoggedInElement = document.getElementById("icon-kwikpass");
+    const crossIconElement = document.getElementById("icon-close-kwikpass")
+    const drawerElement = document.getElementById("kwikpass-drawer-desktop")
+    drawerElement.style.display = "none";
+    crossIconElement.style.display="none";
+    kwikpassLoggedInElement.style.display="flex";
+    updateDOM();
+  });
+</script>
+
+<script defer src="https://pdp.gokwik.co/kwikpass/kwikpass-core-functions-min.js"></script>
+<script defer src="https://pdp.gokwik.co/kwikpass/plugin/build/kp-merchant-v2.js"></script>
+
+
+
+

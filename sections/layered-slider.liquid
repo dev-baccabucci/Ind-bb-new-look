@@ -1,0 +1,207 @@
+<style>
+    .sneaker-carousel-wrapper {
+  background-color: #dbdbdb; /* Match your image background */
+  padding: 60px 0px;
+  overflow: hidden;
+}
+
+.section-title {
+    font-size: 5.4rem;
+    margin-bottom: 40px;
+    font-style: italic;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    text-transform: capitalize;
+}
+
+/* Swiper Logic */
+.sneaker-swiper {
+  padding-bottom: 50px !important;
+}
+
+.sneaker-carousel-wrapper .swiper-slide {
+  transition: transform 0.5s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 1; /* Fully visible as per your request */
+  scale:0.7; /* Side images are smaller */
+}
+
+.sneaker-carousel-wrapper .swiper-slide-active {
+  scale:1.1; /* Center image is big */
+}
+
+/* Info Visibility */
+.product-info {
+  text-align: center;
+  margin-top: 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sneaker-carousel-wrapper .swiper-slide-active .product-info {
+  opacity: 1; /* Only show name/price for the center item */
+}
+
+.product-name { font-weight: 700; font-size: 1.5rem; margin: 10px 0 5px; }
+.product-price { color: #555; margin-bottom: 15px; }
+
+.view-more-btn {
+    display: flex;
+    padding: 0.9rem 2.6rem;
+    background: #000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    width: max-content;
+    margin: 0 auto;
+}
+
+/* Customizing Dots */
+.sneaker-carousel-wrapper .swiper-pagination-bullet-active {
+  background: #000 !important;
+}
+.image-container img {
+    width: 100%;
+    height: auto;
+}
+/* 1. Reset Swiper Container to allow overflow if images scale up */
+.sneaker-swiper {
+  padding-bottom: 0 !important;
+  position: relative;
+  overflow: visible !important;
+}
+
+/* 2. Position the Pagination Dots */
+.sneaker-swiper .swiper-pagination {
+    bottom: 100px !important;
+    z-index: 10;
+}
+
+/* 3. Adjust Product Info to sit below the dots */
+.product-info {
+  text-align: center;
+  margin-top: 10px; /* Fine-tune spacing */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* 4. Ensure dots only show for the center context visually */
+.sneaker-carousel-wrapper .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  background: #aaa;
+  opacity: 0.5;
+}
+
+.sneaker-carousel-wrapper .swiper-pagination-bullet-active {
+  background: #000 !important;
+  opacity: 1;
+}
+.image-container {
+    margin-bottom: 50px;
+}
+
+/* Mobile Tweak for the Section Title */
+@media screen and (max-width: 768px) {
+  .section-title {
+    font-size: 2.5rem; /* Large font size was breaking mobile */
+  }
+  .sneaker-carousel-wrapper{
+    padding: 30px 20px;
+  }
+}
+    </style>
+<div class="sneaker-carousel-wrapper">
+  <h2 class="section-title container">{{ section.settings.title }}</h2>
+  
+  <div class="swiper sneaker-swiper">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        {%- assign product = all_products[block.settings.product_handle] -%}
+        <div class="swiper-slide">
+          <div class="product-card">
+            <div class="image-container">
+              {% if block.settings.image != blank %}
+                <img src="{{ block.settings.image | img_url: '800x' }}" alt="{{ product.title }}">
+              {% elsif product.featured_image != blank %}
+                <img src="{{ product.featured_image | img_url: '800x' }}" alt="{{ product.title }}">
+              {% endif %}
+            </div>
+            
+            <div class="product-info">
+              <p class="product-name">{{ product.title | default: "Select a Product" }}</p>
+              <p class="product-price">{{ product.price | money }}</p>
+              <a href="{{ product.url }}" class="view-more-btn">View More <svg class="icon icon-arrow-right" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M5 10L15 10M15 10L10.7143 6M15 10L10.7143 14" stroke="currentColor" stroke-width="1.2" stroke-linecap="square"></path>
+</svg></a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    
+    <div class="swiper-pagination"></div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const totalSlides = document.querySelectorAll('.sneaker-swiper .swiper-slide').length;
+  
+  const sneakerSwiper = new Swiper('.sneaker-swiper', {
+    loop: true,
+    centeredSlides: true,
+    grabCursor: true,
+    observer: true,
+    observeParents: true,
+    slidesPerView: 1.6,
+    spaceBetween: 0,
+    loopedSlides: totalSlides, // ✅ Tells Swiper to clone ALL slides
+    watchSlidesProgress: true,
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    breakpoints: {
+      1024: {
+        slidesPerView: 2.2,
+        spaceBetween: 30,
+      }
+    },
+    on: {
+      click: function (swiper, event) {
+        const clickedSlide = event.target.closest('.swiper-slide');
+        if (!clickedSlide) return;
+        
+        const realIndex = parseInt(clickedSlide.getAttribute('data-swiper-slide-index'));
+        
+        if (!isNaN(realIndex)) {
+          swiper.slideToLoop(realIndex);
+        }
+      }
+    }
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Sneaker Carousel",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Heading", "default": "Standout Sneakers" }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        { "type": "product", "id": "product_handle", "label": "Select Product" },
+        { "type": "image_picker", "id": "image", "label": "Custom Image (Optional)", "info": "Overrides product featured image" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Sneaker Carousel" }]
+}
+{% endschema %}

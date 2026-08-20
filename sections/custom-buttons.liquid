@@ -1,0 +1,104 @@
+<div class="new-btn-section">
+{% for block in section.blocks %}
+<div class="button-content {{ forloop.index }}" style="cursor: pointer;" onclick="window.location='{{ block.settings.button_link }}';">
+   {% if block.settings.button_text != blank %}
+  <a href="{{ block.settings.button_link }}" class="btn">
+  <div class="button-text">
+    <!-- Slide text content goes here -->
+    {{ block.settings.button_text }}
+  </div>
+</a>
+  {% endif %}
+      </div>
+    {% endfor %}
+   </div>
+<style>
+
+  @font-face {
+  font-family: 'Montserrat';
+  src: url('https://cdn.shopify.com/s/files/1/0279/5133/3450/files/Montserrat-VariableFont_wght.ttf') format('ttf');  
+  font-style: normal;
+  }
+  
+  /* button */
+.new-btn-section {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  padding: 10px 0;
+}
+  .button-text {
+     border: 1px solid #5B3B22;
+    padding: 2px 7px;
+    {% comment %} box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 14px; {% endcomment %}
+    {% comment %} border-radius: 5px; {% endcomment %}
+    font-size: 14px;
+        font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    color: #5B3B22;
+}
+  .button-content {
+    display: flex;
+}
+.button-content .btn {
+    background-color: white;
+    padding: 0px 0px !important;
+    min-width: 95px;
+    font-size: 16px;
+    color: black;
+    position: relative;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    font-family:'Inter';
+    text-shadow:none;
+    /* text-transform: uppercase; */
+}
+.coll-list:hover, .button-text:hover {
+    background: #dca23f;
+    color: #fff;
+}
+/* text mobile */
+/* @media screen and (min-width: 768px) {
+ .button-text {
+    font-size: 17px;
+}
+} */
+@media screen and (max-width: 768px) {
+ 
+}
+</style>
+
+{% schema %}
+{
+  "name": "Custom Buttons",
+  "settings": [],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Custom button",
+      "category": "Custom"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "button",
+      "name": "button",
+      "settings": [
+         {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link",
+          
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

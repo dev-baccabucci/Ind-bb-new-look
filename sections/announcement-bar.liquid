@@ -1,0 +1,73 @@
+<script src="{{ 'announcement-bar.js' | asset_url }}" defer></script>
+
+{%- if section.settings.text != blank -%}
+  <style>
+    :root {
+      --announcement-height: {{ section.settings.height_mobile }}px;
+    }
+
+    @media screen and (min-width: 765px) {
+      :root {
+        --announcement-height: {{ section.settings.height }}px;
+      }
+    }
+  </style>
+{%- endif -%}
+
+{%- if section.settings.text != blank -%}
+  <div
+    class="announcement-bar color-{{ section.settings.color_scheme }} background"
+    role="region"
+    aria-label="{{ 'sections.header.announcement' | t }}"
+  >
+    <div class="announcement-bar__message container">
+      <div class="announcement-bar__text body-small">
+        {{- section.settings.text -}}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.announcement-bar.name",
+  "class": "section-announcement",
+  "tag": "section",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "range",
+      "id": "height",
+      "min": 20,
+      "max": 100,
+      "step": 2,
+      "default": 34,
+      "label": "t:sections.announcement-bar.settings.height.label"
+    },
+    {
+      "type": "range",
+      "id": "height_mobile",
+      "min": 20,
+      "max": 100,
+      "step": 2,
+      "default": 34,
+      "label": "t:sections.announcement-bar.settings.height_mobile.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "background-4",
+      "label": "t:sections.all.color_scheme.label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text",
+      "label": "t:sections.announcement-bar.settings.text.label",
+      "default": "t:sections.announcement-bar.settings.text.default",
+      "info": "t:sections.announcement-bar.settings.text.info"
+    }
+  ]
+}
+{% endschema %}

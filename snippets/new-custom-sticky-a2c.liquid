@@ -1,0 +1,573 @@
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const productButtons = document.querySelector('.product-form__buttons');
+  if (!productButtons) return;
+
+  // Clone sticky layout
+const stickyClone = document.createElement('div');
+stickyClone.classList.add('sticky-product-form-buttons');
+
+// add wrapper for layout
+const buttonWrapper = document.createElement('div');
+buttonWrapper.classList.add('sticky-buttons-row');
+buttonWrapper.appendChild(productButtons.cloneNode(true)); // only clone once
+stickyClone.appendChild(buttonWrapper);
+
+  // ➕ Add static payment info below sticky buttons
+  const payInfo = document.createElement('div');
+  payInfo.className = 'pay-img stickyone';
+  payInfo.innerHTML = `
+    <p>SECURE PAYMENTS</p>
+    <img src="https://cdn.shopify.com/s/files/1/0279/5133/3450/files/Frame_82_762039a6-bafc-4c49-aeee-d0cafde8d43f.png?v=1758952875" width="100%" height="auto">
+  `;
+  stickyClone.appendChild(payInfo);
+
+  document.body.appendChild(stickyClone);
+
+  // Observe visibility
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        stickyClone.classList.remove('visible');
+      } else {
+        stickyClone.classList.add('visible');
+      }
+    });
+  });
+  observer.observe(productButtons);
+
+  // Create popup element
+  const variantPopup = document.createElement('div');
+  variantPopup.className = 'variant-popup';
+  variantPopup.innerHTML = `
+    <div class="variant-popup__overlay"></div>
+    <div class="variant-popup__content">
+      <div class="variant-popup__header">
+        <h3>Select Size</h3>
+        <button class="variant-popup__close">&times;</button>
+      </div>
+      <div class="variant-popup__variants"></div>
+      <div class="variant-popup__buttons">
+        <button class="button button--primary variant-popup__add-to-cart">Add to Cart</button>
+        <button class="button button--secondary variant-popup__buy-now">Buy Now</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(variantPopup);
+
+  // Elements
+  const stickyAddToCart = stickyClone.querySelector('[name="add"]');
+  const stickyBuyNow = stickyClone.querySelector('#gokwik-buy-now');
+  const originalAddToCart = productButtons.querySelector('[name="add"]');
+  const originalBuyNow = productButtons.querySelector('#gokwik-buy-now');
+  
+  // Popup elements
+  const popupOverlay = variantPopup.querySelector('.variant-popup__overlay');
+  const popupClose = variantPopup.querySelector('.variant-popup__close');
+  const popupVariants = variantPopup.querySelector('.variant-popup__variants');
+  const popupAddToCart = variantPopup.querySelector('.variant-popup__add-to-cart');
+  const popupBuyNow = variantPopup.querySelector('.variant-popup__buy-now');
+
+  // Helper: check if all variants selected (checks the real/original form only)
+  function allVariantsSelected() {
+    // Check selects
+    const selects = document.querySelectorAll('.product-form__controls select');
+    for (const s of selects) {
+      if (!s.value) return false;
+    }
+
+    // Check radio groups by unique name
+    const radioInputs = document.querySelectorAll('.product-form__controls input[type="radio"]');
+    const radioNames = [...new Set(Array.from(radioInputs).map(r => r.name).filter(Boolean))];
+    for (const name of radioNames) {
+      const checked = document.querySelector(.product-form__controls input[type="radio"][name="${name}"]:checked);
+      if (!checked) return false;
+    }
+
+    return true;
+  }
+
+  // Find size section (same as before)
+  function findSizeVariantSection() {
+    const variantSections = document.querySelectorAll('.product-form__controls');
+    for (const section of variantSections) {
+      const legend = section.querySelector('legend');
+      if (legend) {
+        const legendText = legend.textContent.toLowerCase();
+        if (legendText.includes('size') || legendText.includes('sizes')) return section;
+      }
+      const groupName = section.querySelector('.product-form__group-name');
+      if (groupName) {
+        const groupText = groupName.textContent.toLowerCase();
+        if (groupText.includes('size') || groupText.includes('sizes')) return section;
+      }
+    }
+    return variantSections[0] || null;
+  }
+
+  // Clone & cleanup size options for popup
+  function extractSizeOptions() {
+    const sizeSection = findSizeVariantSection();
+    if (!sizeSection) {
+      console.log('No size section found');
+      return null;
+    }
+    const sizeClone = sizeSection.cloneNode(true);
+
+    // Keep only label part of legend/groupname
+    const legend = sizeClone.querySelector('legend');
+    if (legend) {
+      const labelPart = legend.textContent.split(':')[0];
+      legend.textContent = labelPart + ':';
+    }
+    const groupName = sizeClone.querySelector('.product-form__group-name');
+    if (groupName) {
+      const labelPart = groupName.textContent.split(':')[0];
+      groupName.textContent = labelPart + ':';
+    }
+
+    return sizeClone;
+  }
+
+  // Make popup inputs independent and wire sync listeners
+  function preparePopupInputsAndListeners() {
+    // Radios
+    const popupRadios = popupVariants.querySelectorAll('input[type="radio"]');
+    popupRadios.forEach((radio, i) => {
+      const origName = radio.name || '';
+      const origValue = radio.value || '';
+      // ensure unique id and update label 'for' inside popup
+      const origId = radio.id || popup-radio-${i};
+      const newId = origId + '-popup-' + Math.random().toString(36).slice(2,6);
+      radio.dataset.originalName = origName;
+      radio.dataset.originalValue = origValue;
+      radio.id = newId;
+
+      // update label inside popup that referenced the original id (if any)
+      const lbl = popupVariants.querySelector(label[for="${origId}"]) || radio.nextElementSibling;
+      if (lbl && lbl.tagName === 'LABEL') lbl.setAttribute('for', newId);
+
+      // remove name to prevent browser grouping with page radios (this was the root cause)
+      radio.removeAttribute('name');
+
+      // add change listener to sync popup -> original
+      radio.addEventListener('change', function() {
+        const oName = this.dataset.originalName;
+        const oValue = this.dataset.originalValue;
+        if (oName) {
+          const originalRadio = document.querySelector(input[type="radio"][name="${oName}"][value="${oValue}"]);
+          if (originalRadio) {
+            originalRadio.checked = true;
+            originalRadio.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        }
+        // ensure clicked popup radio remains visually checked (it will — no name).
+        // visually highlight label (if your markup uses label + input structure, CSS :checked + label will work)
+      });
+    });
+
+    // Selects (if your variant uses select dropdown)
+    const popupSelects = popupVariants.querySelectorAll('select');
+    popupSelects.forEach((sel, i) => {
+      const origName = sel.name || '';
+      sel.dataset.originalName = origName;
+      const newId = (sel.id || popup-select-${i}) + '-popup-' + Math.random().toString(36).slice(2,6);
+      sel.id = newId;
+      sel.removeAttribute('name');
+      sel.addEventListener('change', function() {
+        const oName = this.dataset.originalName;
+        if (oName) {
+          const originalSelect = document.querySelector(select[name="${oName}"]);
+          if (originalSelect) {
+            originalSelect.value = this.value;
+            originalSelect.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        }
+      });
+    });
+
+    // Sync initial selection from original form -> popup UI
+    const originalChecked = document.querySelectorAll('.product-form__controls input[type="radio"]:checked');
+    originalChecked.forEach(orig => {
+      const popupMatch = popupVariants.querySelector(input[data-original-name="${orig.name}"][data-original-value="${orig.value}"]);
+      if (popupMatch) popupMatch.checked = true;
+    });
+    // selects
+    const originalSelects = document.querySelectorAll('.product-form__controls select');
+    originalSelects.forEach(os => {
+      const popupSel = popupVariants.querySelector(select[data-original-name="${os.name}"]);
+      if (popupSel) popupSel.value = os.value;
+    });
+  }
+
+  // Opens popup
+  function openVariantPopup() {
+    const sizeOptions = extractSizeOptions();
+    if (sizeOptions) {
+      popupVariants.innerHTML = '';
+      popupVariants.appendChild(sizeOptions);
+
+      // IMPORTANT: make popup radios/selects independent and add listeners
+      preparePopupInputsAndListeners();
+
+    } else {
+      popupVariants.innerHTML = '<p style="text-align: center; padding: 20px; color: #666;">Size options not available</p>';
+    }
+
+    variantPopup.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeVariantPopup() {
+    variantPopup.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  // Popup button handlers
+  popupOverlay.addEventListener('click', closeVariantPopup);
+  popupClose.addEventListener('click', closeVariantPopup);
+
+  popupAddToCart.addEventListener('click', function() {
+    if (allVariantsSelected()) {
+      originalAddToCart.click();
+      closeVariantPopup();
+    } else {
+      popupVariants.classList.add('highlight-missing');
+      setTimeout(() => popupVariants.classList.remove('highlight-missing'), 1000);
+    }
+  });
+
+  popupBuyNow.addEventListener('click', function() {
+    if (allVariantsSelected()) {
+      originalBuyNow.click();
+      closeVariantPopup();
+    } else {
+      popupVariants.classList.add('highlight-missing');
+      setTimeout(() => popupVariants.classList.remove('highlight-missing'), 1000);
+    }
+  });
+
+  // Sticky handlers
+  if (stickyAddToCart && originalAddToCart) {
+    stickyAddToCart.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (!allVariantsSelected()) openVariantPopup();
+      else originalAddToCart.click();
+    });
+  }
+
+  if (stickyBuyNow && originalBuyNow) {
+    stickyBuyNow.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (!allVariantsSelected()) openVariantPopup();
+      else originalBuyNow.click();
+    });
+  }
+
+  // Keep popup UI updated if original form changes while popup is open
+  function wireOriginalToPopupSync() {
+    // radios
+    const originalRadios = document.querySelectorAll('.product-form__controls input[type="radio"]');
+    originalRadios.forEach(r => {
+      r.addEventListener('change', function() {
+        if (!variantPopup.classList.contains('active')) return;
+        const p = popupVariants.querySelector(input[data-original-name="${this.name}"][data-original-value="${this.value}"]);
+        if (p) p.checked = true;
+      });
+    });
+    // selects
+    const originalSelects = document.querySelectorAll('.product-form__controls select');
+    originalSelects.forEach(s => {
+      s.addEventListener('change', function() {
+        if (!variantPopup.classList.contains('active')) return;
+        const p = popupVariants.querySelector(select[data-original-name="${this.name}"]);
+        if (p) p.value = this.value;
+      });
+    });
+  }
+  wireOriginalToPopupSync();
+
+  // Close popup with Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && variantPopup.classList.contains('active')) {
+      closeVariantPopup();
+    }
+  });
+});
+</script>
+
+
+<style>
+/* Sticky buttons */
+.sticky-product-form-buttons {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  z-index: 9999;
+  padding: 10px 15px;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+  display: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.sticky-product-form-buttons.visible {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+.pay-img.stickyone {
+    background: transparent;
+    justify-content: center;
+    gap: 10px;
+    padding: 0;
+    margin-top: -5px;
+    align-items: center;
+    max-width:100%;
+}
+.pay-img.stickyone p {
+    font-size: 9px;
+}
+.pay-img.stickyone img {
+    width: 40px;
+}
+.sticky-product-form-buttons:not(.visible) {
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+/* Variant Popup */
+.variant-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  display: none;
+}
+
+.variant-popup.active {
+  display: block;
+}
+
+.variant-popup__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.variant-popup__content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 12px 12px 0 0;
+  padding: 20px;
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.variant-popup__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.variant-popup__header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.variant-popup__close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.variant-popup__variants {
+  margin-bottom: 20px;
+}
+
+/* Style the variant options in popup */
+.variant-popup_variants .product-form_controls {
+  margin-bottom: 0;
+  border: none;
+  padding: 0;
+}
+
+.variant-popup_variants .product-form_group-name {
+  font-weight: 600;
+  margin-bottom: 12px;
+  display: block;
+  font-size: 16px;
+}
+
+.variant-popup_variants .product-form_controls-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.variant-popup_variants .product-form_input {
+  margin: 0;
+}
+
+.variant-popup__variants input[type="radio"] {
+  display: none;
+}
+
+.variant-popup__variants input[type="radio"] + label {
+  border: 1px solid #ddd;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #f9f9f9;
+  font-size: 14px;
+  min-width: 50px;
+  text-align: center;
+}
+
+.variant-popup__variants input[type="radio"]:checked + label {
+  border-color: #000;
+  background: #000;
+  color: #fff;
+}
+
+.variant-popup__variants input[type="radio"]:disabled + label {
+  opacity: 0.4;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.variant-popup__buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-top: 20px;
+  align-items: center;
+    justify-content: center;
+}
+
+.variant-popup__content .pay-img.stickyone {
+    margin-top: 5px;
+}
+
+.variant-popup__buttons .button {
+    width: 50%;
+    padding: 9px 15px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    font-family: 'Inter';
+}
+
+.variant-popup__add-to-cart {
+  background: #000;
+  color: #fff;
+}
+
+.variant-popup__add-to-cart:hover {
+  background: #333;
+}
+
+.variant-popup__buy-now {
+  background: #ff4444;
+  color: #fff;
+}
+
+.variant-popup__buy-now:hover {
+  background: #ff6666;
+}
+button.button.button--secondary.variant-popup__buy-now {
+    background: #5b3b22;
+    color: white;
+    border: 2px solid #5b3b22;
+}
+button.button.button--primary.variant-popup__add-to-cart {
+    background: transparent;
+    color: #5b3b22;
+    border: 2px solid #5b3b22;
+}
+
+.highlight-missing {
+  outline: 2px solid #ff4444;
+  border-radius: 8px;
+  padding: 15px;
+  animation: pulse 1s ease;
+}
+
+@keyframes pulse {
+  0% { outline-color: #ff4444; }
+  50% { outline-color: #ff8888; }
+  100% { outline-color: #ff4444; }
+}
+
+/* Hide Shopify accelerated checkout */
+.sticky-product-form-buttons .shopify-payment-button {
+  display: none !important;
+}
+
+/* Mobile-only */
+@media (min-width: 768px) {
+  .sticky-product-form-buttons {
+    display:none;
+  }
+  
+  .variant-popup__content {
+    max-width: 450px;
+    max-height: 600px;
+    border-radius: 12px;
+    bottom: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: popIn 0.3s ease;
+  }
+  
+  @keyframes popIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -40%);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+</style>

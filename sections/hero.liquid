@@ -1,0 +1,945 @@
+{{ 'section-hero.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'hero.js' | asset_url }}" defer="defer"></script>
+
+{% liquid
+  assign images_fetch_priority = 'auto'
+  assign images_loading = 'lazy'
+
+  if section.index == 1
+    assign images_fetch_priority = 'high'
+    assign images_loading = 'eager'
+  endif
+
+  assign is_header_overlay = false
+
+  if section.index == 1 or section.index == null
+    if section.settings.header_overlay == true
+      assign is_header_overlay = true
+    endif
+  endif
+
+  assign has_background_image = false
+  if section.settings.background_image != blank or section.settings.mobile_background_image != blank
+    assign has_background_image = true
+  endif
+
+  assign has_secondary_image = false
+  if section.settings.secondary_image != blank or section.settings.mobile_secondary_image != blank
+    assign has_secondary_image = true
+  endif
+%}
+
+{% if section.settings.animate %}
+  {% style %}
+    @media screen and (max-width: 989px) {
+      #hero-{{ section.id }} .hero-content {
+        {%- if section.index == 1 or section.index == null -%}
+          {%- if is_header_overlay -%}
+            min-height: calc(100vh - var(--announcement-height));
+            min-height: calc((var(--vh, 1vh) * 100) - var(--announcement-height));
+            min-height: calc(100svh - var(--announcement-height));
+          {%- else -%}
+            min-height: calc(100vh - var(--announcement-height) - var(--header-height));
+            min-height: calc((var(--vh, 1vh) * 100) - var(--announcement-height) - var(--header-height));
+            min-height: calc(100svh - var(--announcement-height) - var(--header-height));
+          {%- endif -%}
+        {%- else -%}
+          min-height: 100vh;
+          min-height: calc((var(--vh, 1vh) * 100));
+          min-height: 100svh;
+        {%- endif -%}
+      }
+    }
+
+    @media screen and (min-width: 990px) {
+      #hero-{{ section.id }} .hero-content {
+        {%- if section.index == 1 or section.index == null -%}
+          {%- if is_header_overlay -%}
+            min-height: calc(100vh - var(--announcement-height));
+            min-height: calc((var(--vh, 1vh) * 100) - var(--announcement-height));
+            min-height: calc(100svh - var(--announcement-height));
+          {%- else -%}
+            min-height: calc(100vh - var(--announcement-height) - var(--header-height));
+            min-height: calc((var(--vh, 1vh) * 100) - var(--announcement-height) - var(--header-height));
+            min-height: calc(100svh - var(--announcement-height) - var(--header-height));
+          {%- endif -%}
+        {%- else -%}
+          min-height: 100vh;
+          min-height: calc((var(--vh, 1vh) * 100));
+          min-height: 100svh;
+        {%- endif -%}
+      }
+    }
+  {% endstyle %}
+{% endif %}
+
+{% style %}
+  {% render 'section-margin' %}
+{% endstyle %}
+
+{% liquid
+  assign image_size = section.settings.aspect_ratio
+
+  case image_size
+    when 'adapt'
+      if section.settings.background_image != blank
+        assign section_size = 1 | divided_by: section.settings.background_image.aspect_ratio | times: 100 | append: '%'
+      endif
+    when '1/1'
+      assign section_size = '100%'
+    when '3/2'
+      assign section_size = '56.25%'
+    when '4/3'
+      assign section_size = '75%'
+    when '5/3'
+      assign section_size = '38.2%'
+    when '16/9'
+      assign section_size = '56.25%'
+    when '21/9'
+      assign section_size = '42.8%'
+    when 'large'
+      assign section_size = 'calc(100vh - var(--header-height) - var(--announcement-height))'
+    else
+      assign section_size = 'calc(100vh - var(--header-height) - var(--announcement-height))'
+  endcase
+%}
+
+{% liquid
+  assign image_size_mobile = section.settings.aspect_ratio_mobile
+
+  case image_size_mobile
+    when 'adapt'
+      if section.settings.mobile_background_image != blank
+        assign section_size_mobile = 1 | divided_by: section.settings.mobile_background_image.aspect_ratio | times: 100 | append: '%'
+      else
+        assign section_size_mobile = section_size
+      endif
+    when '1/1'
+      assign section_size_mobile = '100%'
+    when '3/2'
+      assign section_size_mobile = '56.25%'
+    when '4/3'
+      assign section_size_mobile = '75%'
+    when '5/3'
+      assign section_size_mobile = '38.2%'
+    when '16/9'
+      assign section_size_mobile = '56.25%'
+    when '21/9'
+      assign section_size_mobile = '42.8%'
+    when '4/5'
+      assign section_size_mobile = '125%'
+    when '3/4'
+      assign section_size_mobile = '133.33%'
+    when 'large'
+      assign section_size_mobile = 'calc(100vh - var(--header-height) - var(--announcement-height))'
+    else
+      assign section_size_mobile = section_size
+  endcase
+%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    --image-height: {{ section_size }};
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} {
+      --image-height: {{ section_size_mobile }};
+    }
+  }
+{% endstyle %}
+<div
+  class="hero hero-{{ section.id }} color-{{ section.settings.color_scheme }} background{% if section.settings.animate %} animate{% endif %}{% if section.settings.show_secondary_media %} hero-has-secondary-image{% endif %}{% if section.index == 1 or section.index == null %} hero--first-section{% endif %} {% if section.settings.animate == false and section.settings.aspect_ratio != 'adapt' %} hero-before {% endif %}"
+  style="--secondary-image-border-radius: {{ section.settings.secondary_image_border_radius }}px"
+  id="hero-{{ section.id }}"
+  {% if is_header_overlay %}
+    data-header-overlay="true"
+    data-color-scheme="{{ section.settings.color_scheme }}"
+  {% endif %}
+>
+  {%- if section.settings.show_background_media -%}
+    {%- if has_background_image and section.settings.background_video == blank -%}
+      <div class="hero-bg-image-wrapper">
+        {% liquid
+          assign widths = '360, 535, 600, 720, 940, 1066, 1200, 1400, 1600, 1800, 2000, 2200, 2400, 2600, 2800, 3000, 3200, 3400, 3600, 3800'
+          assign widths_arr = widths | split: ', '
+
+          assign one_bg_image = false
+          if section.settings.background_image != blank and section.settings.mobile_background_image == blank
+            assign one_bg_image = true
+            assign section_bg_image = section.settings.background_image
+          elsif section.settings.background_image == blank and section.settings.mobile_background_image != blank
+            assign one_bg_image = true
+            assign section_bg_image = section.settings.mobile_background_image
+          endif
+
+          assign settings_aspect_ratio = 1
+
+          if section.settings.aspect_ratio != 'adapt'
+            assign settings_aspect_ratio_numbers = section.settings.aspect_ratio | split: '/'
+            assign settings_aspect_ratio = settings_aspect_ratio_numbers[0] | append: '.0' | divided_by: settings_aspect_ratio_numbers[1]
+          endif
+
+          assign calc_ratio = 1
+
+          if section_bg_image.aspect_ratio > settings_aspect_ratio
+            assign calc_ratio = section_bg_image.aspect_ratio | divided_by: settings_aspect_ratio | round: 2
+          endif
+
+          assign calc_ratio = 1.2
+        %}
+        {%- capture sizes -%}
+          calc({{ calc_ratio }} * 100vw)
+        {%- endcapture -%}
+
+        {%- if one_bg_image -%}
+          {{
+            section_bg_image
+            | image_url: width: section_bg_image.width
+            | image_tag:
+              widths: widths,
+              sizes: sizes,
+              class: 'hero-bg-image',
+              fetchpriority: images_fetch_priority,
+              loading: images_loading
+          }}
+        {%- else -%}
+          <picture style="display: block; width: 100%; height: 100%;">
+            <source
+              srcset="{% for width in widths_arr %}{{ section.settings.mobile_background_image | image_url: width: width }} {{ width }}w{% if forloop.last == false %}, {% endif %}{% endfor %}"
+              media="(max-width: 575px)"
+              sizes="{{ sizes }}"
+            >
+            <source
+              srcset="{% for width in widths_arr %}{{ section.settings.background_image | image_url: width: width }} {{ width }}w{% if forloop.last == false %}, {% endif %}{% endfor %}"
+              media="(min-width: 576px)"
+              sizes="{{ sizes }}"
+            >
+            <img
+              src="{{ section.settings.background_image | image_url: width: section.settings.background_image.width }}"
+              alt="{{ section.settings.background_image.alt }}"
+              width="{{ section.settings.background_image.width }}"
+              height="{{ section.settings.background_image.height }}"
+              sizes="{{ sizes }}"
+              class="hero-bg-image"
+              loading="{{ images_loading }}"
+              fetchpriority="{{ images_fetch_priority }}"
+              style="--focal_point_desktop: {{ section.settings.background_image.presentation.focal_point }}; --focal_point_mobile: {{ section.settings.mobile_background_image.presentation.focal_point }};"
+            >
+          </picture>
+        {%- endif -%}
+        {%- if section.settings.overlay_opacity > 0 -%}
+          {%- if section.settings.overlay_as_gradient -%}
+            {%- capture overlay_styles -%}
+              background: linear-gradient(
+                to bottom,
+                rgba(var(--color-overlay), {{ section.settings.overlay_opacity | divided_by: 100.0 | times: 0.3 }}),
+                rgba(var(--color-overlay), {{ section.settings.overlay_opacity | divided_by: 100.0 }})
+              );
+            {%- endcapture -%}
+          {%- else -%}
+            {%- capture overlay_styles -%}background: rgb(var(--color-overlay)); opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};{%- endcapture -%}
+          {%- endif -%}
+          <div
+            class="hero-bg-image-overlay"
+            style="{{ overlay_styles }}"
+          ></div>
+        {%- endif -%}
+      </div>
+    {%- else -%}
+      <div class="hero-bg-image-wrapper">
+        {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg placeholder-svg--filled hero-bg-image' }}
+        {%- if section.settings.overlay_opacity > 0 -%}
+          {%- if section.settings.overlay_as_gradient -%}
+            {%- capture overlay_styles -%}
+              background: linear-gradient(
+                to bottom,
+                rgba(var(--color-overlay), {{ section.settings.overlay_opacity | divided_by: 100.0 | times: 0.3 }}),
+                rgba(var(--color-overlay), {{ section.settings.overlay_opacity | divided_by: 100.0 }})
+              );
+            {%- endcapture -%}
+          {%- else -%}
+            {%- capture overlay_styles -%}background: rgb(var(--color-overlay)); opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};{%- endcapture -%}
+          {%- endif -%}
+          <div
+            class="hero-bg-image-overlay"
+            style="{{ overlay_styles }}"
+          ></div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.background_video != blank -%}
+      <div class="hero-bg-image-wrapper">
+        {{
+          section.settings.background_video
+          | video_tag:
+            image_size: '2160x',
+            autoplay: true,
+            loop: true,
+            controls: false,
+            muted: true,
+            class: 'hero-bg-image hero-bg-image--video'
+        }}
+        {%- if section.settings.overlay_opacity > 0 -%}
+          {%- if section.settings.overlay_as_gradient -%}
+            {%- capture overlay_styles -%}
+              background: linear-gradient(
+                to bottom,
+                rgba(var(--color-overlay), {{ section.settings.overlay_opacity | divided_by: 100.0 | times: 0.3 }}),
+                rgba(var(--color-overlay), {{ section.settings.overlay_opacity | divided_by: 100.0 }})
+              );
+            {%- endcapture -%}
+          {%- else -%}
+            {%- capture overlay_styles -%}
+              background: rgba(var(--color-overlay));
+              opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+            {%- endcapture -%}
+          {%- endif -%}
+          <div
+            class="hero-bg-image-overlay"
+            style="{{ overlay_styles }}"
+          ></div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+
+  <div class="hero-main">
+    {% if section.settings.section_heading != blank
+      or section.settings.description != blank
+      or section.settings.show_button
+    %}
+      <div class="hero-content-wrapper">
+        <div class="container">
+          <div class="hero-content">
+            {%- if section.settings.section_heading != blank -%}
+              {% assign featured_heading_tag = section.settings.featured_heading_tag %}
+
+              <{{ featured_heading_tag }} class="hero-heading {{ section.settings.section_heading_size }}">
+                {{- section.settings.section_heading -}}
+              </{{ featured_heading_tag }}>
+            {%- endif -%}
+            {% if section.settings.animate != true %}
+              {%- if section.settings.section_heading_2 != blank or section.settings.show_button -%}
+                <div class="hero-content-bottom">
+                  {% assign secondary_heading_tag = section.settings.secondary_heading_tag %}
+
+                  <{{ secondary_heading_tag }} class="hero-secondary-heading {{ section.settings.section_heading_size_2 }}">
+                    {{- section.settings.section_heading_2 -}}
+                  </{{ secondary_heading_tag }}>
+                  {%- if section.settings.show_button -%}
+                    {% render 'button', layout: section, class: 'hero-button' %}
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+  {%- if section.settings.show_secondary_media -%}
+    {%- if has_secondary_image or section.settings.secondary_video != blank -%}
+      <div class="hero-sticky-wrapper">
+        <div class="hero-sticky">
+          <div
+            class="hero-sticky-image-container{% if section.settings.secondary_image_overlay_opacity > 0 %} hero-sticky-image-container--with-overlay{% endif %}"
+            style="{% if section.settings.secondary_image_overlay_opacity > 0 %}--secondary-overlay-opacity: {{ section.settings.secondary_image_overlay_opacity}}%{% endif %}"
+          >
+            {%- if has_secondary_image and section.settings.secondary_video == blank -%}
+              {% liquid
+                assign widths = '360, 535, 600, 720, 940, 1066, 1200, 1400, 1600, 1800, 2000, 2200, 2400, 2600, 2800, 3000, 3200, 3400, 3600, 3800'
+                assign widths_arr = widths | split: ', '
+
+                assign one_sec_image = false
+                if section.settings.secondary_image != blank and section.settings.mobile_secondary_image == blank
+                  assign one_sec_image = true
+                  assign secondary_image = section.settings.secondary_image
+                elsif section.settings.secondary_image == blank and section.settings.mobile_secondary_image != blank
+                  assign one_sec_image = true
+                  assign secondary_image = section.settings.mobile_secondary_image
+                endif
+              %}
+              {%- capture sizes -%}
+              (min-width: 576px) 100vw, calc(1.2 * 100vw)
+            {%- endcapture -%}
+
+              {%- if one_sec_image -%}
+                {{
+                  secondary_image
+                  | image_url: width: secondary_image.width
+                  | image_tag:
+                    widths: widths,
+                    sizes: sizes,
+                    class: 'hero-sticky-image',
+                    fetchpriority: images_fetch_priority,
+                    loading: images_loading
+                }}
+              {%- else -%}
+                <picture style="display: block; width: 100%; height: 100%;">
+                  <source
+                    srcset="{% for width in widths_arr %}{{ section.settings.mobile_secondary_image | image_url: width: width }} {{ width }}w{% if forloop.last == false %}, {% endif %}{% endfor %}"
+                    media="(max-width: 575px)"
+                    sizes="{{ sizes }}"
+                  >
+                  <source
+                    srcset="{% for width in widths_arr %}{{ section.settings.secondary_image | image_url: width: width }} {{ width }}w{% if forloop.last == false %}, {% endif %}{% endfor %}"
+                    media="(min-width: 576px)"
+                    sizes="{{ sizes }}"
+                  >
+                  <img
+                    src="{{ section.settings.secondary_image | image_url: width: section.settings.secondary_image.width }}"
+                    alt="{{ section.settings.secondary_image.alt }}"
+                    width="{{ section.settings.secondary_image.width }}"
+                    height="{{ section.settings.secondary_image.height }}"
+                    sizes="{{ sizes }}"
+                    class="hero-sticky-image"
+                    loading="{{ images_loading }}"
+                    fetchpriority="{{ images_fetch_priority }}"
+                    style="--focal_point_desktop: {{ section.settings.secondary_image.presentation.focal_point }}; --focal_point_mobile: {{ section.settings.secondary_image.presentation.focal_point }};"
+                  >
+                </picture>
+              {%- endif -%}
+            {%- endif -%}
+            {%- if section.settings.secondary_video -%}
+              {{
+                section.settings.secondary_video
+                | video_tag:
+                  image_size: '2160x',
+                  autoplay: true,
+                  loop: true,
+                  controls: false,
+                  muted: true,
+                  class: 'hero-sticky-image hero-sticky-image--video'
+              }}
+            {%- endif -%}
+            {%- if section.settings.section_heading_2 != blank or section.settings.show_button -%}
+              <div class="hero-secondary-heading-container">
+                <div class="container">
+                  <div class="hero-secondary-heading-wrapper">
+                    {%- if section.settings.section_heading_2 != blank -%}
+                      {% assign secondary_heading_tag = section.settings.secondary_heading_tag %}
+
+                      <{{ secondary_heading_tag }} class="hero-secondary-heading {{ section.settings.section_heading_size_2 }}">
+                        {{- section.settings.section_heading_2 -}}
+                      </{{ secondary_heading_tag }}>
+                    {%- endif -%}
+                    {%- if section.settings.show_button -%}
+                      {% render 'button', layout: section, class: 'hero-button' %}
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- else -%}
+      <div class="hero-sticky-wrapper">
+        <div class="hero-sticky">
+          <div
+            class="hero-sticky-image-container{% if section.settings.secondary_image_overlay_opacity > 0 %} hero-sticky-image-container--with-overlay{% endif %}"
+            style="{% if section.settings.secondary_image_overlay_opacity > 0 %}--secondary-overlay-opacity: {{ section.settings.secondary_image_overlay_opacity}}%{% endif %}"
+          >
+            {{
+              'hero-apparel-2'
+              | placeholder_svg_tag: 'placeholder-svg placeholder-svg--filled placeholder-svg--no-transition hero-sticky-image'
+            }}
+            {%- if section.settings.section_heading_2 != blank or section.settings.show_button -%}
+              <div class="hero-secondary-heading-container">
+                <div class="container">
+                  <div class="hero-secondary-heading-wrapper">
+                    {%- if section.settings.section_heading_2 != blank -%}
+                      {% assign secondary_heading_tag = section.settings.secondary_heading_tag %}
+
+                      <{{ secondary_heading_tag }} class="hero-secondary-heading {{ section.settings.section_heading_size_2 }}">
+                        {{- section.settings.section_heading_2 -}}
+                      </{{ secondary_heading_tag }}>
+                    {%- endif -%}
+                    {%- if section.settings.show_button -%}
+                      {% render 'button', layout: section, class: 'hero-button' %}
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.hero.name",
+  "tag": "section",
+  "class": "hero-section spaced-section",
+  "enabled_on": {
+    "templates": ["*"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "header_overlay",
+      "default": false,
+      "label": "t:sections.all.header_overlay.label",
+      "info": "t:sections.hero.settings.header_overlay.info"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "background-3",
+      "label": "t:sections.all.color_scheme.label"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "options": [
+        {
+          "value": "1/1",
+          "label": "t:sections.all.aspect_ratio.options__1.label"
+        },
+        {
+          "value": "3/2",
+          "label": "t:sections.all.aspect_ratio.options__2.label"
+        },
+        {
+          "value": "4/3",
+          "label": "t:sections.all.aspect_ratio.options__3.label"
+        },
+        {
+          "value": "16/9",
+          "label": "t:sections.all.aspect_ratio.options__4.label"
+        },
+        {
+          "value": "21/9",
+          "label": "t:sections.all.aspect_ratio.options__5.label"
+        },
+        {
+          "value": "4/5",
+          "label": "t:sections.all.aspect_ratio.options__7.label"
+        },
+        {
+          "value": "3/4",
+          "label": "t:sections.all.aspect_ratio.options__8.label"
+        },
+        {
+          "value": "adapt",
+          "label": "t:sections.all.aspect_ratio.options__6.label"
+        }
+      ],
+      "default": "16/9",
+      "label": "t:sections.all.aspect_ratio.label",
+      "info": "t:sections.hero.settings.aspect_ratio.info"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio_mobile",
+      "options": [
+        {
+          "value": "1/1",
+          "label": "t:sections.all.aspect_ratio.options__1.label"
+        },
+        {
+          "value": "3/2",
+          "label": "t:sections.all.aspect_ratio.options__2.label"
+        },
+        {
+          "value": "4/3",
+          "label": "t:sections.all.aspect_ratio.options__3.label"
+        },
+        {
+          "value": "16/9",
+          "label": "t:sections.all.aspect_ratio.options__4.label"
+        },
+        {
+          "value": "21/9",
+          "label": "t:sections.all.aspect_ratio.options__5.label"
+        },
+        {
+          "value": "4/5",
+          "label": "t:sections.all.aspect_ratio.options__7.label"
+        },
+        {
+          "value": "3/4",
+          "label": "t:sections.all.aspect_ratio.options__8.label"
+        },
+        {
+          "value": "adapt",
+          "label": "t:sections.all.aspect_ratio.options__6.label"
+        }
+      ],
+      "default": "3/4",
+      "label": "t:sections.all.aspect_ratio.mobile",
+      "info": "t:sections.hero.settings.aspect_ratio.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "animate",
+      "label": "t:sections.all.animate.label",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.hero.settings.header__media.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_background_media",
+      "default": true,
+      "label": "t:sections.hero.settings.show_background_media.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "t:sections.hero.settings.background_image.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_background_image",
+      "label": "t:sections.hero.settings.mobile_background_image.label"
+    },
+    {
+      "type": "video",
+      "id": "background_video",
+      "label": "t:sections.hero.settings.background_video.label",
+      "info": "t:sections.hero.settings.background_video.info"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "default": 40,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "t:sections.all.overlay_opacity.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "overlay_as_gradient",
+      "label": "t:sections.all.overlay_as_gradient.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_media",
+      "default": true,
+      "label": "t:sections.hero.settings.show_secondary_media.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "secondary_image",
+      "label": "t:sections.hero.settings.secondary_image.label",
+      "info": "t:sections.hero.settings.secondary_image.info"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_secondary_image",
+      "label": "t:sections.hero.settings.mobile_secondary_image.label"
+    },
+    {
+      "type": "video",
+      "id": "secondary_video",
+      "label": "t:sections.hero.settings.secondary_video.label",
+      "info": "t:sections.hero.settings.secondary_video.info"
+    },
+    {
+      "type": "range",
+      "id": "secondary_image_border_radius",
+      "step": 1,
+      "default": 16,
+      "min": 0,
+      "max": 100,
+      "unit": "px",
+      "label": "t:sections.hero.settings.secondary_image_border_radius.label"
+    },
+    {
+      "type": "range",
+      "id": "secondary_image_overlay_opacity",
+      "default": 20,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "t:sections.hero.settings.secondary_image_overlay_opacity.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.hero.settings.header__heading.content"
+    },
+    {
+      "type": "textarea",
+      "id": "section_heading",
+      "label": "t:sections.all.heading.label",
+      "default": "t:sections.hero.settings.section_heading.default"
+    },
+    {
+      "type": "select",
+      "id": "section_heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__3.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__8.label"
+        }
+      ],
+      "default": "h0",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "featured_heading_tag",
+      "label": "t:sections.all.heading_tag.label",
+      "default": "h2",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        },
+        {
+          "value": "div",
+          "label": "div"
+        },
+        {
+          "value": "p",
+          "label": "p"
+        },
+        {
+          "value": "span",
+          "label": "span"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "t:sections.hero.settings.header__heading__2.content"
+    },
+    {
+      "type": "textarea",
+      "id": "section_heading_2",
+      "label": "t:sections.all.heading.label",
+      "default": "t:sections.hero.settings.section_heading_2.default"
+    },
+    {
+      "type": "select",
+      "id": "section_heading_size_2",
+      "options": [
+        {
+          "value": "h4",
+          "label": "t:sections.all.heading_size.options__4.label"
+        },
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h3",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "secondary_heading_tag",
+      "label": "t:sections.all.heading_tag.label",
+      "default": "p",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        },
+        {
+          "value": "div",
+          "label": "div"
+        },
+        {
+          "value": "p",
+          "label": "p"
+        },
+        {
+          "value": "span",
+          "label": "span"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.button.header_button.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "default": true,
+      "label": "t:sections.all.button.button_show.label"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:sections.all.button.button_label.label",
+      "default": "t:sections.hero.settings.button_label.default"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "t:sections.all.button.button_style.options__1.label"
+        },
+        {
+          "value": "secondary",
+          "label": "t:sections.all.button.button_style.options__2.label"
+        },
+        {
+          "value": "tertiary",
+          "label": "t:sections.all.button.button_style.options__3.label"
+        }
+      ],
+      "default": "primary",
+      "label": "t:sections.all.button.button_style.label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:sections.all.button.button_link.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_arrow",
+      "default": true,
+      "label": "t:sections.all.button.button_arrow.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.section-margin.header.content"
+    },
+    {
+      "type": "select",
+      "id": "margin_top",
+      "options": [
+        {
+          "value": "no-indent",
+          "label": "t:sections.all.section-margin.options__1.label"
+        },
+        {
+          "value": "xs",
+          "label": "t:sections.all.section-margin.options__2.label"
+        },
+        {
+          "value": "s",
+          "label": "t:sections.all.section-margin.options__3.label"
+        },
+        {
+          "value": "m",
+          "label": "t:sections.all.section-margin.options__4.label"
+        },
+        {
+          "value": "l",
+          "label": "t:sections.all.section-margin.options__5.label"
+        },
+        {
+          "value": "xl",
+          "label": "t:sections.all.section-margin.options__6.label"
+        }
+      ],
+      "default": "no-indent",
+      "label": "t:sections.all.section-margin.margin_top.label"
+    },
+    {
+      "type": "select",
+      "id": "margin_bottom",
+      "options": [
+        {
+          "value": "no-indent",
+          "label": "t:sections.all.section-margin.options__1.label"
+        },
+        {
+          "value": "xs",
+          "label": "t:sections.all.section-margin.options__2.label"
+        },
+        {
+          "value": "s",
+          "label": "t:sections.all.section-margin.options__3.label"
+        },
+        {
+          "value": "m",
+          "label": "t:sections.all.section-margin.options__4.label"
+        },
+        {
+          "value": "l",
+          "label": "t:sections.all.section-margin.options__5.label"
+        },
+        {
+          "value": "xl",
+          "label": "t:sections.all.section-margin.options__6.label"
+        }
+      ],
+      "default": "no-indent",
+      "label": "t:sections.all.section-margin.margin_bottom.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.hero.name",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}

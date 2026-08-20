@@ -1,0 +1,218 @@
+{% comment %}
+  Product Color Options - PDP Snippet
+  Metafields used:
+    - custom.product_color_options  → Product List  (linked color products)
+    - custom.product_colors     → Single line text (color name for THIS product)
+  
+  Usage: {% render 'product-color-options', product: product %}
+{% endcomment %}
+
+{% assign color_products  = product.metafields.custom.product_color_options.value %}
+{% assign current_color   = product.metafields.custom.product_colors.value | first %}
+{% if current_color == blank %}
+  {% assign current_color = product.title %}
+{% endif %}
+
+ {% if color_products != blank %}
+  <div class="pco-wrap" data-pco>
+
+    <p class="pco-label">
+      Color: <strong class="pco-color-name" data-pco-name>{{ current_color | upcase  }}</strong>
+    </p>
+
+    <div class="pco-swatches">
+
+      {% comment %} ── Current product (always first, always active) ── {% endcomment %}
+      <a
+        href="{{ product.url }}"
+        class="pco-swatch pco-swatch--active"
+        aria-label="{{ current_color }} (selected)"
+        aria-current="true"
+        data-pco-name="{{ current_color | upcase }}"
+      >
+        {% if product.featured_image %}
+          {{
+            product.featured_image
+            | image_url: width: 160
+            | image_tag:
+              alt: current_color,
+              class: 'pco-swatch__img',
+              loading: 'lazy',
+              width: 80,
+              height: 80
+          }}
+        {% else %}
+          <span class="pco-swatch__fallback">{{ current_color | slice: 0 }}</span>
+        {% endif %}
+      </a>
+
+      {% comment %} ── Metafield color products ── {% endcomment %}
+      {% if color_products != blank %}
+        {% for cp in color_products %}
+          {% unless cp.id == product.id %}
+            {% assign cp_color = cp.metafields.custom.product_colors.value | first %}
+            {% if cp_color == blank %}{% assign cp_color = cp.title %}{% endif %}
+
+            <a
+              href="{{ cp.url }}"
+              class="pco-swatch{% unless cp.available %} pco-swatch--soldout{% endunless %}"
+              aria-label="{{ cp_color }}{% unless cp.available %} - Sold out{% endunless %}"
+              data-pco-name="{{ cp_color | upcase }}"
+            >
+              {% if cp.featured_image %}
+                {{
+                  cp.featured_image
+                  | image_url: width: 160
+                  | image_tag:
+                    alt: cp_color,
+                    class: 'pco-swatch__img',
+                    loading: 'lazy',
+                    width: 80,
+                    height: 80
+                }}
+              {% else %}
+                <span class="pco-swatch__fallback">{{ cp_color | slice: 0 }}</span>
+              {% endif %}
+
+              {% unless cp.available %}
+                <span class="pco-swatch__soldout-line" aria-hidden="true"></span>
+              {% endunless %}
+            </a>
+          {% endunless %}
+        {% endfor %}
+      {% endif %}
+
+    </div><!-- /.pco-swatches -->
+  </div><!-- /.pco-wrap -->
+{% endif %}
+{% if color_products != blank %}
+    <style>
+  .product-form__controls--colors {
+    display: none;
+}
+</style>
+{% endif %}
+{% comment %} ===================== STYLES ===================== {% endcomment %}
+<style>
+  .pco-wrap {
+    margin: 0px 0px 8px 0px;
+    font-family: inherit;
+  }
+
+  /* -- Label -- */
+  .pco-label {
+    color: #000;
+    margin-bottom: .7rem;
+    font-weight: 700;
+    font-size: 1.4rem;
+    line-height: 100%;
+  }
+
+
+
+  /* -- Swatch row -- */
+  .pco-swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  /* -- Individual swatch -- */
+  .pco-swatch {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 75px;
+    height: 70px;
+    border-radius: 10px;
+    border: 1px solid #000000ff;
+    overflow: hidden;
+    text-decoration: none;
+    background: #ffffffff;
+    cursor: pointer;
+    transition: border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+    flex-shrink: 0;
+  }
+
+  .pco-swatch:hover {
+    border-color: #999;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Active / selected state - matches screenshot */
+  .pco-swatch--active {
+    border-color: #111;
+    border-width: 2px;
+    box-shadow: 0px 4px 0px 0px;
+  }
+
+  .pco-swatch--active:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Image inside swatch */
+  .pco-swatch__img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    box-sizing: border-box;
+  }
+
+  /* Fallback letter */
+  .pco-swatch__fallback {
+    font-size: 22px;
+    font-weight: 700;
+    color: #777;
+    text-transform: uppercase;
+  }
+
+  /* Sold-out diagonal line */
+  .pco-swatch--soldout {
+    opacity: 0.55;
+  }
+
+  .pco-swatch__soldout-line {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      transparent 44%,
+      rgba(180, 0, 0, 0.55) 44%,
+      rgba(180, 0, 0, 0.55) 56%,
+      transparent 56%
+    );
+    pointer-events: none;
+    border-radius: 8px;
+  }
+
+
+</style>
+
+
+{% comment %} ===================== SCRIPT ===================== {% endcomment %}
+<script>
+  (function () {
+    var wrap = document.querySelector('[data-pco]');
+    if (!wrap) return;
+
+    var nameEl      = wrap.querySelector('[data-pco-name]');
+    var defaultName = nameEl ? nameEl.textContent : '';
+    var swatches    = wrap.querySelectorAll('.pco-swatch');
+
+    swatches.forEach(function (sw) {
+      sw.addEventListener('mouseenter', function () {
+        if (nameEl) nameEl.textContent = sw.dataset.pcoName;
+      });
+      sw.addEventListener('mouseleave', function () {
+        if (nameEl) nameEl.textContent = defaultName;
+      });
+    });
+  })();
+</script>
+

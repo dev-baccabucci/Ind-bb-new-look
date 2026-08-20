@@ -1,0 +1,938 @@
+{{ 'section-multicolumn.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'multicolumn.js' | asset_url }}" defer="defer"></script>
+
+{% style %}
+  {% render 'section-padding' %}
+  {% render 'section-margin' %}
+{% endstyle %}
+
+{%- style -%}
+  .section-{{ section.id }}-padding .multicolumn-grid__wrapper {
+    --row_gap: {{ section.settings.row_gap }}rem;
+    --column_gap: {{ section.settings.column_gap }}rem;
+    --column_padding: {{ section.settings.column_padding }}rem;
+  }
+{%- endstyle -%}
+
+{%- for block in section.blocks -%}
+  {% liquid
+    if section.settings.column_aspect_ratio != 'adapt'
+      assign aspect_ratio = section.settings.column_aspect_ratio | split: '/'
+      assign temp = aspect_ratio[0] | append: '.0'
+      assign card_padding_bottom = aspect_ratio[1] | divided_by: temp | times: 100 | round: 2
+    elsif section.settings.column_aspect_ratio == 'adapt'
+      assign card_padding_bottom = 0
+    endif
+  %}
+  {%- style -%}
+    .section-{{ section.id }}-padding .multicolumn-card::before {
+      content: '';
+      display: block;
+      width: 0;
+      padding-bottom: {{ card_padding_bottom }}%;
+    }
+
+    {%- if section.settings.column_width == "narrow" and section.settings.swipe_on_desktop == false -%}
+      @media screen and (min-width: 1200px) {
+        .section-{{ section.id }}-padding .multicolumn-card {
+          min-width: unset !important;
+          max-width: 26.4rem;
+        }
+      }
+    {%- endif -%}
+  {%- endstyle -%}
+{%- endfor -%}
+
+<div
+  class="multicolumn color-{{ section.settings.color_scheme }} background section-{{ section.id }}-padding{% if section.settings.mobile_slider_layout_type == 'visible_overflow' %} multicolumn--visible-overflow{% endif %}"
+  data-enable-mobile-slider="{{ section.settings.swipe_on_mobile }}"
+  data-enable-desktop-slider="{{ section.settings.swipe_on_desktop }}"
+  data-space-between="{{ section.settings.column_gap }}"
+>
+  <div class="container">
+    {% render 'heading-group',
+      section: section,
+      class: 'multicolumn__header',
+      text_align: section.settings.text_align
+    %}
+
+    <div
+      class="content multicolumn-grid{% if section.blocks.size >= 1 %}{% if section.settings.swipe_on_mobile or section.settings.swipe_on_desktop %} swiper swiper--multicolumn{% endif %}{% if section.settings.mobile_slider_layout_type == 'visible_overflow' and section.settings.swipe_on_mobile %} swiper--multicolumn--visible-overflow{% endif %}{% endif %}"
+    >
+      <div class="multicolumn-grid__wrapper multicolumn-grid__wrapper--{{ section.settings.multicolumn_to_show }}{% if section.blocks.size >= 1 %} swiper-wrapper{% endif %}">
+        {% for block in section.blocks %}
+          <div
+            class="multicolumn-card color-{{ section.settings.column_color_scheme }}{% if section.settings.column_padding != '0' %} multicolumn-card--with-paddings{% endif %}{% if section.settings.enable_column_border %} multicolumn-card--border multicolumn-card--with-paddings{% endif %}{% if section.settings.card_bg_color == 'secondary' %} multicolumn-card--bg-secondary{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="multicolumn-card__inner multicolumn-card__inner--hor-align-{{ section.settings.content_horizontal_alignment }} multicolumn-card__inner--ver-align-{{ section.settings.content_vertical_alignment }}">
+              {%- if block.settings.heading != blank or block.settings.image != blank -%}
+                <div class="multicolumn-card__inner-top">
+                  {%- if block.settings.heading != blank -%}
+                    {%- if section.settings.heading != blank -%}
+                      {% assign card_heading_tag = section.settings.card_heading_tag %}
+                      <{{ card_heading_tag }} class="multicolumn-card__heading {{ section.settings.card_heading_size }} multicolumn-card__heading--font-{{ section.settings.card_heading_font }}">
+                        <span>{{- block.settings.heading | escape -}}</span>
+                      </{{ card_heading_tag }}>
+                    {%- else -%}
+                      {% assign heading_tag = section.settings.heading_tag %}
+                      <{{ heading_tag }} class="multicolumn-card__heading {{ section.settings.card_heading_size }} multicolumn-card__heading--font-{{ section.settings.card_heading_font }}">
+                        <span>{{- block.settings.heading | escape -}}</span>
+                      </{{ heading_tag }}>
+                    {%- endif -%}
+                  {%- endif -%}
+
+                  {%- if block.settings.image != blank -%}
+                    {% liquid
+                      if aspect_ratio == 'landscape'
+                        assign settings_aspect_ratio = 1.77
+                      elsif aspect_ratio == 'portrait'
+                        assign settings_aspect_ratio = 0.8
+                      else
+                        assign settings_aspect_ratio = 1
+                      endif
+
+                      assign calc_ratio = 1
+                      if block.settings.object_fit == 'cover' and block.settings.image.aspect_ratio > settings_aspect_ratio
+                        assign calc_ratio = block.settings.image.aspect_ratio | divided_by: settings_aspect_ratio
+                      endif
+
+                      assign image_loading = 'lazy'
+
+                      if section.index == 1
+                        assign image_loading = 'eager'
+                      endif
+                    %}
+                    {%- capture image_sizes -%}
+                      {%- if block.settings.image_width == 'icon' -%}
+                        calc(40px * {{ calc_ratio }})
+                      {%- elsif block.settings.image_width == 'small' -%}
+                        calc(80px * {{ calc_ratio }})
+                      {%- elsif block.settings.image_width == 'medium' -%}
+                        calc(130px * {{ calc_ratio }})
+                      {%- elsif block.settings.image_width == 'full-width' -%}
+                        {%- if section.settings.multicolumn_to_show == 1 -%}
+                          (min-width: 1440px) 1280px, (min-width: 1200px) 89vw, (min-width: 990px) 97vw, (min-width: 750px) 96vw, (min-width: 576px) 95vw, 91vw
+                        {%- elsif section.settings.multicolumn_to_show == 2 -%}
+                          (min-width: 1440px) calc({{ calc_ratio }} * 624px), (min-width: 1200px) calc({{ calc_ratio }} * 44vw), (min-width: 990px) calc({{ calc_ratio }} * 47vw), (min-width: 750px) calc({{ calc_ratio }} * 46vw), (min-width: 576px) 45vw, 91vw
+                        {%- elsif section.settings.multicolumn_to_show == 3 -%}
+                          (min-width: 1440px) calc({{ calc_ratio }} * 406px), (min-width: 1200px) calc({{ calc_ratio }} * 28vw), (min-width: 990px) calc({{ calc_ratio }} * 30vw), (min-width: 750px) calc({{ calc_ratio }} * 46vw), (min-width: 576px) calc({{ calc_ratio }} * 45vw), 91vw
+                        {%- elsif section.settings.multicolumn_to_show == 4 -%}
+                          (min-width: 1440px) calc({{ calc_ratio }} * 296px), (min-width: 1200px) calc({{ calc_ratio }} * 21vw), (min-width: 990px) calc({{ calc_ratio }} * 30vw), (min-width: 750px) calc({{ calc_ratio }} * 46vw), (min-width: 576px) calc({{ calc_ratio }} * 45vw), 91vw'
+                        {%- endif -%}
+                      {%- endif -%}
+                    {%- endcapture -%}
+
+                    <div class="multicolumn-card__image-wrapper multicolumn-card__image-wrapper--{{ block.settings.image_width }} multicolumn-card__image-wrapper--{{ block.settings.image_ratio }}{% if block.settings.image_2 != blank %} multicolumn-card__image-wrapper--with-dm-image{% endif %}{% if block.settings.enable_img_border_radius %} multicolumn-card__image-wrapper--with-border-radius{% endif %}">
+                      {%- capture style -%}
+                        object-fit: {{ block.settings.object_fit }};
+                      {%- endcapture -%}
+                      {% comment %} ----- MAIN IMAGE ----- {% endcomment %}
+                      {{
+                        block.settings.image
+                        | image_url: width: block.settings.image.width
+                        | image_tag:
+                          sizes: image_sizes,
+                          widths: '40, 80, 120, 240, 300, 360, 535, 600, 720, 940, 1200, 1400, 1600, 1800, 2000, 2200, 2400, 2600, 2800, 3000, 3200, 3400, 3600, 3800',
+                          style: style,
+                          class: 'multicolumn-card__image',
+                          loading: image_loading
+                      }}
+                      {% comment %} ----- DARK MODE IMAGE ----- {% endcomment %}
+                      {%- if block.settings.image_2 != blank -%}
+                        {{
+                          block.settings.image_2
+                          | image_url: width: block.settings.image.width
+                          | image_tag:
+                            sizes: image_sizes,
+                            widths: '40, 80, 120, 240, 300, 360, 535, 600, 720, 940, 1200, 1400, 1600, 1800, 2000, 2200, 2400, 2600, 2800, 3000, 3200, 3400, 3600, 3800',
+                            height: block.settings.image.height,
+                            width: block.settings.image.width,
+                            style: style,
+                            class: 'multicolumn-card__image multicolumn-card__image--dark',
+                            loading: image_loading
+                        }}
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings.add_separator -%}
+                <div class="multicolumn-card__separator"></div>
+              {%- endif -%}
+
+              {%- if block.settings.text != blank or block.settings.show_button -%}
+                <div class="multicolumn-card__inner-bottom">
+                  {%- if block.settings.text != blank -%}
+                    <p class="multicolumn-card__text body-{{ section.settings.card_text_size }} multicolumn-card__text--{{ section.settings.card_text_color }}">
+                      {{- block.settings.text -}}
+                    </p>
+                  {%- endif -%}
+
+                  {%- if block.settings.show_button and block.settings.button_label != blank -%}
+                    {% render 'button', layout: block, class: 'multicolumn-card__button' %}
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      {%- if section.settings.swipe_on_mobile
+        and section.blocks.size >= 1
+        and section.settings.mobile_slider_layout_type == 'with_arrows'
+      -%}
+        <div class="multicolumn-buttons no-js-hidden">
+          <button class="multicolumn-button multicolumn-button--prev">
+            {% render 'icon-btn-arrow' %}
+          </button>
+          <button class="multicolumn-button multicolumn-button--next">
+            {% render 'icon-btn-arrow' %}
+          </button>
+        </div>
+      {%- endif -%}
+      {%- if section.settings.swipe_on_desktop and section.blocks.size >= 1 -%}
+        <div class="multicolumn-grid__scrollbar swiper-scrollbar no-js-hidden"></div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.multicolumn.name",
+  "class": "spaced-section multicolumn-section",
+  "tag": "section",
+  "enabled_on": {
+    "templates": ["*"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.multicolumn.settings.header__main.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "background-1",
+      "label": "t:sections.all.color_scheme.label"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "t:sections.all.subheading.label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.all.heading.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__2.label"
+        }
+      ],
+      "default": "h2",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "t:sections.all.heading_tag.label",
+      "default": "h2",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        },
+        {
+          "value": "div",
+          "label": "div"
+        },
+        {
+          "value": "p",
+          "label": "p"
+        },
+        {
+          "value": "span",
+          "label": "span"
+        }
+      ]
+    },
+    {
+      "type": "inline_richtext",
+      "id": "description",
+      "label": "t:sections.all.text.label"
+    },
+    {
+      "type": "text_alignment",
+      "id": "text_align",
+      "label": "t:sections.all.text_align.label",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.multicolumn.settings.header__columns.content"
+    },
+    {
+      "type": "range",
+      "id": "multicolumn_to_show",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3,
+      "label": "t:sections.multicolumn.settings.multicolumn_to_show.label"
+    },
+    {
+      "type": "select",
+      "id": "column_gap",
+      "label": "t:sections.multicolumn.settings.column_gap.label",
+      "options": [
+        {
+          "value": "0.8",
+          "label": "t:sections.multicolumn.settings.column_gap.options__3.label"
+        },
+        {
+          "value": "1.6",
+          "label": "t:sections.multicolumn.settings.column_gap.options__2.label"
+        },
+        {
+          "value": "2.4",
+          "label": "t:sections.multicolumn.settings.column_gap.options__1.label"
+        }
+      ],
+      "default": "1.6"
+    },
+    {
+      "type": "select",
+      "id": "row_gap",
+      "label": "t:sections.multicolumn.settings.row_gap.label",
+      "options": [
+        {
+          "value": "0.8",
+          "label": "t:sections.multicolumn.settings.row_gap.options__3.label"
+        },
+        {
+          "value": "1.6",
+          "label": "t:sections.multicolumn.settings.row_gap.options__2.label"
+        },
+        {
+          "value": "3.2",
+          "label": "t:sections.multicolumn.settings.row_gap.options__1.label"
+        }
+      ],
+      "default": "3.2"
+    },
+    {
+      "type": "checkbox",
+      "id": "swipe_on_desktop",
+      "default": false,
+      "label": "t:sections.multicolumn.settings.swipe_on_desktop.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "swipe_on_mobile",
+      "default": false,
+      "label": "t:sections.multicolumn.settings.swipe_on_mobile.label"
+    },
+    {
+      "type": "select",
+      "id": "mobile_slider_layout_type",
+      "options": [
+        {
+          "value": "visible_overflow",
+          "label": "t:sections.all.mobile_slider_layout_type.options__1.label"
+        },
+        {
+          "value": "with_arrows",
+          "label": "t:sections.all.mobile_slider_layout_type.options__2.label"
+        }
+      ],
+      "default": "visible_overflow",
+      "label": "t:sections.all.mobile_slider_layout_type.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.multicolumn.settings.header__column.content"
+    },
+    {
+      "type": "select",
+      "id": "card_heading_size",
+      "options": [
+        {
+          "value": "h5",
+          "label": "t:sections.all.heading_size.options__5.label"
+        },
+        {
+          "value": "h4",
+          "label": "t:sections.all.heading_size.options__4.label"
+        },
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__2.label"
+        }
+      ],
+      "default": "h4",
+      "label": "t:sections.multicolumn.settings.card_heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "card_heading_tag",
+      "label": "t:sections.all.heading_tag.label",
+      "default": "h3",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        },
+        {
+          "value": "div",
+          "label": "div"
+        },
+        {
+          "value": "p",
+          "label": "p"
+        },
+        {
+          "value": "span",
+          "label": "span"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "card_heading_font",
+      "options": [
+        {
+          "value": "heading",
+          "label": "t:sections.multicolumn.settings.card_heading_font.option__1.label"
+        },
+        {
+          "value": "body",
+          "label": "t:sections.multicolumn.settings.card_heading_font.option__2.label"
+        }
+      ],
+      "default": "heading",
+      "label": "t:sections.multicolumn.settings.card_heading_font.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "column_color_scheme",
+      "default": "background-1",
+      "label": "t:sections.multicolumn.settings.column_color_scheme.label"
+    },
+    {
+      "type": "select",
+      "id": "card_bg_color",
+      "options": [
+        {
+          "value": "primary",
+          "label": "t:sections.multicolumn.settings.card_bg_color.options__1.label"
+        },
+        {
+          "value": "secondary",
+          "label": "t:sections.multicolumn.settings.card_bg_color.options__2.label"
+        }
+      ],
+      "default": "primary",
+      "label": "t:sections.multicolumn.settings.card_bg_color.label"
+    },
+    {
+      "type": "select",
+      "id": "card_text_color",
+      "options": [
+        {
+          "value": "primary",
+          "label": "t:sections.multicolumn.settings.card_text_color.options__1.label"
+        },
+        {
+          "value": "secondary",
+          "label": "t:sections.multicolumn.settings.card_text_color.options__2.label"
+        }
+      ],
+      "default": "primary",
+      "label": "t:sections.multicolumn.settings.card_text_color.label"
+    },
+    {
+      "type": "select",
+      "id": "card_text_size",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:sections.multicolumn.settings.card_text_size.options__1.label"
+        },
+        {
+          "value": "normal",
+          "label": "t:sections.multicolumn.settings.card_text_size.options__2.label"
+        }
+      ],
+      "default": "small",
+      "label": "t:sections.multicolumn.settings.card_text_size.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_column_border",
+      "default": false,
+      "label": "t:sections.multicolumn.settings.enable_column_border.label"
+    },
+    {
+      "type": "select",
+      "id": "column_padding",
+      "label": "t:sections.multicolumn.settings.column_padding.label",
+      "options": [
+        {
+          "value": "0",
+          "label": "t:sections.multicolumn.settings.column_padding.options__4.label"
+        },
+        {
+          "value": "1.2",
+          "label": "t:sections.multicolumn.settings.column_padding.options__3.label"
+        },
+        {
+          "value": "2.4",
+          "label": "t:sections.multicolumn.settings.column_padding.options__2.label"
+        },
+        {
+          "value": "4",
+          "label": "t:sections.multicolumn.settings.column_padding.options__1.label"
+        }
+      ],
+      "default": "0"
+    },
+    {
+      "type": "select",
+      "id": "column_aspect_ratio",
+      "options": [
+        {
+          "value": "3/2",
+          "label": "t:sections.multicolumn.settings.column_aspect_ratio.options__1.label"
+        },
+        {
+          "value": "3/4",
+          "label": "t:sections.multicolumn.settings.column_aspect_ratio.options__2.label"
+        },
+        {
+          "value": "264/280",
+          "label": "t:sections.multicolumn.settings.column_aspect_ratio.options__5.label"
+        },
+        {
+          "value": "1/1",
+          "label": "t:sections.multicolumn.settings.column_aspect_ratio.options__3.label"
+        },
+        {
+          "value": "adapt",
+          "label": "t:sections.multicolumn.settings.column_aspect_ratio.options__4.label"
+        }
+      ],
+      "default": "adapt",
+      "label": "t:sections.multicolumn.settings.column_aspect_ratio.label"
+    },
+    {
+      "type": "text_alignment",
+      "id": "content_horizontal_alignment",
+      "default": "center",
+      "label": "t:sections.multicolumn.settings.content_horizontal_alignment.label"
+    },
+    {
+      "type": "select",
+      "id": "content_vertical_alignment",
+      "label": "t:sections.multicolumn.settings.content_vertical_alignment.label",
+      "options": [
+        {
+          "value": "top",
+          "label": "t:sections.multicolumn.settings.content_vertical_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.multicolumn.settings.content_vertical_alignment.options__2.label"
+        },
+        {
+          "value": "bottom",
+          "label": "t:sections.multicolumn.settings.content_vertical_alignment.options__3.label"
+        },
+        {
+          "value": "justify",
+          "label": "t:sections.multicolumn.settings.content_vertical_alignment.options__4.label"
+        }
+      ],
+      "default": "top"
+    },
+    {
+      "type": "select",
+      "id": "column_width",
+      "label": "t:sections.multicolumn.settings.column_width.label",
+      "info": "t:sections.multicolumn.settings.column_width.info",
+      "options": [
+        {
+          "value": "recommended",
+          "label": "t:sections.multicolumn.settings.column_width.options__1.label"
+        },
+        {
+          "value": "narrow",
+          "label": "t:sections.multicolumn.settings.column_width.options__2.label"
+        }
+      ],
+      "default": "recommended"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.section-padding.header.content"
+    },
+    {
+      "type": "select",
+      "id": "padding_top",
+      "options": [
+        {
+          "value": "no-indent",
+          "label": "t:sections.all.section-padding.options__1.label"
+        },
+        {
+          "value": "xs",
+          "label": "t:sections.all.section-padding.options__2.label"
+        },
+        {
+          "value": "s",
+          "label": "t:sections.all.section-padding.options__3.label"
+        },
+        {
+          "value": "m",
+          "label": "t:sections.all.section-padding.options__4.label"
+        },
+        {
+          "value": "l",
+          "label": "t:sections.all.section-padding.options__5.label"
+        },
+        {
+          "value": "xl",
+          "label": "t:sections.all.section-padding.options__6.label"
+        }
+      ],
+      "default": "xl",
+      "label": "t:sections.all.section-padding.padding_top.label"
+    },
+    {
+      "type": "select",
+      "id": "padding_bottom",
+      "options": [
+        {
+          "value": "no-indent",
+          "label": "t:sections.all.section-padding.options__1.label"
+        },
+        {
+          "value": "xs",
+          "label": "t:sections.all.section-padding.options__2.label"
+        },
+        {
+          "value": "s",
+          "label": "t:sections.all.section-padding.options__3.label"
+        },
+        {
+          "value": "m",
+          "label": "t:sections.all.section-padding.options__4.label"
+        },
+        {
+          "value": "l",
+          "label": "t:sections.all.section-padding.options__5.label"
+        },
+        {
+          "value": "xl",
+          "label": "t:sections.all.section-padding.options__6.label"
+        }
+      ],
+      "default": "xl",
+      "label": "t:sections.all.section-padding.padding_bottom.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.section-margin.header.content"
+    },
+    {
+      "type": "select",
+      "id": "margin_top",
+      "options": [
+        {
+          "value": "no-indent",
+          "label": "t:sections.all.section-margin.options__1.label"
+        },
+        {
+          "value": "xs",
+          "label": "t:sections.all.section-margin.options__2.label"
+        },
+        {
+          "value": "s",
+          "label": "t:sections.all.section-margin.options__3.label"
+        },
+        {
+          "value": "m",
+          "label": "t:sections.all.section-margin.options__4.label"
+        },
+        {
+          "value": "l",
+          "label": "t:sections.all.section-margin.options__5.label"
+        },
+        {
+          "value": "xl",
+          "label": "t:sections.all.section-margin.options__6.label"
+        }
+      ],
+      "default": "no-indent",
+      "label": "t:sections.all.section-margin.margin_top.label"
+    },
+    {
+      "type": "select",
+      "id": "margin_bottom",
+      "options": [
+        {
+          "value": "no-indent",
+          "label": "t:sections.all.section-margin.options__1.label"
+        },
+        {
+          "value": "xs",
+          "label": "t:sections.all.section-margin.options__2.label"
+        },
+        {
+          "value": "s",
+          "label": "t:sections.all.section-margin.options__3.label"
+        },
+        {
+          "value": "m",
+          "label": "t:sections.all.section-margin.options__4.label"
+        },
+        {
+          "value": "l",
+          "label": "t:sections.all.section-margin.options__5.label"
+        },
+        {
+          "value": "xl",
+          "label": "t:sections.all.section-margin.options__6.label"
+        }
+      ],
+      "default": "no-indent",
+      "label": "t:sections.all.section-margin.margin_bottom.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "t:sections.multicolumn.blocks.column.name",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "heading",
+          "label": "t:sections.all.heading.label",
+          "default": "t:sections.multicolumn.blocks.column.settings.heading.default"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.all.image.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "t:sections.all.image_2.label"
+        },
+        {
+          "type": "select",
+          "id": "image_width",
+          "options": [
+            {
+              "value": "icon",
+              "label": "t:sections.multicolumn.blocks.column.settings.image_width.options__1.label"
+            },
+            {
+              "value": "small",
+              "label": "t:sections.multicolumn.blocks.column.settings.image_width.options__2.label"
+            },
+            {
+              "value": "medium",
+              "label": "t:sections.multicolumn.blocks.column.settings.image_width.options__3.label"
+            },
+            {
+              "value": "full-width",
+              "label": "t:sections.multicolumn.blocks.column.settings.image_width.options__4.label"
+            }
+          ],
+          "default": "icon",
+          "label": "t:sections.multicolumn.blocks.column.settings.image_width.label"
+        },
+        {
+          "type": "select",
+          "id": "image_ratio",
+          "options": [
+            {
+              "value": "landscape",
+              "label": "t:sections.all.card.image_ratio_2.options__1.label"
+            },
+            {
+              "value": "portrait",
+              "label": "t:sections.all.card.image_ratio_2.options__2.label"
+            },
+            {
+              "value": "square",
+              "label": "t:sections.all.card.image_ratio_2.options__3.label"
+            },
+            {
+              "value": "adapt",
+              "label": "t:sections.all.card.image_ratio_2.options__4.label"
+            }
+          ],
+          "default": "square",
+          "label": "t:sections.all.card.image_ratio_2.label"
+        },
+        {
+          "type": "select",
+          "id": "object_fit",
+          "options": [
+            {
+              "value": "contain",
+              "label": "t:sections.all.card.image_fit.options__1.label"
+            },
+            {
+              "value": "cover",
+              "label": "t:sections.all.card.image_fit.options__2.label"
+            }
+          ],
+          "default": "cover",
+          "label": "t:sections.all.card.image_fit.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_img_border_radius",
+          "default": true,
+          "label": "t:sections.multicolumn.blocks.column.settings.enable_img_border_radius.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "add_separator",
+          "default": false,
+          "label": "t:sections.multicolumn.blocks.column.settings.add_separator.label",
+          "info": "t:sections.multicolumn.blocks.column.settings.add_separator.info"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "t:sections.all.text.label",
+          "default": "t:sections.multicolumn.blocks.column.settings.description.default"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.all.button.header_button.content"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_button",
+          "default": true,
+          "label": "t:sections.all.button.button_show.label"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "t:sections.all.button.button_label.label",
+          "default": "t:sections.multicolumn.blocks.column.settings.button_label.default"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "t:sections.all.button.button_link.label"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "options": [
+            {
+              "value": "primary",
+              "label": "t:sections.all.button.button_style.options__1.label"
+            },
+            {
+              "value": "secondary",
+              "label": "t:sections.all.button.button_style.options__2.label"
+            },
+            {
+              "value": "tertiary",
+              "label": "t:sections.all.button.button_style.options__3.label"
+            }
+          ],
+          "default": "primary",
+          "label": "t:sections.all.button.button_style.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_arrow",
+          "default": true,
+          "label": "t:sections.all.button.button_arrow.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.multicolumn.name",
+      "blocks": [
+        {
+          "type": "column"
+        },
+        {
+          "type": "column"
+        },
+        {
+          "type": "column"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

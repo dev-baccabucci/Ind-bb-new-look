@@ -1,0 +1,242 @@
+<div class="contact-form" id="formorder">
+  <div class="container">
+    <div class="contact-form__inner contact-form__inner--center content">
+      <div class="contact-form__wrapper">
+        <div class="form-head-content">
+        <h2 class="contact-form__title-form h2">Bulk Order</h2>
+        <p class="contact-form__text-form">
+          We’d love to hear from you. Send us a message and we’ll respond as soon as possible.
+        </p>
+      </div>
+        {% form 'contact', id: 'ContactForm' %}
+          {%- if form.posted_successfully? -%}
+            <div class="form-status form-status-list form__message" tabindex="-1" autofocus>
+              {% render 'icon-success' %}
+              Thanks for contacting us. We’ll get back to you soon.
+            </div>
+          {%- endif -%}
+        
+          <input type="hidden" name="contact[Form Type]" value="Bulk Order Inquiry">
+
+          <div class="field field__name">
+            <input
+              class="field__input focus-inset"
+              autocomplete="name"
+              type="text"
+              id="ContactForm-name"
+              name="contact[Name]"
+              value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+              placeholder="Your name*"
+              required
+            >
+            {% comment %} <label class="field__label body-small" for="ContactForm-name">Your name</label> {% endcomment %}
+          </div>
+
+          <div class="field field--with-error">
+            <input
+              autocomplete="email"
+              type="email"
+              id="ContactForm-email"
+              class="field__input focus-inset"
+              name="contact[email]"
+              spellcheck="false"
+              autocapitalize="off"
+              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+              aria-required="true"
+              {% if form.errors contains 'email' %}
+                aria-invalid="true"
+                aria-describedby="ContactForm-email-error"
+              {% endif %}
+              placeholder="Email address*"
+              required
+            >
+            {% comment %} <label class="field__label body-small" for="ContactForm-email">Email address</label> {% endcomment %}
+            {%- if form.errors contains 'email' -%}
+              <small class="contact-form__field-error" id="ContactForm-email-error">
+                <span class="visually-hidden">Error</span>
+                <span class="form__message">
+                  {{ form.errors.translated_fields.email | capitalize }}
+                  {{ form.errors.messages.email -}}
+                </span>
+              </small>
+            {%- endif -%}
+          </div>
+
+          <div class="field">
+            <input
+              type="tel"
+              id="ContactForm-phone"
+              class="field__input"
+              autocomplete="tel"
+              name="contact[Phone]"
+              pattern="[0-9\-]*"
+              value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+              placeholder="Phone number*"
+              required
+            >
+            {% comment %} <label class="field__label body-small" for="ContactForm-phone">Phone number</label> {% endcomment %}
+          </div>
+          <div class="field">
+            <input
+              type="text"
+              id="ContactForm-company"
+              class="field__input"
+              autocomplete="organization"
+              name="contact[Company Name]"
+              placeholder="Company Name (Optional)"
+            >
+            {% comment %} <label class="field__label body-small" for="ContactForm-phone">Phone number</label> {% endcomment %}
+          </div>
+
+          <div class="field">
+            <textarea
+              id="ContactForm-address"
+              class="text-area field__input"
+              name="contact[Address]"
+              placeholder="Your Address (Optional)"
+            ></textarea>
+            {% comment %} <label class="field__label body-small" for="ContactForm-body">Note</label> {% endcomment %}
+          </div>
+
+          <div class="field">
+            <select
+              id="ContactForm-require-qty"
+              class="field__input"
+              name="contact[require-qty]"
+              required
+              aria-required="true"
+            >
+              <option value="" {% if form.require-qty == blank %}selected{% endif %} disabled>Please Select</option>
+              <option value="30-50 Pairs" {% if form.require-qty == "30-50 Pairs" %}selected{% endif %}>30-50 Pairs</option>
+              <option value="50-100 Pairs" {% if form.require-qty == "50-100 Pairs" %}selected{% endif %}>50-100 Pairs</option>
+              <option value="100-150 Pairs" {% if form.require-qty == "100-150 Pairs" %}selected{% endif %}>100-150 Pairs</option>
+              <option value="150-2000 Pairs" {% if form.require-qty == "150-200 Pairs" %}selected{% endif %}>150-200 Pairs</option>
+              <option value="200+ Pair" {% if form.require-qty == "200+ Pair" %}selected{% endif %}>200+ Pairs</option>
+            </select>
+            <label style="font-size: 16px;" class="field__label body-small" for="ContactForm-require-qty">Required Quantity</label>
+          </div>
+
+           <div class="field">
+            <select
+              id="ContactForm-budget"
+              class="field__input"
+              name="contact[budget]"
+              required
+              aria-required="true"
+            >
+              <option value="" {% if form.budget == blank %}selected{% endif %} disabled>Please Select (Value of Order)</option>
+              <option value="₹0 - ₹50,000" {% if form.budget == "₹0 - ₹50,000" %}selected{% endif %}>₹0 - ₹50,000</option>
+              <option value="₹50,000 - ₹1,00,000" {% if form.budget == "₹50,000 - ₹1,00,000" %}selected{% endif %}>₹50,000 - ₹1,00,000</option>
+              <option value="₹1,00,000 - ₹3,00,000" {% if form.budget == "₹1,00,000 - ₹3,00,000" %}selected{% endif %}>₹1,00,000 - ₹3,00,000</option>
+              <option value="₹3,00,000 - ₹5,00,000" {% if form.budget == "₹3,00,000 - ₹5,00,000" %}selected{% endif %}>₹3,00,000 - ₹5,00,000</option>
+              <option value="₹5,00,000 - ₹10,00,000" {% if form.budget == "₹5,00,000 - ₹10,00,000" %}selected{% endif %}>₹5,00,000 - ₹10,00,000</option>
+              <option value="More than ₹10,00,000" {% if form.budget == "More than ₹10,00,000" %}selected{% endif %}>More than ₹10,00,000</option>
+            </select>
+            <label style="font-size: 16px;" class="field__label body-small" for="ContactForm-budget">Budget</label>
+          </div>
+
+          <div class="field">
+            <select
+              id="ContactForm-category"
+              class="field__input"
+              name="contact[category]"
+              required
+              aria-required="true"
+            >
+              <option value="" {% if form.category == blank %}selected{% endif %} disabled>Please Select</option>
+              <option value="Shoes" {% if form.category == "Shoes" %}selected{% endif %}>Shoes (Men, Women)</option>
+              <option value="Accessories" {% if form.category == "Accessories" %}selected{% endif %}>Accessories (Belt, Wallet, Slides, Socks, Combo)</option>
+            </select>
+            <label style="font-size: 16px;" class="field__label body-small" for="ContactForm-category">Category</label>
+          </div>
+           
+          <div class="field">
+            <textarea
+              id="ContactForm-body"
+              class="text-area field__input"
+              name="contact[Message]"
+              placeholder="Your message"
+              aria-required="true"
+              required
+            >{{- form.body -}}</textarea>
+            {% comment %} <label class="field__label body-small" for="ContactForm-body">Note</label> {% endcomment %}
+          </div>
+
+          <div class="contact-form__bottom">
+            <button type="submit" class="button button--primary focus-inset">
+              <div class="button__content">
+                <span class="button__label">SUBMIT</span>
+              </div>
+            </button>
+          </div>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<style>
+    .contact-form__inner.contact-form__inner--center.content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.field {
+    padding: 10px 0;
+}
+.contact-form {
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+.contact-form__bottom {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.button__label::after {
+    content: none;
+}
+.form-status-list {
+    color: #005b00;
+}
+.field textarea.field__input, .field .textarea, .field input[type=text], .field input[type=email], 
+.field input[type=tel], .field input[type=search], 
+.field input[type=password], .field select, .field .field__input  {
+    border-radius: 5px;
+}
+.form-head-content {
+    text-align: center;
+}
+button.button.button--primary.focus-inset {
+    border-radius: 7px;
+}
+label.field__label.body-small {
+    padding-left: 2px;
+}
+h2.contact-form__title-form.h2 {
+    padding-bottom: 10px;
+        font-size: 35px;
+}
+.field textarea.field__input:hover, .field .textarea:hover, .field input[type=text]:hover, 
+.field input[type=email]:hover, .field input[type=tel]:hover, .field:hover .field__input:hover {
+    border: 1px solid black;
+}
+.button--primary, .customer .button--primary {
+    background-color: #f2a61e;
+        padding: 0.9rem 4.6rem;
+}
+@media screen and (pointer: fine) {
+    .button:not(:disabled):not([aria-disabled=true]):hover .button__label, .customer .button:not(:disabled):not([aria-disabled=true]):hover .button__label {
+        transform: none;
+    }
+}
+@media (max-width: 768px) {
+{% comment %} h2.contact-form__title-form.h2 {
+    font-size: 22px;
+} {% endcomment %}
+p.contact-form__text-form {
+    font-size: 13px;
+}
+}
+</style>

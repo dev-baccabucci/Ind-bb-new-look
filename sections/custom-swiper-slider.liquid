@@ -1,0 +1,235 @@
+{%- style -%}
+  /* Section-specific padding */
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    padding-left: {{ section.settings.padding_left }}px;
+    padding-right: {{ section.settings.padding_right }}px;
+    background: {{ section.settings.background }};
+  }
+
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      padding-left: {{ section.settings.padding_left_mobile }}px;
+      padding-right: {{ section.settings.padding_right_mobile }}px;
+    }
+  }
+
+  #Swiper-{{ section.id }} {
+    --swiper-theme-color: #fff;
+    --swiper-navigation-size: 25px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    display: block;
+    border-radius: {{ section.settings.border_radius }}px; /* Added for design flexibility */
+    
+    {% if section.settings.height_mode == 'adapt' %}
+      {% if section.blocks.first.settings.image_desktop != blank %}
+        aspect-ratio: {{ section.blocks.first.settings.image_desktop.aspect_ratio }};
+      {% else %}
+        aspect-ratio: 16/9;
+      {% endif %}
+    {% else %}
+      height: {{ section.settings.custom_height_desktop }}px;
+    {% endif %}
+  }
+
+  @media (max-width: 768px) {
+    #Swiper-{{ section.id }} {
+      {% if section.settings.height_mode == 'adapt' %}
+        {% if section.blocks.first.settings.image_mobile != blank %}
+          aspect-ratio: {{ section.blocks.first.settings.image_mobile.aspect_ratio }};
+        {% elsif section.blocks.first.settings.image_desktop != blank %}
+           aspect-ratio: {{ section.blocks.first.settings.image_desktop.aspect_ratio }};
+        {% else %}
+          aspect-ratio: 4/5;
+        {% endif %}
+      {% else %}
+        height: {{ section.settings.custom_height_mobile }}px;
+      {% endif %}
+    }
+  }
+
+  #Swiper-{{ section.id }} .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: {{ section.settings.image_fit }};
+    display: block;
+  }
+
+  {% unless section.settings.show_nav %} 
+    #Swiper-{{ section.id }} .swiper-button-next, 
+    #Swiper-{{ section.id }} .swiper-button-prev { display: none !important; } 
+  {% endunless %}
+  {% unless section.settings.show_dots %} 
+    #Swiper-{{ section.id }} .swiper-pagination { display: none !important; } 
+  {% endunless %}
+
+  .section-title-wraper h2 {
+    font-size: 5.5rem;
+    font-style: italic;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+}
+
+.section-title-wraper {
+    padding-bottom: 30px;
+}
+#Swiper-{{ section.id }} .swiper-button-all {
+    width: 35px;
+    height: 35px;
+}
+
+@media (max-width: 768px) {
+    .section-title-wraper h2 {
+        font-size: 2.8rem;
+    }
+}
+{%- endstyle -%}
+
+<section id="Swiper-{{ section.id }}" class="swiper custom-swiper-section" data-autoplay="{{ section.settings.autoplay_speed }}">
+  <div class="section-title-wraper container">
+    <h2> {{ section.settings.title_section }}</h2>
+  </div>
+  <div class="swiper-wrapper">
+    {% for block in section.blocks %}
+      <div class="swiper-slide" {{ block.shopify_attributes }}>
+        {% if block.settings.link != blank %}<a href="{{ block.settings.link }}" style="display:block; height:100%;">{% endif %}
+          {% if block.settings.image_desktop != blank %}
+            <picture>
+              {%- if block.settings.image_mobile != blank -%}
+                <source media="(max-width: 767px)" srcset="{{ block.settings.image_mobile | image_url: width: 800 }}">
+              {%- endif -%}
+              {%- liquid
+                assign is_first = forloop.first
+                if is_first
+                  assign fetch_p = 'high'
+                  assign load_s = 'eager'
+                else
+                  assign fetch_p = 'auto'
+                  assign load_s = 'lazy'
+                endif
+              -%}
+              {{ block.settings.image_desktop | image_url: width: 2000 | image_tag: 
+                preload: is_first,
+                fetchpriority: fetch_p,
+                loading: load_s,
+                widths: '375, 550, 750, 1100, 1500, 2000',
+                alt: block.settings.image_desktop.alt | escape
+              }}
+            </picture>
+          {% else %}
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {% endif %}
+        {% if block.settings.link != blank %}</a>{% endif %}
+      </div>
+    {% endfor %}
+  </div>
+ <div class="swiper-button-all swiper-button-next"><img src="https://cdn.shopify.com/s/files/1/0279/5133/3450/files/Right_icon_16e729b1-5cba-43f2-b059-82c2db22ab28.png?v=1776338595" height="100%" width="100%"></div>
+      <div class="swiper-button-all swiper-button-prev"><img src="https://cdn.shopify.com/s/files/1/0279/5133/3450/files/Left_icon_22f8d533-a35e-4e99-9f40-e04501b884cc.png?v=1776338596" height="100%" width="100%"></div>
+  <div class="swiper-pagination"></div>
+</section>
+
+<script>
+  (function() {
+    const init_{{ section.id | replace: '-', '_' }} = () => {
+      const el = document.querySelector('#Swiper-{{ section.id }}');
+      if (!el || el.classList.contains('swiper-initialized')) return;
+      const speed = parseInt(el.dataset.autoplay) * 1000;
+      new Swiper(el, {
+        loop: true,
+        grabCursor: true,
+        autoplay: speed > 0 ? { delay: speed, disableOnInteraction: false } : false,
+        navigation: { nextEl: "#Swiper-{{ section.id }} .swiper-button-next", prevEl: "#Swiper-{{ section.id }} .swiper-button-prev" },
+        pagination: { el: "#Swiper-{{ section.id }} .swiper-pagination", clickable: true },
+        on: { init: function() { this.el.style.aspectRatio = 'auto'; } }
+      });
+    };
+
+    if ('IntersectionObserver' in window) {
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) { init_{{ section.id | replace: '-', '_' }}(); obs.unobserve(entry.target); } });
+      }, { rootMargin: '150px' });
+      obs.observe(document.querySelector('#Swiper-{{ section.id }}'));
+    } else {
+      window.addEventListener('load', init_{{ section.id | replace: '-', '_' }});
+    }
+
+    document.addEventListener('shopify:section:load', (e) => {
+      if (e.detail.sectionId === '{{ section.id }}') init_{{ section.id | replace: '-', '_' }}();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Optimized Swiper Slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title_section",
+      "label": "Section Title"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Spacing"
+    },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Top Padding", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Bottom Padding", "default": 0 },
+    { "type": "range", "id": "padding_left", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Left Padding", "default": 0 },
+    { "type": "range", "id": "padding_right", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Right Padding", "default": 0 },
+    {
+      "type": "header",
+      "content": "Mobile Spacing"
+    },
+    { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Top Padding (Mobile)", "default": 0 },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Bottom Padding (Mobile)", "default": 0 },
+    { "type": "range", "id": "padding_left_mobile", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Left Padding (Mobile)", "default": 0 },
+    { "type": "range", "id": "padding_right_mobile", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Right Padding (Mobile)", "default": 0 },
+    {
+      "type": "header",
+      "content": "Slider Design"
+    },
+    { "type": "range", "id": "border_radius", "min": 0, "max": 50, "step": 2, "unit": "px", "label": "Corner Roundness", "default": 0 },
+    {
+      "type": "select",
+      "id": "height_mode",
+      "label": "Height Mode",
+      "options": [
+        { "value": "adapt", "label": "Adapt to First Image" },
+        { "value": "custom", "label": "Custom Fixed Height" }
+      ],
+      "default": "adapt"
+    },
+    { "type": "range", "id": "custom_height_desktop", "min": 200, "max": 1000, "step": 50, "unit": "px", "label": "Fixed Desktop Height", "default": 600 },
+    { "type": "range", "id": "custom_height_mobile", "min": 150, "max": 800, "step": 50, "unit": "px", "label": "Fixed Mobile Height", "default": 400 },
+    { "type": "select", "id": "image_fit", "label": "Image Fit", "options": [{"value":"cover","label":"Cover"},{"value":"contain","label":"Contain"}], "default": "cover" },
+    { "type": "checkbox", "id": "show_nav", "label": "Show Arrows", "default": true },
+    { "type": "checkbox", "id": "show_dots", "label": "Show Dots", "default": true },
+    { "type": "range", "id": "autoplay_speed", "min": 0, "max": 10, "step": 1, "unit": "s", "label": "Autoplay (0 = Off)", "default": 5 },
+    {
+      "type": "color_background",
+      "id": "background",
+      "label": "Background",
+      "default": "linear-gradient(#ffffff, #000000)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        { "type": "image_picker", "id": "image_desktop", "label": "Desktop Image" },
+        { "type": "image_picker", "id": "image_mobile", "label": "Mobile Image" },
+        { "type": "url", "id": "link", "label": "Slide Link" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Optimized Swiper Slider" }]
+}
+{% endschema %}

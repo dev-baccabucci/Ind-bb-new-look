@@ -1,0 +1,110 @@
+<header-search class="header__search">
+  <a
+    href="{{ routes.search_url }}"
+    class="header__icon header__icon--search focus-inset modal__toggle"
+    aria-haspopup="dialog"
+    role="button"
+    aria-label="{{- 'general.search.search' | t -}}"
+  >
+    {% render 'icon-search' %}
+  </a>
+  <div class="header__search-overlay"></div>
+  <div
+    class="header__search-inner search color-background-1"
+    role="dialog"
+    aria-modal="true"
+    aria-label="{{- 'general.search.search' | t -}}"
+  >
+    <div class="header__search-content">
+      <div class="header__search-heading">
+        <span class="body-normal">{{- 'general.search.search' | t -}}</span>
+        <button
+          class="header__search-close focus-inset body-normal"
+          aria-label="{{- 'accessibility.close' | t -}}"
+        >
+          {{- 'accessibility.close' | t -}}
+        </button>
+      </div>
+      {%- if settings.predictive_search_header_enabled -%}
+        <predictive-search class="search-modal__form" data-loading-text="{{- 'accessibility.loading' | t -}}">
+      {%- else -%}
+        <search-form class="search-modal__form">
+      {%- endif -%}
+      <form action="{{ routes.search_url }}" method="get" role="search" class="search search__form">
+        <div class="field">
+          <input
+            class="search__input field__input"
+            id="Search-In-Modal"
+            type="search"
+            dir="ltr"
+            name="q"
+            value="{{ search.terms | escape }}"
+            placeholder="{{ 'general.search.placeholder' | t }}"
+            {%- if settings.predictive_search_header_enabled -%}
+              role="combobox"
+              aria-expanded="false"
+              aria-owns="predictive-search-results-list"
+              aria-controls="predictive-search-results-list"
+              aria-haspopup="listbox"
+              aria-autocomplete="list"
+              autocorrect="off"
+              autocomplete="off"
+              autocapitalize="off"
+              spellcheck="false"
+            {%- endif -%}
+          >
+          <label class="visually-hidden" for="Search-In-Modal">
+            {{- 'general.search.search' | t -}}
+          </label>
+          <input type="hidden" name="options[prefix]" value="last">
+          <button
+            class="search__button field__button focus-inset"
+            aria-label="{{- 'general.search.search' | t -}}"
+          >
+            {% render 'icon-search-input' %}
+          </button>
+          <button
+            class="search__button search__button--reset field__button focus-inset"
+            aria-label="{{- 'general.search.reset_search' | t -}}"
+            {%- if search.terms != blank -%}
+              style="display: flex;"
+            {%- endif -%}
+          >
+            {% render 'icon-close' %}
+          </button>
+        </div>
+
+        {%- if settings.predictive_search_header_enabled -%}
+          <div class="predictive-search predictive-search--header" tabindex="-1" data-predictive-search>
+            <div class="predictive-search__loading-state">
+              {% render 'icon-loading' %}
+            </div>
+          </div>
+
+          <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
+        {%- endif -%}
+      </form>
+      {%- if settings.predictive_search_header_enabled -%}
+        </predictive-search>
+      {%- else -%}
+        </search-form>
+      {%- endif -%}
+      {%- if section.settings.search_menu != blank -%}
+        <div class="header__search-popular body-normal">
+          {%- for link in section.settings.search_menu.links -%}
+            <a
+              href="{{ link.url }}"
+              {% if settings.links_blank and link.type == 'http_link' %}
+                target="_blank"
+              {% endif %}
+              class="header__search-popular-link"
+              aria-label="{{- link.title -}}"
+            >
+              <span>{{- link.title -}}</span>
+            </a>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</header-search>

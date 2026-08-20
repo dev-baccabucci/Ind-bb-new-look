@@ -1,0 +1,119 @@
+{% layout none %}
+
+<!doctype html>
+<html
+  lang="{{ request.locale.iso_code }}"
+  data-scheme="{{ settings.color_scheme }}"
+>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link
+      rel="preconnect"
+      href="https://cdn.shopify.com"
+      crossorigin
+    >
+    <script src="{{ 'vendor/qrcode.js' | shopify_asset_url }}" defer></script>
+
+    {%- if settings.favicon != blank -%}
+      <link
+        rel="icon"
+        type="image/png"
+        href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
+      >
+    {%- endif -%}
+
+    {%- unless settings.type_header_font.system? -%}
+      <link
+        rel="preconnect"
+        href="https://fonts.shopifycdn.com"
+        crossorigin
+      >
+    {%- endunless -%}
+
+    <title>{{ page_title }}</title>
+
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    {% render 'meta-tags' %}
+
+    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+
+    {% comment %} DYNAMICALLY RETURNS ALL SCRIPTS REQUIRED BY SHOPIFY. {% endcomment %}
+    {{ content_for_header }}
+
+    {% comment %} FONTS {% endcomment %}
+    {% render 'fonts' %}
+
+    {% comment %} DARK MODE VARIABLES {% endcomment %}
+    {% render 'color-vars' %}
+
+    {% comment %} BASIC VARIABLES AND STYLES {% endcomment %}
+    {% render 'base-vars-styles' %}
+
+    {% comment %} BASIC STYLES {% endcomment %}
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+
+    {% comment %} FONTS PRELOAD {% endcomment %}
+    {%- unless settings.type_body_font.system? -%}
+      {% comment %}theme-check-disable AssetPreload{% endcomment %}
+      <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
+      {% comment %}theme-check-enable AssetPreload{% endcomment %}
+    {%- endunless -%}
+    {%- unless settings.type_header_font.system? -%}
+      {% comment %}theme-check-disable AssetPreload{% endcomment %}
+      <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
+      {% comment %}theme-check-enable AssetPreload{% endcomment %}
+    {%- endunless -%}
+  </head>
+
+  <body>
+    <main class="main" id="MainContent">
+      {% section 'gift-card' %}
+    </main>
+
+    <div hidden>
+      <span id="a11y-new-window-message">
+        {{- 'accessibility.link_messages.new_window' | t -}}
+      </span>
+    </div>
+  </body>
+</html>
+
+<script>
+  const string = { qrImageAlt: {{ 'gift_cards.issued.qr_image_alt' | t | json }} };
+  document.addEventListener('DOMContentLoaded', function () {
+    QRCodeContainer = document.querySelector('.gift-card__qr-code');
+    if (QRCodeContainer) {
+      new QRCode(QRCodeContainer, {
+        text: QRCodeContainer.dataset.identifier,
+        width: 120,
+        height: 120,
+        imageAltText: string.qrImageAlt
+      });
+    }
+  });
+
+  const template = document.getElementsByTagName("template")[0];
+  const clonedTemplate = template.content.cloneNode(true);
+
+  document
+    .querySelector('.gift-card__copy-link')
+    .addEventListener('click', () => {
+      navigator.clipboard.writeText(document.querySelector('.gift-card__number').value).then(function () {
+        const successMsgEl = document.querySelector('.gift-card__copy-success');
+        if (!successMsgEl) return;
+        successMsgEl.classList.remove('visually-hidden');
+        successMsgEl.appendChild(clonedTemplate);
+
+        setTimeout(() => {
+          successMsgEl.classList.add('visually-hidden');
+        }, 4000);
+      });
+    });
+</script>

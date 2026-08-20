@@ -1,0 +1,259 @@
+<div class="product-info-wrapper">
+  <!-- Desktop Tabs -->
+  <div class="tabs-desktop">
+    <ul class="tab-buttons">
+      {% for block in section.blocks %}
+        <li class="tab-btn {% if forloop.first %}active{% endif %}" data-tab="tab-{{ block.id }}">
+          {{ block.settings.tab_title }}
+        </li>
+      {% endfor %}
+    </ul>
+    <div class="tab-contents">
+      {% for block in section.blocks %}
+        <div id="tab-{{ block.id }}" class="tab-content {% if forloop.first %}active{% endif %}">
+          {{ block.settings.tab_content }}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Mobile Accordion -->
+  <div class="accordion-mobile">
+    {% for block in section.blocks %}
+      <div class="accordion-item">
+        <button class="accordion-header">
+          <span class="icon">+</span>
+          <span class="acctitle">{{ block.settings.tab_title }}</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-inner">
+            {{ block.settings.tab_content }}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.product-info-wrapper {
+  margin-top: 20px;
+  font-family: inherit;
+}
+
+/* --- Desktop Tabs --- */
+.tab-buttons {
+  display: flex;
+  gap: 25px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  margin-bottom: 15px;
+  justify-content: center;
+  padding: 0 20px;
+  text-align: center;
+}
+.tab-btn {
+  padding: 10px 0; 
+  position: relative;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-family: 'Inter';
+  color: #4A4A4A;
+}
+.tab-contents {
+    padding-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+}
+.tab-content img {
+  width: 100%;
+  height:auto;
+}
+.tab-content {
+  padding-right: 5rem;
+  padding-left: 2rem;
+  {% comment %} max-width: 1200px; {% endcomment %}
+    margin: 0 auto; 
+}
+.tab-content p {
+    margin-bottom: 1rem;
+    font-family: 'Inter';
+    font-weight: 500;
+    color: #262626;
+}
+.tab-btn.active {
+  border-bottom: 2px solid #000;
+}
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* --- Mobile Accordion --- */
+.accordion-item { border-bottom: 1px solid #000000; }
+.accordion-header {
+    width: 100%;
+    padding: 10px 0;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    cursor: pointer;
+    background: none;
+    border: none;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+}
+.accordion-header .icon {
+  font-size: 18px;
+  transition: transform .2s ease;
+}
+.accordion-item.open .accordion-header .icon {
+  content: "-";
+  transform: rotate(180deg);
+}
+.accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .3s ease;
+}
+.accordion-inner {
+  padding: 0px 20px;
+  padding-left: 35px;
+  font-family: 'Inter';
+  color: #262626;
+}
+.accordion-inner ul.a-unordered-list.a-vertical.a-spacing-mini {
+    padding-left: 10px;
+}
+.accordion-inner p {
+    margin-bottom: 1rem;
+}
+.accordion-inner img {
+  width: 100%;
+  height:auto;
+}
+.accordion-inner li.a-spacing-mini {
+    padding-bottom: 15px;
+}
+@media screen and (min-width: 767px) {
+.accordion-mobile {
+    display: none;
+}
+}
+
+ @media screen and (max-width: 767px) {
+    .tabs-desktop {
+    display: none;
+}
+ }
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  // Desktop Tabs
+  const tabBtns = document.querySelectorAll(".tab-btn");
+  const tabContents = document.querySelectorAll(".tab-content");
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener("click", function(){
+      tabBtns.forEach(b => b.classList.remove("active"));
+      tabContents.forEach(c => c.classList.remove("active"));
+      this.classList.add("active");
+      document.getElementById(this.dataset.tab).classList.add("active");
+    });
+  });
+
+  // Mobile Accordion
+  const accItems = document.querySelectorAll(".accordion-item");
+  accItems.forEach((item, index )=> {
+    const header = item.querySelector(".accordion-header");
+    const body = item.querySelector(".accordion-body");
+    const icon = item.querySelector(".icon");
+
+    // Open the first item by default
+    if(index === 0){
+      item.classList.add("open");
+      body.style.maxHeight = body.scrollHeight + "px";
+      icon.textContent = "–";
+    }
+
+    header.addEventListener("click", () => {
+      const isOpen = item.classList.contains("open");
+
+      // Close all first (only one open at a time)
+      accItems.forEach(i => {
+        i.classList.remove("open");
+        i.querySelector(".accordion-body").style.maxHeight = null;
+        i.querySelector(".icon").textContent = "+";
+      });
+
+      // If not already open, then open it
+      if (!isOpen) {
+        item.classList.add("open");
+        body.style.maxHeight = body.scrollHeight + "px";
+        icon.textContent = "–";
+      }
+    });
+  });
+});
+</script>
+
+
+
+{% schema %}
+{
+  "name": "New Product Info Tabs",
+  "tag": "section",
+  "class": "product-info-tabs",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Info Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_title",
+          "label": "Tab Title",
+          "default": "Description"
+        },
+        {
+          "type": "richtext",
+          "id": "tab_content",
+          "label": "Tab Content",
+          "default": "<p>Write your content here...</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "New Product Info Tabs",
+      "blocks": [
+        {
+          "type": "tab",
+          "settings": {
+            "tab_title": "Description",
+            "tab_content": "<p>{{ product.description }}</p>"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "tab_title": "Material",
+            "tab_content": "<p>100% Cotton</p>"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "tab_title": "Shipping Info",
+            "tab_content": "<p>Free shipping on orders over $50</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

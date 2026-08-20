@@ -1,0 +1,524 @@
+<style>
+  .explore-range-section {
+    --bg-color: #d9d9d9;
+    --accent-color: #000;
+    --track-color: #d1d1d1;
+    --transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    padding: 30px 0;
+    background-color: var(--bg-color);
+  }
+  .explore-range-section .section-title {
+    font-size: 5.4rem;
+    font-style: italic;
+    margin-bottom: 10px;
+    text-transform:capitalize;
+    font-weight:600;
+    letter-spacing: -0.03em;
+  }
+  .explore-range-section #mobileHeading {
+    display: none;
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    transition: opacity 0.3s ease;
+    letter-spacing: -0.03em;
+    font-family:'Inter';
+  }
+  /* DESKTOP TABS */
+  .explore-range-section .tab-wrapper {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 60px;
+  }
+  .explore-range-section .tab-wrapper:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 6px;
+    background: #c6c6c6;
+    border-radius: 10px;
+  }
+  .explore-range-section .tab-btn {
+    background: none;
+    border: none;
+    padding: 15px 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #888;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.4s ease;
+    text-align: left;
+  }
+  .explore-range-section .tab-btn.active {
+    color: var(--accent-color);
+  }
+  .explore-range-section .tab-btn span {
+    position: relative;
+    padding-bottom: 15px;
+  }
+  .explore-range-section .tab-btn span::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 0;
+    height: 5px;
+    background-color: var(--accent-color);
+    transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    border-radius: 50px;
+    z-index: 9;
+  }
+  .explore-range-section .tab-btn.active span::after {
+    width: 100%;
+  }
+  /* GRID & FLEX LAYOUT */
+  .explore-range-section .explore-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 500px;
+  }
+  .explore-range-section .explore-card {
+    display: none;
+    position: relative;
+    transition: var(--transition);
+    cursor: pointer;
+    overflow: hidden;
+    flex-direction: column;
+    flex: 0 0 auto;
+  }
+  .explore-range-section .explore-card.is-visible {
+    display: flex;
+  }
+  .explore-range-section .explore-card.is-active {
+    flex: 0 0 45%;
+  }
+  .explore-range-section .explore-card.is-visible:not(.is-active) {
+    flex: 0 0 25%;
+  }
+  .explore-range-section .image-box {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #ddd;
+    position: relative;
+  }
+  /* The picture element and img fill the box */
+  .explore-range-section .image-box picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .explore-range-section .image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s ease;
+  }
+  .explore-range-section .card-content {
+    margin-top: 15px;
+  }
+  .explore-range-section .view-more {
+    text-decoration: none;
+    color: #000;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1em;
+  }
+  .explore-range-section .circle-arrow {
+    width: 20px;
+    height: 20px;
+  }
+  /* SWIPER NAVIGATION (mobile only) */
+  .explore-range-section .swiper-button-next,
+  .explore-range-section .swiper-button-prev {
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 50%;
+    display: none;
+  }
+  .explore-range-section .swiper-button-next::after,
+  .explore-range-section .swiper-button-prev::after {
+    font-size: 18px !important;
+  }
+
+  span.button_label_more {
+    position: relative;
+    display: inline-block;
+  }
+  .explore-range-section .button_label_more:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 1px;
+    bottom: 0px;
+    left: 0;
+    background-color: rgb(0, 0, 0);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+  .explore-range-section .button_label_more:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+
+  /* MOBILE OPTIMIZATION */
+  @media (max-width: 768px) {
+    .explore-range-section .tab-wrapper {
+      display: none;
+    }
+    .explore-range-section #mobileHeading {
+      display: block;
+    }
+    .explore-range-section .swiper-button-next,
+    .explore-range-section .swiper-button-prev {
+      display: flex;
+    }
+    .explore-range-section .explore-grid {
+      height: auto;
+      gap: 0;
+    }
+    .explore-range-section .explore-card {
+      display: block !important;
+      width: 100% !important;
+      flex: 0 0 100% !important;
+      height: auto !important;
+    }
+    .explore-range-section .image-box {
+      aspect-ratio: 4/5;
+    }
+    .explore-range-section .section-title {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+    }
+  }
+</style>
+
+<div class="explore-range-section" data-section-id="{{ section.id }}" data-section-type="explore-range">
+  <div class="container">
+    {% if section.settings.heading != blank %}
+      <h2 class="section-title">{{ section.settings.heading | escape }}</h2>
+    {% endif %}
+    <div id="mobileHeading" class="mobile-heading-text">{{ section.blocks[0].settings.title | default: 'Explore' }}</div>
+
+    <nav class="tab-wrapper">
+      {% for block in section.blocks %}
+        <button class="tab-btn {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}" data-block-id="{{ block.id }}">
+          <span>{{ block.settings.title | escape }}</span>
+        </button>
+      {% endfor %}
+    </nav>
+
+    <div class="swiper explore-swiper-{{ section.id }}">
+      <div class="swiper-wrapper explore-grid">
+        {% for block in section.blocks %}
+          {% assign img_url = block.settings.image | img_url: '800x' %}
+          {% assign link_url = block.settings.link | default: '#' %}
+          {% assign button_text_view = block.settings.button_lable %}
+
+          {%- comment -%}
+            Mobile image: use mobile_image if set, otherwise fall back to desktop image.
+            The <source media="(max-width: 768px)"> tells the browser to use the
+            mobile URL on small screens; the <img> fallback is used on desktop.
+          {%- endcomment -%}
+          {% if block.settings.mobile_image != blank %}
+            {% assign mobile_img_url = block.settings.mobile_image | img_url: '600x' %}
+          {% else %}
+            {% assign mobile_img_url = img_url %}
+          {% endif %}
+
+          <div class="swiper-slide explore-card" data-index="{{ forloop.index0 }}" data-title="{{ block.settings.title | escape }}">
+            <div class="image-box">
+              {% if block.settings.image != blank or block.settings.mobile_image != blank %}
+                <picture>
+                  {%- comment -%} Mobile source — shown on screens ≤ 768px {%- endcomment -%}
+                  <source media="(max-width: 768px)" srcset="{{ mobile_img_url }}">
+                  {%- comment -%} Desktop fallback img {%- endcomment -%}
+                  <img
+                    src="{{ img_url }}"
+                    alt="{{ block.settings.title | escape }}"
+                    loading="lazy"
+                  >
+                </picture>
+              {% else %}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              {% endif %}
+            </div>
+            <div class="card-content">
+              <a href="{{ link_url }}" class="view-more">
+                <span class="button_label_more">{{ button_text_view }}</span>
+                <span class="circle-arrow">
+                  <img src="https://cdn.shopify.com/s/files/1/0279/5133/3450/files/View_more_icon_d280f222-97aa-4fbf-8a5e-4c94b2001893.png?v=1776338595" height="100%" width="100%">
+                </span>
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="swiper-button-next"><img src="https://cdn.shopify.com/s/files/1/0279/5133/3450/files/Right_icon_16e729b1-5cba-43f2-b059-82c2db22ab28.png?v=1776338595" height="100%" width="100%"></div>
+      <div class="swiper-button-prev"><img src="https://cdn.shopify.com/s/files/1/0279/5133/3450/files/Left_icon_22f8d533-a35e-4e99-9f40-e04501b884cc.png?v=1776338596" height="100%" width="100%"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    function loadSwiper(callback) {
+      if (typeof Swiper !== 'undefined') { callback(); return; }
+      if (!document.querySelector('#swiper-css')) {
+        var link = document.createElement('link');
+        link.id = 'swiper-css';
+        link.rel = 'stylesheet';
+        link.href = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css';
+        document.head.appendChild(link);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
+      script.onload = callback;
+      document.head.appendChild(script);
+    }
+
+    function initExploreRangeSection(sectionEl) {
+      if (sectionEl.dataset.exploreInitialized === 'true') return;
+      sectionEl.dataset.exploreInitialized = 'true';
+
+      const sectionId = sectionEl.dataset.sectionId;
+      const tabs = Array.from(sectionEl.querySelectorAll('.tab-btn'));
+      const cards = Array.from(sectionEl.querySelectorAll('.explore-card'));
+      const mobileHeading = sectionEl.querySelector('#mobileHeading');
+      const swiperContainer = sectionEl.querySelector('.explore-swiper-' + sectionId);
+      let swiperInstance = null;
+      let currentActiveIndex = 0;
+      let isMobileLayout = window.innerWidth <= 768;
+
+      function applyDesktopLayout(activeIndex) {
+        const total = cards.length;
+        if (total === 0) return;
+        let visibleIndices = [activeIndex];
+        if (total > 1) visibleIndices.push((activeIndex + 1) % total);
+        if (total > 2) visibleIndices.push((activeIndex + 2) % total);
+        visibleIndices = [...new Set(visibleIndices)];
+        cards.forEach((card, idx) => {
+          card.classList.remove('is-visible', 'is-active');
+          card.style.flex = '';
+          if (visibleIndices.includes(idx)) {
+            card.classList.add('is-visible');
+            if (idx === activeIndex) card.classList.add('is-active');
+          }
+        });
+        const visibleCards = cards.filter(c => c.classList.contains('is-visible'));
+        const visibleCount = visibleCards.length;
+        if (visibleCount === 1) {
+          visibleCards.forEach(card => { card.style.flex = '0 0 100%'; });
+        } else if (visibleCount === 2) {
+          visibleCards.forEach(card => {
+            card.style.flex = card.classList.contains('is-active') ? '0 0 55%' : '0 0 40%';
+          });
+        } else {
+          visibleCards.forEach(card => {
+            card.style.flex = card.classList.contains('is-active') ? '0 0 45%' : '0 0 25%';
+          });
+        }
+        cards.forEach((card, idx) => {
+          if (visibleIndices.includes(idx)) {
+            const position = visibleIndices.indexOf(idx);
+            card.style.order = idx === activeIndex ? '-1' : position;
+          } else {
+            card.style.order = '10';
+          }
+        });
+      }
+
+      function setActiveTabUI(activeIndex) {
+        tabs.forEach((tab, idx) => {
+          tab.classList.toggle('active', idx === activeIndex);
+        });
+      }
+
+      function bindTabEvents() {
+        tabs.forEach((tab, idx) => {
+          tab.removeEventListener('click', tab._clickHandler);
+          tab._clickHandler = () => {
+            if (isMobileLayout) return;
+            const newIndex = parseInt(tab.dataset.index, 10);
+            if (isNaN(newIndex)) return;
+            currentActiveIndex = newIndex;
+            setActiveTabUI(currentActiveIndex);
+            applyDesktopLayout(currentActiveIndex);
+          };
+          tab.addEventListener('click', tab._clickHandler);
+        });
+      }
+
+      function initMobileSwiper() {
+        if (swiperInstance) swiperInstance.destroy(true, true);
+        swiperInstance = new Swiper(swiperContainer, {
+          slidesPerView: 1,
+          spaceBetween: 20,
+          navigation: {
+            nextEl: swiperContainer.querySelector('.swiper-button-next'),
+            prevEl: swiperContainer.querySelector('.swiper-button-prev'),
+          },
+          on: {
+            slideChange: function () {
+              const activeSlide = this.slides[this.activeIndex];
+              if (activeSlide && mobileHeading) {
+                const title = activeSlide.getAttribute('data-title') || '';
+                mobileHeading.style.opacity = '0';
+                setTimeout(() => {
+                  mobileHeading.innerText = title;
+                  mobileHeading.style.opacity = '1';
+                }, 200);
+              }
+            },
+          },
+        });
+        if (mobileHeading && swiperInstance.slides.length) {
+          mobileHeading.innerText = swiperInstance.slides[0].getAttribute('data-title') || '';
+        }
+      }
+
+      function destroyMobileSwiper() {
+        if (swiperInstance) { swiperInstance.destroy(true, true); swiperInstance = null; }
+        const gridWrapper = sectionEl.querySelector('.explore-grid');
+        if (gridWrapper) gridWrapper.style.display = 'flex';
+        applyDesktopLayout(currentActiveIndex);
+      }
+
+      function handleResize() {
+        const nowMobile = window.innerWidth <= 768;
+        if (nowMobile === isMobileLayout) return;
+        isMobileLayout = nowMobile;
+        if (isMobileLayout) {
+          destroyMobileSwiper();
+          initMobileSwiper();
+        } else {
+          if (swiperInstance) { swiperInstance.destroy(true, true); swiperInstance = null; }
+          const gridWrapper = sectionEl.querySelector('.explore-grid');
+          if (gridWrapper) gridWrapper.style.display = 'flex';
+          applyDesktopLayout(currentActiveIndex);
+          bindTabEvents();
+        }
+      }
+
+      function initialSetup() {
+        currentActiveIndex = 0;
+        setActiveTabUI(0);
+        if (window.innerWidth <= 768) {
+          isMobileLayout = true;
+          initMobileSwiper();
+        } else {
+          isMobileLayout = false;
+          applyDesktopLayout(0);
+          bindTabEvents();
+        }
+        window.addEventListener('resize', () => {
+          clearTimeout(window._resizeTimer);
+          window._resizeTimer = setTimeout(handleResize, 150);
+        });
+      }
+
+      if (window.Shopify && window.Shopify.designMode) {
+        const observer = new MutationObserver(() => {
+          const newCards = Array.from(sectionEl.querySelectorAll('.explore-card'));
+          const newTabs = Array.from(sectionEl.querySelectorAll('.tab-btn'));
+          if (newCards.length !== cards.length || newTabs.length !== tabs.length) location.reload();
+        });
+        observer.observe(sectionEl, { childList: true, subtree: true });
+      }
+
+      initialSetup();
+    }
+
+    function initAllSections() {
+      document.querySelectorAll('.explore-range-section').forEach(section => {
+        if (!section.dataset.exploreInitialized) initExploreRangeSection(section);
+      });
+    }
+
+    loadSwiper(function() {
+      initAllSections();
+      if (window.Shopify && window.Shopify.section) {
+        document.addEventListener('shopify:section:load', function(event) {
+          const section = event.target;
+          if (section.classList && section.classList.contains('explore-range-section')) {
+            initExploreRangeSection(section);
+          }
+        });
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Explore Range",
+  "class": "explore-range",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Explore Range"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Category Tab",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tab Title",
+          "default": "Category"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image (Desktop)"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Card Image (Mobile)",
+          "info": "Optional. If not set, the desktop image will be used on mobile too."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "View More Link",
+          "info": "Link for the 'View more' button"
+        },
+        {
+          "type": "text",
+          "id": "button_lable",
+          "label": "Button Lable",
+          "default": "Category"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Explore Range",
+      "blocks": [
+        { "type": "tab", "settings": { "title": "Active shoes" } },
+        { "type": "tab", "settings": { "title": "Sneaker" } },
+        { "type": "tab", "settings": { "title": "Adventure" } },
+        { "type": "tab", "settings": { "title": "Belts & Wallets" } },
+        { "type": "tab", "settings": { "title": "Oversized Tshirt" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,508 @@
+<h1 style="text-align:center;">Your Wishlist</h1>
+<div class="wishlist-wrapper">
+  <div class="product-list__inner col-3 col-4 col-2 col-1" id="inner-list">
+  <!-- Wishlist items will be dynamically loaded -->
+  </div>
+</div>
+
+<script>
+  function formatMoney(amount) {
+    const formatter = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "INR",
+    });
+    return formatter.format(amount / 100);
+  }
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    const wishlistContainer = document.getElementById("inner-list");
+    const wishlistKey = "shopify_wishlist";
+    const wishlist = JSON.parse(localStorage.getItem(wishlistKey)) || [];
+
+    if (wishlist.length > 0) {
+      const reversedWishlist = wishlist.reverse();
+
+      const productPromises = reversedWishlist.map(async (productHandle) => {
+        try {
+          const response = await fetch(`/products/${productHandle}.js`);
+          if (response.ok) {
+            const product = await response.json();
+            const hasDiscount = product.compare_at_price && product.compare_at_price > product.price;
+            const comparePriceHtml = hasDiscount
+              ? `<p class="compare-price" style="text-decoration: line-through; color: #999;">${formatMoney(product.compare_at_price)}</p>`
+              : "";
+
+            return `
+              <div class="wishlist-item">
+                <div class="wishlist-product">
+                  <a class="item-link" href="/products/${product.handle}">
+                    <img src="${product.featured_image}" alt="${product.title}" width="250">
+                  </a>
+                  <div class="product-item-details">
+                    <div class="wishlist-details">
+                      <a href="/products/${product.handle}"><h3>${product.title}</h3></a>
+                      <div class="prices">
+                        <p class="mrpprice">${formatMoney(product.price)}</p>
+                        ${comparePriceHtml}
+                      </div>
+                    </div>
+                    <div class="buttons-new">
+                      <button class="quick-view" data-product-handle="${product.handle}">Add to Cart</button>
+                      <button class="remove-wishlist-item" data-product-handle="${product.handle}">Remove</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+          } else {
+            return `<p>Product "${productHandle}" could not be loaded.</p>`;
+          }
+        } catch (error) {
+          return `<p>Error loading product "${productHandle}".</p>`;
+        }
+      });
+
+      const productsHtml = await Promise.all(productPromises);
+      wishlistContainer.innerHTML = productsHtml.join("");
+
+      document.querySelectorAll(".quick-view").forEach((button) => {
+        button.addEventListener("click", async (event) => {
+          const productHandle = event.target.dataset.productHandle;
+          const response = await fetch(`/products/${productHandle}.js`);
+          if (response.ok) {
+            const product = await response.json();
+
+            const quickViewHtml = `
+              <div class="quick-view-popup">
+                <button class="close-quick-view">X</button>
+                <div class="header-close"></div>
+                <div class="main-sec">
+                  <div class="main-img">
+                    <img id="quick-view-image" src="${product.featured_image}" alt="${product.title}" width="350">
+                  </div>
+                  <div class="product-options">
+                    <h2>${product.title}</h2>
+                    <div class="variant-options">
+                      <h3 style="margin-bottom: 0;">Color</h3>
+                      <div class="selected-details">
+                        <p class="selected-color" style="display: none; margin-bottom: 0;">Selected Color: None</p>
+                      </div>
+                      <div class="color-options">
+                        ${getUniqueColors(product.variants).map(variant => `
+                          <button 
+                            type="button" 
+                            class="variant-option color-option" 
+                            data-variant-id="${variant.id}" 
+                            data-color="${variant.option1}" 
+                            data-image="${variant.featured_image?.src || product.featured_image}">
+                            <img src="${variant.featured_image?.src || product.featured_image}" alt="${variant.option1}" width="70" />
+                          </button>
+                        `).join('')}
+                      </div>
+                    </div>
+
+                    <div class="size-options" style="display: none;">
+                      <h3 style="margin-bottom: 0;">Size</h3>
+                      <div class="selected-details">
+                        <p class="selected-size" style="display: none; margin-bottom: 0;">Selected Size: None</p>
+                      </div>
+                      <div class="sizes"></div>
+                    </div>
+
+                    <button type="button" class="add-to-cart" style="display: none;">Add to Cart</button>
+                  </div>
+                </div>
+              </div>
+            `;
+
+            const quickViewContainer = document.createElement("div");
+            quickViewContainer.classList.add("quick-view-overlay");
+            quickViewContainer.innerHTML = quickViewHtml;
+            document.body.appendChild(quickViewContainer);
+
+            document.querySelectorAll(".color-option").forEach(button => {
+              button.addEventListener("click", (event) => {
+                document.querySelectorAll(".color-option").forEach((btn) => btn.style.border = "none");
+                event.currentTarget.style.border = "2px solid black";
+
+                const selectedColor = event.currentTarget.dataset.color;
+                const selectedImage = event.currentTarget.dataset.image;
+                const sizeOptionsContainer = document.querySelector(".size-options .sizes");
+                const addToCartButton = document.querySelector(".add-to-cart");
+                const selectedVariants = product.variants.filter(variant => variant.option1 === selectedColor);
+
+                document.getElementById("quick-view-image").src = selectedImage;
+                const colorDisplay = document.querySelector(".selected-color");
+                colorDisplay.textContent = `Selected Color: ${selectedColor}`;
+                colorDisplay.style.display = "block";
+
+                sizeOptionsContainer.innerHTML = selectedVariants.map(variant => `
+                  <button 
+                    type="button" 
+                    class="variant-option size-option" 
+                    data-variant-id="${variant.id}">
+                    ${variant.option2}
+                  </button>
+                `).join('');
+
+                document.querySelector(".size-options").style.display = "block";
+                addToCartButton.style.display = "block";
+
+                document.querySelectorAll(".size-option").forEach(sizeButton => {
+                  sizeButton.addEventListener("click", () => {
+                    document.querySelectorAll(".size-option").forEach((btn) => btn.style.border = "none");
+                    sizeButton.style.border = "2px solid black";
+
+                    addToCartButton.setAttribute("data-variant-id", sizeButton.dataset.variantId);
+
+                    const sizeDisplay = document.querySelector(".selected-size");
+                    sizeDisplay.textContent = `Selected Size: ${sizeButton.textContent}`;
+                    sizeDisplay.style.display = "block";
+                  });
+                });
+              });
+            });
+
+            quickViewContainer.querySelector(".add-to-cart").addEventListener("click", async (event) => {
+              const variantId = event.target.getAttribute("data-variant-id");
+              const productName = document.querySelector(".product-options h2").textContent;
+              const selectedColor = document.querySelector(".selected-color").textContent.replace("Selected Color: ", "");
+              const selectedSize = document.querySelector(".selected-size").textContent.replace("Selected Size: ", "");
+              const selectedVariantImage = document.getElementById("quick-view-image").src;
+
+              if (!variantId) {
+                alert("Please select a variant.");
+                return;
+              }
+
+              if (window.clevertap) {
+                window.clevertap.event.push("Wishlist Add to Cart", {
+                  "Product Name": productName,
+                  "Selected Color": selectedColor || "None",
+                  "Selected Size": selectedSize || "None",
+                  "Selected Variant Image": selectedVariantImage,
+                });
+              } else {
+                console.warn("CleverTap is not available.");
+              }
+
+              // Add product to cart using Shopify's cart API
+              try {
+                const response = await fetch("/cart/add.js", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ id: variantId, quantity: 1 }),
+                });
+
+                if (response.ok) {
+                  alert("Product added to cart!");
+                  window.location.href = "/cart"; // Redirect to cart page
+                } else {
+                  const error = await response.json();
+                  alert(`Error: ${error.message}`);
+                }
+              } catch (error) {
+                console.error("Error adding to cart:", error);
+              }
+            });
+
+            quickViewContainer.querySelector(".close-quick-view").addEventListener("click", () => {
+              document.body.removeChild(quickViewContainer);
+            });
+          }
+        });
+      });
+
+      document.querySelectorAll(".remove-wishlist-item").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          const productHandle = event.target.dataset.productHandle;
+          const updatedWishlist = wishlist.filter((handle) => handle !== productHandle);
+          localStorage.setItem(wishlistKey, JSON.stringify(updatedWishlist));
+          location.reload();
+        });
+      });
+    } else {
+      wishlistContainer.innerHTML = '<p style="text-align: center;width: 100%;position: absolute;right: 0;">Wishlist is empty.</p>';
+    }
+  });
+
+  function getUniqueColors(variants) {
+    const colorMap = {};
+    variants.forEach(variant => {
+      colorMap[variant.option1] = variant;
+    });
+    return Object.values(colorMap);
+  }
+</script>
+
+
+
+
+
+<style>
+  .wishlist-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+     justify-content: center;
+    padding: 0 20px;
+}
+
+.product-list__inner {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 items in a row by default */
+  gap: 20px; /* Space between grid items */
+  margin-bottom: 40px;
+}
+
+.wishlist-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-item-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  .wishlist-product {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+        @media screen and (max-width:480px) {
+.col-1 {
+    grid-template-columns: repeat(2, 1fr);
+}
+}
+      @media screen and (min-width:667px) {
+.col-3 {
+    grid-template-columns: repeat(2, 1fr);
+}
+}
+    @media screen and (min-width:966px) {
+.col-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+}
+  @media screen and (min-width: 1160px) {
+.col-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .product-list__inner {
+    grid-template-columns: repeat(2, 1fr); /* 2 items in a row for tablets and mobile */
+    gap: 10px;
+  }
+  .wishlist-product img {
+    height: 230px !important;
+  }
+  .wishlist-details h3{
+        font-weight: 700;
+    font-size:14px !important;
+  }
+  .wishlist-details p {
+    font-size: 14px !important;
+}
+  .product-item-details {
+    padding-top: 10px;
+}
+  .wishlist-item {
+    margin: 5px 0;
+    padding: 5px;
+  }
+  .buttons-new {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+  .main-sec {
+    display: flex;
+    flex-direction: column;
+}
+  .quick-view-popup {
+    width: 100% !important;
+    overflow: auto;
+        height: 650px;
+}
+  .product-options {
+    padding-left: 0 !important;
+    padding-top: 10px;
+}
+  /* .color-options {
+    display: flex;
+    gap: 10px;
+} */
+ button.add-to-cart {
+    width: 100% !important;
+}
+  button.variant-option.color-option img {
+    width: 50px;
+}
+}
+button.variant-option.size-option, button.variant-option.color-option {
+    margin-bottom: 10px;
+    margin-right: 5px;
+}
+.wishlist-product img {
+  /* margin-right: 15px; */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  height: 350px;
+  object-fit: scale-down;
+  width:100%;
+}
+
+.wishlist-details h3 {
+  margin: 0;
+  font-size: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-top:10px;
+}
+
+p.mrpprice {
+  color: #dca23f;
+  font-weight: 700;
+}
+
+.wishlist-details p {
+  margin: 0px 0 0;
+  color: black;
+  font-size: 16px;
+  padding-bottom: 15px;
+}
+
+.prices {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.remove-wishlist-item, .add-to-cart, .quick-view {
+  background-color: #d18400;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: 'Inter';
+  letter-spacing: 0px;
+  border-radius: 8px;
+  text-transform: uppercase;
+   text-align: center;
+}
+
+.remove-wishlist-item:hover, .add-to-cart:hover {
+  background-color: #c0392b;
+}
+.product-options {
+    padding-left: 25px;
+}
+  button.variant-option.size-option {
+    border: 1px solid #dca23f;
+    padding: 0 5px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 14px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    background: none;
+    color: #b87b13;
+    margin-top: 0;s
+}
+.quick-view-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  z-index: 1000;
+  width: 800px;
+}
+.main-sec {
+    display: flex;
+}
+.quick-view-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.quick-view-popup img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+.product-options h2 {
+    line-height: normal;
+    font-family: 'Lato';
+  font-size: 18px;
+    font-weight: 600;
+    padding-bottom: 15px;
+}
+  .variant-options h3, .size-options h3 {
+    font-size: 16px;
+    font-weight: 600;
+    padding-bottom: 10px;
+}
+.quick-view-popup button {
+  margin-top: 10px;
+  /* background: #007bff; */
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+  button.variant-option.color-option {
+    background: none;
+    padding: 0 5px;
+    border-radius: 0;
+    margin-top: 0;
+}
+  .size-options {
+    padding-top: 10px;
+        padding-bottom: 20px;
+}
+  button.add-to-cart {
+    border-radius: 8px;
+    width: 250px;
+    text-align: center;
+}
+  .header-close {
+    display: flex;
+    align-items: flex-start;
+}
+  button.close-quick-view {
+    color: #d18400;
+    border-radius: 5px;
+    cursor: pointer;
+    background: transparent;
+    float: right;
+    margin: 0px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 5px 10px 0px 20px;
+}
+</style>

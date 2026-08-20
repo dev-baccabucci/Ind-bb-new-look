@@ -1,0 +1,68 @@
+<details-disclosure class="header__account">
+  <details>
+    <summary
+      class="header__icon header__icon--account focus-inset modal__toggle"
+      aria-haspopup="dialog"
+      role="button"
+    >
+      {% render 'icon-account' %}
+    </summary>
+    <div class="header__account-modal modal__toggle color-background-1" role="dialog" aria-modal="true">
+      {%- if customer -%}
+        <div class="header__account-account">
+          {% if customer.name != blank %}
+            <div class="header__account-name">
+              {{- customer.name -}}
+            </div>
+          {%- endif -%}
+          <ul class="header__account-body">
+            <li>
+              <a href="{{ routes.account_url }}">
+                {{- 'customer.account_fallback' | t -}}
+              </a>
+            </li>
+            <li>
+              <a href="{{ routes.account_addresses_url }}">
+                {{- 'customer.addresses.book' | t -}}
+              </a>
+            </li>
+          </ul>
+          <a
+            class="header__account-logout button button--primary focus-inset"
+            href="{{ routes.account_logout_url }}"
+          >
+            <div class="button__content">
+              <span class="button__label" data-label="{{ 'customer.log_out' | t }}">
+                {{ 'customer.log_out' | t }}
+              </span>
+            </div>
+            <span class="animated-button-circle"></span>
+          </a>
+        </div>
+      {%- else -%}
+        <a
+          href="{{ routes.account_login_url }}"
+          class="button button--primary header__account-login focus-inset"
+        >
+          <div class="button__content">
+            <span class="button__label" data-label="{{ 'customer.log_in' | t }}">
+              {{ 'customer.log_in' | t }}
+            </span>
+          </div>
+          <span class="animated-button-circle"></span>
+        </a>
+
+        <a
+          class="header__account-register button button--tertiary"
+          href="{{ routes.account_register_url }}"
+        >
+          <div class="button__content">
+            <span class="button__label" data-label="{{- 'customer.login_page.create_account_header' | t -}}">
+              {{- 'customer.login_page.create_account_header' | t -}}
+            </span>
+          </div>
+        </a>
+      {%- endif -%}
+    </div>
+  </details>
+</details-disclosure>

@@ -1,0 +1,63 @@
+<ul
+  class="header__submenu list-menu list-menu--disclosure motion-reduce color-background-1"
+  role="list"
+>
+  {%- for childlink in link.links -%}
+    <li>
+      {%- if childlink.links == blank -%}
+        <a
+          href="{{ childlink.url }}"
+          {% if settings.links_blank and childlink.type == "http_link" %}
+            target="_blank"
+          {% endif %}
+          class="header__menu-item list-menu__item focus-inset {% if childlink.current and childlink.url != '/' %} header__menu-item--active{% endif %}"
+          {% if childlink.current and childlink.url != '/' %}
+            aria-current="page"
+          {% endif %}
+        >
+          <span>
+            {{ childlink.title | escape }}
+          </span>
+        </a>
+      {%- else -%}
+        <a
+          href="{{ childlink.url }}"
+          {% if settings.links_blank and childlink.type == "http_link" %}
+            target="_blank"
+          {% endif %}
+          class="header__menu-item list-menu__item focus-inset {% if childlink.current and childlink.url != '/' %} header__menu-item--active{% endif %}"
+          {% if childlink.current and childlink.url != '/' %}
+            aria-current="page"
+          {% endif %}
+        >
+          <span>
+            {{ childlink.title | escape }}
+            {% render 'icon-arrow-small' %}
+          </span>
+        </a>
+        <ul
+          class="header__submenu list-menu--disclosure list-menu motion-reduce color-background-1"
+        >
+          {%- for grandchildlink in childlink.links -%}
+            <li>
+              <a
+                href="{{ grandchildlink.url }}"
+                {% if settings.links_blank and grandchildlink.type == "http_link" %}
+                  target="_blank"
+                {% endif %}
+                class="header__menu-item list-menu__item focus-inset {% if grandchildlink.current and grandchildlink.url != '/' %} header__menu-item--active{% endif %}"
+                {% if grandchildlink.current and grandchildlink.url != '/' %}
+                  aria-current="page"
+                {% endif %}
+              >
+                <span>
+                  {{ grandchildlink.title | escape }}
+                </span>
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </li>
+  {%- endfor -%}
+</ul>

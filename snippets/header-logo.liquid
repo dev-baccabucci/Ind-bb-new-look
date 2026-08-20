@@ -1,0 +1,69 @@
+{% comment %}
+  Example: {% render 'header-logo', tag: 'h1' %}
+{% endcomment %}
+
+{%- if request.page_type == 'index' -%}
+  <{{ tag }} class="header__heading">
+{%- endif -%}
+{% liquid
+  if section.settings.logo != blank and section.settings.logo_2 == blank
+    assign aspect_ratio = section.settings.logo.aspect_ratio
+    assign padding_bottom = 1 | divided_by: aspect_ratio | times: 100
+  elsif section.settings.logo == blank and section.settings.logo_2 != blank
+    assign aspect_ratio = section.settings.logo_2.aspect_ratio
+    assign padding_bottom = 1 | divided_by: aspect_ratio | times: 100
+  elsif section.settings.logo != blank and section.settings.logo_2 != blank
+    assign aspect_ratio = section.settings.logo.aspect_ratio | at_most: section.settings.logo_2.aspect_ratio
+    assign padding_bottom = 1 | divided_by: aspect_ratio | times: 100
+  else
+    assign padding_bottom = 0
+  endif
+%}
+<a
+  href="{{ routes.root_url }}" class="header__heading-link focus-inset{% if position != blank %} header__heading-link--{{position}}{% endif %} {{ aspect_ratio }}"
+  {% if section.settings.logo != blank or section.settings.logo_2 != blank %}
+  style="width: {{ section.settings.logo_width }}px; --padding_bottom: {{ padding_bottom }}%; "
+  {% endif %}
+>
+  {%- if section.settings.logo != blank -%}
+    {%- assign image_size = section.settings.logo_width | append: 'x' -%}
+    {%- assign image_size_2x = section.settings.logo_width | times: 2 | at_most: 5760 -%}
+    <img
+      srcset="{{ section.settings.logo | image_url: width: image_size }} 1x, {{ section.settings.logo | image_url: width: image_size_2x }} 2x"
+      src="{{ section.settings.logo | image_url: width: image_size }}"
+      class="header__heading-logo"
+      width="{{ section.settings.logo_width }}"
+      height="auto"
+      alt="{{ section.settings.logo.alt | default: shop.name | escape }}"
+      loading="lazy"
+    >
+    {%- if section.settings.logo_2 != blank -%}
+      <img
+        srcset="{{ section.settings.logo_2 | image_url: width: image_size }} 1x, {{ section.settings.logo_2 | image_url: width: image_size_2x }} 2x"
+        src="{{ section.settings.logo_2 | image_url: width: image_size }}"
+        class="header__heading-logo header__heading-logo--overlay"
+        width="{{ section.settings.logo_width }}"
+        height="auto"
+        alt="{{ section.settings.logo_2.alt | default: shop.name | escape }}"
+        loading="lazy"
+      >
+    {%- endif -%}
+  {%- elsif section.settings.logo_2 != blank -%}
+    {%- assign image_size = section.settings.logo_width | append: 'x' -%}
+    {%- assign image_size_2x = section.settings.logo_width | times: 2 | at_most: 5760 -%}
+    <img
+      srcset="{{ section.settings.logo_2 | image_url: width: image_size }} 1x, {{ section.settings.logo_2 | image_url: width: image_size_2x }} 2x"
+      src="{{ section.settings.logo_2 | image_url: width: image_size }}"
+      class="header__heading-logo header__heading-logo--overlay"
+      width="{{ section.settings.logo_width }}"
+      height="auto"
+      alt="{{ section.settings.logo_2.alt | default: shop.name | escape }}"
+      loading="lazy"
+    >
+  {%- else -%}
+    <span>{{ shop.name }}</span>
+  {%- endif -%}
+</a>
+{%- if request.page_type == 'index' -%}
+  </{{ tag }}>
+{%- endif -%}

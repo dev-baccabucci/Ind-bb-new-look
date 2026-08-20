@@ -1,0 +1,345 @@
+{% liquid
+  assign enable_burger_menu = false
+  for block in section.blocks
+    if block.type == 'desktop_burger'
+      assign enable_burger_menu = true
+      assign burger_block = block
+    endif
+  endfor
+%}
+
+{%- if enable_burger_menu -%}
+  <burger-menu {{ burger_block.shopify_attributes }}>
+    <button
+      class="burger-menu__toggle burger-menu__toggle--open-btn button--unstyled focus-inset no-js-hidden"
+      aria-label="{{ 'sections.header.burger_menu_open' | t }}"
+    >
+      <span class="burger-menu__toggle-line"></span>
+      <span class="burger-menu__toggle-line"></span>
+    </button>
+
+    <div
+      class="burger-menu"
+      role="dialog"
+      aria-modal="true"
+      aria-label="{{ 'sections.header.burger_menu' | t }}"
+      tabindex="-1"
+    >
+      <div class="container">
+        {% liquid
+          assign has_cards = false
+          for i in (1..4)
+            assign enable_card = 'burger_enable_card_' | append: i
+            if burger_block.settings[enable_card]
+              assign has_cards = true
+            endif
+          endfor
+        %}
+        <div
+          class="burger-menu__wrapper{% if burger_block.settings.burger_enable_social or burger_block.settings.burger_additional_links != blank %}{% if has_cards %} burger-menu__wrapper--with-links{% endif %}{% endif %}"
+        >
+          {%- if burger_block.settings.burger_enable_social
+            or burger_block.settings.burger_additional_links != blank
+          -%}
+            {%- if has_cards -%}
+              <div class="burger-menu__top"></div>
+            {%- endif -%}
+          {%- endif -%}
+
+          {%- if has_cards -%}
+            <div class="burger-menu__cards">
+              <div class="burger-menu__cards-wrapper">
+                {% for i in (1..4) %}
+                  {% liquid
+                    assign is_visible_card = false
+                    assign enable_card = 'burger_enable_card_' | append: i
+                    assign card_type = 'burger_card_type_' | append: i
+                    assign card_heading = 'burger_card_heading_' | append: i
+                    assign card_heading_size = 'burger_card_heading_size_' | append: i
+                    assign card_description = 'burger_card_description_' | append: i
+                    assign card_link = 'burger_card_link_' | append: i
+                    assign card_image = 'burger_card_image_' | append: i
+                    assign card_overlay = 'burger_card_overlay_opacity_' | append: i
+                    assign card_button_label = 'burger_button_label_' | append: i
+                    assign card_color_scheme = 'burger_card_color_scheme_' | append: i
+
+                    if burger_block.settings[enable_card]
+                      assign is_visible_card = true
+                    endif
+                  %}
+                  {%- if is_visible_card -%}
+                    <div class="burger-menu__card color-{{ burger_block.settings[card_color_scheme] }} burger-menu__card--{{ burger_block.settings[card_type] }} burger-menu__card--{{ burger_block.settings.burger_card_ratio }}">
+                      <div class="burger-menu__card-inner">
+                        {%- if burger_block.settings[card_heading] != blank
+                          or burger_block.settings[card_description] != blank
+                        -%}
+                          <div class="burger-menu__card-top">
+                            {%- if burger_block.settings[card_heading] != blank -%}
+                              <h3 class="burger-menu__card-heading {{ burger_block.settings[card_heading_size] }}">
+                                {{- burger_block.settings[card_heading] -}}
+                              </h3>
+                            {%- endif -%}
+                            {%- if burger_block.settings[card_description] != blank -%}
+                              <p class="burger-menu__card-description{% if burger_block.settings[card_heading_size] == "h5" %} body-small{% endif %}">
+                                {{- burger_block.settings[card_description] -}}
+                              </p>
+                            {%- endif -%}
+                          </div>
+                        {%- endif -%}
+
+                        {%- if burger_block.settings[card_link] != blank -%}
+                          <a
+                            class="burger-menu__card-link focus-inset"
+                            href="{{ burger_block.settings[card_link] }}"
+                            {% if settings.links_blank and burger_block.settings[card_link].type == 'external_link' %}
+                              target="_blank"
+                            {% endif %}
+                          ></a>
+                          {%- if burger_block.settings[card_type] == 'link' -%}
+                            <div class="burger-menu__card-icon">
+                              {% render 'icon-arrow-link' %}
+                            </div>
+                          {%- endif -%}
+                        {%- endif -%}
+
+                        {%- if burger_block.settings[card_type] == 'media' -%}
+                          {%- if burger_block.settings[card_image] != blank -%}
+                            {% liquid
+                              case burger_block.settings.burger_card_ratio
+                                when 'landscape'
+                                  assign settings_aspect_ratio = 1.5
+                                when 'portrait'
+                                  assign settings_aspect_ratio = 0.75
+                                when 'square'
+                                  assign settings_aspect_ratio = 1
+                              endcase
+
+                              assign calc_ratio = 1
+                              if burger_block.settings[card_image].aspect_ratio > settings_aspect_ratio
+                                assign calc_ratio = burger_block.settings[card_image].aspect_ratio | divided_by: settings_aspect_ratio | round: 2
+                              endif
+                            %}
+                            <div
+                              class="burger-menu__card-overlay"
+                              style="opacity: {{ card_overlay | divided_by: 100.0 }};"
+                            ></div>
+                            <div class="burger-menu__card-image">
+                              {%- capture sizes -%}
+                                calc({{ calc_ratio }} * (100vw - 160px) / 4)
+                              {%- endcapture -%}
+                              {{
+                                burger_block.settings[card_image]
+                                | image_url: width: burger_block.settings[card_image].width
+                                | image_tag:
+                                  loading: 'lazy',
+                                  sizes: sizes,
+                                  widths: '200, 308, 400, 616, 800, 1000, 1200, 1600, 2000'
+                              }}
+                            </div>
+                          {%- endif -%}
+
+                          {%- if burger_block.settings[card_button_label] != blank -%}
+                            {% render 'button',
+                              btn_link: burger_block.settings[card_link],
+                              btn_label: burger_block.settings[card_button_label],
+                              btn_style: 'primary',
+                              btn_arrow: true,
+                              class: 'burger-menu__card-button'
+                            %}
+                          {%- endif -%}
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  {%- endif -%}
+                {% endfor %}
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- if burger_block.settings.burger_enable_social
+            or burger_block.settings.burger_additional_links != blank
+          -%}
+            <div class="burger-menu__bottom">
+              {%- if burger_block.settings.burger_additional_links != blank -%}
+                <div class="burger-menu__info-links">
+                  {% for additionalLink in burger_block.settings.burger_additional_links.links %}
+                    <a
+                      href="{{ additionalLink.url }}"
+                      class="focus-inset"
+                      aria-label="{{- additionalLink.title | escape -}}"
+                      {% if settings.links_blank and additionalLink.type == 'http_link' %}
+                        target="_blank"
+                      {% endif %}
+                    >
+                      <span class="body-small" title="{{- additionalLink.title | escape -}}">
+                        {{- additionalLink.title | escape -}}
+                      </span>
+                    </a>
+                  {% endfor %}
+                </div>
+              {%- endif -%}
+
+              {%- if burger_block.settings.burger_enable_social -%}
+                <ul class="list list-social list-unstyled" role="list">
+                  {%- if settings.social_twitter_link != blank -%}
+                    <li class="list-social__item">
+                      <a
+                        href="{{ settings.social_twitter_link }}"
+                        {% if settings.links_blank %}
+                          target="_blank"
+                        {% endif %}
+                        class="list-social__link"
+                        
+                      >
+                        {%- render 'icon-twitter' -%}
+                        <span class="visually-hidden">
+                          {{- 'general.social.links.twitter' | t -}}
+                        </span>
+                      </a>
+                    </li>
+                  {%- endif -%}
+                  {%- if settings.social_facebook_link != blank -%}
+                    <li class="list-social__item">
+                      <a
+                        href="{{ settings.social_facebook_link }}"
+                        {% if settings.links_blank %}
+                          target="_blank"
+                        {% endif %}
+                        class="list-social__link"
+                        
+                      >
+                        {%- render 'icon-facebook' -%}
+                        <span class="visually-hidden">
+                          {{- 'general.social.links.facebook' | t -}}
+                        </span>
+                      </a>
+                    </li>
+                  {%- endif -%}
+                  {%- if settings.social_pinterest_link != blank -%}
+                    <li class="list-social__item">
+                      <a
+                        href="{{ settings.social_pinterest_link }}"
+                        {% if settings.links_blank %}
+                          target="_blank"
+                        {% endif %}
+                        class="list-social__link"
+                        
+                      >
+                        {%- render 'icon-pinterest' -%}
+                        <span class="visually-hidden">
+                          {{- 'general.social.links.pinterest' | t -}}
+                        </span>
+                      </a>
+                    </li>
+                  {%- endif -%}
+                  {%- if settings.social_instagram_link != blank -%}
+                    <li class="list-social__item">
+                      <a
+                        href="{{ settings.social_instagram_link }}"
+                        {% if settings.links_blank %}
+                          target="_blank"
+                        {% endif %}
+                        class="list-social__link"
+                        
+                      >
+                        {%- render 'icon-instagram' -%}
+                        <span class="visually-hidden">
+                          {{- 'general.social.links.instagram' | t -}}
+                        </span>
+                      </a>
+                    </li>
+                  {%- endif -%}
+                  {%- if settings.social_tiktok_link != blank -%}
+                    <li class="list-social__item">
+                      <a
+                        href="{{ settings.social_tiktok_link }}"
+                        {% if settings.links_blank %}
+                          target="_blank"
+                        {% endif %}
+                        class="list-social__link"
+                        
+                      >
+                        {%- render 'icon-tiktok' -%}
+                        <span class="visually-hidden">
+                          {{ 'general.social.links.tiktok' | t }}
+                        </span>
+                      </a>
+                    </li>
+                  {%- endif -%}
+                  {%- if settings.social_tumblr_link != blank -%}
+                    <li class="list-social__item">
+                      <a
+                        href="{{ settings.social_tumblr_link }}"
+                        {% if settings.links_blank %}
+                          target="_blank"
+                        {% endif %}
+                        class="list-social__link"
+                        
+                      >
+                        {%- render 'icon-tumblr' -%}
+                        <span class="visually-hidden">
+                          {{- 'general.social.links.tumblr' | t -}}
+                        </span>
+                      </a>
+                    </li>
+                  {%- endif -%}
+                  {%- if settings.social_snapchat_link != blank -%}
+                    <li class="list-social__item">
+                      <a
+                        href="{{ settings.social_snapchat_link }}"
+                        {% if settings.links_blank %}
+                          target="_blank"
+                        {% endif %}
+                        class="list-social__link"
+                        
+                      >
+                        {%- render 'icon-snapchat' -%}
+                        <span class="visually-hidden">
+                          {{- 'general.social.links.snapchat' | t -}}
+                        </span>
+                      </a>
+                    </li>
+                  {%- endif -%}
+                  {%- if settings.social_youtube_link != blank -%}
+                    <li class="list-social__item">
+                      <a
+                        href="{{ settings.social_youtube_link }}"
+                        {% if settings.links_blank %}
+                          target="_blank"
+                        {% endif %}
+                        class="list-social__link"
+                        
+                      >
+                        {%- render 'icon-youtube' -%}
+                        <span class="visually-hidden">
+                          {{- 'general.social.links.youtube' | t -}}
+                        </span>
+                      </a>
+                    </li>
+                  {%- endif -%}
+                  {%- if settings.social_vimeo_link != blank -%}
+                    <li class="list-social__item">
+                      <a
+                        href="{{ settings.social_vimeo_link }}"
+                        {% if settings.links_blank %}
+                          target="_blank"
+                        {% endif %}
+                        class="list-social__link"
+                        
+                      >
+                        {%- render 'icon-vimeo' -%}
+                        <span class="visually-hidden">
+                          {{- 'general.social.links.vimeo' | t -}}
+                        </span>
+                      </a>
+                    </li>
+                  {%- endif -%}
+                </ul>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </burger-menu>
+{%- endif -%}

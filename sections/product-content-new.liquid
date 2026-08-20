@@ -1,0 +1,495 @@
+{%- capture product_content -%}
+  {%- assign trust_block = section.blocks | where: 'type', 'trust' | first -%}
+
+  {%- if trust_block != blank -%}
+    {%- capture trust_content -%}
+      {%- for i in (1..5) -%}
+        {%- capture custom_icon_setting -%}custom_icon_{{ i }}{%- endcapture -%}
+        {%- capture title_setting -%}title_{{ i }}{%- endcapture -%}
+        {%- capture content_setting -%}content_{{ i }}{%- endcapture -%}
+
+        {%- if trust_block.settings[title_setting] != blank -%}
+          {%- assign custom_icon = trust_block.settings[custom_icon_setting] -%}
+
+          {%- capture trust_icon -%}
+            {%- if custom_icon != blank -%}
+              <img class="product-tabs__trust-icon" loading="lazy" sizes="35px" src="{{ custom_icon | img_url: '35px' }}" srcset="{{ custom_icon | img_url: '35x' }} 1x, {{ custom_icon | img_url: '48x' }} 2x, {{ custom_icon | img_url: '72x' }} 3x, {{ custom_icon | img_url: '96x' }} 4x" alt="{{ trust_block.settings[title_setting] | escape }}">
+            {%- endif -%}
+          {%- endcapture -%}
+
+          {%- if trust_block.settings[content_setting] != blank -%}
+            <button class="product-tabs__trust-title icon-text link text--subdued hidden-phone" aria-expanded="false" data-trust-toggle="trust-drawercs-{{ forloop.index }}">
+              {{- trust_icon -}} {{- trust_block.settings[title_setting] | escape -}}
+            </button>
+
+            <button class="product-tabs__trust-title icon-text link text--subdued hidden-tablet-and-up" aria-expanded="false" data-trust-toggle="trust-popover-{{ forloop.index }}">
+              {{- trust_icon -}} {{- trust_block.settings[title_setting] | escape -}}
+            </button>
+          {%- else -%}
+            <span class="product-tabs__trust-title icon-text text--subdued">
+              {{- trust_icon -}} {{- trust_block.settings[title_setting] | escape -}}
+            </span>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+
+    {%- capture trust_drawercs_content -%}
+      {%- for i in (1..5) -%}
+        {%- capture custom_icon_setting -%}custom_icon_{{ i }}{%- endcapture -%}
+        {%- capture title_setting -%}title_{{ i }}{%- endcapture -%}
+        {%- capture content_setting -%}content_{{ i }}{%- endcapture -%}
+
+        {%- if trust_block.settings[title_setting] != blank and trust_block.settings[content_setting] != blank -%}
+          {%- assign custom_icon = trust_block.settings[custom_icon_setting] -%}
+
+          {%- capture trust_icon -%}
+            {%- if custom_icon != blank -%}
+              <img class="product-tabs__trust-icon" loading="lazy" sizes="35px" src="{{ custom_icon | img_url: '24x' }}" srcset="{{ custom_icon | img_url: '24x' }} 1x, {{ custom_icon | img_url: '48x' }} 2x, {{ custom_icon | img_url: '72x' }} 3x, {{ custom_icon | img_url: '96x' }} 4x" alt="{{ trust_block.settings[title_setting] | escape }}">
+            {%- endif -%}
+          {%- endcapture -%}
+
+          <div id="trust-drawercs-{{ forloop.index }}" class="drawercs drawercs--large hidden-phone">
+            <div class="drawercs__overlay" data-trust-toggle="trust-drawercs-{{ forloop.index }}"></div>
+
+            <div class="drawercs__header">
+              <p class="drawercs__title heading h6">{{- trust_icon -}} {{- trust_block.settings[title_setting] | escape -}}</p>
+
+              <button type="button" class="drawercs__close-button" data-trust-toggle="trust-drawercs-{{ forloop.index }}" title="{{ 'general.accessibility.close' | t | escape }}">
+                <svg class="icon icon--close" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18 6L6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M6 6L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+
+            <div class="drawercs__content drawercs__content--padded-start">
+              <div class="rte">
+                {{- trust_block.settings[content_setting] -}}
+              </div>
+            </div>
+          </div>
+
+          <div id="trust-popover-{{ forloop.index }}" class="popover hidden-tablet-and-up">
+            <div class="popover__overlay" data-trust-toggle="trust-popover-{{ forloop.index }}"></div>
+
+            <div class="popover__header">
+              <p class="popover__title heading h6">{{- trust_icon -}} {{- trust_block.settings[title_setting] | escape -}}</p>
+
+              <button type="button" class="popover__close-button" data-trust-toggle="trust-popover-{{ forloop.index }}" title="{{ 'general.accessibility.close' | t | escape }}">
+                <svg class="icon icon--close" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18 6L6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M6 6L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+
+            <div class="popover__content">
+              <div class="rte">
+                {{- trust_block.settings[content_setting] -}}
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+  {%- endif -%}
+
+  {%- if trust_content != blank -%}
+    <div class="product-tabs__trust-list container">
+      {{- trust_content -}}
+    </div>
+  {%- endif -%}
+
+  {{- trust_drawercs_content -}}
+{%- endcapture -%}
+
+{%- if product_content != blank -%}
+  <section class="container">
+    <div id="product-{{ product.id }}-content" class="product-content anchor">
+      {{- product_content -}}
+    </div>
+  </section>
+{%- endif -%}
+
+<style>
+  .product-tabs__trust-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 35px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .product-tabs__trust-title {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    color: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+  }
+  
+  .product-tabs__trust-icon {
+    width: 35px;
+    height: 35px;
+  }
+  
+  /* drawercs styles */
+  .drawercs {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 400px;
+    max-width: 90vw;
+    background: #fff;
+    z-index: 1000;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+    visibility: hidden;
+  }
+  
+  .drawercs.is-open {
+    transform: translateX(0);
+    visibility: visible;
+  }
+  
+  .drawercs__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  
+  .drawercs.is-open ~ .drawercs__overlay {
+    opacity: 1;
+    pointer-events: all;
+  }
+  
+  .drawercs__header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .drawercs__content {
+    padding: 20px;
+    overflow-y: auto;
+    height: calc(100% - 60px);
+  }
+  
+  /* Popover styles (mobile) */
+  .popover {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-height: 80vh;
+    background: #fff;
+    z-index: 1000;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    border-radius: 12px 12px 0 0;
+    visibility: hidden;
+  }
+  
+  .popover.is-open {
+    transform: translateY(0);
+    visibility: visible;
+  }
+  
+  .popover__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  
+  .popover.is-open ~ .popover__overlay {
+    opacity: 1;
+    pointer-events: all;
+  }
+  
+  .popover__header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .popover__content {
+    padding: 20px;
+    overflow-y: auto;
+    max-height: 60vh;
+  }
+  button.popover__close-button, button.drawercs__close-button {
+    display: block;
+    width: 29px;
+    margin-right: 8%;
+}
+  p.popover__title.heading.h6, p.drawercs__title.heading.h6 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+  /* Responsive classes */
+  @media (max-width: 999px) {
+    .hidden-lap-and-up {
+      display: none !important;
+    }
+  }
+  
+  @media (min-width: 1000px) {
+    .hidden-pocket {
+      display: none !important;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .hidden-phone {
+      display: none !important;
+    }
+    .product-tabs__trust-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 35px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+  }
+  
+  @media (min-width: 768px) {
+    .hidden-tablet-and-up {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Trust badge drawercs/popover functionality
+  const trustToggles = document.querySelectorAll('[data-trust-toggle]');
+  
+  trustToggles.forEach(toggle => {
+    toggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('data-trust-toggle');
+      const target = document.getElementById(targetId);
+      const isExpanded = this.getAttribute('aria-expanded') === 'true';
+      
+      // Close all other trust elements first
+      document.querySelectorAll('.drawercs.is-open, .popover.is-open').forEach(el => {
+        if (el.id !== targetId) {
+          el.classList.remove('is-open');
+          const toggleBtn = document.querySelector(`[data-trust-toggle="${el.id}"]`);
+          if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+      
+      // Toggle current element
+      this.setAttribute('aria-expanded', !isExpanded);
+      target.classList.toggle('is-open');
+      
+      // Handle overlay separately for popovers
+      const overlay = target.querySelector('.popover__overlay, .drawercs__overlay');
+      if (overlay) {
+        overlay.classList.toggle('is-open', !isExpanded);
+      }
+      
+      // Lock body scroll when drawercs/popover is open
+      if (!isExpanded) {
+        document.body.style.overflow = 'visible';
+      } else {
+        document.body.style.overflow = '';
+      }
+    });
+  });
+
+  // Close buttons and overlay clicks
+  const closeElements = document.querySelectorAll('[data-trust-toggle], .drawercs__overlay, .popover__overlay');
+  
+  closeElements.forEach(element => {
+    element.addEventListener('click', function(e) {
+      // For overlay clicks, we want to close the parent drawercs/popover
+      const targetId = this.getAttribute('data-trust-toggle') || 
+                      this.classList.contains('drawercs__overlay') ? this.previousElementSibling.id : 
+                      this.classList.contains('popover__overlay') ? this.previousElementSibling.id : null;
+      
+      if (!targetId) return;
+      
+      const target = document.getElementById(targetId);
+      if (!target) return;
+      
+      // Find the toggle button that controls this element
+      const toggle = document.querySelector(`[data-trust-toggle="${targetId}"]`);
+      
+      // Close the target
+      target.classList.remove('is-open');
+      if (toggle) toggle.setAttribute('aria-expanded', 'false');
+      
+      // Restore body scroll
+      document.body.style.overflow = '';
+    });
+  });
+
+  // Prevent clicks inside the drawercs/popover content from closing it
+  document.querySelectorAll('.drawercs__content, .popover__content').forEach(content => {
+    content.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Trust Icons",
+  "class": "shopify-section--trust-icons",
+  "blocks": [
+    {
+      "name": "Trust Icons",
+      "type": "trust",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Add trust badges with custom icons and content."
+        },
+        {
+          "type": "header",
+          "content": "Badge 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon_1",
+          "label": "Custom icon",
+          "info": "48 x 48px .png with transparency recommended"
+        },
+        {
+          "type": "text",
+          "id": "title_1",
+          "label": "Heading",
+          "default": "Shipping & Returns"
+        },
+        {
+          "type": "richtext",
+          "id": "content_1",
+          "label": "Content",
+          "default": "<p>Add text about your shipping policy</p>"
+        },
+        {
+          "type": "header",
+          "content": "Badge 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon_2",
+          "label": "Custom icon",
+          "info": "48 x 48px .png with transparency recommended"
+        },
+        {
+          "type": "text",
+          "id": "title_2",
+          "label": "Heading",
+          "default": "Warranty"
+        },
+        {
+          "type": "richtext",
+          "id": "content_2",
+          "label": "Content",
+          "default": "<p>Add text about your product warranty</p>"
+        },
+        {
+          "type": "header",
+          "content": "Badge 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon_3",
+          "label": "Custom icon",
+          "info": "48 x 48px .png with transparency recommended"
+        },
+        {
+          "type": "text",
+          "id": "title_3",
+          "label": "Heading",
+          "default": "Secure Payment"
+        },
+        {
+          "type": "richtext",
+          "id": "content_3",
+          "label": "Content",
+          "default": "<p>Add text about your payment security</p>"
+        },
+        {
+          "type": "header",
+          "content": "Badge 4"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon_4",
+          "label": "Custom icon",
+          "info": "48 x 48px .png with transparency recommended"
+        },
+        {
+          "type": "text",
+          "id": "title_4",
+          "label": "Heading",
+          "default": "Customer Support"
+        },
+        {
+          "type": "richtext",
+          "id": "content_4",
+          "label": "Content",
+          "default": "<p>Add text about your customer support</p>"
+        },
+        {
+          "type": "header",
+          "content": "Badge 5"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon_5",
+          "label": "Custom icon",
+          "info": "48 x 48px .png with transparency recommended"
+        },
+        {
+          "type": "text",
+          "id": "title_5",
+          "label": "Heading",
+          "default": "Quality Guarantee"
+        },
+        {
+          "type": "richtext",
+          "id": "content_5",
+          "label": "Content",
+          "default": "<p>Add text about your quality guarantee</p>"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

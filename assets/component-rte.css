@@ -1,0 +1,429 @@
+.rte {
+  width: 100%;
+  overflow: hidden;
+}
+.rte::after {
+  clear: both;
+  content: "";
+  display: table;
+}
+.rte > span {
+  display: block;
+  margin-bottom: 2rem;
+}
+.rte figure {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: 1.2rem;
+  max-width: 740px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2.4rem;
+  margin-bottom: 3.2rem;
+  max-width: 100%;
+}
+@media screen and (min-width: 576px) {
+  .rte figure {
+    margin-top: 4.4rem;
+    margin-bottom: 6.4rem;
+  }
+}
+@media screen and (min-width: 780px) {
+  .rte figure {
+    max-width: 740px;
+  }
+}
+.rte figure img {
+  margin: 0 auto;
+  max-width: 100%;
+}
+@media screen and (min-width: 780px) {
+  .rte figure img {
+    max-width: 740px;
+  }
+}
+.rte figcaption {
+  width: 100%;
+  color: rgb(var(--color-foreground-secondary));
+  font-size: calc(var(--font-body-scale) * 1.2rem - 0.1rem);
+  max-width: 100%;
+}
+@media screen and (min-width: 780px) {
+  .rte figcaption {
+    max-width: 740px;
+  }
+}
+@media only screen and (min-width: 750px) {
+  .rte figcaption {
+    font-size: calc(var(--font-body-scale) * 1.4rem - 0.2rem);
+  }
+}
+.rte p:has(iframe) {
+  max-width: 100%;
+}
+@media screen and (min-width: 780px) {
+  .rte p:has(iframe) {
+    max-width: 740px;
+  }
+}
+.rte iframe {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+}
+@media screen and (min-width: 780px) {
+  .rte iframe {
+    max-width: 740px;
+  }
+}
+.rte iframe[src*="youtube.com"],
+.rte iframe[src*="vimeo.com"] {
+  margin-top: 2rem;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+}
+.rte p {
+  color: rgba(var(--color-foreground));
+  margin-bottom: 2rem;
+}
+.rte p small {
+  font-size: calc(var(--font-body-scale) * 1.2rem - 0.1rem);
+}
+@media only screen and (min-width: 750px) {
+  .rte p small {
+    font-size: calc(var(--font-body-scale) * 1.4rem - 0.2rem);
+  }
+}
+.rte h1,
+.rte h2,
+.rte h3,
+.rte h4 {
+  margin-top: 3.2rem;
+}
+@media screen and (min-width: 750px) {
+  .rte h1,
+  .rte h2,
+  .rte h3,
+  .rte h4 {
+    margin-top: 4.8rem;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .rte h1,
+  .rte h2,
+  .rte h3,
+  .rte h4 {
+    margin-top: 5.6rem;
+  }
+}
+.rte h5,
+.rte h6 {
+  margin-top: 2.8rem;
+}
+@media screen and (min-width: 750px) {
+  .rte h5,
+  .rte h6 {
+    margin-top: 3.2rem;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .rte h5,
+  .rte h6 {
+    margin-top: 4rem;
+  }
+}
+.rte h1,
+.rte h2,
+.rte h3,
+.rte h4,
+.rte h5,
+.rte h6 {
+  color: rgb(var(--color-foreground));
+  margin-bottom: 2rem;
+}
+.rte ol,
+.rte ul {
+  color: rgba(var(--color-foreground));
+  margin-bottom: 24px;
+}
+.rte ol li,
+.rte ul li {
+  position: relative;
+  margin-bottom: 1.6rem;
+}
+.rte ol li p,
+.rte ul li p {
+  margin: 0;
+}
+.rte ol li img,
+.rte ul li img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.rte ol li ol,
+.rte ol li ul,
+.rte ul li ol,
+.rte ul li ul {
+  margin: 1.6rem 0 0;
+}
+.rte ol li ol,
+.rte ul li ol {
+  list-style: lower-latin;
+}
+.rte ol li ol ol,
+.rte ul li ol ol {
+  list-style: lower-roman;
+}
+.rte ol {
+  list-style: decimal;
+  list-style-position: outside;
+}
+.rte ol ol,
+.rte ol ul {
+  margin: 1.6rem 0 0;
+}
+.rte ol ol {
+  padding-left: 2.4rem;
+  list-style: lower-latin;
+}
+.rte ol ol ol {
+  list-style: lower-roman;
+}
+.rte ol li {
+  margin-left: 2.4rem;
+}
+.rte ol li::marker {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.rte ul li {
+  list-style: none;
+  margin-left: 2.5rem;
+}
+.rte ul li:before {
+  content: "";
+  position: absolute;
+  top: 0.8rem;
+  left: -1.5rem;
+  background-color: rgba(var(--color-foreground));
+  width: 5px;
+  height: 5px;
+  border-radius: 100px;
+}
+.rte ul li ol li {
+  padding-left: 0;
+}
+.rte ul li ul li:before {
+  background-color: transparent;
+  border: 1px solid rgba(var(--color-foreground));
+  width: 5px;
+  height: 5px;
+}
+.rte ul li ul li ul li:before {
+  background-color: rgba(var(--color-foreground));
+  width: 5px;
+  height: 5px;
+  border-radius: 0;
+}
+.rte blockquote {
+  position: relative;
+  margin-top: 2.4rem;
+  margin-bottom: 2.4rem;
+}
+.rte blockquote > *:first-child {
+  margin-top: 0;
+}
+.rte blockquote > *:last-child {
+  margin-bottom: 0;
+}
+@media screen and (min-width: 750px) {
+  .rte blockquote {
+    margin-top: 3.2rem;
+    margin-bottom: 3.2rem;
+  }
+}
+.rte blockquote.blockquote-alt {
+  margin-top: 3.2rem;
+  margin-bottom: 3.2rem;
+}
+@media screen and (min-width: 750px) {
+  .rte blockquote.blockquote-alt {
+    margin-top: 4.8rem;
+    margin-bottom: 4.8rem;
+  }
+}
+.rte table {
+  width: auto;
+  max-width: 100%;
+  margin-top: 3.2rem;
+  margin-bottom: 3.2rem;
+  margin-left: auto;
+  margin-right: auto;
+  table-layout: fixed;
+  max-width: 100%;
+}
+.rte table::-webkit-scrollbar:horizontal {
+  height: 0.4rem;
+}
+.rte table::-webkit-scrollbar-thumb {
+  background-color: rgb(var(--color-scrollbar));
+  border-radius: 2rem;
+}
+.rte table:not(.table-gallery) {
+  display: block;
+  overflow-x: auto;
+}
+.rte table:not(.table-gallery) tbody,
+.rte table:not(.table-gallery) thead {
+  display: table;
+  width: 100%;
+}
+.rte table th,
+.rte table td {
+  vertical-align: baseline;
+  min-width: 200px;
+}
+.rte table th > *,
+.rte table td > * {
+  margin: 0;
+}
+.rte table.table-gallery {
+  border-collapse: collapse;
+  width: 100% !important;
+  max-width: 100%;
+}
+@media screen and (min-width: 750px) {
+  .rte table.table-gallery {
+    max-width: 740px;
+    max-height: 450px;
+  }
+}
+.rte table.table-gallery td {
+  display: block;
+  padding: 0.8rem 0;
+  width: auto !important;
+  min-width: auto;
+  max-width: none;
+}
+.rte table.table-gallery td:first-child {
+  padding-top: 0;
+}
+.rte table.table-gallery td:last-child {
+  padding-bottom: 0;
+}
+@media screen and (max-width: 575px) {
+  .rte table.table-gallery td {
+    height: auto !important;
+  }
+}
+@media screen and (min-width: 750px) {
+  .rte table.table-gallery td {
+    display: table-cell;
+    padding: 0.8rem;
+  }
+  .rte table.table-gallery td:first-child {
+    padding-top: 0.8rem;
+    padding-left: 0;
+  }
+  .rte table.table-gallery td:last-child {
+    padding-bottom: 0.8rem;
+    padding-right: 0;
+  }
+}
+.rte table.table-gallery img {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  display: block;
+  object-fit: cover;
+  margin: 0;
+  padding: 0;
+}
+.rte a {
+  display: inline;
+  color: rgba(var(--color-foreground-secondary));
+  transition: background-size var(--duration-default) ease-in-out, opacity var(--duration-default) ease-in-out;
+  background-position: left 90%;
+  background-size: 100% 5%;
+  background-image: linear-gradient(to right, rgba(var(--color-foreground-secondary)) 0%, rgba(var(--color-foreground-secondary)) 100%);
+  background-repeat: no-repeat;
+  text-decoration: none;
+}
+@media screen and (pointer: fine) {
+  .rte a:hover {
+    background-size: 0% 5%;
+    background-position: right 90%;
+    opacity: 0.8;
+  }
+}
+.rte img {
+  max-width: 100%;
+  display: inline-block;
+}
+.rte > * {
+  color: rgb(var(--color-foreground));
+  width: 100%;
+  max-width: 100%;
+}
+.rte > *:last-child {
+  margin-bottom: 0 !important;
+}
+.rte > *:last-child > *:last-child {
+  margin-bottom: 0 !important;
+}
+.rte > *:first-child {
+  margin-top: 0 !important;
+}
+.rte > *:first-child > *:first-child {
+  margin-top: 0 !important;
+}
+
+.rte__container > * {
+  margin-left: auto;
+  margin-right: auto;
+}
+@media screen and (min-width: 672px) {
+  .rte__container > * {
+    max-width: 632px;
+  }
+}
+.rte__container div {
+  max-width: 100%;
+  margin: 0 auto;
+}
+@media screen and (min-width: 672px) {
+  .rte__container div:has(img[style*="float: left"]:only-child), .rte__container div:has(img[style*="float: right"]:only-child) {
+    max-width: 632px;
+  }
+}
+.rte__container div:has(img[style*="float: left"]:only-child) > img, .rte__container div:has(img[style*="float: right"]:only-child) > img {
+  margin: 0;
+}
+.rte__container div > p, .rte__container div > pre, .rte__container div > span, .rte__container div > ul, .rte__container div > ol, .rte__container div > dl, .rte__container div > h1, .rte__container div > h2, .rte__container div > h3, .rte__container div > h4, .rte__container div > h5, .rte__container div > h6, .rte__container div > blockquote {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media screen and (min-width: 672px) {
+  .rte__container div > p, .rte__container div > pre, .rte__container div > span, .rte__container div > ul, .rte__container div > ol, .rte__container div > dl, .rte__container div > h1, .rte__container div > h2, .rte__container div > h3, .rte__container div > h4, .rte__container div > h5, .rte__container div > h6, .rte__container div > blockquote {
+    max-width: 632px;
+  }
+}
+.rte__container img {
+  border-radius: var(--border-radius-block);
+  height: auto;
+  margin-top: 2.4rem;
+  margin-bottom: 3.2rem;
+}
+@media screen and (min-width: 576px) {
+  .rte__container img {
+    margin-top: 4.2rem;
+    margin-bottom: 6.4rem;
+  }
+}

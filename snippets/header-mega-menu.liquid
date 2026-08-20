@@ -1,0 +1,208 @@
+{% for block in blocks %}
+  {% assign mega_menu_trigger = block.settings.mega_menu_trigger | handle | strip %}
+
+  {%- if link.handle == mega_menu_trigger and block.type == 'mega_menu' -%}
+    {% liquid
+      assign has_tabs = false
+      for i in (1..8)
+        assign enable_tab_setting = 'enable_tab_' | append: i
+        assign heading_setting = 'tab_heading_' | append: i
+
+        if block.settings[enable_tab_setting] and block.settings[heading_setting] != blank
+          assign has_tabs = true
+        endif
+      endfor
+    %}
+
+    {%- if has_tabs or block.settings.mega_menu_additional_submenu != blank -%}
+      <div class="header__mega-menu mega-menu color-background-1" {{ block.shopify_attributes }}>
+        <div class="mega-menu__overlay"></div>
+
+        <div
+          class="mega-menu__wrapper"
+          tabindex="-1"
+          role="dialog"
+        >
+          {%- if has_tabs or block.settings.mega_menu_additional_submenu != blank -%}
+            <div class="mega-menu__block">
+              {%- if has_tabs -%}
+                <div class="mega-menu__submenu">
+                  {% for i in (1..8) %}
+                    {% liquid
+                      assign enable_tab_setting = 'enable_tab_' | append: i
+                      assign heading_setting = 'tab_heading_' | append: i
+                      assign tab_link = 'tab_link_' | append: i
+                      assign tab_product_list = 'tab_product_list_' | append: i
+                      assign products_setting = 'tab_product_list_' | append: i
+                      assign tab_menu = 'tab_menu_' | append: i
+                      assign tab_type = 'tab_type_' | append: i
+
+                      assign is_visible_tab = false
+
+                      if block.settings[enable_tab_setting] and block.settings[heading_setting] != blank
+                        assign is_visible_tab = true
+                      endif
+
+                      assign has_content = false
+
+                      if block.settings[tab_type] == 'products' and block.settings[products_setting] != blank
+                        assign has_content = true
+                      endif
+
+                      if block.settings[tab_type] == 'menu' and block.settings[tab_menu] != blank
+                        assign has_content = true
+                      endif
+                    %}
+                    {%- if is_visible_tab -%}
+                      <div
+                        class="mega-menu__submenu-link{% if i == 1 %} mega-menu__submenu-link--active{% endif %}"
+                        data-mega-menu-tab-id="{{ i }}"
+                      >
+                        {%- if block.settings[tab_link] != blank -%}
+                          <a
+                            class="body-large mega-menu__submenu-link-inner"
+                            href="{{ block.settings[tab_link] }}"
+                            {% if settings.links_blank and block.settings[tab_link].type == 'external_link' %}
+                              target="_blank"
+                            {% endif %}
+                          >
+                            <span>{{- block.settings[heading_setting] -}}</span>
+
+                            {%- if has_content -%}
+                              {% render 'icon-arrow-small' %}
+                            {%- endif -%}
+                          </a>
+                        {%- else -%}
+                          <div
+                            class="body-large mega-menu__submenu-link-inner"
+                            title="{{- block.settings[heading_setting] -}}"
+                          >
+                            <span>{{- block.settings[heading_setting] -}}</span>
+
+                            {%- if has_content -%}
+                              {% render 'icon-arrow-small' %}
+                            {%- endif -%}
+                          </div>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                  {% endfor %}
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings.mega_menu_additional_submenu != blank -%}
+                <div class="mega-menu__info-links">
+                  {% for additionalLink in block.settings.mega_menu_additional_submenu.links %}
+                    <a
+                      href="{{ additionalLink.url }}"
+                      class="focus-inset"
+                      aria-label="{{- additionalLink.title | escape -}}"
+                      {% if settings.links_blank and additionalLink.type == 'http_link' %}
+                        target="_blank"
+                      {% endif %}
+                    >
+                      <span class="body-small" title="{{- additionalLink.title | escape -}}">
+                        {{- additionalLink.title | escape -}}
+                      </span>
+                    </a>
+                  {% endfor %}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          {%- if has_tabs -%}
+            <div class="mega-menu__block mega-menu__block--right">
+              {% for i in (1..8) %}
+                {% liquid
+                  assign enable_tab_setting = 'enable_tab_' | append: i
+                  assign heading_setting = 'tab_heading_' | append: i
+                  assign products_setting = 'tab_product_list_' | append: i
+                  assign label_setting = 'products_label_' | append: i
+                  assign tab_link = 'tab_link_' | append: i
+                  assign tab_type = 'tab_type_' | append: i
+                  assign tab_menu = 'tab_menu_' | append: i
+
+                  assign is_visible_tab = false
+                  assign has_content = false
+
+                  if block.settings[tab_type] == 'products' and block.settings[products_setting] != blank
+                    assign has_content = true
+                  endif
+
+                  if block.settings[tab_type] == 'menu' and block.settings[tab_menu] != blank
+                    assign has_content = true
+                  endif
+
+                  if block.settings[enable_tab_setting] and block.settings[heading_setting] != blank and has_content
+                    assign is_visible_tab = true
+                  endif
+                %}
+                {% if is_visible_tab %}
+                  <div
+                    class="mega-menu__media{% if i == 1 %} mega-menu__media--active{% endif %}"
+                    data-mega-menu-tab-id="{{ i }}"
+                    {% if i == 1 %}
+                      style="display: flex;"
+                    {% endif %}
+                  >
+                    {%- if block.settings[tab_type] == 'products' -%}
+                      {%- if block.settings[label_setting] != blank -%}
+                        <span class="mega-menu__media-label body-small">
+                          {{- block.settings[label_setting] -}}
+                        </span>
+                      {%- endif -%}
+
+                      <div class="mega-menu__products">
+                        {%- for item in block.settings[products_setting] -%}
+                          <div class="mega-menu__products-card collection-product-card{% if settings.quickview_hover %} quickview--hover{% endif %}">
+                            {% assign section_id = section.id | append: '_mega_menu_desktop' %}
+                            {% render 'product-card',
+                              product_card_product: item,
+                              media_ratio: block.settings.product_image_ratio,
+                              media_fit: block.settings.product_image_fit,
+                              show_secondary_image: block.settings.product_show_secondary_image,
+                              show_vendor: block.settings.product_show_vendor,
+                              show_desc: block.settings.product_show_desc,
+                              heading_tag: block.settings.product_heading_tag,
+                              section_id: section_id,
+                              columns: 3
+                            %}
+                          </div>
+                        {%- endfor -%}
+                      </div>
+                    {%- elsif block.settings[tab_type] == 'menu' -%}
+                      <div class="mega-menu__menu">
+                        <ul class="mega-menu__menu-list" role="list">
+                          {%- for link in block.settings[tab_menu].links -%}
+                            <li
+                              class="mega-menu__menu-list-item"
+                            >
+                              <a
+                                href="{{ link.url }}"
+                                {% if settings.links_blank and link.type == 'http_link' %}
+                                  target="_blank"
+                                {% endif %}
+                                class="mega-menu__menu-list-link focus-inset{% if link.current and link.url != '/' %} mega-menu__menu-list-link--active{% endif %}"
+                                {% if link.current and link.url != '/' %}
+                                  aria-current="page"
+                                {% endif %}
+                                aria-label="{{ link.title | escape }}"
+                              >
+                                {{ link.title | escape }}
+                              </a>
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      </div>
+                    {%- endif -%}
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+{% endfor %}

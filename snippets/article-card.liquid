@@ -1,0 +1,268 @@
+{% comment %}
+  Renders a blog post card for a given blog.
+
+  Accepts:
+  - blog: {Object} Blog object
+  - article: {Object} Article object
+  - article_heading_font_family: {String} Post heading font family. Default = heading
+  -	article_heading_font_size: {String} Post heading font size. Default = h3
+  - aspect_ratio: {String} Aspect ratio of the image. Default = square
+  - object_fit: {String} Object fit of the image. Default = cover
+  - show_image: {Boolean} Show the post image or not. Default = false
+  - show_date: {Boolean} Show the post date or not. Default = false
+  - show_author: {Boolean} Show the post author or not. Default = false
+  - show_tags: {Boolean} Show the post tags or not. Default = false
+  - show_excerpt: {Boolean} Show the post excerpt or not. Default = false
+  - show_read_article_button: {Boolean} Show the read article button or not. Default = false
+  - read_article_button_label: {String} Read article button label. Default = Read Article
+  - columns_count: {Number} Sizes of the card per row for calculate image width. Default image width = 100vw
+  - show_comments_count: {Boolean} Show the comments count or not. Default = false
+  - is_blog_page: {Boolean} Used to determine if card is inside Blog page. Default = false
+  - is_inside_section_with_heading: {Boolean} Used to determine heading (h2 or h3) if card is inside section outside of Blog. Default = h2
+
+  Usage:
+  {% render 'article-card', blog: section.settings.blog, article: article, article_heading_font_family: section.settings.article_heading_font_family, article_heading_font_size: section.settings.article_heading_font_size, aspect_ratio: section.settings.aspect_ratio,  show_image: section.settings.show_image, show_date: section.settings.show_date, show_author: section.settings.show_author, show_tags: section.settings.show_tags, show_excerpt: section.settings.show_excerpt, show_read_article_button: section.settings.show_read_article_button, read_article_button_label: section.settings.read_article_button_label  %}
+{% endcomment %}
+
+{% liquid
+  assign show_meta = false
+
+  if show_tags == true or show_author == true or show_date == true
+    assign show_meta = true
+  endif
+
+  assign image_styles = 'object-fit: cover;'
+
+  if object_fit
+    assign image_styles = 'object-fit: ' | append: object_fit | append: ';'
+  endif
+
+  assign is_show_comments_count = false
+
+  if show_comments_count == true and blog.comments_enabled?
+    assign is_show_comments_count = true
+  endif
+%}
+
+<article class="article-card" aria-labelledby="Article-{{ article.id }}">
+  {%- if show_image == true -%}
+    <a
+      href="{{ article.url }}"
+      class="article-card-image-wrapper article-card-image-wrapper--{% if aspect_ratio %}{{ aspect_ratio }}{% else %}square{% endif %}"
+      aria-label="{{ article.title }} {{ "accessibility.article_link" | t }}"
+    >
+      {% liquid
+        if aspect_ratio == 'landscape'
+          assign settings_aspect_ratio = 1.77
+        elsif aspect_ratio == 'portrait'
+          assign settings_aspect_ratio = 0.8
+        else
+          assign settings_aspect_ratio = 1
+        endif
+
+        assign calc_ratio = 1
+        if article.image.aspect_ratio > settings_aspect_ratio
+          assign calc_ratio = article.image.aspect_ratio | divided_by: settings_aspect_ratio | round: 2
+        endif
+      %}
+
+      {%- capture img_sizes -%}
+        {%- if columns_count != blank -%}
+          {%- if columns_count == 1 -%}
+            (min-width: 1440px) calc(1280px * {{ calc_ratio }}), (min-width: 1200px) calc(88vw * {{ calc_ratio }}), (min-width: 750px) calc(97vw * {{ calc_ratio }}), (min-width: 576px) calc(95vw * {{ calc_ratio }}), calc(91vw * {{ calc_ratio }})
+          {%- elsif columns_count == 2 -%}
+            (min-width: 1440px) calc(632px * {{ calc_ratio }}), (min-width: 1200px) calc(44vw * {{ calc_ratio }}), (min-width: 750px) calc(48vw * {{ calc_ratio }}), (min-width: 576px) calc(95vw * {{ calc_ratio }}), calc(91vw * {{ calc_ratio }})
+          {%- elsif columns_count == 3 -%}
+            (min-width: 1440px) calc(416px * {{ calc_ratio }}), (min-width: 1200px) calc(29vw * {{ calc_ratio }}), (min-width: 750px) calc(48vw * {{ calc_ratio }}), (min-width: 576px) calc(95vw * {{ calc_ratio }}), calc(91vw * {{ calc_ratio }})
+          {%- elsif columns_count == 4 -%}
+            (min-width: 1440px) calc(308px * {{ calc_ratio }}), (min-width: 1200px) calc(22vw * {{ calc_ratio }}), (min-width: 990px) calc(31vw * {{ calc_ratio }}), (min-width: 750px) calc(48vw * {{ calc_ratio }}), (min-width: 576px) calc(95vw * {{ calc_ratio }}), calc(91vw * {{ calc_ratio }})
+          {%- else -%}
+            100vw
+          {%- endif -%}
+        {%- else -%}
+          100vw
+        {%- endif -%}
+      {%- endcapture -%}
+      {%- if article.image != blank -%}
+        {{
+          article.image
+          | image_url: width: article.image.width
+          | image_tag:
+            loading: 'lazy',
+            widths: '308, 416, 632, 700, 800, 900, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2560',
+            sizes: img_sizes,
+            class: 'article-card-image motion-reduce',
+            style: image_styles
+        }}
+      {%- else -%}
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg article-card-image motion-reduce' }}
+      {%- endif -%}
+    </a>
+  {%- endif -%}
+  <div class="article-card-content">
+    {% if show_meta == true %}
+      <div class="article-card-meta">
+        {%- if show_tags and article.tags.size > 0 -%}
+          <ul class="article-card-tags">
+            {%- for tag in article.tags -%}
+              <li class="article-card-tag">
+                {% if is_blog_page %}
+                  <a
+                    class="article-card-tag__link body-small"
+                    href="{{ blog.url }}/tagged/{{ tag | handle }}"
+                  >
+                    {{- tag -}}
+                  </a>
+                {% else %}
+                  <span class="article-card-tag__link body-small">
+                    {{- tag -}}
+                  </span>
+                {% endif %}
+                {%- if forloop.last != true -%},&nbsp;{%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+        {%- if show_date == true -%}
+          <span class="article-card-date body-small">
+            {{ article.published_at | time_tag: '%b %d %Y' }}
+            {%- if show_date == true and show_author == true -%},&nbsp;{%- endif -%}
+          </span>
+        {%- endif -%}
+        {%- if show_author == true -%}
+          <span class="article-card-author body-small">
+            {{ 'general.blog.author' | t }}
+            {{ article.author }}
+          </span>
+        {%- endif -%}
+      </div>
+    {% endif %}
+    {% if is_inside_section_with_heading == true %}
+      <{{ article_heading_tag }}
+        class="article-card-title article-card-title--font-{% if article_heading_font_family != blank %}{{ article_heading_font_family }}{% else %}heading{% endif %}{% if article_heading_font_size != blank %} {{ article_heading_font_size }}{% else %} h4{% endif %}"
+        id="Article-{{ article.id }}"
+      >
+        <a
+          class="article-card-title__link"
+          href="{{ article.url }}"
+          aria-label="{{ article.title }} {{ "accessibility.article_link" | t }}"
+        >
+          {{ article.title | escape }}
+        </a>
+      </{{ article_heading_tag }}>
+    {% else %}
+      <{{ article_heading_tag }}
+        class="article-card-title article-card-title--font-{% if article_heading_font_family != blank %}{{ article_heading_font_family }}{% else %}heading{% endif %}{% if article_heading_font_size != blank %} {{ article_heading_font_size }}{% else %} h4{% endif %}"
+        id="Article-{{ article.id }}"
+      >
+        <a
+          class="article-card-title__link"
+          href="{{ article.url }}"
+          aria-label="{{ article.title }} {{ "accessibility.article_link" | t }}"
+        >
+          {{ article.title | escape }}
+        </a>
+      </{{ article_heading_tag }}>
+    {% endif %}
+    {%- if show_excerpt and article.excerpt_or_content.size > 0 -%}
+      <div class="article-card-excerpt body-small">
+        {{ article.excerpt_or_content | strip_html | truncate: 150 }}
+      </div>
+    {%- endif -%}
+    {%- if show_read_article_button == true or is_show_comments_count == true -%}
+      <div class="article-card-bottom{% if show_read_article_button == true and is_show_comments_count == true %} article-card-bottom--with-border{% endif %}">
+        {%- if show_read_article_button == true -%}
+          <a href="{{ article.url }}" class="article-card-button">
+            <div class="article-card-button__circle">
+              <svg
+                class="article-card-button__circle-svg"
+                width="40"
+                height="20"
+                viewBox="0 0 40 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  class="article-card-button__circle-bg"
+                  d="M 20 0.5
+                     H 30
+                     A 9.5 9.5 0 0 1 39.5 10
+                     A 9.5 9.5 0 0 1 30 19.5
+                     H 10
+                     A 9.5 9.5 0 0 1 0.5 10
+                     A 9.5 9.5 0 0 1 10 0.5
+                     Z"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1"
+                />
+                <path
+                  class="article-card-button__circle-fill"
+                  d="M 20 0.5
+                     H 30
+                     A 9.5 9.5 0 0 1 39.5 10
+                     A 9.5 9.5 0 0 1 30 19.5
+                     H 10
+                     A 9.5 9.5 0 0 1 0.5 10
+                     A 9.5 9.5 0 0 1 10 0.5
+                     Z"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1"
+                  stroke-dasharray="220"
+                  stroke-dashoffset="220"
+                />
+              </svg>
+              <svg
+                class="article-card-button__arrow article-card-button__arrow--1 motion-reduce"
+                width="12"
+                height="10"
+                viewBox="0 0 12 10"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M1 5L11 5M11 5L6.71429 1M11 5L6.71429 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="square"/>
+              </svg>
+              <svg
+                class="article-card-button__arrow article-card-button__arrow--2 motion-reduce"
+                width="12"
+                height="10"
+                viewBox="0 0 12 10"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M1 5L11 5M11 5L6.71429 1M11 5L6.71429 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="square"/>
+              </svg>
+            </div>
+            <div class="article-card-button__label-wrapper">
+              <span
+                class="article-card-button__label"
+                data-label="
+                  {%- if read_article_button_label != blank -%}
+                    {{ read_article_button_label | escape }}
+                  {%- else -%}
+                    {{ 'sections.blog-posts.read_article_button_label' | t }}
+                  {%- endif -%}
+                "
+              >
+                {%- if read_article_button_label != blank -%}
+                  {{ read_article_button_label | escape }}
+                {%- else -%}
+                  {{ 'sections.blog-posts.read_article_button_label' | t }}
+                {%- endif -%}
+              </span>
+            </div>
+          </a>
+        {%- endif -%}
+        {%- if is_show_comments_count == true -%}
+          <div class="article-card-comments">
+            {% render 'icon-comments' %}
+            <span class="article-card-comments__count body-small">
+              {{- article.comments_count -}}
+            </span>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</article>

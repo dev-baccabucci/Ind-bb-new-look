@@ -1,0 +1,272 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "page_RfNXVM": {
+      "type": "page",
+      "disabled": true,
+      "name": "t:sections.page.presets.name",
+      "settings": {
+        "page": "about-us",
+        "padding_top": "xs",
+        "padding_bottom": "xl"
+      }
+    },
+    "rich_text_6RRjXc": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_DeTHJ3": {
+          "type": "heading",
+          "settings": {
+            "heading": "About Us",
+            "heading_size": "h1"
+          }
+        },
+        "text_G9UFVg": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Born in 2013, on the streets of Delhi, worn in the world today. As footwear and accessories pioneer we have consistently reinvented the definition of footwear and accessories to keep up with the trends. We are an iconic brand that is synonymously associated with fashion and limitless creativity. Bacca Bucci gives you the foundations to exude self-confidence, uniqueness and authenticity.<br/>Over these years Bacca Bucci has become a  leading footwear and accessories brand, enjoying support of a large clientele worldwide. Catering to the quintessentially stylish people of today who is, personality & trend conscious, the collection boasts of timeless classic additions that are a must feature in everyone’s wardrobe.<br/>To make sure it sustains, we at BACCA BUCCI, have supreme discipline in the shoe manufacture. We offer a combination of invention & craftsmanship that remains at the heart of what we do; & hence every pair of shoe begins with a last carved by hand from a single block of horn-beam, advanced construction techniques & contemporary material.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_DeTHJ3",
+        "text_G9UFVg"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "color_scheme": "",
+        "full_width": true,
+        "alignment": "center",
+        "padding_top": "l",
+        "padding_bottom": "s",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "image-with-text": {
+      "type": "image-with-text",
+      "custom_css": [
+        ".image-with-text-content__text {max-width: inherit;}",
+        ".image-with-text-content__heading {max-width: inherit;}"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "color_scheme_content": "",
+        "section_gap": "small",
+        "subheading": "",
+        "heading": "",
+        "heading_size": "h2",
+        "description": "",
+        "text_align": "center",
+        "image": "shopify://shop_images/BB_About_Us_01.png",
+        "img_position": "left",
+        "aspect_ratio": "1/1",
+        "object_fit": "contain",
+        "inner_subheading": "",
+        "inner_heading": "What we have in here for you?",
+        "inner_heading_size": "h2",
+        "inner_text": "",
+        "inner_content_align": "center",
+        "vertical_inner_content_align": "center",
+        "custom-text": "<i>‘’Leonardo Da Vinci described the human feet as <br>\n\"A masterpiece of Engineering & a work of art\".</i>\n<br><br>\nAt Baccabucci.com, we offer the latest footwear and accessories trends at affordable prices for the global minded people. Whether you Going for a Gym? Or Heading to work? Party? Casual meeting and gatherings? Or may be simply decided to relax on your couch at home, we got you all covered with the range of Athleisures, formal, moccasins, sneakers and flip-flops all under one roof. We are constantly inspired by the bold and accomplished people of the world, whether it is in our daily lives or on our socials. \n<br>\nWe believe that we’re a little bit of this and a bit of that, we shouldn’t be categorized into one specific type, we consume the latest news and gossip while working hard towards our goals. We get inspired from bloggers, celebs, and friends, who constantly motivate us to create a better world and stay true to you.\nStay humble, Stay real, Stay\n<br><br>\n\n<h5><b>#baccabucci</b></h5>",
+        "show_button": false,
+        "button_label": "Learn more",
+        "button_link": "",
+        "button_style": "primary",
+        "button_arrow": true,
+        "show_button_2": false,
+        "button_label_2": "Learn more",
+        "button_link_2": "",
+        "button_style_2": "secondary",
+        "button_arrow_2": true,
+        "padding_top": "m",
+        "padding_bottom": "xs",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "image_with_text_iVaQhr": {
+      "type": "image-with-text",
+      "custom_css": [
+        ".image-with-text-content__text {max-width: inherit;}",
+        ".image-with-text-content__heading {max-width: inherit;}"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "color_scheme_content": "",
+        "section_gap": "small",
+        "subheading": "",
+        "heading": "",
+        "heading_size": "h2",
+        "description": "",
+        "text_align": "center",
+        "image": "shopify://shop_images/BB_About_Us_04.png",
+        "img_position": "right",
+        "aspect_ratio": "1/1",
+        "object_fit": "contain",
+        "inner_subheading": "",
+        "inner_heading": "CRAFTMANSHIP",
+        "inner_heading_size": "h2",
+        "inner_text": "‘’Leonardo Da Vinci described the human feet as\"A masterpiece of Engineering & a work of art\".",
+        "inner_content_align": "center",
+        "vertical_inner_content_align": "center",
+        "custom-text": "I firmly believe that with the right footwear one can rule the world. — <b>Bette Midler </b><br>\nI still have my feet on the ground, I just wear better shoes. – <b> Oprah Winfrey</b> <br>\nHow important is it for a shoe to be technically correct?\n\n<br><br>\n\nYes, our artisans and craftsman are well-versed with the answer to that question. Each and every pair we put out on our shelves is crafted by a team of highly skilled artisans and craftsman to achieve high measures of finesse, comfort and quality. A multi tier process starts with the designs that move from sketches and then to the clicking of curves to give the shoe the correct shape, polish and smoothening of leather, stitching of leather pieces together, lasting and to the finishing. Entire process is done with immense care to give you your perfect shoe. Every pair is quality checked and then moved to the final phase of packaging, which then is delivered to you with love!<br>\nWith every collection Bacca Bucci launches, we challenge ourselves to produce designs that break norms and create fresh powerful stories that read with people from all over the world. And that is the Bacca Bucci design aesthetic!",
+        "show_button": false,
+        "button_label": "Learn more",
+        "button_link": "",
+        "button_style": "primary",
+        "button_arrow": true,
+        "show_button_2": false,
+        "button_label_2": "Learn more",
+        "button_link_2": "",
+        "button_style_2": "secondary",
+        "button_arrow_2": true,
+        "padding_top": "xs",
+        "padding_bottom": "m",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "image_with_text_m9wzVW": {
+      "type": "image-with-text",
+      "custom_css": [
+        ".image-with-text-content__text {max-width: inherit;}",
+        ".image-with-text-content__heading {max-width: inherit;}"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "color_scheme_content": "",
+        "section_gap": "small",
+        "subheading": "",
+        "heading": "",
+        "heading_size": "h2",
+        "description": "",
+        "text_align": "center",
+        "image": "shopify://shop_images/BB_About_Us_02.png",
+        "img_position": "left",
+        "aspect_ratio": "1/1",
+        "object_fit": "contain",
+        "inner_subheading": "",
+        "inner_heading": "PACKAGING",
+        "inner_heading_size": "h2",
+        "inner_text": "BACCABUCCI offers a range of special crafted pairs that comes in a strong designed top-bottom hard cover Korean craft boxes, with shoes wrapped in butter paper. While, the accessories are delivered in a beautifully laser designed Wooden handcrafted boxes. The box contains a care card, which gives you instructions on how to care for your accessories, along with a warranty card. It’s nothing short of luxury! We will be soon introducing an option to add a greeting card in the box too. Watch out for the greeting box, where you can fill in details, on the check out page.",
+        "inner_content_align": "center",
+        "vertical_inner_content_align": "center",
+        "custom-text": "",
+        "show_button": false,
+        "button_label": "Learn more",
+        "button_link": "",
+        "button_style": "primary",
+        "button_arrow": true,
+        "show_button_2": false,
+        "button_label_2": "Learn more",
+        "button_link_2": "",
+        "button_style_2": "secondary",
+        "button_arrow_2": true,
+        "padding_top": "xs",
+        "padding_bottom": "m",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "image_with_text_wPqhCR": {
+      "type": "image-with-text",
+      "custom_css": [
+        ".image-with-text-content__text {max-width: inherit;}",
+        ".image-with-text-content__heading {max-width: inherit;}"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "color_scheme_content": "",
+        "section_gap": "small",
+        "subheading": "",
+        "heading": "",
+        "heading_size": "h2",
+        "description": "",
+        "text_align": "center",
+        "image": "shopify://shop_images/BB_About_Us_03.png",
+        "img_position": "right",
+        "aspect_ratio": "1/1",
+        "object_fit": "contain",
+        "inner_subheading": "",
+        "inner_heading": "Our Mantra - Style as individual as you are",
+        "inner_heading_size": "h2",
+        "inner_text": "",
+        "inner_content_align": "center",
+        "vertical_inner_content_align": "center",
+        "custom-text": "Bacca Bucci (pronounced / ‘baa-ka: bu-ki /) is a label for the people who isn’t afraid to showcase their own unique style. Offering a colorfully eclectic range of footwear and accessories, Bacca Bucci provides the opportunity for people to breathe new life into their wardrobes with a bold and bright design. Taking inspiration from the global runway as well as the local fashion scene, Bacca Bucci delivers top quality footwear that’s\n\n<br><br>\nAs individual as you are!",
+        "show_button": false,
+        "button_label": "Learn more",
+        "button_link": "",
+        "button_style": "primary",
+        "button_arrow": true,
+        "show_button_2": false,
+        "button_label_2": "Learn more",
+        "button_link_2": "",
+        "button_style_2": "secondary",
+        "button_arrow_2": true,
+        "padding_top": "xs",
+        "padding_bottom": "m",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "rich_text_4LhUd8": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_MenYRi": {
+          "type": "heading",
+          "settings": {
+            "heading": "SOCIAL MEDIA",
+            "heading_size": "h1"
+          }
+        },
+        "text_D6qhVq": {
+          "type": "text",
+          "settings": {
+            "text": "<p>You are very important to us!<br/>We can be reached at <a href=\"mailto:crm@baccabucci.com\" title=\"mailto:crm@baccabucci.com\">crm@baccabucci.com</a>. We welcome your feedbacks, reviews and grievances. Your thoughts about us help us to serve you better.<br/>Our social handles are always decked up with the latest updates and developments.<br/><br/></p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_MenYRi",
+        "text_D6qhVq"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "color_scheme": "",
+        "full_width": true,
+        "alignment": "center",
+        "padding_top": "xs",
+        "padding_bottom": "s",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "custom_liquid_Afh4ey": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "custom_liquid": "<style>\nh2.image-with-text-content__heading.h2 {\n    font-size: 25px;\n}\n@media screen and (max-width: 750px) {\ndiv#shopify-section-template--19252155449590__image_with_text_iVaQhr .image-with-text-img-wrapper, .image-with-text.color-background-1.background.section-template--19252155449590__image_with_text_wPqhCR-padding .image-with-text-img-wrapper\n {\n    order: 1;\n}\n\ndiv#shopify-section-template--19252155449590__image_with_text_iVaQhr .image-with-text-content.color-background-2.image-with-text-content--align-center.image-with-text-content--vertical-align-center,\n.image-with-text.color-background-1.background.section-template--19252155449590__image_with_text_wPqhCR-padding .image-with-text-content.color-background-2.image-with-text-content--align-center.image-with-text-content--vertical-align-center\n {\n    order: 2;\n}\n}\n</style>"
+      }
+    }
+  },
+  "order": [
+    "page_RfNXVM",
+    "rich_text_6RRjXc",
+    "image-with-text",
+    "image_with_text_iVaQhr",
+    "image_with_text_m9wzVW",
+    "image_with_text_wPqhCR",
+    "rich_text_4LhUd8",
+    "custom_liquid_Afh4ey"
+  ]
+}

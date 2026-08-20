@@ -1,0 +1,125 @@
+<div class="custom-product-actions">
+  <button type="button" id="custom-add-to-cart" class="btn">Add to Cart</button>
+  <button type="button" id="custom-buy-now" class="btn">Buy Now</button>
+</div>
+
+<!-- Popover -->
+<div id="variant-popover" class="variant-popover hidden">
+  <div class="popover-inner">
+    <h4>Select Size</h4>
+    <div class="size-options">
+      {% for variant in product.variants %}
+        {% if variant.available %}
+          <button 
+            class="size-option" 
+            data-variant-id="{{ variant.id }}">
+            {{ variant.option1 }} <!-- assuming option1 = Size -->
+          </button>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <button id="popover-add-to-cart" class="btn hidden">Add to Cart</button>
+    <button id="popover-buy-now" class="btn hidden">Buy Now</button>
+  </div>
+</div>
+
+<style>
+    .variant-popover {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  z-index: 9999;
+  display: none;
+}
+.variant-popover.active {
+  display: block;
+}
+.size-option {
+  margin: 5px;
+  padding: 8px 12px;
+  border: 1px solid #000;
+  cursor: pointer;
+}
+.size-option.active {
+  background: #000;
+  color: #fff;
+}
+
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  let selectedVariant = null;
+  const popover = document.getElementById("variant-popover");
+  const popoverAdd = document.getElementById("popover-add-to-cart");
+  const popoverBuy = document.getElementById("popover-buy-now");
+
+  function openPopover(type) {
+    popover.classList.add("active");
+    if (type === "cart") {
+      popoverAdd.classList.remove("hidden");
+      popoverBuy.classList.add("hidden");
+    } else {
+      popoverAdd.classList.add("hidden");
+      popoverBuy.classList.remove("hidden");
+    }
+  }
+
+  document.getElementById("custom-add-to-cart").addEventListener("click", function() {
+    // check if variant selected in form
+    if (!document.querySelector("input[name='id']:checked")) {
+      openPopover("cart");
+    } else {
+      document.querySelector("form[action='/cart/add']").submit();
+    }
+  });
+
+  document.getElementById("custom-buy-now").addEventListener("click", function() {
+    if (!document.querySelector("input[name='id']:checked")) {
+      openPopover("buy");
+    } else {
+      document.querySelector("form[action='/cart/add']").submit();
+    }
+  });
+
+  // Select variant from popover
+  document.querySelectorAll(".size-option").forEach(btn => {
+    btn.addEventListener("click", function() {
+      document.querySelectorAll(".size-option").forEach(b => b.classList.remove("active"));
+      this.classList.add("active");
+      selectedVariant = this.dataset.variantId;
+    });
+  });
+
+  // Ajax add to cart
+  popoverAdd.addEventListener("click", function() {
+    if (!selectedVariant) return;
+    fetch("/cart/add.js", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: selectedVariant, quantity: 1 })
+    })
+    .then(res => res.json())
+    .then(data => {
+      alert("Added to Cart!");
+      popover.classList.remove("active");
+    });
+  });
+
+  // Ajax buy now
+  popoverBuy.addEventListener("click", function() {
+    if (!selectedVariant) return;
+    fetch("/cart/clear.js", { method: "POST" }) // clear cart for direct checkout
+    .then(() => fetch("/cart/add.js", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: selectedVariant, quantity: 1 })
+    }))
+    .then(() => window.location.href = "/checkout");
+  });
+});
+
+</script>

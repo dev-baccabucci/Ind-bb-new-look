@@ -1,0 +1,264 @@
+<!-- Kwikpass script to add kwikpass button in the header - [Starts] -->
+<script>
+  window.merchantInfo  = {
+    ...window.merchantInfo,
+    mid: "19g6jleqrilqk",
+    environment: "production",
+    type: "merchantInfo",
+  }
+ function getCustomerId() {
+    {% if customer %}
+    return {{ customer.id | json }};
+    {% else %}
+    return null
+    {% endif %}
+  }
+  function getThemeId() {
+    {% if theme %}
+    return {{ theme.id | json }};
+    {% else %}
+    return null
+    {% endif %}
+  }
+  
+  // This script will change for every merchant
+
+  const kpLoader = `<svg
+    class="loadergk kploader"
+    width="17"
+    height="16"
+    viewBox="0 0 17 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+  <path
+    d="M8.50004 1.33325V3.99992M8.50004 11.9999V14.6666M4.50004 7.99992H1.83337M15.1667 7.99992H12.5M13.219 12.7189L11.3334 10.8333M13.219 3.33321L11.3334 5.21883M3.78109 12.7189L5.66671 10.8333M3.78109 3.33321L5.66671 5.21883"
+    stroke="#111"
+    stroke-width="1.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  </svg>`
+   
+   /*removing existing profile(person) icon - person icon is not present in this store*/
+   const profileButtonElement = document.querySelector('.header__icons .header__account')
+
+  // defining css and add it to style tag in head
+  function appendCss() {
+  let css = `
+  .loadergk {
+    display: none;
+    animation: rotate 1.5s linear infinite;
+  }
+  @keyframes rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  .kp-disabled-text-color{
+    cursor: not-allowed;
+  }
+  #logout-button-desktop{
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #344054;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    width: 100%;
+    border-radius: 8px;
+    padding: 8px 14px;;
+    border: 1px solid var(--gray-300, #d0d5dd);
+    background: var(--base-white, #fff);
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  }
+  #loggedin-icons{
+    align-self: center;
+    display: none;
+  }
+  #kwikpass-drawer-desktop{
+    padding: 16px;
+    display: none;
+    right: 0%;
+    width: 16rem;
+    position: absolute;
+    top: 190%;
+    box-shadow: 0px 0px 32px 0px rgba(16, 24, 40, 0.32);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    z-index: 999;
+    background:#fff!important;
+  }
+  #kwikpass-drawer-desktop > ul{
+    margin: 0px 0px 15px 0px;
+    padding: 0;
+    width: 100%;
+  }
+  #kwikpass-drawer-desktop >ul >a{
+    cursor: pointer;
+    width: 100%;
+    display: flex!important;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    color: inherit;
+    margin-left:0!important;
+    text-decoration: none;
+  }
+  #kwikpass-drawer-desktop >ul >a:hover , #kwikpass-drawer-desktop >ul >a:focus {
+    text-decoration: none;
+  }
+  #kwikpass-drawer-desktop >ul >a:focus,#kwikpass-drawer-desktop >ul >a:active {
+    text-decoration: none;
+  }
+  #kwikpass-drawer-desktop >ul >a:focus .loadergk {
+    display: block;
+  }
+  #kwikpass-drawer-desktop >ul >a:not(:focus) .loadergk {
+    display: none;
+  }
+  div#kp-login-button-header-logo svg:hover {
+    color: #dca23f;
+}
+  #kwikpass-drawer-desktop > ul > a > p {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 142.857%;
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    margin: 0px 0 0px 0;
+    color: #000;
+  }
+  .header--icon{
+    cursor: pointer;
+    position: relative;
+    display: inline-flex;
+    color: #000;
+    right: -5px;
+  }
+  path#svgkp-path {
+    stroke-width: 0.4;
+  }
+  #icon-close-kwikpass{
+    display: none;
+    border-radius: 50px;
+    border: 1px solid;
+    margin: 0;
+    padding: 2px;
+    align-items: center;
+    justify-content: center;
+    margin-left:3px;
+  }
+  div#icon-kwikpass {
+    height: 2rem;
+    width: 2rem;
+}
+  
+ 
+    `;
+
+    var style = document.createElement('style');
+    style.innerHTML = css;
+    document.getElementsByTagName('head')[0].appendChild(style);
+  }
+
+  // function call to append css to style tag
+  appendCss() 
+  // existing user icon to show in the header
+  // TODO : fetch user icon form backend
+  {% comment %} const userIcon = `<svg width="24" height="24" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" id="svgkp">
+      <path d="M22.9129 12.935L13.7571 23.0474C13.5348 23.2929 13.1284 23.1084 13.1669 22.7794L14.0816 14.9731H10.6991C10.4034 14.9731 10.2484 14.6219 10.4478 14.4035L20.3133 3.59739C20.5589 3.32834 20.9984 3.58134 20.8891 3.92887L18.2354 12.3664H22.6607C22.9557 12.3664 23.1109 12.7163 22.9129 12.935Z" fill="#FEA203"/>
+      <path id="svgkp-path" fill-rule="evenodd" clip-rule="evenodd" d="M16.6079 5.35819C16.4805 5.1933 16.3421 5.03582 16.1932 4.8869C15.2702 3.96387 14.0183 3.44531 12.7129 3.44531C11.4075 3.44531 10.1556 3.96387 9.2326 4.8869C8.30957 5.80993 7.79102 7.06183 7.79102 8.36719C7.79102 9.67255 8.30957 10.9244 9.2326 11.8475C9.48368 12.0986 9.75909 12.3197 10.0533 12.5086L11.0235 11.4503C10.7335 11.2914 10.4649 11.0911 10.227 10.8531C9.56766 10.1938 9.19727 9.29959 9.19727 8.36719C9.19727 7.43479 9.56766 6.54057 10.227 5.88127C10.8863 5.22196 11.7805 4.85156 12.7129 4.85156C13.6453 4.85156 14.5395 5.22196 15.1988 5.88127C15.3636 6.04604 15.5103 6.22549 15.6377 6.41654L16.6079 5.35819ZM20.6413 18.6497L19.6746 19.7132C20.1676 20.4122 20.4473 21.2264 20.4473 22.0781V23.8359C20.4473 24.2243 20.7621 24.5391 21.1504 24.5391C21.5387 24.5391 21.8535 24.2243 21.8535 23.8359V22.0781C21.8535 20.7863 21.4016 19.6103 20.6413 18.6497ZM12.3111 17.5078H10.3026C7.27113 17.5078 4.97852 19.6394 4.97852 22.0781V23.8359C4.97852 24.2243 4.66372 24.5391 4.27539 24.5391C3.88707 24.5391 3.57227 24.2243 3.57227 23.8359V22.0781C3.57227 18.6922 6.67684 16.1016 10.3026 16.1016H12.4885L12.3111 17.5078Z" fill="currentColor" stroke="currentColor"/>
+      </svg>`; {% endcomment %}
+
+      const userIcon = `<img src="https://cdn.shopify.com/s/files/1/0279/5133/3450/files/account_circle.png?v=1779281293" width="20px" height="20px">`;
+
+ // kwikpass icon for desktop - if user is not logged in
+ const KwikpassNotLoggedIcon = `<div id="kp-login-button-header-logo" style="color:rgb(19, 30, 41);cursor: pointer;display: flex;align-items: center;">${userIcon}</div>`
+
+ // dropdown for desktop (opens on clicking kwikpass icon if user logged in)
+ const drawerhtmlDesktop = `<div id="kwikpass-drawer-desktop">
+  <ul>
+    <a href="javascript:void(0);" onclick="event.preventDefault();handleShopifyLogin(event,'/account')" tabindex="0" style=" display: flex">
+    <p>
+       <svg
+        width="16"
+        height="16"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg" 
+         >
+        <path
+        d="M4.6 2.20033L3.3 3.93366C3.04251 4.27697 2.91377 4.44863 2.91676 4.59232C2.91936 4.71736 2.97799 4.83462 3.07646 4.91172C3.18962 5.00032 3.40419 5.00032 3.83333 5.00032H16.1667C16.5958 5.00032 16.8104 5.00032 16.9235 4.91172C17.022 4.83462 17.0806 4.71736 17.0832 4.59232C17.0862 4.44863 16.9575 4.27697 16.7 3.93366L15.4 2.20033M4.6 2.20033C4.74667 2.00477 4.82 1.90699 4.91294 1.83647C4.99525 1.77401 5.08846 1.72741 5.18782 1.69903C5.3 1.66699 5.42222 1.66699 5.66667 1.66699H14.3333C14.5778 1.66699 14.7 1.66699 14.8122 1.69903C14.9115 1.72741 15.0047 1.77401 15.0871 1.83647C15.18 1.90699 15.2533 2.00477 15.4 2.20033M4.6 2.20033L3.03333 4.28921C2.83545 4.55306 2.73651 4.68498 2.66625 4.83026C2.6039 4.95917 2.55843 5.09559 2.53096 5.23612C2.5 5.3945 2.5 5.55941 2.5 5.88921L2.5 15.667C2.5 16.6004 2.5 17.0671 2.68166 17.4236C2.84144 17.7372 3.09641 17.9922 3.41002 18.152C3.76654 18.3337 4.23325 18.3337 5.16667 18.3337L14.8333 18.3337C15.7668 18.3337 16.2335 18.3337 16.59 18.152C16.9036 17.9922 17.1586 17.7372 17.3183 17.4236C17.5 17.0671 17.5 16.6004 17.5 15.667V5.88921C17.5 5.55941 17.5 5.3945 17.469 5.23613C17.4416 5.09559 17.3961 4.95918 17.3338 4.83026C17.2635 4.68498 17.1646 4.55306 16.9667 4.28921L15.4 2.20033M13.3333 8.33366C13.3333 9.21771 12.9821 10.0656 12.357 10.6907C11.7319 11.3158 10.8841 11.667 10 11.667C9.11594 11.667 8.2681 11.3158 7.64298 10.6907C7.01786 10.0656 6.66667 9.21771 6.66667 8.33366"
+        stroke="currentColor"
+        stroke-width="1.66667"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        fill="none"
+      />
+       </svg>
+       Order History
+    </p>
+  
+  ${kpLoader}
+    </a>
+  </ul>
+    <button id="logout-button-desktop">
+      Logout
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+          d="M15 6.66667L18.3334 10M18.3334 10L15 13.3333M18.3334 10H7.50002M12.5 3.50337C11.4377 2.86523 10.2044 2.5 8.88891 2.5C4.90019 2.5 1.66669 5.85786 1.66669 10C1.66669 14.1421 4.90019 17.5 8.88891 17.5C10.2044 17.5 11.4377 17.1348 12.5 16.4966"
+          stroke="currentColor"
+          stroke-width="1.66667"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          fill="none"
+        />
+      </svg>
+    </button>
+  </div>`;
+    
+  const kwikpassLoggedInIcon = `
+  <div id="loggedin-icons" >
+    <div id="icon-close-kwikpass" class="icon-close-kwikpass" style="height: 21px; width:21px; cursor: pointer;" onclick="handleDrawer1()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+       </div>
+      <div style="cursor: pointer;display: flex;" onclick="handleDrawer1()" id="icon-kwikpass">
+      ${userIcon}
+     </div>
+  </div>`;
+
+
+  // It will change based on theme
+  const personIconElement = document.querySelector('.header__icons .header__account')?.parentElement
+  const html = `
+    ${KwikpassNotLoggedIcon}
+    ${kwikpassLoggedInIcon} 
+    ${drawerhtmlDesktop}
+  `;
+
+  if(!document.getElementsByClassName("header--icon")?.[0]){
+    const kwipassDesktopNode = document.createElement('div')
+    kwipassDesktopNode.className="header--icon"
+    kwipassDesktopNode.innerHTML = html
+    personIconElement?.replaceChild(kwipassDesktopNode,profileButtonElement)
+  }
+</script>
+<!-- Kwikpass script to add kwikpass button in the header - [Ends] -->
+
+
+

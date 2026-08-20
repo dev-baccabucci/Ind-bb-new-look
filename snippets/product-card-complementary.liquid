@@ -1,0 +1,105 @@
+{% comment %}
+  Renders a product card
+  Accepts:
+  - product_card_product: {Object} Product Liquid object (optional)
+  - media_fit: {String} The media fit to use for the card. Default: 'cover'
+  - show_vendor: {Boolean} Show the product vendor. Default: true
+  - section_id: {String} The ID of the section that contains this card.
+  - class: {String} Additional classes to add to the card.
+  Usage:
+  {% render 'product-card-complementary', show_vendor: section.settings.show_vendor %}
+{% endcomment %}
+
+<div class="card-complementary">
+  <product-form class="product-form" data-hide-errors="{{ gift_card_recipient_feature_active }}">
+    <div class="product-form__error-message-wrapper" role="alert" hidden>
+      {% render 'icon-error' %}
+      <span class="product-form__error-message"></span>
+    </div>
+
+    {%- form 'product',
+      product_card_product,
+      id: product_form_id,
+      class: 'form',
+      novalidate: 'novalidate',
+      data-type: 'add-to-cart-form'
+    -%}
+      <input
+        type="hidden"
+        name="id"
+        value="{{ product_card_product.selected_or_first_available_variant.id }}"
+        {% if product_card_product.selected_or_first_available_variant.available == false %}
+          disabled
+        {% endif %}
+      >
+      <button
+        type="submit"
+        name="add"
+        class="product-form__submit card-complementary__submit"
+        {% if product_card_product.selected_or_first_available_variant.available == false %}
+          disabled
+        {% endif %}
+      >
+        <div class="card-complementary__wrapper">
+          {%- assign featured_image = product_card_product.featured_image -%}
+          <div
+            class="card-complementary__image"
+            data-media-sub-id="{{ section.id }}-{{ featured_image.id }}"
+          >
+            <div class="product__media" style="padding-bottom: 100%">
+              {%- if featured_image != blank -%}
+                {%- capture style -%}
+                object-position: 
+                {%- if conditions.featured_image.presentation.focal_point != blank -%}
+                  {{ conditions.featured_image.presentation.focal_point }};
+                {%- else -%}
+                  center;
+                {%- endif -%}
+                object-fit: {{ media_fit }};
+              {%- endcapture -%}
+
+                {%- liquid
+                  assign calc_ratio = 1
+                  if media_fit == 'cover' and featured_image.aspect_ratio > 1
+                    assign calc_ratio = featured_image.aspect_ratio | divided_by: 1 | round: 2
+                  endif
+                -%}
+                {%- capture sizes -%}
+                  calc(72px * {{ calc_ratio }})
+                {%- endcapture -%}
+                {{
+                  featured_image
+                  | image_url: width: featured_image.width
+                  | image_tag: loading: 'lazy', sizes: sizes, widths: '72, 144, 216', style: style
+                }}
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </div>
+          </div>
+          <div class="card-complementary__content">
+            {%- if show_vendor -%}
+              <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
+              <div class="card-complementary__vendor card__vendor body-small {% if settings.enable_vendor_link %} card__vendor_link {% endif %}">
+                {% if settings.enable_vendor_link %}
+                  {{ product_card_product.vendor | link_to_vendor: class: 'focus-inset' }}
+                {% else %}
+                  {{ product_card_product.vendor }}
+                {% endif %}
+              </div>
+            {%- endif -%}
+            <h3 class="card-complementary__title card__title h5">
+              <a class="title__link" href="{{ product_card_product.url | default: '#' }}">
+                {{- product_card_product.title | escape -}}
+              </a>
+            </h3>
+            {% render 'price', product: product_card_product, price_class: '' %}
+          </div>
+        </div>
+        <div class="loading-overlay__spinner hidden">
+          {%- render 'icon-loading' -%}
+        </div>
+      </button>
+    {%- endform -%}
+  </product-form>
+</div>

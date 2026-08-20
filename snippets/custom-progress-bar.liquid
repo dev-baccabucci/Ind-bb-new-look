@@ -1,0 +1,94 @@
+<style>
+  .custom-progress-bar {
+    text-align: center;
+    transition: all 1000ms linear;
+    height: 93px;
+  }
+  .custom-progress-bar.cart-shipping__wrapper {
+    padding: 15px;
+    max-width: 700px;
+    width: 90%;
+    margin: 0 auto;
+    transition: all 1000ms linear;
+  }
+  #cart-shippingThreshold__bar {
+    position: relative;
+    background-color: #d8d8d8;
+    height: 10px;
+    border-radius: 5px;
+    margin-top: 5px;
+    transition: all 1000ms linear;
+  }
+  .cart-shippingThreshold__progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 0;
+    max-width: 100%;
+    height: 100%;
+    display: block;
+    background-color: #000000; 
+    border-radius: 5px;
+    transition: all 1000ms linear;
+  }
+  .cart-shipping__numOuter,
+  #cart-shipping__success {
+    display: none;
+    font-weight: 500;
+  }
+  </style>
+  
+  <!-- Free shipping progress markup -->
+  <div class="cart-shipping__wrapper custom-progress-bar">
+    <!-- <p class="cart-shipping__numOuter">You're $<span class="cart-shipping__num"></span> away from free shipping!</p> -->
+    
+    {%- if cart.empty? -%}
+  
+    {%- else -%}
+      <p id="cart-shipping__success"></p>
+      <p id="progress-message"></p>
+      <div id="cart-shippingThreshold__bar">
+        <span class="cart-shippingThreshold__progress"></span>
+      </div>
+    {% endif %}
+  </div>
+  
+  <script>
+  // Calculate the progress number, and the width of the progress bar.
+  function calculateProgress(currentVal, targetVal) {
+    let progress_val = 200000
+    if (currentVal < 200000) {
+      document.getElementById("progress-message").innerHTML = '👑  Free Keychain on Orders Above Rs. 2000';
+      document.getElementById("progress-message").style.display = 'block';
+      document.getElementById("cart-shippingThreshold__bar").style.display = 'block';
+    } else if (currentVal > 200000) {
+      progress_val = 300000
+      document.getElementById("progress-message").innerHTML = '15% off on orders above Rs. 3000';
+      document.getElementById("cart-shipping__success").innerHTML = 'Congrats! You unlocked Free Keychain 👑 ';
+      document.getElementById("cart-shipping__success").style.display = 'block';
+      document.getElementById("progress-message").style.display = 'block';
+      document.getElementById("cart-shippingThreshold__bar").style.display = 'block';
+    } else {
+      document.getElementById("progress-message").style.display = 'none';
+      document.getElementById("cart-shippingThreshold__bar").style.display = 'none';
+    }
+    console.log("total price...", progress_val)
+    var progressBar = document.querySelectorAll('.cart-shippingThreshold__progress');
+    // calculate how far progress is from the total as a percentage
+    var result = Math.round(100 * currentVal / progress_val);
+    progressBar.forEach(function(el){
+      el.setAttribute('style', "width: ".concat(result, "%"));
+    })
+  };
+  
+  // In your theme's main JS file, find each ajax call where your store adds to, deletes from, and updates the cart. Put this in the success function of each. 
+  // NOTE: If you make this ajax request outside of the functions that update the cart, the calculator won't sync with the current cart state without refreshing the page. You need to specify that you want to read the current cart data AFTER the new items are added/removed.
+  function cartDrawerUpdate() {
+    fetch('/cart.js')
+    .then(response => response.json())
+    .then(data => {
+      calculateProgress(data.total_price, 10000);
+    });
+  }
+  cartDrawerUpdate()
+  </script>

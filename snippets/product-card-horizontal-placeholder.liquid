@@ -1,0 +1,63 @@
+{% comment %}
+  	Renders a horizontal product card placeholder
+  	Accepts:
+  	- media_size: {String} Size of the product image card. Values are "square" and "portrait". Default is "square" (optional)
+  	- show_vendor: {Boolean} Show the product vendor. Default: true
+  	Usage:
+  {% render 'product-card-horizontal-placeholder',
+  	show_vendor: true
+  %}
+{% endcomment %}
+
+{% liquid
+  if media_ratio == 'landscape'
+    assign padding_bottom = 66
+  elsif media_ratio == 'portrait'
+    assign padding_bottom = 133
+  else
+    assign padding_bottom = 100
+  endif
+%}
+
+<div
+  class="card-horizontal-wrapper {% if color_scheme != blank%}color-{{ color_scheme }}{% else %}color-{{ settings.card_color_scheme }}{% endif %}"
+>
+  <a
+    href="{{ routes.all_products_collection_url }}"
+    class="link link--overlay card-wrapper__link--overlay"
+    aria-label="{{ "accessibility.product_link" | t }}"
+  ></a>
+
+  <div class="card-horizontal__image">
+    <div
+      class="media"
+      style="padding-bottom: {{ padding_bottom }}%; object-fit: {{ media_fit }};"
+    >
+      {% assign placeholder_index = product_number | modulo: 6 | plus: 1 %}
+      {{ 'product-' | append: placeholder_index | placeholder_svg_tag: 'placeholder-svg' }}
+    </div>
+  </div>
+
+  <div class="card-horizontal__information">
+    <div class="card-horizontal__information-top">
+      {%- if show_vendor -%}
+        <div class="subtitle card-horizontal__vendor subtitle">
+          {{- 'products.product.vendor' | t -}}
+        </div>
+      {%- endif -%}
+
+      <h3 class="card-horizontal__title body-normal">
+        {{- 'products.product.product_heading' | t -}}
+      </h3>
+    </div>
+
+    <div class="card-horizontal__information-bottom">
+      {% render 'price' %}
+
+      <div class="card-horizontal__information-bottom-icons">
+        {% render 'icon-arrow-link-small' %}
+        {% render 'icon-arrow-link-small' %}
+      </div>
+    </div>
+  </div>
+</div>

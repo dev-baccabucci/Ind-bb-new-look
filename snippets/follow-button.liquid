@@ -1,0 +1,266 @@
+<details-disclosure class="header__follow" data-hover-opacity="3">
+	<ul class="details__follow list-menu--inline">
+		<li
+			class="list-menu-item"
+			aria-haspopup="dialog"
+			role="button"
+		>
+			<div class="header__menu-item">
+				 <div class="header__menu-item-content">
+						<span class="header__menu-item-title" title="{{ 'sections.header.follow' | t }}">
+							{{ 'sections.header.follow' | t }}
+						</span>
+					</div>
+			</div>
+		</li>
+		<div
+			class="header__follow-modal modal__toggle"
+			role="dialog"
+			aria-modal="true"
+		>
+			<div class="header__follow-main color-{{ block.settings.color_scheme }}">
+				<div class="header__follow-img-block color-{{ block.settings.color_scheme }}">
+					{%- if block.settings.image != blank -%}
+						{{
+							block.settings.image
+							| image_url: width: block.settings.image.width
+							| image_tag:
+								loading: 'lazy',
+								widths: '275, 550, 750',
+								class: 'header__follow-img'
+						}}
+					{%- endif -%}
+					<span
+						class="header__follow__overlay"
+						style="opacity: {{ block.settings.overlay_opacity }}"
+					></span>
+					<div class="header__follow-text">
+						{%- if block.settings.heading != blank -%}
+							<p class="header__follow-text-heading h5">
+								{{ block.settings.heading }}
+							</p>
+						{%- endif -%}
+						{%- if block.settings.enable_subscribe -%}
+							<div class="newsletter">
+								{% form 'customer', class: 'newsletter-form' %}
+									<div class="newsletter-form__inner">
+										<input
+											dir="ltr"
+											type="hidden"
+											name="contact[tags]"
+											value="newsletter"
+										>
+										<div class="newsletter-form__field-wrapper">
+											<div class="field">
+												<input
+													dir="ltr"
+													id="NewsletterForm--{{ block.id }}"
+													type="email"
+													name="contact[email]"
+													class="field__input field"
+													value="{{ form.email }}"
+													pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+													aria-required="true"
+													autocorrect="off"
+													autocapitalize="off"
+													autocomplete="email"
+													{% if form.errors %}
+														autofocus
+														aria-invalid="true"
+														aria-describedby="Newsletter-error--{{ block.id }}"
+													{% elsif form.posted_successfully? %}
+														aria-describedby="Newsletter-success--{{ block.id }}"
+													{% endif %}
+													placeholder="{{ 'newsletter.label' | t }}"
+													required
+												>
+											</div>
+											{%- if form.errors -%}
+												<small
+													class="newsletter-form__message form__message"
+													id="Newsletter-error--{{ block.id }}"
+												>
+													{%- render 'icon-error' -%}
+													{{-
+														form.errors.translated_fields.email
+														| capitalize
+													}}
+													{{ form.errors.messages.email -}}
+												</small>
+											{%- endif -%}
+										</div>
+										<button
+											type="submit"
+											class="newsletter__button button button--{{ block.settings.button_style }} focus-inset"
+											name="commit"
+										>
+											<div class="button__content">
+												<span class="button__label" data-label="{{- 'newsletter.button_label' | t -}}">
+													{{- 'newsletter.button_label' | t -}}
+												</span>
+											</div>
+										</button>
+									</div>
+									{%- if form.posted_successfully? -%}
+										<h3
+											class="newsletter-form__message newsletter-form__message--success form__message"
+											id="Newsletter-success--{{ block.id }}"
+											tabindex="-1"
+											autofocus
+										>
+											{% render 'icon-success' -%}
+											{{- 'newsletter.success' | t }}
+										</h3>
+									{%- endif -%}
+								{% endform %}
+							</div>
+						{%- endif -%}
+
+						{%- if block.settings.info != blank -%}
+							<div class="header__follow-text-info">
+								{{ block.settings.info }}
+							</div>
+						{%- endif -%}
+					</div>
+				</div>
+				<div class="header__follow-social">
+					{%- if block.settings.show_social -%}
+						<div class="header__column--social">
+							<ul
+								class="header__list-social list-unstyled list-social"
+								role="list"
+							>
+								{%- if settings.social_twitter_link != blank -%}
+									<li class="list-social__item">
+										<a
+											href="{{ settings.social_twitter_link }}"
+											class="link link--text list-social__link"
+											aria-describedby="a11y-external-message"
+										>
+											{%- render 'icon-twitter' -%}
+											<span class="visually-hidden">
+												{{- 'general.social.links.twitter' | t -}}
+											</span>
+										</a>
+									</li>
+								{%- endif -%}
+								{%- if settings.social_facebook_link != blank -%}
+									<li class="list-social__item">
+										<a
+											href="{{ settings.social_facebook_link }}"
+											class="link link--text list-social__link"
+											aria-describedby="a11y-external-message"
+										>
+											{%- render 'icon-facebook' -%}
+											<span class="visually-hidden">
+												{{- 'general.social.links.facebook' | t -}}
+											</span>
+										</a>
+									</li>
+								{%- endif -%}
+								{%- if settings.social_pinterest_link != blank -%}
+									<li class="list-social__item">
+										<a
+											href="{{ settings.social_pinterest_link }}"
+											class="link link--text list-social__link"
+											aria-describedby="a11y-external-message"
+										>
+											{%- render 'icon-pinterest' -%}
+											<span class="visually-hidden">
+												{{- 'general.social.links.pinterest' | t -}}
+											</span>
+										</a>
+									</li>
+								{%- endif -%}
+								{%- if settings.social_instagram_link != blank -%}
+									<li class="list-social__item">
+										<a
+											href="{{ settings.social_instagram_link }}"
+											class="link link--text list-social__link"
+											aria-describedby="a11y-external-message"
+										>
+											{%- render 'icon-instagram' -%}
+											<span class="visually-hidden">
+												{{- 'general.social.links.instagram' | t -}}
+											</span>
+										</a>
+									</li>
+								{%- endif -%}
+								{%- if settings.social_tiktok_link != blank -%}
+									<li class="list-social__item">
+										<a
+											href="{{ settings.social_tiktok_link }}"
+											class="link link--text list-social__link"
+											aria-describedby="a11y-external-message"
+										>
+											{%- render 'icon-tiktok' -%}
+											<span class="visually-hidden">
+												{{- 'general.social.links.tiktok' | t -}}
+											</span>
+										</a>
+									</li>
+								{%- endif -%}
+								{%- if settings.social_tumblr_link != blank -%}
+									<li class="list-social__item">
+										<a
+											href="{{ settings.social_tumblr_link }}"
+											class="link link--text list-social__link"
+											aria-describedby="a11y-external-message"
+										>
+											{%- render 'icon-tumblr' -%}
+											<span class="visually-hidden">
+												{{- 'general.social.links.tumblr' | t -}}
+											</span>
+										</a>
+									</li>
+								{%- endif -%}
+								{%- if settings.social_snapchat_link != blank -%}
+									<li class="list-social__item">
+										<a
+											href="{{ settings.social_snapchat_link }}"
+											class="link link--text list-social__link"
+											aria-describedby="a11y-external-message"
+										>
+											{%- render 'icon-snapchat' -%}
+											<span class="visually-hidden">
+												{{- 'general.social.links.snapchat' | t -}}
+											</span>
+										</a>
+									</li>
+								{%- endif -%}
+								{%- if settings.social_youtube_link != blank -%}
+									<li class="list-social__item">
+										<a
+											href="{{ settings.social_youtube_link }}"
+											class="link link--text list-social__link"
+											aria-describedby="a11y-external-message"
+										>
+											{%- render 'icon-youtube' -%}
+											<span class="visually-hidden">
+												{{- 'general.social.links.youtube' | t -}}
+											</span>
+										</a>
+									</li>
+								{%- endif -%}
+								{%- if settings.social_vimeo_link != blank -%}
+									<li class="list-social__item">
+										<a
+											href="{{ settings.social_vimeo_link }}"
+											class="link link--text list-social__link"
+											aria-describedby="a11y-external-message"
+										>
+											{%- render 'icon-vimeo' -%}
+											<span class="visually-hidden">
+												{{- 'general.social.links.vimeo' | t -}}
+											</span>
+										</a>
+									</li>
+								{%- endif -%}
+							</ul>
+						</div>
+					{%- endif -%}
+				</div>
+			</div>
+		</div>
+	</ul>
+</details-disclosure>

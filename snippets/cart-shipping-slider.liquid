@@ -1,0 +1,407 @@
+{% liquid
+  assign has_shipping_slider = false
+  if settings.show_shipping
+    assign has_shipping_slider = true
+  endif
+
+  assign has_cart_popular_products = false
+  if settings.show_cart_recommended_products and settings.cart_recommended_products != blank
+    assign has_cart_popular_products = true
+  endif
+%}
+
+
+{%- if has_shipping_slider or has_cart_popular_products -%}
+  <div class="cart-improvements{% if cart == empty %} is-empty{% endif %}">
+     <div class="yml-title">
+    <h4>You may also like</h4>
+  </div>
+    {%- if has_shipping_slider -%}
+      <div
+        class="cart-shipping{% if cart == empty %} is-empty{% endif %}"
+        data-min-spend="{{ settings.min_spend | times: 100.0 }}"
+        data-total="{{ cart.total_price }}"
+        data-message=" {{ settings.message_shipping }}"
+        data-cart-is-empty="{{ cart.empty? }}"
+        data-show-in-empty-drawer="{{ settings.enable_shipping_in_empty_drawer }}"
+        data-show-in-empty-cart="{{ settings.enable_shipping_in_empty_cart }}"
+      >
+        <p class="cart-shipping__message cart-shipping__message_default body-small active"></p>
+        <p class="cart-shipping__message cart-shipping__message_success body-small">
+          {{- settings.message_shipping_free -}}
+        </p>
+        <span class="cart-shipping__progress">
+          <span class="cart-shipping__progress-current"></span>
+        </span>
+      </div>
+    {%- endif -%}
+
+    {%- if has_cart_popular_products -%}
+      <cart-popular-products-slider
+        class="cart-popular-products-slider"
+        data-cart-is-empty="{{ cart.empty? }}"
+        data-show-in-empty-drawer="{{ settings.enable_recommend_in_empty_drawer }}"
+        data-show-in-empty-cart="{{ settings.enable_recommend_in_empty_cart }}"
+        tabindex="-1"
+      >
+        {%- if settings.cart_recommended_products.count > 0 and cart.empty? == false -%}
+          <button class="cart-popular-products-slider__button cart-popular-products-slider__button--prev">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13 4L7 10L13 16" stroke="currentColor" stroke-width="1.4"/>
+            </svg>
+          </button>
+        {%- endif -%}
+
+        {% if cart.empty? and settings.recommend_label_empty_cart != blank %}
+          <span class="cart-popular-products-slider__empty-label">
+            {{- settings.recommend_label_empty_cart -}}
+          </span>
+        {% endif %}
+
+        <div class="cart-popular-products-slider__window{% if cart.empty? == false %} swiper{% endif %}">
+          <div class="cart-popular-products-slider__wrapper{% if cart.empty? == false %} swiper-wrapper{% endif %}">
+            {% for popular_product in settings.cart_recommended_products %}
+              <div class="cart-popular-products-slider__slide{% if cart.empty? == false %} swiper-slide{% endif %}">
+                <div class="cart-popular-products-slider__slide-details">
+                  {%- if popular_product.featured_image != blank- %}
+                    <div class="cart-popular-products-slider__slide-image">
+                      <a
+                        class="full-unstyled-link cart-popular-products-slider__slide-link focus-inset"
+                        href="{{ popular_product.url }}"
+                        aria-label="{{- 'accessibility.product_link' | t -}}"
+                      >
+                      </a>
+                      {% liquid
+                        assign settings_aspect_ratio = 1
+
+                        assign calc_ratio = 1
+                        if popular_product.featured_image.aspect_ratio > settings_aspect_ratio
+                          assign calc_ratio = popular_product.featured_image.aspect_ratio | divided_by: settings_aspect_ratio | round: 2
+                        endif
+                      %}
+                      {%- capture sizes -%}
+                        (min-width: 750px) calc({{ calc_ratio }} * 72px), calc({{ calc_ratio }} * 48px)
+                      {%- endcapture -%}
+                      {{
+                        popular_product.featured_image
+                        | image_url: width: 216
+                        | image_tag: loading: 'lazy', widths: '48, 72, 96, 144, 216', sizes: sizes
+                      }}
+                    </div>
+                  {%- endif -%}
+                  <div class="cart-popular-products-slider__slide-info">
+                    <a
+                      class="full-unstyled-link cart-popular-products-slider__slide-title focus-inset"
+                      href="{{ popular_product.url }}"
+                    >
+                      {{- popular_product.title | escape -}}
+                    </a>
+                    {% render 'price', product: popular_product, price_class: '' %}
+                  </div>
+                </div>
+                <product-form class="card__add-to-cart cart-popular-products-slider__slide-button">
+                  {% comment %} {%- assign product_form_id = 'cart-quick-' | append: popular_product.id -%}
+                  {%- form 'product',
+                    popular_product,
+                    id: product_form_id,
+                    class: 'form',
+                    novalidate: 'novalidate',
+                    data-type: 'add-to-cart-form'
+                  -%}
+                    <input
+                      type="hidden"
+                      name="id"
+                      value="{{ popular_product.selected_or_first_available_variant.id }}"
+                      disabled
+                    >
+                    <button
+                      class="button button--primary focus-inset"
+                      id="{{ product_form_id }}-submit"
+                      type="submit"
+                      name="add"
+                      aria-haspopup="dialog"
+                      aria-labelledby="{{ product_form_id }}-submit title-{{ popular_product.id }}"
+                      aria-live="polite"
+                      data-sold-out-message="true"
+                      {% if popular_product.selected_or_first_available_variant.available == false %}
+                        disabled
+                      {% endif %}
+                      aria-label="{{- 'general.card.quick__add' | t -}}"
+                    >
+                      <div class="button__content">
+                        <span
+                          class="recom-pr-add-to-cart button__label"
+                          data-label="{{ 'products.product.add_to_cart' | t }}"
+                        >
+                          {{- 'products.product.add_to_cart' | t -}}
+                        </span>
+                        <span class="recom-pr-add-to-cart-mobile">
+                          {% render 'icon-quick-add' %}
+                        </span>
+                        <span class="sold-out-message hidden button__label">
+                          {{ 'products.product.sold_out' | t }}
+                        </span>
+                      </div>
+
+                      <span class="animated-button-circle"></span>
+
+                      <div class="loading-overlay__spinner hidden cart-popular-products-slider__slide-spinner">
+                        {% render 'icon-loading' %}
+                      </div>
+                    </button>
+                  {%- endform -%} {% endcomment %}
+
+                  <div class="quick-add no-js-hidden">
+  {%- assign product_form_id = 'quick-view-popular-' | append: popular_product.id -%}
+
+  <modal-opener data-modal="#QuickAdd-Cart-{{ popular_product.id }}">
+    <button
+      id="{{ product_form_id }}-submit"
+      type="button"
+      class="button button--primary focus-inset"
+      aria-haspopup="dialog"
+      aria-labelledby="{{ product_form_id }}-submit title-{{ popular_product.id }}"
+      data-product-url="{{ popular_product.url }}"
+      aria-label="{{ 'general.card.quick__view' | t }}"
+    >
+      <div class="button__content">
+        <span class="button__label">
+          Add +
+        </span>
+        {% comment %} <span class="recom-pr-add-to-cart-mobile">
+          {% render 'icon-quick-view' %}
+        </span> {% endcomment %}
+      </div>
+
+      <span class="animated-button-circle"></span>
+
+      <div class="loading-overlay__spinner hidden">
+        {% render 'icon-loading' %}
+      </div>
+    </button>
+  </modal-opener>
+
+  <quick-add-modal
+    id="QuickAdd-Cart-{{ popular_product.id }}"
+    class="quick-add-modal quick-add-modal--cart-recommend"
+  >
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="{{ popular_product.title | escape }}"
+      class="quick-add-modal__content global-settings-popup"
+      tabindex="-1"
+    >
+      <div class="quick-add-modal__content-wrapper">
+        <div class="quick-add-modal__top">
+          <p>Select Variant</p>
+          <button
+            id="ModalClose-{{ popular_product.id }}"
+            type="button"
+            class="quick-add-modal__toggle modal-close-button focus-inset"
+            aria-label="{{ 'accessibility.close' | t }}"
+          >
+            {{ 'accessibility.close' | t }}
+          </button>
+        </div>
+
+        <div
+          id="QuickAddInfo-{{ popular_product.id }}"
+          class="quick-add-modal__content-info"
+        ></div>
+      </div>
+    </div>
+  </quick-add-modal>
+</div>
+
+                </product-form>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        {%- if settings.cart_recommended_products.count > 1 and cart.empty? == false -%}
+          <button class="cart-popular-products-slider__button cart-popular-products-slider__button--next">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 4L13 10L7 16" stroke="currentColor" stroke-width="1.4"/>
+            </svg>
+          </button>
+        {%- endif -%}
+
+        {%- if settings.cart_recommended_products.count > 1 and cart.empty? == false -%}
+          <div class="cart-popular-products-slider__pagination swiper-pagination"></div>
+        {%- endif -%}
+      </cart-popular-products-slider>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+
+<style>
+  .quick-add-modal.quick-add-modal--cart-recommend.active {
+    z-index: 999999;
+}
+.quick-add-modal.quick-add-modal--cart-recommend.active 
+div#shopify-block-Ack5nOHNxL09ZMVd5R__back_in_stock_restock_alert_za_zooomy_backinstock_rENDjA,
+
+.quick-add-modal.quick-add-modal--cart-recommend.active 
+div#shopify-block-AU1FOSnpnaVUrRnl5Q__back_in_stock_restock_alert_za_zooomy_backinstock_AVbMAC{
+    display: none;
+}
+{% comment %} .yml-title {
+    margin: 1.6rem 2rem;
+    padding: 1.6rem 0;
+    margin-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+} {% endcomment %}
+.yml-title h4 {
+    text-transform: none;
+    font-size: 16px;
+    font-weight: 500;
+}
+.cart-popular-products-slider__slide {
+    flex: 0 0 auto;
+    {% comment %} width: 50% !important; {% endcomment %}
+    height: auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-evenly;
+    gap: 1rem;
+    background-color: transparent;
+    flex-direction: column;
+    border: .1rem solid rgb(var(--color-border));
+    border-radius: 5px;
+    padding: 5px;
+}
+.card__add-to-cart.cart-popular-products-slider__slide-button .button.button--primary.focus-inset {
+    padding: 0px 10px;
+}
+.card__add-to-cart.cart-popular-products-slider__slide-button .button.button--primary.focus-inset {
+    padding: 0px 8px;
+    height: 25px;
+    border-radius: 5px;
+    min-height: auto;
+}
+.cart-popular-products-slider__slide-info span.price-item.price-item--sale {
+    font-size: 13px;
+}
+.cart-popular-products-slider__slide-info s.price-item.price-item--regular {
+    font-size: 11px;
+}
+.drawer .cart-improvements {
+    padding: 10px;
+}
+.cart-popular-products-slider__slide-info 
+a.full-unstyled-link.cart-popular-products-slider__slide-title.focus-inset {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 !important;
+    text-align: left;
+    font-size:14px;
+}
+.quick-add-modal.quick-add-modal--cart-recommend.active .product-form__checkout.no-js-hidden {
+    display: none;
+}
+.quick-add-modal.quick-add-modal--cart-recommend.active 
+.quick-add-modal__content-info.has-scroll {
+    height: calc(100% - 167px) !important;
+}
+.cart-popular-products-slider {
+    gap: 0;
+}
+.cart-improvements.is-empty {
+    display: none;
+}
+.cart-popular-products-slider__pagination.swiper-pagination .swiper-pagination-bullet-active {
+    background-color: rgb(220 162 63) !important;
+    border-color: rgb(220 162 63) !important;
+}
+.cart-popular-products-slider__pagination.swiper-pagination .swiper-pagination-bullet {
+    border-color: rgb(220 162 63);
+    background: transparent;
+}
+.card__add-to-cart.cart-popular-products-slider__slide-button, .cart-popular-products-slider__slide .button.button--primary.focus-inset {
+    width: 100%;
+}
+.card__add-to-cart.cart-popular-products-slider__slide-button modal-opener {
+    width: 100%;
+}
+.quick-add-modal.quick-add-modal--cart-recommend.active .product-form__submit span.button__label {
+    font-size: 20px;
+}
+.quick-add-modal.quick-add-modal--cart-recommend.active .product-form__controls-group label.variant-swatch--square {
+    width: 50px;
+    height: 5.6rem;
+    border-radius: 5px;
+}
+.quick-add-modal.quick-add-modal--cart-recommend.active 
+div#shopify-block-Ac05EeW0xL1Jhb3M1O__q_discount_free_gift_bogo_offer_689rVJ {
+    display: none;
+}
+.quick-add-modal.quick-add-modal--cart-recommend.active .quick-add-modal__toggle {
+    color: black;
+    font-weight: 700;
+    font-size: 15px;
+}
+.quick-add-modal.quick-add-modal--cart-recommend.active .quick-add-modal__top p {
+    color: black;
+    font-weight: 600;
+    font-size: 15px;
+}
+.quick-add-modal.quick-add-modal--cart-recommend.active .quick-add-modal__top {
+    border-bottom: .1rem solid rgb(var(--color-border));
+}
+.cart-popular-products-slider__slide-info span.price-item.price-item--sale {
+    font-size: 13px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 !important;
+    text-align: left;
+}
+@media screen and (min-width: 1200px) {
+    .yml-title {
+        margin: 0 2rem;
+    }
+    .quick-add-modal.quick-add-modal--cart-recommend.active .product__outer {
+    flex-direction: row;
+}
+}
+
+@media (min-width: 768px) {
+    .quick-add-modal.quick-add-modal--cart-recommend.active .product .product-form {
+        width: 100%;
+    }
+    .quick-add-modal.quick-add-modal--cart-recommend.active .product .product__buy-buttons {
+        width: auto;
+    }
+    .quick-add-modal.quick-add-modal--cart-recommend.active .quick-add-modal__content-info.has-scroll .product__outer {
+    flex-direction: row;
+}
+.yml-title {
+    display: flex;
+    margin: 0 auto;
+    width: 90%;
+}
+}
+
+@media (max-width: 767px) {
+   .quick-add-modal.quick-add-modal--cart-recommend.active .quick-add-modal__content {
+        margin-top: 92%;
+    }
+    .cart-popular-products-slider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+    overflow: hidden;
+}
+}
+</style>

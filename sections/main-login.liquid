@@ -1,0 +1,293 @@
+{{ 'customer.css' | asset_url | stylesheet_tag: preload: true }}
+
+{%- style -%}
+  {% render 'section-margin' %}
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }}">
+  <div
+    class="customer login container"
+  >
+    <div class="login__wrapper">
+      <div class="login__col">
+        <div class="login__reset" id="recover">
+          <div class="page-header">
+            <div class="page-header__inner">
+              <h2 class="title--page login__title h2">
+                {{ 'customer.recover_password.title' | t }}
+              </h2>
+
+              <div class="login__form-info">
+                <span>{{ 'customer.recover_password.subtext' | t }}</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            {%- form 'recover_customer_password' -%}
+              {% assign recover_success = form.posted_successfully? %}
+              <div class="field field--email">
+                <input
+                  type="email"
+                  dir="ltr"
+                  value=""
+                  name="email"
+                  id="RecoverEmail"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  autocomplete="email"
+                  {% if form.errors %}
+                    aria-invalid="true"
+                    aria-describedby="RecoverEmail-email-error"
+                    autofocus
+                  {% endif %}
+                  placeholder="{{ 'customer.login_page.email_placeholder' | t }}"
+                  required
+                >
+                <label for="RecoverEmail" class="body-small">
+                  {{- 'customer.login_page.email' | t -}}
+                </label>
+              </div>
+
+              <div class="login__buttons">
+                <button type="submit" class="button button--primary login__sign-in focus-inset">
+                  <div class="button__content">
+                    <span class="button__label" data-label="{{- 'customer.login_page.submit' | t -}}">
+                      {{- 'customer.login_page.submit' | t -}}
+                    </span>
+                  </div>
+                  <span class="animated-button-circle"></span>
+                </button>
+
+                <a
+                  class="button button--underline login__sign-in anchor focus-inset"
+                  href="#login"
+                >
+                  <span class="button__label">
+                    {{- 'customer.login_page.cancel' | t -}}
+                  </span>
+                </a>
+              </div>
+            {%- endform -%}
+          </div>
+        </div>
+
+        <div class="login__form" id="login">
+          <div class="page-header">
+            <div class="page-header__inner">
+              <h1 class="title--page login__title h2">
+                {{ 'customer.login_page.title' | t }}
+              </h1>
+
+              <div class="login__form-info">
+                <span>{{ 'customer.login_page.new_customer' | t }}</span>
+                <a
+                  href="{{ routes.account_register_url }}"
+                  class="button button--underline focus-inset"
+                >
+                  <span>{{- 'customer.login_page.create_account' | t -}}</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          {%- if recover_success == true -%}
+            <p class="form__message form__message--success" tabindex="-1" autofocus>
+              {{- 'customer.recover_password.success' | t -}}
+            </p>
+          {%- endif -%}
+          {%- form 'customer_login' -%}
+            <div class="field field--email login__field">
+              <input
+                type="email"
+                dir="ltr"
+                name="customer[email]"
+                class="field__input"
+                id="CustomerEmail"
+                autocomplete="email"
+                autocorrect="off"
+                autocapitalize="off"
+                required
+                {% if form.errors contains 'form' %}
+                  aria-invalid="true"
+                  aria-describedby="LoginForm-email-error"
+                {% endif %}
+                placeholder="{{ 'customer.login_page.email_placeholder' | t }}"
+              >
+              <label for="CustomerEmail" class="body-small">
+                {{- 'customer.login_page.email' | t -}}
+              </label>
+              {% unless template.name == 'register' %}
+                {{ form.errors | default_errors }}
+              {% endunless %}
+            </div>
+
+            {%- if form.password_needed -%}
+              <div class="field field--pass login__field">
+                <div class="field--pass-wrapper">
+                  <div class="button-pass-visibility">
+                    {% render 'icon-eye' %}
+                    {% render 'icon-eye-close' %}
+                  </div>
+                  <input
+                    type="password"
+                    dir="ltr"
+                    value=""
+                    name="customer[password]"
+                    class="field__input"
+                    id="CustomerPassword"
+                    autocomplete="current-password"
+                    placeholder="{{ 'customer.login_page.password_placeholder' | t }}"
+                    {% if form.errors contains 'form' %}
+                      aria-invalid="true"
+                    {% endif %}
+                    required
+                  >
+                </div>
+                <label for="CustomerPassword" class="body-small">
+                  {{- 'customer.login_page.password' | t -}}
+                </label>
+                {% unless template.name == 'register' %}
+                  {{ form.errors | default_errors }}
+                {% endunless %}
+              </div>
+            {%- endif -%}
+
+            <div class="login__buttons login__buttons--space-between">
+              <button type="submit" class="button button--primary login__sign-in focus-inset">
+                <div class="button__content">
+                  <span class="button__label" data-label="{{- 'customer.log_in' | t -}}">
+                    {{- 'customer.log_in' | t -}}
+                  </span>
+                  <div class="button__icons">
+                    <span class="button__icon">
+                      {% render 'icon-button-arrow' %}
+                    </span>
+                    <span class="button__icon button__icon--2">
+                      {% render 'icon-button-arrow' %}
+                    </span>
+                  </div>
+                </div>
+                <span class="animated-button-circle"></span>
+              </button>
+
+              <a
+                href="#recover"
+                class="anchor button button--underline focus-inset"
+              >
+                <span>{{- 'customer.login_page.forgot_password' | t -}}</span>
+              </a>
+            </div>
+          {%- endform -%}
+        </div>
+
+        {%- if shop.checkout.guest_login -%}
+          <div class="login__guest">
+            <div class="login__title h2">
+              {{ 'customer.login_page.guest_title' | t }}
+            </div>
+
+            {%- form 'guest_login' -%}
+              <button class="button button--primary focus-inset">
+                <div class="button__content">
+                  <span class="button__label" data-label="{{- 'customer.login_page.guest_continue' | t -}}">
+                    {{- 'customer.login_page.guest_continue' | t -}}
+                  </span>
+                </div>
+                <span class="animated-button-circle"></span>
+              </button>
+            {%- endform -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.onload = () => {
+    typeof PasswordViewer !== 'undefined' && new PasswordViewer();
+  };
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.main-login.name",
+  "tag": "section",
+  "class": "spaced-section login-section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "background-1",
+      "label": "t:sections.all.color_scheme.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.section-margin.header.content"
+    },
+    {
+      "type": "select",
+      "id": "margin_top",
+      "options": [
+        {
+          "value": "no-indent",
+          "label": "t:sections.all.section-margin.options__1.label"
+        },
+        {
+          "value": "xs",
+          "label": "t:sections.all.section-margin.options__2.label"
+        },
+        {
+          "value": "s",
+          "label": "t:sections.all.section-margin.options__3.label"
+        },
+        {
+          "value": "m",
+          "label": "t:sections.all.section-margin.options__4.label"
+        },
+        {
+          "value": "l",
+          "label": "t:sections.all.section-margin.options__5.label"
+        },
+        {
+          "value": "xl",
+          "label": "t:sections.all.section-margin.options__6.label"
+        }
+      ],
+      "default": "no-indent",
+      "label": "t:sections.all.section-margin.margin_top.label"
+    },
+    {
+      "type": "select",
+      "id": "margin_bottom",
+      "options": [
+        {
+          "value": "no-indent",
+          "label": "t:sections.all.section-margin.options__1.label"
+        },
+        {
+          "value": "xs",
+          "label": "t:sections.all.section-margin.options__2.label"
+        },
+        {
+          "value": "s",
+          "label": "t:sections.all.section-margin.options__3.label"
+        },
+        {
+          "value": "m",
+          "label": "t:sections.all.section-margin.options__4.label"
+        },
+        {
+          "value": "l",
+          "label": "t:sections.all.section-margin.options__5.label"
+        },
+        {
+          "value": "xl",
+          "label": "t:sections.all.section-margin.options__6.label"
+        }
+      ],
+      "default": "xl",
+      "label": "t:sections.all.section-margin.margin_bottom.label"
+    }
+  ]
+}
+{% endschema %}

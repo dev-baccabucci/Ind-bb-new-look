@@ -1,0 +1,111 @@
+.product-countdown {
+  position: fixed;
+  display: none;
+  left: 0;
+  right: 0;
+  background: rgb(var(--color-background));
+  border-top: 1px solid rgb(var(--color-border));
+  bottom: 0;
+  z-index: 120;
+  opacity: 0;
+  transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1), opacity 1s cubic-bezier(0.19, 1, 0.22, 1);
+  transform: translateY(100%);
+}
+.product-countdown.active {
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1), opacity 1s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.product-countdown.mobile-show {
+  display: flex;
+}
+@media (min-width: 576px) {
+  .product-countdown {
+    display: flex;
+  }
+}
+@media (min-width: 750px) {
+  .product-countdown {
+    transition-duration: 0.6s;
+  }
+  .product-countdown.active {
+    transition-duration: 0.6s;
+  }
+}
+.product-countdown__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1.6rem;
+  padding-block: 1.2rem;
+}
+h4.product-countdown__title {
+    font-size: 18px;
+    font-family: 'Inter';
+}
+.product-countdown__container.container span.button__label{ 
+    color: white;
+}
+@media (min-width: 750px) {
+  .product-countdown__container {
+    flex-direction: row;
+  }
+}
+.product-countdown__title,
+.product-countdown .product-form {
+  width: 100%;
+}
+@media (min-width: 750px) {
+  .product-countdown__title,
+  .product-countdown .product-form {
+    /* width: calc(25% - 0.8rem); */
+  width: calc(50% - 0.8rem);
+ }
+}
+@media (max-width: 749px) {
+  .product-countdown__title {
+    text-align: center;
+  }
+}
+.product-countdown__info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  width: 100%;
+}
+@media (min-width: 750px) {
+  .product-countdown__info {
+    width: calc(50% - 1.6rem);
+  }
+}
+.product-countdown__info:empty {
+  display: none;
+}
+.product-countdown__main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: rgb(var(--color-foreground)) 0.1rem solid;
+  height: 4rem;
+  padding: 0.8rem 2.6rem;
+  border-radius: 5rem;
+  gap: 0.4rem;
+}
+.product-countdown__end-info {
+  display: none;
+}
+.product-countdown .product-form__submit {
+  width: 100%;
+  border-radius: 5px;
+}
+@media (min-width: 750px) {
+  .product-countdown .product-form__submit {
+    width: fit-content;
+    display: block;
+    margin-left: auto;
+  }
+}

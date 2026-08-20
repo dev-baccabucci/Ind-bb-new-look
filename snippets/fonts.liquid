@@ -1,0 +1,107 @@
+{% comment %}
+  Adding fonts and fonts variables
+{% endcomment %}
+
+{%- liquid
+  assign body_font_light = settings.type_body_font | font_modify: 'weight', '300'
+  assign body_font_regular = settings.type_body_font | font_modify: 'weight', '400'
+  assign body_font_medium = settings.type_body_font | font_modify: 'weight', '500'
+  assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
+  assign body_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
+  assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
+  assign heading_font_italic = settings.type_header_font | font_modify: 'style', 'italic'
+%}
+
+{% style %}
+  {{ settings.type_body_font | font_face: font_display: 'swap' }}
+  {{ settings.type_header_font | font_face: font_display: 'swap' }}
+  {{ settings.type_button_font | font_face: font_display: 'swap' }}
+  {{ settings.type_header_font_card | font_face: font_display: 'swap' }}
+  {{ settings.type_text_font_card | font_face: font_display: 'swap' }}
+  {{ settings.type_subtitle_font | font_face: font_display: 'swap' }}
+  {{ settings.type_header_menu_font | font_face: font_display: 'swap' }}
+  {{ settings.type_footer_menu_font | font_face: font_display: 'swap' }}
+  {{ settings.type_popups_heading_font | font_face: font_display: 'swap' }}
+  {{ settings.type_popups_text_font | font_face: font_display: 'swap' }}
+
+  {{ body_font_light | font_face: font_display: 'swap' }}
+  {{ body_font_regular | font_face: font_display: 'swap' }}
+  {{ body_font_medium | font_face: font_display: 'swap' }}
+  {{ body_font_bold | font_face: font_display: 'swap' }}
+  {{ body_font_italic | font_face: font_display: 'swap' }}
+  {{ heading_font_italic | font_face: font_display: 'swap' }}
+  {{ body_font_bold_italic | font_face: font_display: 'swap' }}
+
+  :root {
+    --font-body-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+    --font-body-style: {{ settings.type_body_font.style }};
+    --font-body-weight: {{ settings.type_body_font.weight }};
+    --font-body-scale: {{ settings.body_scale | divided_by: 100.0 }};
+    --font-body-line-height: {{ settings.type_body_line_height }};
+    --font-body-letter-spacing: {{ settings.type_body_letter_spacing | divided_by: 10.0 }}em;
+
+    --font-heading-family: {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }};
+    --font-heading-style: {{ settings.type_header_font.style }};
+    --font-heading-weight: {{ settings.type_header_font.weight }};
+    --font-heading-letter-spacing: {{ settings.type_header_letter_spacing | divided_by: 10.0 }}em;
+    --font-heading-line-height: {{ settings.type_header_line_height }};
+    --font-heading-text-transform: {{ settings.heading_text_transform }};
+
+    --font-subtitle-family: {{ settings.type_subtitle_font.family }}, {{ settings.type_subtitle_font.fallback_families }};
+    --font-subtitle-style: {{ settings.type_subtitle_font.style }};
+    --font-subtitle-weight: {{ settings.type_subtitle_font.weight }};
+    --font-subtitle-text-transform: {{ settings.subtitle_text_transform }};
+    --font-subtitle-scale: {{ settings.subtitle_scale | divided_by: 100.0 }};
+
+    --font-heading-h0-scale: {{ settings.heading_h0_scale | divided_by: 100.0 }};
+    --font-heading-h1-scale: {{ settings.heading_h1_scale | divided_by: 100.0 }};
+    --font-heading-h2-scale: {{ settings.heading_h2_scale | divided_by: 100.0 }};
+    --font-heading-h3-scale: {{ settings.heading_h3_scale | divided_by: 100.0 }};
+    --font-heading-h4-scale: {{ settings.heading_h4_scale | divided_by: 100.0 }};
+    --font-heading-h5-scale: {{ settings.heading_h5_scale | divided_by: 100.0 }};
+
+    --font-heading-card-family: {{ settings.type_header_font_card.family }}, {{ settings.type_header_font_card.fallback_families }};
+    --font-heading-card-style: {{ settings.type_header_font_card.style }};
+    --font-heading-card-weight: {{ settings.type_header_font_card.weight }};
+    --font-heading-card-text-transform: {{ settings.heading_card_text_transform }};
+    --font-text-card-family: {{ settings.type_text_font_card.family }}, {{ settings.type_text_font_card.fallback_families }};
+    --font-text-card-style: {{ settings.type_text_font_card.style }};
+    --font-text-card-weight: {{ settings.type_text_font_card.weight }};
+
+    --font-heading-card-scale: {{ settings.heading_scale_card | divided_by: 100.0 }};
+    --font-text-card-scale: {{ settings.text_scale_card | divided_by: 100.0 }};
+
+    /* BUTTONS */
+    --font-button-family: {{ settings.type_button_font.family }}, {{ settings.type_button_font.fallback_families }};
+    --font-button-style: {{ settings.type_button_font.style }};
+    --font-button-weight: {{ settings.type_button_font.weight }};
+    --font-button-text-transform: {{ settings.button_text_transform }};
+    --font-button-letter-spacing: {{ settings.button_letter_spacing | divided_by: 10.0 }}em;
+    --font-button-scale: {{ settings.button_text_scale | divided_by: 100.0 }};
+
+    --font-subtitle-letter-spacing: 0.08em;
+
+    --font-header-menu-family: {{ settings.type_header_menu_font.family }}, {{ settings.type_header_menu_font.fallback_families }};
+    --font-header-menu-style: {{ settings.type_header_menu_font.style }};
+    --font-header-menu-weight: {{ settings.type_header_menu_font.weight }};
+    --font-header-menu-text-scale: {{ settings.header_menu_text_scale | divided_by: 100.0 }};
+    --font-header-menu-letter-spacing: {{ settings.header_menu_letter_spacing | divided_by: 10.0 }}em;
+    --font-header-menu-text-transform: {{ settings.header_menu_text_transform }};
+
+    --font-footer-menu-family: {{ settings.type_footer_menu_font.family }}, {{ settings.type_footer_menu_font.fallback_families }};
+    --font-footer-menu-style: {{ settings.type_footer_menu_font.style }};
+    --font-footer-menu-weight: {{ settings.type_footer_menu_font.weight }};
+
+    --font-popups-heading-family: {{ settings.type_popups_heading_font.family }}, {{ settings.type_popups_heading_font.fallback_families }};
+    --font-popups-heading-style: {{ settings.type_popups_heading_font.style }};
+    --font-popups-heading-weight: {{ settings.type_popups_heading_font.weight }};
+    --font-popups-text-family: {{ settings.type_popups_text_font.family }}, {{ settings.type_popups_text_font.fallback_families }};
+    --font-popups-text-style: {{ settings.type_popups_text_font.style }};
+    --font-popups-text-weight: {{ settings.type_popups_text_font.weight }};
+    --font-popup-heading-scale: {{ settings.popup_heading_scale | divided_by: 100.0 }};
+    --font-popup-desc-scale: {{ settings.popup_desc_scale | divided_by: 100.0 }};
+    --font-popup-text-scale: {{ settings.popup_text_scale | divided_by: 100.0 }};
+    --font-notification-heading-scale: {{ settings.notification_heading_scale | divided_by: 100.0 }};
+    --font-notification-text-scale: {{ settings.notification_text_scale | divided_by: 100.0 }};
+  }
+{% endstyle %}

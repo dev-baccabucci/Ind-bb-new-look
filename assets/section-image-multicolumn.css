@@ -1,0 +1,272 @@
+@media (max-width: 749px) {
+  .image-multicolumn--visible-overflow {
+    overflow: hidden;
+  }
+  .image-multicolumn--visible-overflow .swiper.swiper--image-multicolumn.swiper-initialized {
+    overflow: visible;
+  }
+  .image-multicolumn--visible-overflow .swiper.swiper--image-multicolumn .swiper-slide.image-multicolumn-block {
+    width: calc(100% - 25px);
+  }
+  .image-multicolumn--visible-overflow .swiper.swiper--image-multicolumn .swiper-slide.image-multicolumn-block:only-child {
+    width: 100%;
+  }
+}
+.image-multicolumn-block .titles + .description {
+  margin-top: 0.8rem;
+}
+@media (min-width: 750px) {
+  .image-multicolumn-block .titles + .description {
+    margin-top: 1.6rem;
+  }
+}
+.image-multicolumn-block .subtitle + .title {
+  margin-top: 0.8rem;
+}
+@media (min-width: 750px) {
+  .image-multicolumn-block .subtitle + .title {
+    margin-top: 1.6rem;
+  }
+}
+.image-multicolumn-block__info-titles {
+  max-width: 39.5rem;
+}
+.image-multicolumn-block__info-description {
+  max-width: 39.5rem;
+}
+.image-multicolumn-block__info + .content {
+  margin-top: 2.4rem;
+}
+@media (min-width: 750px) {
+  .image-multicolumn-block__info + .content {
+    margin-top: 3.2rem;
+  }
+}
+.image-multicolumn__list {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+  gap: var(--row_gap) var(--column_gap);
+  align-items: end;
+}
+.image-multicolumn__list--2 {
+  grid-template-columns: 1fr;
+}
+@media (min-width: 750px) {
+  .image-multicolumn__list--2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.image-multicolumn__list--3 {
+  grid-template-columns: 1fr;
+}
+@media (min-width: 750px) {
+  .image-multicolumn__list--3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 990px) {
+  .image-multicolumn__list--3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.image-multicolumn__list--4 {
+  grid-template-columns: 1fr;
+}
+@media (min-width: 750px) {
+  .image-multicolumn__list--4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 990px) {
+  .image-multicolumn__list--4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 1440px) {
+  .image-multicolumn__list--4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (max-width: 749px) {
+  .image-multicolumn .swiper .image-multicolumn__list {
+    display: flex;
+    gap: 0;
+  }
+}
+.image-multicolumn-card {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 0;
+  border-radius: var(--border-radius-block);
+  height: auto;
+  overflow: hidden;
+  background-color: rgb(var(--color-background));
+  user-select: none;
+}
+.image-multicolumn-card::after {
+  content: "";
+  display: block;
+  width: 0;
+}
+.image-multicolumn-card--without-bg {
+  background-color: transparent;
+}
+.image-multicolumn-card__landscape::after {
+  padding-bottom: 58%;
+}
+.image-multicolumn-card__portrait::after {
+  padding-bottom: 123.3%;
+}
+.image-multicolumn-card__square::after {
+  padding-bottom: 100%;
+}
+.image-multicolumn-card__link {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  inset: 0;
+  z-index: 3;
+  display: block;
+  background-color: rgb(var(--color-foreground));
+  opacity: 0;
+}
+.image-multicolumn-card__link:empty {
+  display: block;
+}
+@media screen and (pointer: fine) {
+  .image-multicolumn-card__link:hover {
+    cursor: pointer;
+  }
+  .image-multicolumn-card__link:hover + img {
+    transform: scale(1.05);
+  }
+}
+.image-multicolumn-card__overlay {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  inset: 0;
+  z-index: 2;
+  background-color: rgb(var(--color-overlay));
+}
+.image-multicolumn-card__button {
+  position: relative;
+  z-index: 4;
+  padding: 2.4rem;
+}
+@media (min-width: 990px) {
+  .image-multicolumn-card__button {
+    padding: 4rem;
+  }
+}
+.image-multicolumn-card--button-left {
+  justify-content: flex-start;
+}
+.image-multicolumn-card--button-center {
+  justify-content: center;
+}
+.image-multicolumn-card--button-right {
+  justify-content: flex-end;
+}
+.image-multicolumn-card img,
+.image-multicolumn-card svg {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: transform 1.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.image-multicolumn__navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 1.6rem;
+  margin-top: 3.2rem;
+}
+@media (min-width: 750px) {
+  .image-multicolumn__navigation {
+    display: none;
+  }
+}
+.image-multicolumn__navigation-button {
+  color: rgb(var(--color-foreground));
+  width: 3.2rem;
+  height: 3.2rem;
+}
+.image-multicolumn__navigation-button.image-multicolumn__navigation-button-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+@media screen and (min-width: 990px) {
+  .image-multicolumn__navigation-button {
+    width: 36px;
+    height: 36px;
+  }
+}
+.image-multicolumn__navigation-button .icon {
+  width: 32px;
+  height: 32px;
+}
+@media screen and (min-width: 990px) {
+  .image-multicolumn__navigation-button .icon {
+    width: 36px;
+    height: 36px;
+  }
+}
+@media screen and (pointer: fine) {
+  .image-multicolumn__navigation-button {
+    transition: opacity var(--duration-default) ease, transform var(--duration-default) ease;
+  }
+  .image-multicolumn__navigation-button:hover {
+    opacity: var(--hover-opacity);
+  }
+}
+.image-multicolumn__navigation-button-prev .icon {
+  transform: rotate(180deg);
+}
+@media screen and (pointer: fine) {
+  .image-multicolumn__navigation-button-prev:hover {
+    transform: translateX(-0.2rem);
+  }
+}
+@media screen and (pointer: fine) {
+  .image-multicolumn__navigation-button-next:hover {
+    transform: translateX(0.2rem);
+  }
+}
+.image-multicolumn .swiper--image-multicolumn:not(.swiper-initialized) .image-multicolumn__navigation {
+  display: none;
+}
+
+@media screen and (pointer: fine) and (min-width: 1200px) {
+  html:not(.no-js) .image-multicolumn-card.image-multicolumn-card--button-as-cursor {
+    position: relative;
+    cursor: none;
+  }
+  html:not(.no-js) .image-multicolumn-card.image-multicolumn-card--button-as-cursor .image-multicolumn-card__link {
+    cursor: none;
+  }
+  html:not(.no-js) .image-multicolumn-card.image-multicolumn-card--button-as-cursor .image-multicolumn-card__button {
+    padding: 0;
+    position: absolute;
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    cursor: none;
+    transition: opacity 0.3s cubic-bezier(0.39, 0.575, 0.565, 1), visibility 0.3s;
+  }
+  html:not(.no-js) .image-multicolumn-card.image-multicolumn-card--button-as-cursor .image-multicolumn-card__button .button {
+    min-width: max-content;
+    pointer-events: none;
+    cursor: none;
+  }
+  html:not(.no-js) .image-multicolumn-card.image-multicolumn-card--button-as-cursor.cursor-active .image-multicolumn-card__button {
+    opacity: 1;
+    visibility: visible;
+  }
+}

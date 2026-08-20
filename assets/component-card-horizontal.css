@@ -1,0 +1,163 @@
+.card-horizontal-wrapper {
+  position: relative;
+  display: flex;
+  gap: 1.2rem;
+  text-decoration: none;
+  border-radius: var(--border-radius-product);
+  padding: 0.8rem;
+  overflow: hidden;
+}
+@media screen and (hover: hover) and (pointer: fine) {
+  .card-horizontal-wrapper > .link:hover + .card-horizontal__image img {
+    transform: scale(1.07);
+  }
+  .card-horizontal-wrapper > .link:hover ~ .card-horizontal__information .icon-arrow-link-small {
+    transform: translate3d(100%, -100%, 0px);
+  }
+}
+.card-horizontal-wrapper .product-form__controls-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2rem;
+}
+.card-horizontal-wrapper .product-form__controls-group label.color-swatch {
+  position: relative;
+  box-sizing: border-box;
+  width: 2rem;
+  height: 2rem;
+  padding: 0.2rem;
+  background-color: transparent;
+  border-radius: 50%;
+  border: 0.1rem solid transparent;
+  z-index: 2;
+}
+.card-horizontal-wrapper .product-form__controls-group label.color-swatch::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1.2rem;
+  height: 1.2rem;
+  transform: translate(-50%, -50%);
+  border-radius: inherit;
+  background: var(--swatch-color);
+  transition: border-color var(--duration-default);
+  border: 0.1rem solid rgba(var(--color-foreground), 0.2);
+}
+.card-horizontal-wrapper .product-parameters {
+  width: 100%;
+}
+@media (min-width: 750px) {
+  .card-horizontal-wrapper .product-parameters {
+    width: 100%;
+  }
+}
+
+.card-horizontal__image {
+  align-self: flex-start;
+  position: relative;
+  flex-shrink: 0;
+  width: 10rem;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+.card-horizontal__image img {
+  transition: transform 1.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.card-horizontal__image .media {
+  background-color: transparent;
+}
+.card-horizontal__information {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.8rem;
+  flex-grow: 1;
+  padding-right: 0.4rem;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+.card-horizontal__information-top {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.card-horizontal__information-bottom {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+.card-horizontal__information-bottom .price {
+  width: calc(100% - 0.8rem - 2rem);
+  align-items: flex-start;
+}
+.card-horizontal__information-bottom-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.card-horizontal__information-bottom .icon-arrow-link-small {
+  width: 2rem;
+  height: 2rem;
+  transition: transform var(--duration-default);
+  position: relative;
+  transform: translate3d(0%, 0%, 0px);
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+}
+.card-horizontal__information-bottom .icon-arrow-link-small:nth-child(2) {
+  position: absolute;
+  top: 100%;
+  left: -100%;
+}
+.card-horizontal__title {
+  position: relative;
+  display: block;
+  margin: 0;
+  font-family: var(--font-heading-card-family);
+  font-style: var(--font-heading-card-style);
+  font-weight: var(--font-heading-card-weight);
+  font-size: calc(var(--font-heading-card-scale) * 1.6rem);
+  text-transform: var(--font-heading-card-text-transform);
+  color: rgb(var(--color-foreground));
+}
+.card-horizontal__title + .product-parameters {
+  margin-top: 0.8rem;
+}
+.card-horizontal__title a {
+  font-family: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+  letter-spacing: inherit;
+  word-break: break-word;
+}
+.card-horizontal__vendor {
+  color: rgb(var(--color-foreground-secondary));
+  margin-bottom: 0.4rem;
+}
+.card-horizontal__vendor_link {
+  position: relative;
+  z-index: 2;
+  pointer-events: all;
+}
+.card-horizontal__vendor a {
+  text-decoration: none;
+  color: inherit;
+  transition: opacity var(--duration-default);
+}
+@media screen and (hover: hover) and (pointer: fine) {
+  .card-horizontal__vendor a:hover {
+    opacity: var(--hover-opacity);
+  }
+}

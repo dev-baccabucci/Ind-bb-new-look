@@ -1,0 +1,426 @@
+<!-- Swiper Slider Section -->
+<header style="margin-bottom: 10px;" class="section__header text-container">
+    <h3 class="heading h2">All CATEGORIES</h3>
+  </header>
+  
+<div class="space-div">
+<div class="swiper mySwiper">
+  <div class="swiper-wrapper coll-wrap">
+    {% for block in section.blocks %}
+      <div class="swiper-slide">
+        <a href="{{ block.settings.slide_link }}" class="slide-content">
+<picture>
+  <source media="(min-width: 768px)" srcset="{{ block.settings.slide_image_desktop | img_url: 'master' }}">
+  <source media="(max-width: 767px)" srcset="{{ block.settings.slide_image_mobile | img_url: 'master' }}">
+  <img src="{{ block.settings.slide_image_desktop | image_url: 'master', width: block.settings.image.width, height: image_height, preload: true, fetchpriority: 'high' }}" style="width:100%; height:auto; object-fit: cover;" alt="All Categories" loading="eager">
+</picture>
+
+          <div class="slide-text">
+            <h3>{{ block.settings.slide_title }}</h3>
+            <!-- <p>{{ block.settings.slide_text }}</p> -->
+          </div>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="swiper-button-next for-coll-next"> <img src="https://cdn.shopify.com/s/files/1/0279/5133/3450/files/right-arrow-icon-1.png?v=1740817334" width="35px"> </div>
+    <div class="swiper-button-prev for-coll-prev"> <img src="https://cdn.shopify.com/s/files/1/0279/5133/3450/files/left-arrow-icon-1.png?v=1740817335" width="35px"> </div>
+  <!-- <div class="swiper-pagination for-coll"></div> -->
+</div>
+</div>
+
+<!-- Swiper CSS -->
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" /> -->
+
+<!-- Custom CSS -->
+{% stylesheet %}
+  .swiper-pagination {
+    z-index: 1;
+}
+
+  .space-div{
+  padding-left:20px;
+    padding-right:20px;
+}
+  
+  .swiper {
+ width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease;
+  }
+
+  .swiper-slide a {
+    text-decoration: none;
+    color: inherit;
+    padding: 15px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  }
+
+  .swiper-slide img {
+    /* display: block; */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .swiper-slide:hover {
+    transform: scale(1.05);
+  }
+
+  .slide-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .mobile-image {
+    display: block;
+  }
+.for-coll .swiper-pagination-bullet {
+    color: black;
+    border-color: black !important;
+}
+
+.for-coll .swiper-pagination-bullet-active{
+    color: black;
+    border-color: black !important;
+}
+  .swiper-pagination.for-coll.swiper-pagination-clickable.swiper-pagination-bullets {
+    bottom:0 !important;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+      
+}
+  @media (min-width: 768px) {
+    .mobile-image {
+      display: none;
+    }
+  }
+
+   @media (min-width: 1024px) {
+  div#shopify-section-template--18003766870262__1725512033fc84f8ff {
+    display: none;
+}}
+
+  @media (max-width: 767px) {
+  .desktop-image {
+    display: none;
+  }
+  .slide-text h3 {
+    font-size: 15px !important;
+    text-align:center;
+  }
+    .slide-text {
+    bottom: 28px !important;
+    }
+      .swiper-slide a {
+    padding: 15px 0px !important;
+  }
+     /* For next and preview arrows */
+    
+       .swiper-button-prev.for-coll-prev{
+  left:37% !important;
+}
+  .swiper-button-next.for-coll-next{
+    right:37% !important;
+  }
+      div#shopify-section-template--18003766870262__new_all_collections_caEdxD {
+    margin-bottom: 15% !important;
+}
+     .swiper-button-prev.for-coll-prev:after, .swiper-button-next.for-coll-next:after {
+    font-size: 15px !important;
+    padding: 7px 10px !important;
+}
+    /* END */
+
+    h3.heading.h2 {
+    font-size: 26.4px !important;
+}
+  }
+  
+  .slide-text {
+    position: absolute;
+    bottom: 40px;
+    /* left: 20px; */
+    color: white;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    width:100% !important;
+    display: flex;
+        justify-content: center;
+        align-items: center;
+  }
+
+  .slide-text h3 {
+    margin: 0;
+    font-size: 20px;
+  }
+
+  .slide-text p {
+    margin: 5px 0 0;
+    font-size: 16px;
+  }
+    /* For next and preview arrows */
+  .swiper-button-prev.for-coll-prev:after, .swiper-button-next.for-coll-next:after {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: black !important;
+    background: #dca23f !important;
+    border-radius: 50% !important;
+    padding: 10px 15px !important;
+}
+.for-coll-prev::after{
+  content:'left' !important;
+}
+.for-coll-next::after{
+    content: 'right' !important;
+  }
+.swiper-button-prev.for-coll-prev, .swiper-button-next.for-coll-next {
+    margin-top: 0px;
+    top: initial;
+    /* width: 90%; */
+  z-index:0;
+}
+.swiper-button-prev.for-coll-prev{
+  left:45%;
+}
+  .swiper-button-next.for-coll-next{
+    right:45%;
+  }
+
+div#shopify-section-template--18003766870262__new_all_collections_caEdxD {
+    margin-bottom: 7%;
+  padding-top: 40px;
+}
+ div#shopify-section-template--20103595000054__new_all_collections_DQxVNW {
+    padding-top: 30px;
+    padding-bottom: 35px;
+}
+  h3.heading.h2 {
+    text-align: center;
+    font-size:30px;
+}
+
+{% endstylesheet %}
+
+<!-- Swiper JS -->
+
+<script>
+(function initMySwiperSafe() {
+  // 1️⃣ Wait until Swiper JS is actually available
+  if (typeof Swiper === 'undefined') {
+    setTimeout(initMySwiperSafe, 50);
+    return;
+  }
+
+  const swiperElement = document.querySelector('.mySwiper');
+  if (!swiperElement || swiperElement.classList.contains('swiper-initialized')) {
+    return;
+  }
+
+  // 2️⃣ Initialize Swiper
+  const swiper = new Swiper(swiperElement, {
+    lazy: true,
+    slidesPerView: 3,
+    spaceBetween: 10,
+    loop: false,
+    autoplay: false,
+
+    navigation: {
+      nextEl: '.for-coll-next',
+      prevEl: '.for-coll-prev',
+    },
+
+    breakpoints: {
+      640: {
+        slidesPerView: 4,
+        spaceBetween: 5,
+      },
+      768: {
+        slidesPerView: 4,
+        spaceBetween: 5,
+      },
+      1024: {
+        slidesPerView: 5,
+        spaceBetween: 5,
+      },
+    },
+
+    on: {
+      slideChange: function () {
+        if (this.isEnd) {
+          setTimeout(() => {
+            this.slideTo(0, 0);
+          }, 1000);
+        }
+      },
+      slidePrevTransitionStart: function () {
+        if (this.activeIndex === 0) {
+          this.slideTo(0, 0);
+        }
+      }
+    }
+  });
+
+  // 3️⃣ IntersectionObserver for autoplay
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          swiper.params.autoplay = {
+            delay: 3000,
+            disableOnInteraction: false,
+          };
+          swiper.autoplay.start();
+        } else {
+          swiper.autoplay.stop();
+        }
+      });
+    }, { threshold: 0.3 });
+
+    observer.observe(swiperElement);
+  }
+
+})();
+</script>
+
+
+<!-- Initialize Swiper -->
+{% comment %} <script async>
+  var swiper = new Swiper(".mySwiper", {
+    lazy: true,
+    slidesPerView: 3,
+    spaceBetween: 10,
+    loop: false,  // Disable loop
+    autoplay: false,  // Autoplay is initially off
+    // pagination: {
+    //   el: ".swiper-pagination",
+    //   clickable: true,
+    // },
+     navigation: {
+        nextEl: ".for-coll-next",
+        prevEl: ".for-coll-prev",
+      },
+    breakpoints: {
+      640: {
+        slidesPerView: 4,
+        spaceBetween: 5,
+      },
+      768: {
+        slidesPerView: 4,
+        spaceBetween: 5,
+      },
+      1024: {
+        slidesPerView: 5,
+        spaceBetween: 5,
+      },
+    },
+    on: {
+      slideChange: function () {
+        // Check if the user is on the last slide
+        if (this.isEnd) {
+          // Automatically go back to the first slide after a brief delay
+          setTimeout(() => {
+            this.slideTo(0, 0);  // Jump to the first slide without transition
+          }, 1000);  // Adjust the delay as needed
+        }
+      },
+      // Disable left scroll manually
+      slidePrevTransitionStart: function () {
+        if (this.activeIndex === 0) {
+          this.slideTo(0, 0);  // Prevent sliding back to the last slide
+        }
+      }
+    }
+  });
+
+  // Use IntersectionObserver to start autoplay when the swiper is visible
+  const swiperElement = document.querySelector('.mySwiper');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        swiper.params.autoplay = {
+          delay: 3000,
+          disableOnInteraction: false,
+        };
+        swiper.autoplay.start();
+      } else {
+        swiper.autoplay.stop();
+      }
+    });
+  });
+
+  observer.observe(swiperElement);
+</script> {% endcomment %}
+
+
+
+{% schema %}
+{
+  "name": "Custom Collections Slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Swiper Slider Demo"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "text",
+          "id": "slide_title",
+          "label": "Slide Title",
+          "default": "Slide Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "slide_image_desktop",
+          "label": "Slide Image (Desktop)"
+        },
+        {
+          "type": "image_picker",
+          "id": "slide_image_mobile",
+          "label": "Slide Image (Mobile)"
+        },
+        {
+          "type": "text",
+          "id": "slide_text",
+          "label": "Slide Text",
+          "default": "Slide Text"
+        },
+        {
+          "type": "url",
+          "id": "slide_link",
+          "label": "Slide Link",
+          
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Collections Slider",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

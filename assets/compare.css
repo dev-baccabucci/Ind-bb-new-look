@@ -1,0 +1,387 @@
+img-comparison-slider {
+  visibility: hidden;
+}
+
+img-comparison-slider [slot=second] {
+  display: none;
+}
+
+img-comparison-slider.rendered {
+  visibility: inherit;
+}
+
+img-comparison-slider.rendered [slot=second] {
+  display: unset;
+}
+
+.compare {
+  overflow: hidden;
+}
+.compare__wrapper--split {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 990px) {
+  .compare__wrapper--split {
+    flex-direction: row;
+  }
+  .compare__wrapper--split .compare__images {
+    width: 57%;
+  }
+  .compare__wrapper--split .compare__content {
+    width: 43%;
+  }
+}
+@media (min-width: 1200px) {
+  .compare__wrapper--split .compare__images {
+    width: 60%;
+  }
+  .compare__wrapper--split .compare__content {
+    width: 40%;
+  }
+}
+@media (min-width: 1600px) {
+  .compare__wrapper--split .compare__images {
+    width: 66.5217391304%;
+  }
+  .compare__wrapper--split .compare__content {
+    width: 33.4782608696%;
+  }
+}
+.compare__images {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  border-radius: var(--border-radius-block);
+  overflow: hidden;
+}
+.compare__images::after {
+  content: "";
+  display: block;
+  width: 0;
+  padding-bottom: var(--padding-bottom-mobile);
+}
+@media (min-width: 576px) {
+  .compare__images::after {
+    padding-bottom: var(--padding-bottom-desktop);
+  }
+}
+.compare img-comparison-slider {
+  user-select: none;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--border-radius-block);
+  outline: none;
+}
+.compare img-comparison-slider .second {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.compare img-comparison-slider .divider::after {
+  border-left-color: rgb(var(--color-background));
+}
+.compare__figure {
+  display: block;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+.compare__figure img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.compare__label {
+  position: absolute;
+  max-width: 30rem;
+  word-wrap: break-word;
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  padding: 0.4rem 0.8rem;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.compare__label--left {
+  left: 2rem;
+  bottom: 2rem;
+}
+.compare__label--right {
+  top: 2rem;
+  right: 2rem;
+}
+.compare__handle {
+  width: 4.8rem;
+  height: 4.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  border-radius: var(--border-radius-button);
+  overflow: hidden;
+}
+.compare__handle .icon-compare {
+  width: 1.575rem;
+  height: 3rem;
+}
+@media (min-width: 576px) {
+  .compare__handle {
+    width: 6.4rem;
+    height: 6.4rem;
+  }
+  .compare__handle .icon-compare {
+    width: 2.1rem;
+    height: 4rem;
+  }
+}
+.compare__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.compare__default {
+  display: flex;
+  gap: 0.4rem;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--border-radius-block);
+  overflow: hidden;
+}
+.compare__default svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--border-radius-block);
+}
+.compare__content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+  padding: 2rem;
+}
+@media screen and (min-width: 1200px) {
+  .compare__content {
+    padding: 2rem 3.2rem;
+    gap: 5.5rem;
+  }
+}
+@media screen and (min-width: 1360px) {
+  .compare__content {
+    padding: 2.25rem 4.8rem;
+  }
+}
+.compare__content--vertical-align-top {
+  justify-content: flex-start;
+}
+.compare__content--vertical-align-center {
+  justify-content: center;
+}
+.compare__content--vertical-align-bottom {
+  justify-content: flex-end;
+}
+.compare__content--vertical-align-space_between {
+  justify-content: space-between;
+}
+.compare__content--vertical-align-space_between:not(:has(.compare__products)):not(:has(.compare__button)) .compare__text {
+  height: 100%;
+}
+.compare__content--vertical-align-space_between:not(:has(.compare__products)):not(:has(.compare__button)) .compare__subheading {
+  margin-bottom: auto;
+}
+.compare__content--vertical-align-space_between:has(.compare__products) .compare__products {
+  margin-top: auto;
+}
+.compare__content--vertical-align-space_between:has(.compare__button):not(:has(.compare__products)) .compare__button {
+  margin-top: auto;
+}
+.compare__content--horizontal-align-left {
+  align-items: flex-start;
+}
+.compare__content--horizontal-align-left .compare__text {
+  align-items: flex-start;
+  text-align: left;
+}
+.compare__content--horizontal-align-center {
+  align-items: center;
+}
+.compare__content--horizontal-align-center .compare__text {
+  align-items: center;
+  text-align: center;
+}
+.compare__content--horizontal-align-right {
+  align-items: flex-end;
+}
+.compare__content--horizontal-align-right .compare__text {
+  align-items: flex-end;
+  text-align: right;
+}
+.compare__content:has(.compare__products--standard) {
+  gap: 2.4rem;
+}
+@media screen and (min-width: 1200px) {
+  .compare__content:has(.compare__products--standard) {
+    gap: 2.4rem;
+  }
+}
+.compare__text {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+.compare__subheading {
+  max-width: 45rem;
+}
+.compare__subheading.badge {
+  background: rgb(var(--color-background), 0.3);
+  border: 0.1rem solid rgb(var(--color-accent));
+  color: rgb(var(--color-accent));
+  backdrop-filter: blur(8px);
+}
+.compare__subheading.badge.text {
+  background: rgb(var(--color-foreground), 0.3);
+  border: 0.1rem solid rgb(var(--color-border), 0.3);
+  color: rgb(var(--color-foreground));
+}
+.compare__subheading.simple {
+  color: rgb(var(--color-foreground));
+}
+.compare__heading {
+  margin: 0;
+  padding: 0;
+  max-width: 55rem;
+}
+.compare__description {
+  max-width: 45rem;
+}
+.compare__products {
+  width: 100%;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.6rem;
+}
+@media (min-width: 576px) {
+  .compare__products {
+    overflow: hidden;
+  }
+}
+.compare__products .swiper-button-prev,
+.compare__products .swiper-button-next {
+  display: none;
+}
+@media (min-width: 576px) {
+  .compare__products .swiper-button-prev,
+  .compare__products .swiper-button-next {
+    display: flex;
+  }
+}
+.compare__products-slider {
+  overflow: visible;
+  width: 100%;
+  margin: 0 auto;
+}
+@media (min-width: 576px) {
+  .compare__products-slider {
+    overflow: hidden;
+  }
+}
+@media (min-width: 990px) {
+  .compare__products-slider {
+    max-width: 300px;
+  }
+}
+.compare__products-wrapper {
+  box-sizing: border-box;
+  align-items: stretch;
+}
+.compare__products-item {
+  width: 100%;
+  height: auto;
+}
+.compare__products-item .card-horizontal-wrapper {
+  height: 100%;
+}
+@media (min-width: 990px) {
+  .compare__products-item {
+    max-width: 300px;
+  }
+}
+@media (min-width: 576px) {
+  .compare__products--standard .compare__products-slider {
+    max-width: 220px;
+  }
+}
+@media (min-width: 750px) {
+  .compare__products--standard .compare__products-slider {
+    max-width: 448px;
+  }
+}
+@media (min-width: 990px) {
+  .compare__products--standard .compare__products-slider {
+    max-width: 220px;
+  }
+}
+@media (min-width: 576px) {
+  .compare__products--standard .compare__products-item {
+    max-width: 220px;
+  }
+}
+@media (min-width: 990px) {
+  .compare__products--standard .compare__products-item {
+    max-width: 220px;
+  }
+}
+.no-js .compare img-comparison-slider {
+  visibility: visible;
+}
+.no-js .compare img-comparison-slider::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: block;
+  height: 100%;
+  width: 0.2rem;
+  background-color: rgb(var(--color-background));
+  transform: translate(-50%, -50%);
+}
+.no-js .compare img-comparison-slider .compare__figure {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 50%;
+  width: 50%;
+}
+.no-js .compare img-comparison-slider .compare__figure[slot=second] {
+  left: 50%;
+  right: 0;
+  display: block;
+}
+.no-js .compare img-comparison-slider .compare__figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.no-js .compare .compare__handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}

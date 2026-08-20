@@ -1,0 +1,111 @@
+.search__form {
+  width: 100%;
+}
+.search__form-text {
+  margin-top: 2rem;
+}
+.search .field {
+  position: relative;
+  border-bottom: 1px solid rgb(var(--color-border-input));
+}
+.search__input {
+  padding: 1.6rem 6.4rem 1.6rem 0.1rem !important;
+  width: 100%;
+  height: 100%;
+  font-size: 2.4rem !important;
+  background-color: transparent !important;
+  border: unset !important;
+}
+.search__input::placeholder {
+  color: rgb(var(--color-foreground-secondary));
+  font-size: 2.4rem !important;
+}
+@media only screen and (min-width: 750px) {
+  .search__input {
+    padding: 1.6rem 8rem 1.6rem 0.1rem !important;
+    font-size: 3.2rem !important;
+  }
+  .search__input::placeholder {
+    font-size: 3.2rem !important;
+  }
+}
+.search__button {
+  position: absolute;
+  right: 0rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.4rem;
+  height: 2.4rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: rgb(var(--color-foreground));
+  transition: opacity var(--duration-default);
+}
+.search__button .icon {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+.search__button--reset {
+  display: none;
+  right: 3.2rem;
+}
+@media only screen and (min-width: 750px) {
+  .search__button--reset {
+    right: 4rem;
+  }
+}
+@media only screen and (min-width: 750px) {
+  .search__button {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+@media screen and (hover: hover) and (pointer: fine) {
+  .search__button:hover {
+    opacity: var(--hover-opacity);
+  }
+}
+
+.card-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4rem;
+  min-height: 12.4rem;
+  height: 100%;
+  padding: 2rem;
+  border-radius: var(--border-radius-block);
+  border: 0.1rem solid rgb(var(--color-background-secondary));
+  background-color: rgb(var(--color-background-secondary));
+  transition: border-color var(--duration-default);
+  overflow: hidden;
+}
+@media screen and (hover: hover) and (pointer: fine) {
+  .card-page:hover {
+    border-color: rgb(var(--color-border));
+  }
+  .card-page:hover .icon-arrow-animated-item--1 {
+    transform: translate(-50%, -50%);
+  }
+  .card-page:hover .icon-arrow-animated-item--2 {
+    transform: translate(4rem, -50%);
+  }
+  .card-page:hover .icon-arrow-animated-fill {
+    stroke-dashoffset: 0;
+  }
+}
+.card-page-wrapper {
+  position: relative;
+  display: block;
+  height: 100%;
+  min-height: 15.8rem;
+  text-decoration: none;
+  background-color: transparent;
+}
+.card-page__content {
+  text-align: center;
+}

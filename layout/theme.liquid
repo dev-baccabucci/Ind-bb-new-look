@@ -1,0 +1,625 @@
+<!doctype html>
+<html
+  class="no-js"
+  lang="{{ request.locale.iso_code }}"
+  data-scheme="{{ settings.color_scheme }}"
+  dir="{% render 'direction' %}"
+>
+  <head>
+     <!-- Google Tag Manager -->
+    <script>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-NQFCQFN');
+    </script>
+
+    <!-- Gokwik theme code start -->
+    <link rel="dns-prefetch" href="https://pdp.gokwik.co/">
+    <link rel="dns-prefetch" href="https://api.gokwik.co">
+    {% render 'gokwik' %}
+    
+ <script>
+      function handleBuyNowClick(e,productFormId){
+         const selectedSize = document.querySelector('.product-parameters input[name="Size"]:checked');
+         // Remove any existing warning message
+        const existingWarning = document.querySelector('.size-warning');
+        if (existingWarning) existingWarning.remove();
+        if (selectedSize) {
+          onBuyNowClick(e, productFormId);
+        } else {
+          const sizeOptionsContainer = document.querySelector('.product-parameters input[name="Size"]').closest('.product-form__controls-group');
+
+          const warningDiv = document.createElement('div');
+          warningDiv.className = 'size-warning';
+          warningDiv.style.color = 'red';
+          warningDiv.style.marginTop = '8px';
+          warningDiv.textContent = 'Please select a size.';
+
+          sizeOptionsContainer.appendChild(warningDiv);
+          return;
+        }
+      }
+    </script>
+    <script>
+      function observeSizeSelection() {
+      const sizeContainer = document.querySelector('.product-parameters');
+
+      if (!sizeContainer) return;
+
+      const observer = new MutationObserver(() => {
+        const selectedSize = document.querySelector('.product-parameters input[name="Size"]:checked');
+        const warning = document.querySelector('.size-warning');
+
+        if (selectedSize && warning) {
+          warning.remove();
+        }
+      });
+
+      observer.observe(sizeContainer, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['checked']
+      });
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+    observeSizeSelection();
+  });
+    </script>
+    <!-- Gokwik theme code End -->
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+    <link rel="dns-prefetch" href="https://productreviews.shopifycdn.com" crossorigin>
+    {%- if settings.favicon != blank -%}
+      <link
+        rel="icon"
+        type="image/png"
+        href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
+      >
+    {%- endif -%}
+
+    <link rel="preload" as="image" href="https://baccabucci.com/cdn/shop/files/2160_x_1080-min.jpg?v=1689857430&width=1200">
+    <link rel="preload" as="image" href="https://baccabucci.com/cdn/shop/files/1000_x_1400-min.jpg?v=1689857512&width=1200"> 
+   
+
+    {%- unless settings.type_header_font.system? -%}
+      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    {%- endunless -%}
+
+    <title>{{ page_title }}</title>
+
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    {% render 'meta-tags' %}
+    {% if template contains '404' %}
+      <meta name="robots" content="noindex,nofollow">
+    {% endif %} 
+    <script async>
+      /*!@shinsenter/defer.js@3.6.0*/
+      !(function(o,u,s){function f(t,n,e){k?S(t,n):((e=e===s?f.lazy:e)?N:C).push(t,Math.max(e?350:0,n))}function i(t){j.head.appendChild(t)}function a(t,n){t.forEach(function(t){n(t)})}function r(n,t,e,c){a(t.split(" "),function(t){(c||o)[n+"EventListener"](t,e||p)})}function l(t,n,e,c){return(c=n?j.getElementById(n):s)||(c=j.createElement(t),n&&(c.id=n)),e&&r(g,b,e,c),c}function d(t,n){a(q.call(t.attributes),function(t){n(t.name,t.value)})}function h(t,n){return q.call((n||j).querySelectorAll(t))}function m(c,t){a(h("source,img",c),m),d(c,function(t,n,e){(e=/^data-(.+)/.exec(t))&&c[x](e[1],n)}),t&&(c.className+=" "+t),c[b]&&c[b]()}function t(t,n,e){f(function(n){a(n=h(t||"script[type=deferjs]"),function(t,e){t.src&&(e=l(v),d(t,function(t,n){t!=A&&e[x]("src"==t?"href":t,n)}),e.rel="preload",e.as=y,i(e))}),(function c(t,e){(t=n[E]())&&(e=l(y),d(t,function(t,n){t!=A&&e[x](t,n)}),e.text=t.text,t.parentNode.replaceChild(e,t),e.src&&!e.getAttribute("async")?r(g,b+" error",c,e):c())})()},n,e)}function p(t,n){for(n=k?(r(e,c),N):(r(e,w),k=f,N[0]&&r(g,c),C);n[0];)S(n[E](),n[E]())}var v="link",y="script",b="load",n="pageshow",g="add",e="remove",c="touchstart mousemove mousedown keydown wheel",w="on"+n in o?n:b,x="setAttribute",E="shift",A="type",I=o.IntersectionObserver,j=o.document||o,k=/p/.test(j.readyState),C=[],N=[],S=o.setTimeout,q=C.slice;f.all=t,f.dom=function(t,n,o,i,r){f(function(e){function c(t){i&&!1===i(t)||m(t,o)}e=I?new I(function(t){a(t,function(t,n){t.isIntersecting&&(e.unobserve(n=t.target),c(n))})},r):s,a(h(t||"[data-src]"),function(t){t[u]||(t[u]=f,e?e.observe(t):c(t))})},n,!1)},f.css=function(n,e,t,c,o){f(function(t){(t=l(v,e,c)).rel="stylesheet",t.href=n,i(t)},t,o)},f.js=function(n,e,t,c,o){f(function(t){(t=l(y,e,c)).src=n,i(t)},t,o)},f.reveal=m,o[u]=f,k||r(g,w),t()})(this,"Defer");
+    </script>
+
+    <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'gsap.min.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'ScrollTrigger.min.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+
+    {% comment %} DYNAMICALLY RETURNS ALL SCRIPTS REQUIRED BY SHOPIFY. {% endcomment %}
+     {% comment %} {% case template %}
+      {% when 'index' %}
+        {{-
+          header_content
+          | remove: 'https://assets.snapmint.com/assets/merchant/1567/snapmint_emi.js'
+          | remove: "https:\/\/loox.io\/widget\/EkZpQIDJv9\/loox.1619425036871.js?shop=baccabucci.myshopify.com"
+          | remove: "https://loox.io/widget/EkZpQIDJv9/loox.1619425036871.js?shop=baccabucci.myshopify.com"
+          | remove: "https:\/\/zooomyapps.com\/backinstock\/ZooomyOrders.js?shop=baccabucci.myshopify.com"
+        -}}
+      {% when 'collection' %}
+        {{-
+          header_content
+          | remove: 'https://assets.snapmint.com/assets/merchant/1567/snapmint_emi.js'
+          | remove: "https:\/\/loox.io\/widget\/EkZpQIDJv9\/loox.1619425036871.js?shop=baccabucci.myshopify.com"
+          | remove: "https:\/\/zooomyapps.com\/backinstock\/ZooomyOrders.js?shop=baccabucci.myshopify.com"
+          | remove: 'https://baccabucci.com/cdn/wpm/b417a2555wec646399p8179bc53m9a4f51a3m.js'
+        -}}
+      {% else %}
+        {{- content_for_header -}}
+    {% endcase %} {% endcomment %}
+
+    {% comment %}
+Dynamically modify scripts loaded via content_for_header
+{% endcomment %}
+
+    {{ content_for_header }}
+
+    {% comment %} FONTS {% endcomment %}
+    {% render 'fonts' %}
+
+    {% comment %} COLOR VARIABLES {% endcomment %}
+    {% render 'color-vars' %}
+
+    {% comment %} BASIC VARIABLES AND STYLES {% endcomment %}
+    {% render 'base-vars-styles' %}
+
+    {% comment %} SWIPER MIN CSS {% endcomment %}
+    {% comment %} {{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }} {% endcomment %}
+     <link
+  rel="preload"
+  href="{{ 'swiper-bundle.min.css' | asset_url }}"
+  as="style"
+  onload="this.rel='stylesheet'"
+>
+<noscript>
+  <link rel="stylesheet" href="{{ 'swiper-bundle.min.css' | asset_url }}">
+</noscript>
+
+
+    {% comment %} BASIC STYLES {% endcomment %}
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+
+    {% comment %} RICH TEXT (RTE) STYLES {% endcomment %}
+    {{ 'component-rte.css' | asset_url | stylesheet_tag }}
+
+    {% comment %} PREDICTIVE SEARCH STYLES {% endcomment %}
+    {%- if settings.predictive_search_enabled or settings.predictive_search_header_enabled -%}
+      <link
+        rel="stylesheet"
+        href="{{ 'component-predictive-search.css' | asset_url }}"
+        media="print"
+        onload="this.media='all'"
+      >
+    {%- endif -%}
+
+    {% comment %} CART & CART DRAWER {% endcomment %}
+    {% comment %} If cart drawer is disabled, the assets below are loaded in the file main-cart-items.liquid {% endcomment %}
+    {%- if settings.enable_cart_drawer -%}
+      {{ 'component-cart-drawer.css' | asset_url | stylesheet_tag }}
+      {{ 'component-cart-items.css' | asset_url | stylesheet_tag }}
+      <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
+      <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
+
+      {% if settings.show_shipping or settings.show_cart_recommended_products %}
+        {{ 'component-cart-shipping.css' | asset_url | stylesheet_tag }}
+      {% endif %}
+    {%- endif -%}
+
+    {% comment %} PRODUCTS STYLES {% endcomment %}
+    {% assign is_preload = false %}
+    {%- if request.page_type == 'product' -%}
+      {%- assign is_preload = true -%}
+    {%- endif -%}
+    {{ 'section-main-product.css' | asset_url | stylesheet_tag: preload: is_preload }}
+    {%- if settings.quickview_show or settings.show_on_mobile -%}
+      {{- 'component-deferred-media.css' | asset_url | stylesheet_tag -}}
+      {{- 'quick-add.css' | asset_url | stylesheet_tag: preload: is_preload -}}
+      <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+      <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+    {%- elsif settings.settings.add_to_cart_enabled -%}
+      <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
+    {% comment %} FONTS PRELOAD {% endcomment %}
+    {%- unless settings.type_body_font.system? -%}
+      {% comment %}theme-check-disable AssetPreload{% endcomment %}
+      <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
+      {% comment %}theme-check-enable AssetPreload{% endcomment %}
+    {%- endunless -%}
+    {%- unless settings.type_header_font.system? -%}
+      {% comment %}theme-check-disable AssetPreload{% endcomment %}
+      <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
+      {% comment %}theme-check-enable AssetPreload{% endcomment %}
+    {%- endunless -%}
+
+    <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      if (Shopify.designMode) {
+        document.documentElement.classList.add('shopify-design-mode');
+      }
+    </script>
+
+    <script src="{{ 'popup.js' | asset_url }}" defer="defer"></script>
+
+    {% if settings.show_back_to_top %}
+      <script src="{{ 'scroll-top.js' | asset_url }}" defer="defer"></script>
+    {% endif %}
+
+    <script>
+      let cscoDarkMode = {};
+
+      (function () {
+        const body = document.querySelector('html[data-scheme]');
+
+        cscoDarkMode = {
+          init: function (e) {
+            this.initMode(e);
+            window.matchMedia('(prefers-color-scheme: dark)').addListener((e) => {
+              this.initMode(e);
+            });
+
+            window.addEventListener('load', () => {
+              const toggleBtns = document.querySelectorAll('.header__toggle-scheme');
+              toggleBtns.forEach((btn) => {
+                btn.addEventListener('click', (e) => {
+                  e.preventDefault();
+                  if ('auto' === body.getAttribute('data-scheme')) {
+                    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                      cscoDarkMode.changeScheme('light', true);
+                    } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+                      cscoDarkMode.changeScheme('dark', true);
+                    }
+                  } else {
+                    if ('dark' === body.getAttribute('data-scheme')) {
+                      cscoDarkMode.changeScheme('light', true);
+                    } else {
+                      cscoDarkMode.changeScheme('dark', true);
+                    }
+                  }
+                });
+              });
+            });
+          },
+          initMode: function (e) {
+            let siteScheme = false;
+            switch (
+              '{{ settings.color_scheme }}' // Field. User’s system preference.
+            ) {
+              case 'dark':
+                siteScheme = 'dark';
+                break;
+              case 'light':
+                siteScheme = 'light';
+                break;
+              case 'system':
+                siteScheme = 'auto';
+                break;
+            }
+            if ('{{ settings.dark_mode_toggle }}') {
+              // Field. Enable dark/light mode toggle.
+              if ('light' === localStorage.getItem('_color_schema')) {
+                siteScheme = 'light';
+              }
+              if ('dark' === localStorage.getItem('_color_schema')) {
+                siteScheme = 'dark';
+              }
+            }
+            if (siteScheme && siteScheme !== body.getAttribute('data-scheme')) {
+              this.changeScheme(siteScheme, false);
+            }
+          },
+          changeScheme: function (siteScheme, cookie) {
+            body.classList.add('scheme-toggled');
+            body.setAttribute('data-scheme', siteScheme);
+            if (cookie) {
+              localStorage.setItem('_color_schema', siteScheme);
+            }
+            setTimeout(() => {
+              body.classList.remove('scheme-toggled');
+            }, 100);
+          },
+        };
+      })();
+
+      cscoDarkMode.init();
+
+      document.addEventListener('shopify:section:load', function () {
+        setTimeout(() => {
+          cscoDarkMode.init();
+        }, 100);
+      });
+
+      const calcScrollbarWidth = () => {
+        const div = document.createElement('div');
+        div.style.cssText = 'width: 100px; height: 100px; overflow-y: scroll; position: absolute; top: -9999px;';
+        document.body.appendChild(div);
+        const scrollbarWidth = div.offsetWidth - div.clientWidth;
+        document.body.removeChild(div);
+        document.documentElement.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
+      };
+
+      window.addEventListener('DOMContentLoaded', calcScrollbarWidth);
+    </script>
+
+    {% comment %} For Redirect all 404 Pages to Home page {% endcomment %}
+<script async>
+  document.addEventListener('DOMContentLoaded', function() {
+  if (document.title.includes('404') || document.body.innerText.includes('Page not found')) {
+    window.location.href = '/';
+  }
+});
+</script>
+
+    {% render 'lazyscriptkr' %}
+
+    <script>
+  (function () {
+    const botPattern = /bot|crawl|slurp|spider/i;
+    if (botPattern.test(navigator.userAgent)) return;
+
+    if (sessionStorage.getItem("geo_redirect_done")) return;
+
+    fetch("https://ipinfo.io/json")
+      .then(res => res.json())
+      .then(data => {
+        console.log("ipinfo.io result:", data);
+        if (data && data.country === "AE") {
+          sessionStorage.setItem("geo_redirect_done", "true");
+          const path = window.location.pathname + window.location.search;
+          const redirectTo = "https://baccabucci.ae" + path;
+          console.log("Redirecting to:", redirectTo);
+          window.location.href = redirectTo;
+        }
+      })
+      .catch(err => console.error("Geo fetch failed:", err));
+  })();
+</script> 
+
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "shv30u3zeh");
+</script>
+
+<script defer>
+  setTimeout(function () {
+    const banner = document.querySelector('.appbrew-download-banner-root');
+    if (banner) {
+      banner.style.transition = 'opacity 0.5s ease';
+      banner.style.opacity = '0';
+      setTimeout(() => banner.remove(), 500);
+    }
+  }, 8000);
+</script>
+
+<!-- Snap Pixel Code -->
+<script type='text/javascript'>
+(function(e,t,n){if(e.snaptr)return;var a=e.snaptr=function()
+{a.handleRequest?a.handleRequest.apply(a,arguments):a.queue.push(arguments)};
+a.queue=[];var s='script';r=t.createElement(s);r.async=!0;
+r.src=n;var u=t.getElementsByTagName(s)[0];
+u.parentNode.insertBefore(r,u);})(window,document,
+'https://sc-static.net/scevent.min.js');
+
+snaptr('init', '86e4284d-61bb-4f58-8e8c-bbb5c26b7711', {});
+
+snaptr('track', 'PAGE_VIEW');
+
+</script>
+<!-- End Snap Pixel Code -->
+
+  </head>
+  <body class="template-{{ template.name }} template-{{ template | replace: '.', '-' }}">
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-NQFCQFN"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <script defer src="https://www.googletagmanager.com/gtag/js?id=G-JGVRHNYTJD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-JGVRHNYTJD',{ 'groups': 'GA4'});
+    </script> 
+
+    <a
+      class="skip-to-content-link button visually-hidden"
+      href="#MainContent"
+    >
+      {{ 'accessibility.skip_to_text' | t }}
+    </a>
+
+    {% sections 'header-group' %}
+    {% render 'kwikpass-add-button' %}
+    {% sections 'overlay-group' %}
+    {% if settings.show_breadcrumbs %}
+      {% render 'breadcrumbs' %}
+    {% endif %}
+
+    <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+    {% sections 'footer-group' %}
+
+    {% if settings.show_back_to_top %}
+      {% render 'scroll-top' %}
+    {% endif %}
+
+    {%- if request.page_type != 'cart' and settings.enable_cart_drawer -%}
+      {%- render 'cart-drawer' -%}
+    {%- endif -%}
+
+    <ul hidden>
+      <li id="a11y-refresh-page-message">
+        {{- 'accessibility.refresh_page' | t -}}
+      </li>
+    </ul>
+
+    <script>
+      window.routes = {
+        cart_add_url: '{{ routes.cart_add_url }}',
+        cart_change_url: '{{ routes.cart_change_url }}',
+        cart_update_url: '{{ routes.cart_update_url }}',
+        cart_url: '{{ routes.cart_url }}',
+        predictive_search_url: '{{ routes.predictive_search_url }}'
+      };
+
+      window.cartStrings = {
+        error: `{{ 'sections.cart.cart_error' | t }}`,
+        quantityError: `{{ 'sections.cart.cart_quantity_error_html' | t }}`,
+        empty: `{{ 'general.cart.empty_cart' | t }}`,
+        shop_now: `{{ 'customer.account.account_button_shop' | t }}`,
+        collections_url: `{{ routes.collections_url | sort_by: 'best-selling' }}`,
+        additional_service_property: `{{ 'products.product.additional_service.property_in_order' | t }}`,
+      }
+
+      window.variantStrings = {
+        addToCart: `{{ 'products.product.add_to_cart' | t }}`,
+        soldOut: `{{ 'products.product.sold_out' | t }}`,
+        unavailable: `{{ 'products.product.unavailable' | t }}`,
+        unavailable_with_option: `{{ 'products.product.value_unavailable' | t: option_value: '[value]' }}`
+      }
+
+      window.theme = {
+        moneyFormat: {{ shop.money_format | json }},
+        quickviewMore: `{{ 'general.card.view__more' | t }}`,
+        reviews: `{{ 'products.product.reviews' | t }}`
+      }
+
+      const calcVh = () => {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty("--vh", `${vh}px`);
+      }
+      window.addEventListener("load", calcVh);
+      window.addEventListener("resize", calcVh);
+    </script>
+    {%- if settings.predictive_search_enabled or settings.predictive_search_header_enabled -%}
+      <script src="{{ 'search-form.js' | asset_url }}" defer="defer"></script>
+      <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+    <script src="{{ 'product-model.js' | asset_url }}" defer></script>
+
+    {%- if request.design_mode -%}
+      <script>
+        if (window.Shopify && window.Shopify.theme && navigator && navigator.sendBeacon && window.Shopify.designMode) {
+          const themeKey = `dataSent_{{ theme.name }}`;
+          if (!localStorage.getItem(themeKey)) {
+            navigator.sendBeacon(
+              'https://cdn.ashstonestudios.com/shopify-beacon/sent/',
+              new URLSearchParams({
+                slug: window.Shopify.theme.schema_name,
+                shop: window.Shopify.shop,
+                role: window.Shopify.theme.role,
+                route: window.location.pathname,
+                themeId: window.Shopify.theme.id,
+                themeStoreId: window.Shopify.theme.theme_store_id || 0,
+                isThemeEditor: !!window.Shopify.designMode,
+                themeName: '{{ theme.name }}',
+                shopName: '{{ shop.name }}',
+                shopEmail: '{{ shop.email }}',
+              })
+            );
+            localStorage.setItem(themeKey, 'true');
+          }
+        }
+      </script>
+    {%- endif -%}
+
+    <!-- Snapmint Begin Shopify–payment-cart JavaScript -->
+<script type="text/javascript">
+
+  var mid = '2057';
+
+</script>
+<script src="https://checkout-merchant.snapmint.com/js/v1/2057" defer ></script>
+<!-- End Shopify-payment JavaScript -->
+
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const wishlistKey = "shopify_wishlist";
+
+  // Make functions globally accessible
+  window.updateWishlistCount = function() {
+    const wishlist = JSON.parse(localStorage.getItem(wishlistKey)) || [];
+    const countElement = document.getElementById("wishlist-count");
+    if (countElement) {
+      countElement.textContent = wishlist.length;
+    }
+  };
+
+  window.updateWishlistButtonState = function() {
+    const wishlist = JSON.parse(localStorage.getItem(wishlistKey)) || [];
+    document.querySelectorAll(".wishlist-button").forEach(button => {
+      const productHandle = button.dataset.productHandle;
+      const wishlistAction = button.querySelector(".wishlist-action");
+      const wishlistIcon = button.querySelector(".wishlist-icon");
+
+      if (wishlist.includes(productHandle)) {
+        wishlistAction.textContent = "";
+        wishlistIcon.src = "https://cdn.shopify.com/s/files/1/0279/5133/3450/files/heart_fill.png?v=1787205694";
+        button.classList.add("in-wishlist");
+      } else {
+        wishlistAction.textContent = "";
+        wishlistIcon.src = "https://cdn.shopify.com/s/files/1/0279/5133/3450/files/heart.png?v=1733812785";
+        button.classList.remove("in-wishlist");
+      }
+    });
+    updateWishlistCount();
+  };
+
+  function sendToCleverTap(eventData) {
+    if (window.clevertap) {
+      clevertap.event.push("Wishlist", eventData);
+      console.log("CleverTap Event Sent: Wishlist", eventData);
+    } else {
+      console.warn("CleverTap not initialized.");
+    }
+  }
+
+  // Make function globally accessible
+  window.toggleWishlist = function(button) {
+    const productHandle = button.dataset.productHandle;
+    const productName = button.dataset.productName;
+    const productImage = button.dataset.productImage;
+    const productPrice = button.dataset.productPrice;
+
+    let wishlist = JSON.parse(localStorage.getItem(wishlistKey)) || [];
+
+    if (wishlist.includes(productHandle)) {
+      wishlist = wishlist.filter(handle => handle !== productHandle);
+      localStorage.setItem(wishlistKey, JSON.stringify(wishlist));
+      alert("Product removed from wishlist.");
+    } else {
+      wishlist.push(productHandle);
+      localStorage.setItem(wishlistKey, JSON.stringify(wishlist));
+      alert("Product added to wishlist.");
+
+      const eventData = { productHandle, productName, productImage, productPrice };
+      sendToCleverTap(eventData);
+    }
+    updateWishlistButtonState();
+  };
+
+  updateWishlistButtonState(); // Update UI on load
+
+  // Remove direct click listeners, use event delegation instead
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest(".wishlist-button");
+    if (button) {
+      toggleWishlist(button);
+    }
+  });
+
+  //  Attach observer only when recommendations section exists
+  const recommendationsSection = document.querySelector(".product-recommendations");
+  if (recommendationsSection) {
+    const observer = new MutationObserver(() => {
+      updateWishlistButtonState();
+    });
+    observer.observe(recommendationsSection, { childList: true, subtree: true });
+  }
+
+});
+</script>
+
+{% render 'kwikpass' %} 
+
+  </body>
+</html>

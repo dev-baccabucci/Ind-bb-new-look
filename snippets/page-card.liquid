@@ -1,0 +1,11 @@
+<a href="{{ url }}" class="card-page-wrapper">
+  <div class="card-page">
+    <div class="card-page__content">
+      <h3 class="card-page__title h5">
+        {{ title | truncate: 50 | escape }}
+      </h3>
+    </div>
+
+    {% render 'icon-arrow-animated' %}
+  </div>
+</a>

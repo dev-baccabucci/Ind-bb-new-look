@@ -1,0 +1,190 @@
+.cards-grid {
+  width: 100%;
+}
+
+.cards-grid-items-container {
+  width: 100%;
+  display: grid;
+  gap: 1.6rem;
+  position: relative;
+}
+@media screen and (min-width: 990px) {
+  .cards-grid-items-container::before {
+    content: "";
+    display: block;
+    grid-column: 1/-1;
+    grid-row: 1/-1;
+    padding-top: var(--desktop-padding-bottom);
+    pointer-events: none;
+  }
+}
+
+.cards-grid-item {
+  display: flex;
+  position: relative;
+  border-radius: var(--border-radius-block);
+  overflow: hidden;
+}
+.cards-grid-item--vertical-align-top {
+  align-items: flex-start;
+}
+.cards-grid-item--vertical-align-center {
+  align-items: center;
+}
+.cards-grid-item--vertical-align-bottom {
+  align-items: flex-end;
+}
+.cards-grid-item--horizontal-align-left {
+  justify-content: flex-start;
+}
+.cards-grid-item--horizontal-align-center {
+  justify-content: center;
+}
+.cards-grid-item--horizontal-align-center .cards-grid-item__content {
+  align-items: center;
+}
+.cards-grid-item--horizontal-align-center .cards-grid-item__heading {
+  text-align: center;
+}
+.cards-grid-item--horizontal-align-center .cards-grid-item__text {
+  text-align: center;
+}
+.cards-grid-item--horizontal-align-right {
+  justify-content: flex-end;
+}
+.cards-grid-item--horizontal-align-right .cards-grid-item__content {
+  align-items: flex-end;
+}
+.cards-grid-item--horizontal-align-right .cards-grid-item__heading {
+  text-align: right;
+}
+.cards-grid-item--horizontal-align-right .cards-grid-item__text {
+  text-align: right;
+}
+.cards-grid-item--padding-small {
+  padding: 2rem;
+}
+.cards-grid-item--padding-medium {
+  padding: 2rem;
+}
+@media screen and (min-width: 576px) {
+  .cards-grid-item--padding-medium {
+    padding: 3.2rem;
+  }
+}
+@media screen and (min-width: 990px) {
+  .cards-grid-item--padding-medium {
+    padding: 4rem;
+  }
+}
+.cards-grid-item--padding-large {
+  padding: 2rem;
+}
+@media screen and (min-width: 576px) {
+  .cards-grid-item--padding-large {
+    padding: 3.2rem;
+  }
+}
+@media screen and (min-width: 990px) {
+  .cards-grid-item--padding-large {
+    padding: 6.4rem;
+  }
+}
+.cards-grid-item::before {
+  content: "";
+  float: left;
+  width: 1px;
+  margin-left: -1px;
+  padding-top: var(--padding-bottom-mobile);
+  height: 0;
+}
+@media screen and (min-width: 990px) {
+  .cards-grid-item::before {
+    content: none;
+  }
+}
+.cards-grid-item::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+@media screen and (min-width: 990px) {
+  .cards-grid-item::after {
+    content: none;
+  }
+}
+.cards-grid-item__image-wrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  border-radius: var(--border-radius-block);
+  overflow: hidden;
+}
+.cards-grid-item__image-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--overlay-background);
+  border-radius: var(--border-radius-block);
+  opacity: var(--overlay-opacity);
+  z-index: 1;
+}
+.cards-grid-item__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+}
+.cards-grid-item__content {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+  row-gap: 0.6rem;
+}
+@media screen and (min-width: 576px) {
+  .cards-grid-item__content {
+    row-gap: 0.8rem;
+  }
+}
+@media screen and (min-width: 990px) {
+  .cards-grid-item__content {
+    row-gap: 1.2rem;
+  }
+}
+.cards-grid-item__heading {
+  text-align: left;
+  max-width: 421px;
+}
+.cards-grid-item__text {
+  text-align: left;
+  max-width: 344px;
+}
+.cards-grid-item__heading, .cards-grid-item__text {
+  color: rgb(var(--color-foreground));
+}
+.cards-grid-item__heading a, .cards-grid-item__text a {
+  display: inline;
+  color: rgba(var(--color-foreground));
+  transition: background-size var(--duration-default) ease-in-out, opacity var(--duration-default) ease-in-out;
+  background-position: left 90%;
+  background-size: 100% 5%;
+  background-image: linear-gradient(to right, rgba(var(--color-foreground)) 0%, rgba(var(--color-foreground)) 100%);
+  background-repeat: no-repeat;
+  text-decoration: none;
+}
+@media screen and (pointer: fine) {
+  .cards-grid-item__heading a:hover, .cards-grid-item__text a:hover {
+    background-size: 0% 5%;
+    background-position: right 90%;
+    opacity: 0.8;
+  }
+}
+.cards-grid-item__button {
+  width: fit-content;
+}

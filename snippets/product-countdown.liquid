@@ -1,0 +1,173 @@
+{% comment %}
+  	Renders a product card placeholder
+    Accepts:
+        - block {Object} The block settings.
+        - product {Object} The product object.
+  	Usage:
+  {% render 'product-countdown' %}
+{% endcomment %}
+
+{% liquid
+  assign timezone = 'now' | date: '%Z' | plus: 0 | append: ''
+
+  if timezone.size > 1
+    assign timezone = 'now' | date: '%Z' | divided_by: 100 | times: 3600.0 | plus: 1800
+  else
+    assign timezone = 'now' | date: '%Z' | minus: 1 | times: 3600.0
+  endif
+
+  assign date_merge = block.settings.date_picker | append: '-' | append: block.settings.time_picker | append: ':00'
+  assign date_now = 'now' | date: '%s' | minus: 0
+  assign date_settings = date_merge | date: '%s' | minus: 0
+
+  if date_now < date_settings
+    assign distance = date_settings | minus: date_now
+    assign days = distance | divided_by: 3600 | divided_by: 24 | floor | append: ''
+    assign hours = distance | modulo: 86400 | divided_by: 3600 | floor | append: ''
+    assign minutes = distance | modulo: 3600 | divided_by: 60 | floor | append: ''
+    assign seconds = distance | modulo: 60 | floor | append: ''
+  else
+    assign days = '00'
+    assign hours = '00'
+    assign minutes = '00'
+    assign seconds = '00'
+  endif
+%}
+
+<div
+  class="product-countdown color-{{block.settings.color_scheme}} {% if block.settings.show_on_mobile %}mobile-show{% endif %}"
+  {% if block.settings.show_countdown %}
+    data-date="{{ block.settings.date_picker }}"
+    data-time="{{ block.settings.time_picker }}"
+    data-completed="{{ block.settings.completed_countdown }}"
+  {% endif %}
+  {{ block.shopify_attributes }}
+>
+  <div class="product-countdown__container container">
+    <h4 class="product-countdown__title">{{ product.title }}</h4>
+    <div class="product-countdown__info">
+      {%- if block.settings.countdown_promo_text != blank -%}
+        <div class="product-countdown__promo">
+          <h5 class="h4 product-countdown__end-info-text ">
+            {{ block.settings.countdown_promo_text }}
+          </h5>
+        </div>
+      {%- endif -%}
+      {%- if block.settings.show_countdown -%}
+        {%- if block.settings.date_picker != blank -%}
+          <div class="product-countdown__main">
+            <div class="product-countdown__block">
+              <div class="product-countdown__block_num">
+                <span
+                  class="product-countdown_block_days"
+                >
+                  {% if days.size > 1 %}
+                    {{ days }}
+                  {% else %}
+                    {{ 0 | append: days }}
+                  {% endif %}
+                </span>
+                <span class="product-countdown_block_mark">:</span>
+              </div>
+            </div>
+            <div class="product-countdown__block">
+              <div class="product-countdown__block_num">
+                <span
+                  class="product-countdown_block_hours"
+                >
+                  {% if hours.size > 1 %}
+                    {{ hours }}
+                  {% else %}
+                    {{ 0 | append: hours }}
+                  {% endif %}
+                </span>
+                <span class="product-countdown_block_mark">:</span>
+              </div>
+            </div>
+            <div class="product-countdown__block">
+              <div class="product-countdown__block_num">
+                <span
+                  class="product-countdown_block_minutes"
+                >
+                  {% if minutes.size > 1 %}
+                    {{ minutes }}
+                  {% else %}
+                    {{ 0 | append: minutes }}
+                  {% endif %}
+                </span>
+                <span class="product-countdown_block_mark">:</span>
+              </div>
+            </div>
+            <div class="product-countdown__block">
+              <div class="product-countdown__block_num">
+                <span
+                  class="product-countdown_block_seconds"
+                >
+                  {% if seconds.size > 1 %}
+                    {{ seconds }}
+                  {% else %}
+                    {{ 0 | append: seconds }}
+                  {% endif %}
+                </span>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+        {%- if block.settings.countdown_final_text -%}
+          <div class="product-countdown__end-info">
+            <h5 class="h4 product-countdown__end-info-text title">
+              {{ block.settings.countdown_final_text }}
+            </h5>
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+    {%- if block.settings.button_label != blank -%}
+      <product-form class="product-form" data-hide-errors="{{ gift_card_recipient_feature_active }}">
+        <div class="product-form__error-message-wrapper" role="alert" hidden>
+          {% render 'icon-error' %}
+          <span class="product-form__error-message"></span>
+        </div>
+
+        {% liquid
+          assign product_form_id = 'product-countdown-form-' | append: section.id
+        %}
+
+        {%- form 'product',
+          product,
+          id: product_form_id,
+          class: 'form',
+          novalidate: 'novalidate',
+          data-type: 'add-to-cart-form'
+        -%}
+          <input
+            type="hidden"
+            name="id"
+            value="{{ product.selected_or_first_available_variant.id }}"
+            {% if product.selected_or_first_available_variant.available == false %}
+              disabled
+            {% endif %}
+          >
+          <button
+            type="submit"
+            name="add"
+            class="product-form__submit button button--{{ block.settings.button_style}}"
+            {% if product.selected_or_first_available_variant.available == false %}
+              disabled
+            {% endif %}
+          >
+            <div class="button__content">
+              <span class="button__label" data-label="{{ block.settings.button_label }}">
+                {{ block.settings.button_label }}
+              </span>
+            </div>
+            <div class="animated-button-circle"></div>
+            <div class="loading-overlay__spinner hidden">
+              {%- render 'icon-loading' -%}
+            </div>
+          </button>
+        {%- endform -%}
+      </product-form>
+    {%- endif -%}
+  </div>
+</div>

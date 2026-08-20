@@ -1,0 +1,61 @@
+{% if section.settings.secondary_logo != blank or section.settings.secondary_logo_dark != blank %}
+	{% liquid
+		if section.settings.secondary_logo != blank and section.settings.secondary_logo_dark == blank
+			assign aspect_ratio = section.settings.secondary_logo.aspect_ratio
+			assign padding_bottom = 1 | divided_by: aspect_ratio | times: 100
+		elsif section.settings.secondary_logo == blank and section.settings.secondary_logo_dark != blank
+			assign aspect_ratio = section.settings.secondary_logo_dark.aspect_ratio
+			assign padding_bottom = 1 | divided_by: aspect_ratio | times: 100
+		elsif section.settings.secondary_logo != blank and section.settings.secondary_logo_dark != blank
+			assign aspect_ratio = section.settings.secondary_logo.aspect_ratio | at_most: section.settings.secondary_logo_dark.aspect_ratio
+			assign padding_bottom = 1 | divided_by: aspect_ratio | times: 100
+		else
+			assign padding_bottom = 0
+		endif
+	%}
+
+	<a
+		href="{{ section.settings.secondary_logo_url }}"
+		class="header-secondary-logo header__heading-link focus-inset {{ aspect_ratio }}"
+		{% if section.settings.secondary_logo != blank or section.settings.secondary_logo_dark != blank %}
+			style="width: {{ section.settings.secondary_logo_width }}px; --padding_bottom: {{ padding_bottom }}%; "
+		{% endif %}
+	>
+		{%- if section.settings.secondary_logo != blank -%}
+			{%- assign image_size = section.settings.secondary_logo_width | append: 'x' -%}
+			{%- assign image_size_2x = section.settings.secondary_logo_width | times: 2 | at_most: 5760 -%}
+			<img
+				srcset="{{ section.settings.secondary_logo | image_url: width: image_size }} 1x, {{ section.settings.secondary_logo | image_url: width: image_size_2x }} 2x"
+				src="{{ section.settings.secondary_logo | image_url: width: image_size }}"
+				class="header__heading-logo"
+				width="{{ section.settings.secondary_logo_width }}"
+				height="auto"
+				alt="{{ section.settings.secondary_logo.alt | default: shop.name | escape }}"
+				loading="lazy"
+			>
+			{%- if section.settings.secondary_logo_dark != blank -%}
+				<img
+					srcset="{{ section.settings.secondary_logo_dark | image_url: width: image_size }} 1x, {{ section.settings.secondary_logo_dark | image_url: width: image_size_2x }} 2x"
+					src="{{ section.settings.secondary_logo_dark | image_url: width: image_size }}"
+					class="header__heading-logo header__heading-logo--overlay"
+					width="{{ section.settings.secondary_logo_width }}"
+					height="auto"
+					alt="{{ section.settings.secondary_logo_dark.alt | default: shop.name | escape }}"
+					loading="lazy"
+				>
+			{%- endif -%}
+		{%- elsif section.settings.secondary_logo_dark != blank -%}
+			{%- assign image_size = section.settings.secondary_logo_width | append: 'x' -%}
+			{%- assign image_size_2x = section.settings.secondary_logo_width | times: 2 | at_most: 5760 -%}
+			<img
+				srcset="{{ section.settings.secondary_logo_dark | image_url: width: image_size }} 1x, {{ section.settings.secondary_logo_dark | image_url: width: image_size_2x }} 2x"
+				src="{{ section.settings.secondary_logo_dark | image_url: width: image_size }}"
+				class="header__heading-logo header__heading-logo--overlay"
+				width="{{ section.settings.secondary_logo_width }}"
+				height="auto"
+				alt="{{ section.settings.secondary_logo_dark.alt | default: shop.name | escape }}"
+				loading="lazy"
+			>
+		{%- endif -%}
+	</a>
+{% endif %}

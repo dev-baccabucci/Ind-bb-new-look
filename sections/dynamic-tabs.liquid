@@ -1,0 +1,204 @@
+<div class="dynamic-tabs-wrapper">
+  <!-- Tabs Titles -->
+  <ul class="tabs-menu">
+    {% for block in section.blocks %}
+      {% if block.type == 'tab_title' %}
+        <li>
+          <a href="#tab-{{ block.settings.tab_id }}">
+            {{ block.settings.tab_title }}
+          </a>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+
+  <!-- Tabs Content -->
+  <div class="tabs-content">
+    {% for tab_title_block in section.blocks %}
+      {% if tab_title_block.type == 'tab_title' %}
+        <div id="tab-{{ tab_title_block.settings.tab_id }}" class="tab-content">
+          <div class="tab-items">
+            {% for tab_content_block in section.blocks %}
+              {% if tab_content_block.type == 'tab_content' and tab_content_block.settings.tab_id == tab_title_block.settings.tab_id %}
+                <div class="tab-item">
+                   <a href="{{ tab_content_block.settings.tab_link_url }}" target="_blank" class="btn">
+                  <img src="{{ tab_content_block.settings.tab_image | img_url: 'master' }}" loading="lazy" alt="{{ tab_content_block.settings.tab_title }}">
+                  <h4 class="nah">{{ tab_content_block.settings.tab_title }}</h4>
+                 {{ tab_content_block.settings.tab_link_text }}</a>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.dynamic-tabs-wrapper {
+  width: 100%;
+}
+.tabs-menu {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  justify-content: center;
+    align-items: center;
+}
+.tabs-menu li {
+  margin-right: 15px;
+}
+.tabs-menu a {
+ text-decoration: none;
+    padding: 10px;
+    background-color: #dca23f;
+    border-radius: 50px;
+    opacity: 1;
+    font-family: var(--text-font-family);
+    font-weight: var(--text-font-bold-weight);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: white;
+  box-shadow: rgb(220 162 63) 0px 4px 14px 0px;
+}
+
+  .tabs-menu a.active {
+    color: white;
+    cursor: pointer;
+    box-shadow: none;
+}
+  
+.tabs-content {
+  margin-top: 20px;
+}
+.tab-content {
+  display: none;
+}
+.tab-content.active {
+  display: block;
+}
+.tab-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+    align-items: center;
+}
+  .tab-item {
+    padding: 2rem 1rem;
+    border: 1rem solid #aaaaff;
+    border-image: repeating-linear-gradient(45deg, transparent, transparent 5px, #aaaaff 6px, #dca23f 15px, transparent 16px, transparent 20px) 20 / 1rem
+      }
+  
+.tab-item {
+  width: 23%;
+  margin: 10px;
+  text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+}
+.tab-item img {
+  max-width: 100%;
+  height: auto;
+}
+  @media screen and (max-width: 580px) {
+.tab-item {
+  width: 100% !important;
+}
+    .nah{
+      font-size:20px;
+    }
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const tabs = document.querySelectorAll('.tabs-menu a');
+  const tabContents = document.querySelectorAll('.tab-content');
+  
+  tabs.forEach(tab => {
+    tab.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      tabs.forEach(t => t.classList.remove('active'));
+      tabContents.forEach(content => content.classList.remove('active'));
+      
+      this.classList.add('active');
+      const target = document.querySelector(this.getAttribute('href'));
+      target.classList.add('active');
+    });
+  });
+  
+  // Initialize the first tab as active
+  if (tabs.length > 0) {
+    tabs[0].classList.add('active');
+    tabContents[0].classList.add('active');
+  }
+});
+</script>
+
+{% schema %}
+{
+  "name": "Dynamic tabs",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "tab_title",
+      "name": "Tab Title",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_title",
+          "label": "Tab Title"
+        },
+        {
+          "type": "text",
+          "id": "tab_id",
+          "label": "Tab ID (Unique Identifier)"
+        }
+      ]
+    },
+    {
+      "type": "tab_content",
+      "name": "Tab Content",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_id",
+          "label": "Tab ID (Must Match the Tab Title ID)"
+        },
+        {
+          "type": "image_picker",
+          "id": "tab_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "tab_title",
+          "label": "Title"
+        },
+        {
+          "type": "url",
+          "id": "tab_link_url",
+          "label": "Link URL"
+        },
+        {
+          "type": "text",
+          "id": "tab_link_text",
+          "label": "Link Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dynamic tabs",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

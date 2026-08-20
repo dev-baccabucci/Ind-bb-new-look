@@ -1,0 +1,740 @@
+<div class="dynamic-tabs-wrapper">
+  <!-- Tabs Titles -->
+  <ul class="tabs-menu">
+    {% for block in section.blocks %}
+      {% if block.type == 'tab_title' %}
+        <li>
+          <a href="#tab-{{ block.settings.tab_id }}">
+            {{ block.settings.tab_title }}
+          </a>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+
+  <!-- Tabs Content -->
+  <div class="tabs-content">
+    {% for tab_title_block in section.blocks %}
+      {% if tab_title_block.type == 'tab_title' %}
+        <div id="tab-{{ tab_title_block.settings.tab_id }}" class="tab-content">
+          <div class="tab-items">
+            {% for tab_content_block in section.blocks %}
+              {% if tab_content_block.type == 'tab_content' and tab_content_block.settings.tab_id == tab_title_block.settings.tab_id %}
+                <div class="tab-item">  
+                  <div class="codeblk">{{ tab_content_block.settings.liquid-code }}</div>
+                </div>
+              {% endif %}
+            {% endfor %}
+
+             {% comment %} Trust icons content {% endcomment %}
+              {% for trust_block in section.blocks %}
+                {% if trust_block.type == 'trust_content' and trust_block.settings.tab_id == tab_title_block.settings.tab_id %}
+                  <div class="trust-icons-container">
+                    {%- for i in (1..6) -%}
+                      {%- capture icon_setting -%}icon_{{ i }}{%- endcapture -%}
+                      {%- capture custom_icon_setting -%}custom_icon_{{ i }}{%- endcapture -%}
+                      {%- capture title_setting -%}title_{{ i }}{%- endcapture -%}
+                      {%- capture content_setting -%}content_{{ i }}{%- endcapture -%}
+  
+                      {%- if trust_block.settings[title_setting] != blank -%}
+                        <div class="trust-item">
+                          <div class="trust-icon-wrapper">
+                            {%- if trust_block.settings[custom_icon_setting] != blank -%}
+                              <img class="trust-icon" loading="lazy" src="{{ trust_block.settings[custom_icon_setting] | img_url: '48x48' }}" alt="{{ trust_block.settings[title_setting] | escape }}" width="24" height="24">
+                            {%- else -%}
+                              {%- assign icon_name = trust_block.settings[icon_setting] -%}
+                              {%- if icon_name != blank -%}
+                                <span class="trust-icon trust-icon-{{ icon_name }}"></span>
+                              {%- endif -%}
+                            {%- endif -%}
+                          </div>
+                          <div class="trust-content">
+                            <h4 class="trust-title">{{ trust_block.settings[title_setting] | escape }}</h4>
+                            <div class="trust-text rte">
+                              {{ trust_block.settings[content_setting] }}
+                            </div>
+                          </div>
+                        </div>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                {% endif %}
+              {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.dynamic-tabs-wrapper {
+  width: 100%;
+}
+.tabs-menu {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+}
+.tabs-menu li {
+  margin-right: 15px;
+}
+.tabs-menu a {
+  text-decoration: none;
+    padding: 5px 10px;
+    background-color: transparent;
+    border-radius: 50px;
+    opacity: 1;
+    font-family: 'Inter';
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #dca23f;
+    border: 3px solid #dca23f;
+}
+
+.tabs-menu a.active {
+    color: white;
+    cursor: pointer;
+    box-shadow: none;
+    text-decoration: none;
+    padding: 5px 10px;
+    background-color: #dca23f;
+    border-radius: 50px;
+    opacity: 1;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+  
+.tabs-content {
+  margin-top: 20px;
+}
+.tab-content {
+  display: none;
+}
+.tab-content.active {
+  display: block;
+}
+
+/* Trust Icons Styles */
+.trust-icons-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.trust-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.trust-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.trust-icon-wrapper {
+  margin-bottom: 15px;
+}
+
+.trust-icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.trust-title {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.trust-text {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+  font-family: 'Inter';
+}
+.trust-icons-container {
+    padding: 0 30px;
+}
+  h4.trust-title {
+    font-size: 18px;
+    font-family: 'Inter';
+    font-weight: 500;
+}
+/* Responsive Styles */
+@media screen and (max-width: 1024px) {
+  .trust-icons-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .tabs-menu {
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .tabs-menu li {
+    width: 100%;
+    margin-bottom: 5px;
+    padding: 5px 5px;
+    margin-right: 0;
+  }
+  
+  .tab-item {
+    padding: 0;
+  }
+  
+  .tabs-menu a {
+   width: 100%;
+   position: relative;
+   border: 2px solid;
+    padding: 10px 10px;
+  }
+.tabs-menu a.active {
+    padding: 10px 10px;
+}
+  .tabs-menu a::after {
+    content: '▼';
+    position: absolute;
+    right: 15px;
+    transition: transform 0.3s ease;
+  }
+
+  .tabs-menu a.active::after {
+    transform: rotate(180deg);
+  }
+
+  .tab-content {
+    display: none;
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-top: 5px;
+  }
+  
+  .trust-icons-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .trust-item {
+    flex-direction: row;
+    text-align: left;
+    align-items: flex-start;
+  }
+  
+  .trust-icon-wrapper {
+    margin-right: 15px;
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+  
+  .trust-content {
+    flex-grow: 1;
+  }
+  .trust-icons-container {
+    padding: 0 10px;
+}
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const tabs = document.querySelectorAll('.tabs-menu a');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  function activateTab(tab) {
+    tabs.forEach(t => t.classList.remove('active'));
+    tabContents.forEach(content => content.classList.remove('active'));
+
+    tab.classList.add('active');
+    const target = document.querySelector(tab.getAttribute('href'));
+    target.classList.add('active');
+  }
+
+  function toggleAccordion(tab) {
+    const target = document.querySelector(tab.getAttribute('href'));
+    if (target.classList.contains('active')) {
+      target.classList.remove('active');
+      tab.classList.remove('active');
+    } else {
+      tabContents.forEach(content => content.classList.remove('active'));
+      tabs.forEach(t => t.classList.remove('active'));
+
+      target.classList.add('active');
+      tab.classList.add('active');
+    }
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (window.innerWidth <= 768) {
+        toggleAccordion(this);
+      } else {
+        activateTab(this);
+      }
+    });
+  });
+
+  // Initialize first tab as active on larger screens
+  // if (tabs.length > 0 && window.innerWidth > 768) {
+  //   activateTab(tabs[0]);
+  // }
+
+    // Initialize the first tab as active
+  if (tabs.length > 0) {
+    tabs[0].classList.add('active');
+    tabContents[0].classList.add('active');
+  }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const looxRating = document.querySelector('a[href="#looxReviews"]');
+  const targetTab = document.querySelector('a[href="#tab-looxReviews"]');
+  
+  if (looxRating && targetTab) {
+    looxRating.addEventListener('click', function(event) {
+      event.preventDefault();
+      
+      // Trigger the tab click event to activate it
+      targetTab.click();
+      
+      // Smooth scroll to the tab content
+      const targetContent = document.querySelector('#tab-looxReviews');
+      if (targetContent) {
+        targetContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
+});
+</script>
+
+
+
+{% schema %}
+{
+  "name": "Custom tabs",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "tab_title",
+      "name": "Tab Title",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_title",
+          "label": "Tab Title"
+        },
+        {
+          "type": "text",
+          "id": "tab_id",
+          "label": "Tab ID (Unique Identifier)"
+        }
+      ]
+    },
+    {
+      "type": "tab_content",
+      "name": "Tab Content",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_id",
+          "label": "Tab ID (Must Match the Tab Title ID)"
+        },
+        {
+          "type": "liquid",
+          "id": "liquid-code",
+          "label": "Liquid",
+          "info": "Add app snippets or other Liquid code to create advanced customizations."
+        }
+      ]
+    },
+    {
+      "type": "trust_content",
+      "name": "Trust Icons",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_id",
+          "label": "Tab ID to display under",
+          "info": "These trust icons will appear under the tab with this ID"
+        },
+        {
+          "type": "header",
+          "content": "Trust Badge 1"
+        },
+        {
+          "type": "select",
+          "id": "icon_1",
+          "label": "Icon",
+          "options": [
+            {"value": "picto-coupon", "label": "Coupon", "group": "Shop"},
+            {"value": "picto-gift", "label": "Gift", "group": "Shop"},
+            {"value": "picto-taxes", "label": "Taxes", "group": "Shop"},
+            {"value": "picto-warranty", "label": "Warranty", "group": "Shop"},
+            {"value": "picto-like", "label": "Like", "group": "Shop"},
+            {"value": "picto-store", "label": "Store", "group": "Shop"},
+            {"value": "picto-store-pickup", "label": "Store pickup", "group": "Shop"},
+            {"value": "picto-love", "label": "Love", "group": "Shop"},
+            {"value": "picto-donation", "label": "Donation", "group": "Shop"},
+            {"value": "picto-box", "label": "Box", "group": "Shipping"},
+            {"value": "picto-address", "label": "Address", "group": "Shipping"},
+            {"value": "picto-address-pin", "label": "Address pin", "group": "Shipping"},
+            {"value": "picto-fast-delivery", "label": "Fast delivery", "group": "Shipping"},
+            {"value": "picto-delivery-truck", "label": "Delivery truck", "group": "Shipping"},
+            {"value": "picto-return-box", "label": "Returns", "group": "Shipping"},
+            {"value": "picto-worldwide", "label": "World", "group": "Shipping"},
+            {"value": "picto-plane", "label": "Plane", "group": "Shipping"},
+            {"value": "picto-credit-card", "label": "Credit card", "group": "Payment & Security"},
+            {"value": "picto-lock", "label": "Lock", "group": "Payment & Security"},
+            {"value": "picto-shield", "label": "Shield", "group": "Payment & Security"},
+            {"value": "picto-secure-payment", "label": "Secure payment", "group": "Payment & Security"},
+            {"value": "picto-mobile", "label": "Mobile", "group": "Communication"},
+            {"value": "picto-phone", "label": "Phone", "group": "Communication"},
+            {"value": "picto-chat", "label": "Chat", "group": "Communication"},
+            {"value": "picto-send", "label": "Send", "group": "Communication"},
+            {"value": "picto-email", "label": "Email", "group": "Communication"},
+            {"value": "picto-customer-support", "label": "Customer support", "group": "Communication"},
+            {"value": "picto-operator", "label": "Support operator", "group": "Communication"},
+            {"value": "picto-virus", "label": "Virus", "group": "Health"},
+            {"value": "picto-mask", "label": "Mask", "group": "Health"}
+          ],
+          "default": "picto-customer-support"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon_1",
+          "label": "Custom icon",
+          "info": "Upload a custom icon (48x48px recommended)"
+        },
+        {
+          "type": "text",
+          "id": "title_1",
+          "label": "Title",
+          "default": "Customer Support"
+        },
+        {
+          "type": "richtext",
+          "id": "content_1",
+          "label": "Content",
+          "default": "<p>24/7 customer support available for all your needs</p>"
+        },
+        {
+          "type": "header",
+          "content": "Trust Badge 2"
+        },
+        {
+          "type": "select",
+          "id": "icon_2",
+          "label": "Icon",
+          "options": [
+            {"value": "picto-coupon", "label": "Coupon", "group": "Shop"},
+            {"value": "picto-gift", "label": "Gift", "group": "Shop"},
+            {"value": "picto-taxes", "label": "Taxes", "group": "Shop"},
+            {"value": "picto-warranty", "label": "Warranty", "group": "Shop"},
+            {"value": "picto-like", "label": "Like", "group": "Shop"},
+            {"value": "picto-store", "label": "Store", "group": "Shop"},
+            {"value": "picto-store-pickup", "label": "Store pickup", "group": "Shop"},
+            {"value": "picto-love", "label": "Love", "group": "Shop"},
+            {"value": "picto-donation", "label": "Donation", "group": "Shop"},
+            {"value": "picto-box", "label": "Box", "group": "Shipping"},
+            {"value": "picto-address", "label": "Address", "group": "Shipping"},
+            {"value": "picto-address-pin", "label": "Address pin", "group": "Shipping"},
+            {"value": "picto-fast-delivery", "label": "Fast delivery", "group": "Shipping"},
+            {"value": "picto-delivery-truck", "label": "Delivery truck", "group": "Shipping"},
+            {"value": "picto-return-box", "label": "Returns", "group": "Shipping"},
+            {"value": "picto-worldwide", "label": "World", "group": "Shipping"},
+            {"value": "picto-plane", "label": "Plane", "group": "Shipping"},
+            {"value": "picto-credit-card", "label": "Credit card", "group": "Payment & Security"},
+            {"value": "picto-lock", "label": "Lock", "group": "Payment & Security"},
+            {"value": "picto-shield", "label": "Shield", "group": "Payment & Security"},
+            {"value": "picto-secure-payment", "label": "Secure payment", "group": "Payment & Security"},
+            {"value": "picto-mobile", "label": "Mobile", "group": "Communication"},
+            {"value": "picto-phone", "label": "Phone", "group": "Communication"},
+            {"value": "picto-chat", "label": "Chat", "group": "Communication"},
+            {"value": "picto-send", "label": "Send", "group": "Communication"},
+            {"value": "picto-email", "label": "Email", "group": "Communication"},
+            {"value": "picto-customer-support", "label": "Customer support", "group": "Communication"},
+            {"value": "picto-operator", "label": "Support operator", "group": "Communication"},
+            {"value": "picto-virus", "label": "Virus", "group": "Health"},
+            {"value": "picto-mask", "label": "Mask", "group": "Health"}
+          ],
+          "default": "picto-warranty"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon_2",
+          "label": "Custom icon"
+        },
+        {
+          "type": "text",
+          "id": "title_2",
+          "label": "Title",
+          "default": "Warranty"
+        },
+        {
+          "type": "richtext",
+          "id": "content_2",
+          "label": "Content",
+          "default": "<p>All products come with a 1-year manufacturer warranty</p>"
+        },
+        {
+          "type": "header",
+          "content": "Trust Badge 3"
+        },
+        {
+          "type": "select",
+          "id": "icon_3",
+          "label": "Icon",
+          "options": [
+            {"value": "picto-coupon", "label": "Coupon", "group": "Shop"},
+            {"value": "picto-gift", "label": "Gift", "group": "Shop"},
+            {"value": "picto-taxes", "label": "Taxes", "group": "Shop"},
+            {"value": "picto-warranty", "label": "Warranty", "group": "Shop"},
+            {"value": "picto-like", "label": "Like", "group": "Shop"},
+            {"value": "picto-store", "label": "Store", "group": "Shop"},
+            {"value": "picto-store-pickup", "label": "Store pickup", "group": "Shop"},
+            {"value": "picto-love", "label": "Love", "group": "Shop"},
+            {"value": "picto-donation", "label": "Donation", "group": "Shop"},
+            {"value": "picto-box", "label": "Box", "group": "Shipping"},
+            {"value": "picto-address", "label": "Address", "group": "Shipping"},
+            {"value": "picto-address-pin", "label": "Address pin", "group": "Shipping"},
+            {"value": "picto-fast-delivery", "label": "Fast delivery", "group": "Shipping"},
+            {"value": "picto-delivery-truck", "label": "Delivery truck", "group": "Shipping"},
+            {"value": "picto-return-box", "label": "Returns", "group": "Shipping"},
+            {"value": "picto-worldwide", "label": "World", "group": "Shipping"},
+            {"value": "picto-plane", "label": "Plane", "group": "Shipping"},
+            {"value": "picto-credit-card", "label": "Credit card", "group": "Payment & Security"},
+            {"value": "picto-lock", "label": "Lock", "group": "Payment & Security"},
+            {"value": "picto-shield", "label": "Shield", "group": "Payment & Security"},
+            {"value": "picto-secure-payment", "label": "Secure payment", "group": "Payment & Security"},
+            {"value": "picto-mobile", "label": "Mobile", "group": "Communication"},
+            {"value": "picto-phone", "label": "Phone", "group": "Communication"},
+            {"value": "picto-chat", "label": "Chat", "group": "Communication"},
+            {"value": "picto-send", "label": "Send", "group": "Communication"},
+            {"value": "picto-email", "label": "Email", "group": "Communication"},
+            {"value": "picto-customer-support", "label": "Customer support", "group": "Communication"},
+            {"value": "picto-operator", "label": "Support operator", "group": "Communication"},
+            {"value": "picto-virus", "label": "Virus", "group": "Health"},
+            {"value": "picto-mask", "label": "Mask", "group": "Health"}
+          ],
+          "default": "picto-secure-payment"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon_3",
+          "label": "Custom icon"
+        },
+        {
+          "type": "text",
+          "id": "title_3",
+          "label": "Title",
+          "default": "Secure Payment"
+        },
+        {
+          "type": "richtext",
+          "id": "content_3",
+          "label": "Content",
+          "default": "<p>100% secure payment options with SSL encryption</p>"
+        },
+        {
+          "type": "header",
+          "content": "Trust Badge 4"
+        },
+        {
+          "type": "select",
+          "id": "icon_4",
+          "label": "Icon",
+          "options": [
+            {"value": "picto-coupon", "label": "Coupon", "group": "Shop"},
+            {"value": "picto-gift", "label": "Gift", "group": "Shop"},
+            {"value": "picto-taxes", "label": "Taxes", "group": "Shop"},
+            {"value": "picto-warranty", "label": "Warranty", "group": "Shop"},
+            {"value": "picto-like", "label": "Like", "group": "Shop"},
+            {"value": "picto-store", "label": "Store", "group": "Shop"},
+            {"value": "picto-store-pickup", "label": "Store pickup", "group": "Shop"},
+            {"value": "picto-love", "label": "Love", "group": "Shop"},
+            {"value": "picto-donation", "label": "Donation", "group": "Shop"},
+            {"value": "picto-box", "label": "Box", "group": "Shipping"},
+            {"value": "picto-address", "label": "Address", "group": "Shipping"},
+            {"value": "picto-address-pin", "label": "Address pin", "group": "Shipping"},
+            {"value": "picto-fast-delivery", "label": "Fast delivery", "group": "Shipping"},
+            {"value": "picto-delivery-truck", "label": "Delivery truck", "group": "Shipping"},
+            {"value": "picto-return-box", "label": "Returns", "group": "Shipping"},
+            {"value": "picto-worldwide", "label": "World", "group": "Shipping"},
+            {"value": "picto-plane", "label": "Plane", "group": "Shipping"},
+            {"value": "picto-credit-card", "label": "Credit card", "group": "Payment & Security"},
+            {"value": "picto-lock", "label": "Lock", "group": "Payment & Security"},
+            {"value": "picto-shield", "label": "Shield", "group": "Payment & Security"},
+            {"value": "picto-secure-payment", "label": "Secure payment", "group": "Payment & Security"},
+            {"value": "picto-mobile", "label": "Mobile", "group": "Communication"},
+            {"value": "picto-phone", "label": "Phone", "group": "Communication"},
+            {"value": "picto-chat", "label": "Chat", "group": "Communication"},
+            {"value": "picto-send", "label": "Send", "group": "Communication"},
+            {"value": "picto-email", "label": "Email", "group": "Communication"},
+            {"value": "picto-customer-support", "label": "Customer support", "group": "Communication"},
+            {"value": "picto-operator", "label": "Support operator", "group": "Communication"},
+            {"value": "picto-virus", "label": "Virus", "group": "Health"},
+            {"value": "picto-mask", "label": "Mask", "group": "Health"}
+          ],
+          "default": "picto-fast-delivery"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon_4",
+          "label": "Custom icon"
+        },
+        {
+          "type": "text",
+          "id": "title_4",
+          "label": "Title",
+          "default": "Fast Delivery"
+        },
+        {
+          "type": "richtext",
+          "id": "content_4",
+          "label": "Content",
+          "default": "<p>Quick and reliable shipping to your doorstep</p>"
+        },
+        {
+          "type": "header",
+          "content": "Trust Badge 5"
+        },
+        {
+          "type": "select",
+          "id": "icon_5",
+          "label": "Icon",
+          "options": [
+            {"value": "picto-coupon", "label": "Coupon", "group": "Shop"},
+            {"value": "picto-gift", "label": "Gift", "group": "Shop"},
+            {"value": "picto-taxes", "label": "Taxes", "group": "Shop"},
+            {"value": "picto-warranty", "label": "Warranty", "group": "Shop"},
+            {"value": "picto-like", "label": "Like", "group": "Shop"},
+            {"value": "picto-store", "label": "Store", "group": "Shop"},
+            {"value": "picto-store-pickup", "label": "Store pickup", "group": "Shop"},
+            {"value": "picto-love", "label": "Love", "group": "Shop"},
+            {"value": "picto-donation", "label": "Donation", "group": "Shop"},
+            {"value": "picto-box", "label": "Box", "group": "Shipping"},
+            {"value": "picto-address", "label": "Address", "group": "Shipping"},
+            {"value": "picto-address-pin", "label": "Address pin", "group": "Shipping"},
+            {"value": "picto-fast-delivery", "label": "Fast delivery", "group": "Shipping"},
+            {"value": "picto-delivery-truck", "label": "Delivery truck", "group": "Shipping"},
+            {"value": "picto-return-box", "label": "Returns", "group": "Shipping"},
+            {"value": "picto-worldwide", "label": "World", "group": "Shipping"},
+            {"value": "picto-plane", "label": "Plane", "group": "Shipping"},
+            {"value": "picto-credit-card", "label": "Credit card", "group": "Payment & Security"},
+            {"value": "picto-lock", "label": "Lock", "group": "Payment & Security"},
+            {"value": "picto-shield", "label": "Shield", "group": "Payment & Security"},
+            {"value": "picto-secure-payment", "label": "Secure payment", "group": "Payment & Security"},
+            {"value": "picto-mobile", "label": "Mobile", "group": "Communication"},
+            {"value": "picto-phone", "label": "Phone", "group": "Communication"},
+            {"value": "picto-chat", "label": "Chat", "group": "Communication"},
+            {"value": "picto-send", "label": "Send", "group": "Communication"},
+            {"value": "picto-email", "label": "Email", "group": "Communication"},
+            {"value": "picto-customer-support", "label": "Customer support", "group": "Communication"},
+            {"value": "picto-operator", "label": "Support operator", "group": "Communication"},
+            {"value": "picto-virus", "label": "Virus", "group": "Health"},
+            {"value": "picto-mask", "label": "Mask", "group": "Health"}
+          ],
+          "default": "picto-return-box"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon_5",
+          "label": "Custom icon"
+        },
+        {
+          "type": "text",
+          "id": "title_5",
+          "label": "Title",
+          "default": "Easy Returns"
+        },
+        {
+          "type": "richtext",
+          "id": "content_5",
+          "label": "Content",
+          "default": "<p>Hassle-free returns within 30 days</p>"
+        },
+        {
+          "type": "header",
+          "content": "Trust Badge 6"
+        },
+        {
+          "type": "select",
+          "id": "icon_6",
+          "label": "Icon",
+          "options": [
+            {"value": "picto-coupon", "label": "Coupon", "group": "Shop"},
+            {"value": "picto-gift", "label": "Gift", "group": "Shop"},
+            {"value": "picto-taxes", "label": "Taxes", "group": "Shop"},
+            {"value": "picto-warranty", "label": "Warranty", "group": "Shop"},
+            {"value": "picto-like", "label": "Like", "group": "Shop"},
+            {"value": "picto-store", "label": "Store", "group": "Shop"},
+            {"value": "picto-store-pickup", "label": "Store pickup", "group": "Shop"},
+            {"value": "picto-love", "label": "Love", "group": "Shop"},
+            {"value": "picto-donation", "label": "Donation", "group": "Shop"},
+            {"value": "picto-box", "label": "Box", "group": "Shipping"},
+            {"value": "picto-address", "label": "Address", "group": "Shipping"},
+            {"value": "picto-address-pin", "label": "Address pin", "group": "Shipping"},
+            {"value": "picto-fast-delivery", "label": "Fast delivery", "group": "Shipping"},
+            {"value": "picto-delivery-truck", "label": "Delivery truck", "group": "Shipping"},
+            {"value": "picto-return-box", "label": "Returns", "group": "Shipping"},
+            {"value": "picto-worldwide", "label": "World", "group": "Shipping"},
+            {"value": "picto-plane", "label": "Plane", "group": "Shipping"},
+            {"value": "picto-credit-card", "label": "Credit card", "group": "Payment & Security"},
+            {"value": "picto-lock", "label": "Lock", "group": "Payment & Security"},
+            {"value": "picto-shield", "label": "Shield", "group": "Payment & Security"},
+            {"value": "picto-secure-payment", "label": "Secure payment", "group": "Payment & Security"},
+            {"value": "picto-mobile", "label": "Mobile", "group": "Communication"},
+            {"value": "picto-phone", "label": "Phone", "group": "Communication"},
+            {"value": "picto-chat", "label": "Chat", "group": "Communication"},
+            {"value": "picto-send", "label": "Send", "group": "Communication"},
+            {"value": "picto-email", "label": "Email", "group": "Communication"},
+            {"value": "picto-customer-support", "label": "Customer support", "group": "Communication"},
+            {"value": "picto-operator", "label": "Support operator", "group": "Communication"},
+            {"value": "picto-virus", "label": "Virus", "group": "Health"},
+            {"value": "picto-mask", "label": "Mask", "group": "Health"}
+          ],
+          "default": "picto-chat"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon_6",
+          "label": "Custom icon"
+        },
+        {
+          "type": "text",
+          "id": "title_6",
+          "label": "Title",
+          "default": "Quality Guaranteed"
+        },
+        {
+          "type": "richtext",
+          "id": "content_6",
+          "label": "Content",
+          "default": "<p>Premium quality products you can trust</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom tabs",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

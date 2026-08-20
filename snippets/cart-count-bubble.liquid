@@ -1,0 +1,19 @@
+{% comment %} <svg class="cart-icon-bubble-svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <circle class="cart-icon-bubble-svg__bg-circle" cx="16" cy="16" r="16" ></circle>
+  <circle class="cart-icon-bubble-svg__progress-circle" cx="16" cy="16" r="16"></circle>
+</svg> {% endcomment %}
+{% comment %} <svg focusable="false" width="24" height="24" class="icon icon--header-cart   " viewBox="0 0 24 24">
+        <path d="M3 1h14l1 16H2L3 1z" fill="none" stroke="currentColor" stroke-width="2"></path>
+        <path d="M7 4v0a3 3 0 003 3v0a3 3 0 003-3v0" fill="none" stroke="currentColor" stroke-width="2"></path>
+      </svg> {% endcomment %}
+
+    <img src="https://cdn.shopify.com/s/files/1/0279/5133/3450/files/shopping_cart.png?v=1779280938" width="100%" height="100%">
+<span class="visually-hidden">{{ 'general.cart.view' | t }}</span>
+<div class="cart-count-bubble">
+  {%- if cart.item_count < 100 -%}
+    <span aria-hidden="true">{{ cart.item_count }}</span>
+  {%- else -%}
+    <span aria-hidden="true">99+</span>
+  {%- endif -%}
+  <span class="visually-hidden">{{- 'sections.header.cart_count' | t: count: cart.item_count -}}</span>
+</div>

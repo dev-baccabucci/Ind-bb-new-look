@@ -1,0 +1,113 @@
+<div class="container">
+  <div id="accordion" class="accordion-container">
+    <h4 class="accordion-title js-accordion-title">Description</h4>
+    <div class="accordion-content">
+      {{ product.description }}
+    </div>
+    <hr>
+    {% if product.metafields.custom_fields.offers != blank %}
+      <h4 class="accordion-title js-accordion-title">Offers</h4>
+      <div class="accordion-content">
+        {{ product.metafields.custom_fields.offers }}
+      </div>
+      <hr>
+    {% endif %}
+    {% if product.metafields.custom_fields.material__care != blank %}
+      <h4 class="accordion-title js-accordion-title">Material & Care</h4>
+      <div class="accordion-content">
+        {{ product.metafields.custom_fields.material__care }}
+      </div>
+      <hr>
+    {% endif %}
+  </div>
+</div>
+<!--
+  <h4 class="accordion-title js-accordion-title">Shipping & Delivery</h4>
+    <div class="accordion-content">
+      <p>Ships in 3-4 Days</p>
+    </div>
+  </div>
+-->
+<style>
+            .accordion-container{
+              max-width:1200px;
+              margin:auto;
+            }
+            .accordion-container .accordion-title {
+    position: relative;
+    margin: 0;
+    padding: 8px 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+
+
+  }
+  .accordion-container .accordion-title:hover,
+  .accordion-container .accordion-title:active,
+  .accordion-title.open {
+  /*   background-color:#565656; */
+  }
+  .accordion-container .accordion-title::after {
+    content: "";
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    width: 0;
+    height: 0;
+    border: 8px solid transparent;
+    border-top-color: black;
+  }
+  .accordion-container .accordion-title.open::after {
+    content: "";
+    position: absolute;
+    top: 15px;
+    border: 8px solid transparent;
+    border-bottom-color: black;
+  }
+
+  /*CSS for CodePen*/
+
+  .accordion-content {
+     padding: 15px 15px;
+  }
+            .accordion-title.open {
+              border-bottom: 1px solid grey;
+            }
+  /* .accordion-container {
+    width: 300px;
+    margin: 0 auto;
+  } */
+</style>
+<script defer>
+            $(function () {
+    $(".accordion-content:not(:first-of-type)").css("display", "none");
+    $(".js-accordion-title:first-of-type").addClass("open");
+
+    $(".js-accordion-title").click(function () {
+      $(".open").not(this).removeClass("open").next().slideUp(300);
+      $(this).toggleClass("open").next().slideToggle(300);
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Custom Description",
+  "settings": [],
+"presets": [
+  {
+    "category": "Image",
+    "name": "Custom Description"
+
+  }
+]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,107 @@
+{% comment %} <script>
+  // Define scripts and styles to be lazy-loaded
+  const scriptUrls = [
+    'https://loox.io/widget/EkZpQIDJv9/loox.1619425036871.js?shop=baccabucci.myshopify.com',
+    'https://zooomyapps.com/backinstock/ZooomyOrders.js?shop=baccabucci.myshopify.com',
+    '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit',
+    'https://cdn.shopify.com/extensions/0a399711-e52d-4a4f-97ae-1534575ede67/popcoins-loyalty-baccabucci-82/assets/pop-club-embed.js',
+    'https://cdn.shopify.com/extensions/0a399711-e52d-4a4f-97ae-1534575ede67/popcoins-loyalty-baccabucci-82/assets/jquery-3.6.3.min.js',
+    'https://checkout-merchant.snapmint.com/js/v1/2057'
+  ];
+
+  const styleUrls = [
+    'https://cdn.shopify.com/extensions/0a399711-e52d-4a4f-97ae-1534575ede67/popcoins-loyalty-baccabucci-82/assets/floating-popcoin.css'
+  ];
+
+  let assetsLoaded = false;
+
+  function loadAssetsOnce() {
+    if (assetsLoaded) return;
+    assetsLoaded = true;
+
+    // Load JS
+    scriptUrls.forEach(url => {
+      const script = document.createElement('script');
+      script.src = url;
+      script.async = true;
+      document.body.appendChild(script);
+    });
+
+    // Load CSS
+    styleUrls.forEach(url => {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = url;
+      document.head.appendChild(link);
+    });
+
+    // Remove event listeners
+    ['click', 'touchstart', 'scroll'].forEach(event => {
+      document.removeEventListener(event, loadAssetsOnce);
+    });
+  }
+
+  // Attach once-only event listeners
+  ['click', 'touchstart', 'scroll'].forEach(event => {
+    document.addEventListener(event, loadAssetsOnce, { once: true });
+  });
+</script> {% endcomment %}
+
+ <script>
+  // Unique script URLs
+  const scriptUrls = [
+    'https://loox.io/widget/EkZpQIDJv9/loox.1619425036871.js?shop=baccabucci.myshopify.com',
+    'https://zooomyapps.com/backinstock/ZooomyOrders.js?shop=baccabucci.myshopify.com',
+    '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit',
+    'https://cdn.shopify.com/extensions/0a399711-e52d-4a4f-97ae-1534575ede67/popcoins-loyalty-baccabucci-82/assets/pop-club-embed.js',
+    'https://cdn.shopify.com/extensions/0a399711-e52d-4a4f-97ae-1534575ede67/popcoins-loyalty-baccabucci-82/assets/jquery-3.6.3.min.js',
+    {% comment %} 'https://baccabucci.com/cdn/shopifycloud/shop-js/modules/v2/chunk.common_C_13GLB1.esm.js', {% endcomment %}
+    {% comment %} 'https://baccabucci.com/cdn/s/trekkie.storefront.a804e9514e4efded663580eddd6991fcc12b5451.min.js',
+    'https://baccabucci.com/cdn/shop/t/171/assets/gsap.min.js?v=98399229928229536421767687304',
+    'https://baccabucci.com/cdn/wpm/bfcfee988w5aeb613cpc8e4bc33m6693e112m.js', {% endcomment %}
+    'https://baccabucci.com/cdn/shop/t/171/assets/ScrollTrigger.min.js?v=51844696078135174451767687288',
+    {% comment %} 'https://cdn.js.customerlabs.co/shopify_v1_0_0.js', {% endcomment %}
+    {% comment %} 'https://cdn.js.customerlabs.co/cl79633ony4nss.js' {% endcomment %}
+  ];
+
+  let scriptsLoaded = false;
+
+  function loadScriptsOnce() {
+    if (scriptsLoaded) return;
+    scriptsLoaded = true;
+
+    // Load each script
+    scriptUrls.forEach(url => {
+      const script = document.createElement('script');
+      script.src = url;
+      script.async = true;
+      document.body.appendChild(script);
+    });
+
+    // Remove event listeners after loading
+    ['click', 'touchstart', 'scroll'].forEach(event => {
+      document.removeEventListener(event, loadScriptsOnce);
+    });
+  }
+
+  // Trigger load on first user interaction
+  ['click', 'touchstart', 'scroll'].forEach(event => {
+    document.addEventListener(event, loadScriptsOnce, { once: true });
+  });
+</script>
+
+<script>
+  // Prevent loading the same script twice
+  function loadUniqueScript(url) {
+    // Check if script with same src already exists
+    if (document.querySelector(`script[src="${url}"]`)) {
+      console.log("Script already loaded:", url);
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = url;
+    script.async = true;
+    document.body.appendChild(script);
+  }
+</script>

@@ -1,0 +1,143 @@
+<div
+  class="age-verification popup"
+  data-exit-animation="popupExitFade"
+  data-body-scroll-disable="true"
+  data-open-trigger="none"
+  data-id="{{ section.id }}"
+  data-limit-display="1"
+  data-limit-lifetime="30"
+  tabindex="0"
+>
+  <div class="age-verification__wrapper popup-wrap">
+    <div class="container">
+      <div class="age-verification__content">
+        <div class="age-verification__question show">
+          {%- if section.settings.heading -%}
+            <h2 class="popup-heading age-verification__heading {{ section.settings.heading_size }}">
+              {{- section.settings.heading -}}
+            </h2>
+          {%- endif -%}
+          {%- if section.settings.text -%}
+            <div class="popup-text rte {% if settings.rte_type == 'custom' %} rte__container{% endif %}">
+              {{- section.settings.text -}}
+            </div>
+          {%- endif -%}
+          <div class="age-verification__buttons">
+            <button class="button button--secondary age-verification__button-no focus-inset">
+              <div class="button__content">
+                <span class="button__label" data-label="{{- section.settings.button_label_no -}}">
+                  {{- section.settings.button_label_no -}}
+                </span>
+              </div>
+              <span class="animated-button-circle"></span>
+            </button>
+            <button class="button button--primary age-verification__popup-close focus-inset">
+              <div class="button__content">
+                <span class="button__label" data-label="{{- section.settings.button_label_yes -}}">
+                  {{- section.settings.button_label_yes -}}
+                </span>
+              </div>
+              <span class="animated-button-circle"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="age-verification__declined">
+          <div class="age-declined__wrapper">
+            {%- if section.settings.heading_declined -%}
+              <h2 class="popup-heading age-verification__heading {{ section.settings.heading_size }}">
+                {{- section.settings.heading_declined -}}
+              </h2>
+            {%- endif -%}
+            {%- if section.settings.text_declined -%}
+              <div class="popup-text rte {% if settings.rte_type == 'custom' %} rte__container{% endif %}">
+                {{- section.settings.text_declined -}}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.overlay-group.age-verification.name",
+  "limit": 1,
+  "enabled_on": {
+    "groups": ["custom.overlay"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.overlay-group.age-verification.settings.header_1.content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.overlay-group.age-verification.settings.heading.label",
+      "default": "t:sections.overlay-group.age-verification.settings.heading.default"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_size.options__4.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:sections.overlay-group.age-verification.settings.text.label",
+      "default": "t:sections.overlay-group.age-verification.settings.text.default"
+    },
+    {
+      "type": "text",
+      "id": "button_label_no",
+      "label": "t:sections.overlay-group.age-verification.settings.button_label_no.label",
+      "default": "t:sections.overlay-group.age-verification.settings.button_label_no.default"
+    },
+    {
+      "type": "text",
+      "id": "button_label_yes",
+      "label": "t:sections.overlay-group.age-verification.settings.button_label_yes.label",
+      "default": "t:sections.overlay-group.age-verification.settings.button_label_yes.default"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.overlay-group.age-verification.settings.header_2.content"
+    },
+    {
+      "type": "text",
+      "id": "heading_declined",
+      "label": "t:sections.overlay-group.age-verification.settings.heading.label",
+      "default": "t:sections.overlay-group.age-verification.settings.heading_declined.default"
+    },
+    {
+      "type": "richtext",
+      "id": "text_declined",
+      "label": "t:sections.overlay-group.age-verification.settings.text.label",
+      "default": "t:sections.overlay-group.age-verification.settings.text_declined.default"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.overlay-group.age-verification.name"
+    }
+  ]
+}
+{% endschema %}

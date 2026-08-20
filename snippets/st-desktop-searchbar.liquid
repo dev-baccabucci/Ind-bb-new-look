@@ -1,0 +1,88 @@
+<div class="st-search-bar hidden-mobile">
+  <input type="text" id="st-search-input-desktop" name="q" placeholder="What are you looking for?" value="" autocapitalize="off" autocomplete="off" autocorrect="off" class="changedPlaceholder">
+  <span class="side-btn"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 30 30" style=" fill:#undefined;" class="st-searchicon">
+                <path d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"></path>
+            </svg></span></span>
+  <span class="input-close-btn" style="display: none;"></span>
+</div>
+
+<style>
+  .st-search-bar input::-webkit-input-placeholder:last-child{
+    font-weight:bold;
+  }
+  .st-search-bar {
+    position: relative;
+    z-index: 7;
+}
+.st-search-bar input#st-search-input-desktop {
+    font-family: inherit;
+    border: 1px solid #2b2f3d;
+    width: 100% !important;
+    height: 40px!important;
+    font-size: 16px!important;
+    min-width: 500px;
+    font-weight: 400;
+    background-color: #fff;
+/*     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBkPSJNNTA4LjkgNDc4LjdMMzYwLjEgMzMwYzI4LjItMzQuOCA0NS4yLTc5LjEgNDUuMi0xMjcuM0M0MDUuMyA5MC45IDMxNC40IDAgMjAyLjcgMFMwIDkwLjkgMCAyMDIuN3M5MC45IDIwMi43IDIwMi43IDIwMi43YzQ4LjIgMCA5Mi41LTE3IDEyNy4zLTQ1LjJsMTQ4LjcgMTQ4LjdjNC4yIDQuMiAxMC45IDQuMiAxNS4xIDBsMTUuMS0xNS4xYzQuMS00LjIgNC4xLTEwLjkgMC0xNS4xem0tMzA2LjItMTE2Yy04OC4yIDAtMTYwLTcxLjgtMTYwLTE2MHM3MS44LTE2MCAxNjAtMTYwIDE2MCA3MS44IDE2MCAxNjAtNzEuOCAxNjAtMTYwIDE2MHoiIGZpbGw9IiMzNDNmNDkiLz48L3N2Zz4=)!important;
+    background-size: 15px!important;
+    background-position-x: 12px!important;
+    background-position-y: center!important;
+    background-repeat: no-repeat!important; */
+    color: inherit;
+    line-height: normal;
+    padding: 0 80px 0 10px;
+    border-radius: 8px;
+}
+  .st-search-bar.hidden-mobile svg.st-searchicon {
+    position: relative;
+    right: 0px;
+    width: 25px;
+    top: 49%;
+    transform: translateY(-50%);
+    stroke: #282828;
+}
+   span.side-btn {
+    background: #dca23f;
+    padding: 0 15px;
+    position: absolute;
+    right: 0px;
+    height: 40px;
+    top: 0px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+    .st-search-bar.hidden-desktop svg.st-searchicon path {
+    stroke-width: 2px;
+}
+  .st-search-bar.hidden-mobile {
+    display: inline-block;
+    position: absolute;
+    left: 32%;
+}
+@media only screen and (min-width: 1000px){
+  .st-search-bar.hidden-desktop input, .st-search-bar.hidden-desktop span.side-btn {
+    display: none;
+}
+}
+
+@media (min-width:835px) and (max-width:1280px) {
+    .st-search-bar {
+        max-width: 100%
+    }
+    .st-search-bar input#st-search-input-desktop{
+        min-width: 100%;
+    }
+}
+
+  @media only screen and (max-width: 1000px){
+.st-search-bar.hidden-desktop {
+    margin: 0;
+    padding: 0 24px 10px !important;
+    background: #fff;
+    position: relative;
+}
+.st-search-bar.hidden-mobile {
+    display: none;
+}
+  }
+</style>

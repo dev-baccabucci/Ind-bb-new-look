@@ -1,0 +1,346 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main-product": {
+      "type": "main-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h3",
+            "heading_tag": "h1"
+          }
+        },
+        "custom_liquid_xc6DR6": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% if product.metafields.custom.product_subheading != blank %}\n      <p class=\"cstm-sub\" style=\"margin:0px;\">{{ product.metafields.custom.product_subheading }}</p>\n      <style>\n        .product-meta__title.heading.h3 {\n          margin-bottom: 5px !important;\n        }\n      </style>\n    {% endif %}\n\n{% if product.metafields.loox.avg_rating != blank  %}\n  <a href=\"#looxReviews\"> <div class=\"loox-rating\" data-id=\"{{ product.id }}\" data-rating=\"{{ product.metafields.loox.avg_rating }}\" data-raters=\"{{ product.metafields.loox.num_reviews }}\"></div> </a> \n\n<style>\n.loox-rating .loox-icon {\n    color: #e89f2a;\n}\n</style>\n{% endif %}"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_tax_info": true
+          }
+        },
+        "custom_liquid_bBzVd9": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% if product.metafields.custom.custom_buttons.value != blank %}\n<div class=\"new-btn-section mo\">\n  <div class=\"customfield-btn\" style=\"cursor: pointer;\">\n    {% if product.metafields.custom.custom_button_title != blank %}\n      {{ product.metafields.custom.custom_button_title }}:\n    {% else %}\n       Gender:\n    {% endif %}\n   \n    {% if product.metafields.custom.custom_buttons.value %}\n      {% for button in product.metafields.custom.custom_buttons.value %}\n        <a \n          href=\"{{ button.button_url | escape }}\" \n          class=\"btn {% if forloop.first %}first-btn{% endif %}\"\n        >\n          <div class=\"button-textcst\">\n            {{ button.button_name }}\n          </div>\n        </a>\n      {% endfor %}\n    {% endif %}\n  </div>\n</div>\n{% endif %}\n<style>\n.new-btn-section.mo{\njustify-content:left;\n}\n.customfield-btn {\n   gap: 8px;\n    align-items: center;\n    color: #000;\n    margin-bottom: .7rem;\n    font-family: Roboto;\n    font-weight: 700;\n    font-size: 1.4rem;\n    line-height: 100%;\n}\n.button-textcst {\n    text-transform: uppercase;\n    color: #000;\n    font-weight: 700;\n    font-size: 1.6rem;\n    line-height: 100%;\n}\n.customfield-btn a {\n    border:1px solid rgb(var(--color-border)); /* default border color */\n    border-radius: 10px;\n    padding: 0 10px;\n    display: inline-block;\n    margin: 3px 0;\n    text-decoration: none;\n}\n.customfield-btn a.first-btn {\n    border-color: #000000; /* <<< 1st button different color */\n}\n.new-btn-section {\n    padding-top: 10px;\n}\n\n@media screen and (max-width: 569px) {\n .button-textcst {\n    font-size: 11px;\n}\n}\n</style><style>\n.new-btn-section.mo{\njustify-content:left;\n}\n.customfield-btn {\n    font-size: 14px;\n    font-weight: 600;\n    font-family: Inter;\n    color: #000;\n    margin-bottom: 4px;\ndisplay: flex;\n    gap: 8px;\n    align-items: center;\n}\n.button-textcst {\n    font-weight: 400;\n    font-size: 13px;\n    font-family: Lato;\n    text-transform: uppercase;\n}\n.customfield-btn a {\n       border: 1px solid rgb(var(--color-border));\n    border-radius: 6px;\n    padding: 5px 10px;\n    display: inline-block;\n    margin: 3px 0;\n    text-decoration: none;\n}\n.customfield-btn a.first-btn {\n    border-color: #000; /* <<< 1st button different color */\n}\n.new-btn-section {\n    padding-top: 10px;\n}\n\n@media screen and (max-width: 569px) {\n .button-textcst {\n    font-size: 1.2rem;\n}\n}\n</style>"
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_type": "variant_image",
+            "variant_image_size": "square",
+            "unavailable_options_clickable": true
+          }
+        },
+        "popup_g9XjXD": {
+          "type": "popup",
+          "settings": {
+            "label": "Size Chart",
+            "heading": "",
+            "text": "",
+            "alignment": "center",
+            "page": "size-chart-new"
+          }
+        },
+        "custom_liquid_cK9Wbw": {
+          "type": "custom_liquid",
+          "disabled": true,
+          "settings": {
+            "custom_liquid": "<div class=\"offer-img\">\n<img src=\"https://cdn.shopify.com/s/files/1/0279/5133/3450/files/ddddd.jpg?v=1763965561\" width=\"100%\" height=\"auto\" loading=\"lazy\">\n</div>"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_quantity": false,
+            "show_gift_card_recipient": true
+          }
+        },
+        "back_in_stock_restock_alert_za_zooomy_backinstock_rENDjA": {
+          "type": "shopify://apps/back-in-stock-alerts/blocks/zooomy-backinstock/a2a0a648-aa81-4132-98a8-31e62b1f3e83",
+          "settings": {}
+        },
+        "custom_liquid_kCE7Mc": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'custom-product-offer' %}\n\n<style>\nspan.payment_page_snap.cashback_text_widget {\n    display: none !important;\n}\n</style>"
+          }
+        },
+        "product_countdown_7LXhDJ": {
+          "type": "product_countdown",
+          "settings": {
+            "color_scheme": "background-1",
+            "countdown_promo_text": "",
+            "show_on_mobile": true,
+            "show_countdown": false,
+            "date_picker": "2025-12-01",
+            "time_picker": "00:10",
+            "completed_countdown": "show_text",
+            "countdown_final_text": "Text after countdown has ended",
+            "button_label": "Buy now",
+            "button_style": "primary"
+          }
+        },
+        "q_discount_free_gift_bogo_offer_689rVJ": {
+          "type": "shopify://apps/qikify-upsell/blocks/bogo_offer/2e94b962-8172-4839-8ad9-7837eb8b017a",
+          "settings": {
+            "product": "{{product}}"
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "custom_liquid_xc6DR6",
+        "price",
+        "custom_liquid_bBzVd9",
+        "variant_picker",
+        "popup_g9XjXD",
+        "custom_liquid_cK9Wbw",
+        "buy_buttons",
+        "back_in_stock_restock_alert_za_zooomy_backinstock_rENDjA",
+        "custom_liquid_kCE7Mc",
+        "product_countdown_7LXhDJ",
+        "q_discount_free_gift_bogo_offer_689rVJ"
+      ],
+      "custom_css": [
+        ".product__slider-nav.no-js-hidden.color-background-2 {background: transparent;}",
+        "svg.loox-icon {width: 1.4em; height: 1.4em; flex-shrink: 0;}",
+        "svg.loox-icon {display: flex;}",
+        "span.loox-rating-label {font-size: 14px;}",
+        ".loox-rating .loox-rating-content {align-items: flex-start;}",
+        "@media (max-width: 650px) {.section-template--20821854454006__main-product-padding {padding-top: 0; padding-bottom: 1rem; }}",
+        ".custom-liquid {margin-top: 0 !important;}",
+        ".product-countdown .product-form__submit {border-radius: 5px;}"
+      ],
+      "settings": {
+        "color_scheme": "background-1",
+        "desktop_alignment": "left",
+        "mobile_alignment": "before",
+        "aspect_ratio": "portrait",
+        "image_fit": "cover",
+        "thumbs_direction": "vertical",
+        "thumbs_aspect_ratio": "square",
+        "thumbs_image_fit": "cover",
+        "variant_media_display": "show_all",
+        "enable_video_looping": false,
+        "enable_video_autoplay": false,
+        "enable_image_zoom_mobile": true,
+        "enable_image_zoom_desktop": true,
+        "arrow_color_scheme": "",
+        "padding_bottom": "m"
+      }
+    },
+    "custom_description_qc983y": {
+      "type": "custom-description",
+      "disabled": true,
+      "settings": {}
+    },
+    "custom_tabs_QkHXQf": {
+      "type": "custom-tabs",
+      "blocks": {
+        "tab_title_RypzAc": {
+          "type": "tab_title",
+          "settings": {
+            "tab_title": "Description",
+            "tab_id": "dec"
+          }
+        },
+        "tab_content_LPLApU": {
+          "type": "tab_content",
+          "settings": {
+            "tab_id": "dec",
+            "liquid-code": "<div class=\"container\" style=\"\">{{ product.description }} </div>"
+          }
+        },
+        "tab_title_qUt9Et": {
+          "type": "tab_title",
+          "settings": {
+            "tab_title": "Reviews",
+            "tab_id": "looxReviews"
+          }
+        },
+        "tab_content_eF7MVY": {
+          "type": "tab_content",
+          "settings": {
+            "tab_id": "looxReviews",
+            "liquid-code": "<div id=\"looxReviews\" data-product-id=\"{{product.id}}\" class=\"loox-reviews-default\"></div>"
+          }
+        }
+      },
+      "block_order": [
+        "tab_title_RypzAc",
+        "tab_content_LPLApU",
+        "tab_title_qUt9Et",
+        "tab_content_eF7MVY"
+      ],
+      "custom_css": [
+        "img {width: 100%;}",
+        ".codeblk h3 {font-size: 20px;}",
+        ".loox-reviews-default {max-width: 1200px; margin: 0 auto;}",
+        ".embed-container {padding-bottom: 56.25% !important;}"
+      ],
+      "settings": {}
+    },
+    "product-content-new": {
+      "type": "product-content-new",
+      "blocks": {
+        "ce99d82d-c9c9-4963-b840-7b3d18c881a2": {
+          "type": "trust",
+          "settings": {
+            "custom_icon_1": "shopify://shop_images/return_exchange_1.gif",
+            "title_1": "Return and Exchange",
+            "content_1": "<p><strong>A 7-day, no-questions-asked return and exchange policy.</strong></p><p>Just ensure that the product is unused and all tags are intact.</p><p><strong>Please use following link to process Return & Exchange: </strong></p><p><a href=\"https://baccabucci.clickpost.ai/return-exchange\" title=\"https://baccabucci.clickpost.ai/return-exchange\">https://baccabucci.clickpost.ai/return-exchange</a></p>",
+            "custom_icon_2": "shopify://shop_images/Customer_1.gif",
+            "title_2": "Customer Service",
+            "content_2": "<p><strong>Contact Us:</strong></p><p>Bacca Bucci Fashions Pvt. Ltd.<br/>G-152, Old No 87/88, Village Gazipur, Near MCD School, Delhi-110096</p><p><a href=\"mailto:crm@baccabucci.com\">crm@baccabucci.com</a></p><p><a href=\"tel:+91 82-877-31376\">Tel. +91 82-877-31376</a></p><p>Hours: Mon to Sat from 10 AM to 6 PM</p>",
+            "custom_icon_3": "shopify://shop_images/delivery_1.gif",
+            "title_3": "Shipping and Delivery",
+            "content_3": "<p>All of our orders are delivered by our top courier partners. Most of our orders are shipped out within a day, and most deliveries happen within a couple of days. However, for J&K and the North East region, it may take 3–7 days. </p><p><strong>Please use following link to Track your order: </strong></p><p><a href=\"https://baccabucci.clickpost.ai/\" title=\"https://baccabucci.clickpost.ai/\">https://baccabucci.clickpost.ai/</a></p>",
+            "custom_icon_4": "shopify://shop_images/manufacturing_details_1.gif",
+            "title_4": "Manufacturer Details",
+            "content_4": "<p><strong>Manufactured & Marketed By:</strong></p><p>Bacca Bucci Fashions Pvt. Ltd.<br/>G-152, Old No 87/88, Village Gazipur, Near MCD School, Delhi-110096</p><p><strong>Country of Origin: </strong></p><p>India</p>",
+            "custom_icon_5": "shopify://shop_images/warranty_1.gif",
+            "title_5": "Warranty",
+            "content_5": "<p>Bacca Bucci offers a warranty on its products against manufacturing defects. The warranty period and terms may vary depending on the specific product purchased. <strong>Typically, the warranty period for Bacca Bucci shoes is one month from the date of purchase.</strong></p><p>During the warranty period, we will repair or replace the defective product at no charge, provided that the defect is not a result of normal wear and tear, misuse, or abuse of the product. The warranty does not cover accidental damage or damage caused by improper use or care of the product.</p><p>To claim warranty service, customers need to email us the order number and image of the defective product at <strong>crm@baccabucci.com</strong>. Upon receiving the package, our customer care executive will inspect the product and determine whether it is covered under warranty. If the defect is covered under warranty, we will provide a repair or replacement according to the terms of the warranty.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "ce99d82d-c9c9-4963-b840-7b3d18c881a2"
+      ],
+      "settings": {}
+    },
+    "1738567959ab3760f5": {
+      "type": "apps",
+      "blocks": {
+        "loox_reviews_loox_dynamic_section_demJPr": {
+          "type": "shopify://apps/loox-reviews/blocks/loox-dynamic-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+          "settings": {
+            "reviews_to_display": "",
+            "default_tab": "automatic",
+            "only_photos": false,
+            "aggregated": false,
+            "limit": 20,
+            "hide_thumbnails": false,
+            "maxwidth": 1080,
+            "is_sample": true
+          }
+        }
+      },
+      "block_order": [
+        "loox_reviews_loox_dynamic_section_demJPr"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "custom_css": [
+        ".product-parameters {display: none;}"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "subheading": "",
+        "heading": "Discover more items you'll love",
+        "heading_size": "h3",
+        "heading_tag": "h2",
+        "description": "",
+        "products_limit": 8,
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_desc": false,
+        "product_heading_tag": "h3",
+        "mobile_slider_layout_type": "visible_overflow",
+        "button_show": false,
+        "button_label": "Button label",
+        "button_style": "primary",
+        "button_link": "",
+        "button_arrow": true,
+        "padding_top": "s",
+        "padding_bottom": "xs"
+      }
+    },
+    "recently_viewed_xJ8BY4": {
+      "type": "recently-viewed",
+      "custom_css": [
+        ".product-parameters {display: none;}"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "animate_on_scroll": true,
+        "products_limit": 8,
+        "subheading": "",
+        "heading": "Recently viewed",
+        "heading_size": "h3",
+        "heading_tag": "h2",
+        "description": "",
+        "cards_layout": "bar",
+        "mobile_cards_layout": "slider",
+        "mobile_slider_layout_type": "visible_overflow",
+        "products_to_show": 4,
+        "column_gap": "1.6",
+        "row_gap": "4",
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_desc": false,
+        "product_heading_tag": "h3",
+        "button_show": false,
+        "button_label": "View all",
+        "button_style": "primary",
+        "button_link": "",
+        "button_arrow": true,
+        "padding_top": "no-indent",
+        "padding_bottom": "xs",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "17582694878b9f5b57": {
+      "type": "apps",
+      "blocks": {
+        "customerlabs_1pd_capi_tracking_app_block_3ifjjp": {
+          "type": "shopify://apps/customerlabs-1pd-capi-tracking/blocks/app-block/e7b7e586-f2a0-478c-a96a-edb8673644b2",
+          "settings": {
+            "discount_message": ""
+          }
+        }
+      },
+      "block_order": [
+        "customerlabs_1pd_capi_tracking_app_block_3ifjjp"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    }
+  },
+  "order": [
+    "main-product",
+    "custom_description_qc983y",
+    "custom_tabs_QkHXQf",
+    "product-content-new",
+    "1738567959ab3760f5",
+    "product-recommendations",
+    "recently_viewed_xJ8BY4",
+    "17582694878b9f5b57"
+  ]
+}

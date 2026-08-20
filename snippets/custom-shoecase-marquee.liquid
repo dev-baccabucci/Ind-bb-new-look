@@ -1,0 +1,46 @@
+<div class="marquee">
+  <div class="marquee-track">
+    <div class="marquee-content">&nbsp; Add Any Product to SHOECASE & get It for Just ₹999 , Discount Auto-Applied in checkout | Add Any Product to SHOECASE & get It for Just ₹999 , Discount Auto-Applied in checkout 
+        | Add Any Product to SHOECASE & get It for Just ₹999 , Discount Auto-Applied in checkout | Add Any Product to SHOECASE & get It for Just ₹999 , Discount Auto-Applied in checkout
+        | Add Any Product to SHOECASE & get It for Just ₹999 , Discount Auto-Applied in checkout | Add Any Product to SHOECASE & get It for Just ₹999 , Discount Auto-Applied in checkout 
+        | Add Any Product to SHOECASE & get It for Just ₹999 , Discount Auto-Applied in checkout | Add Any Product to SHOECASE & get It for Just ₹999 , Discount Auto-Applied in checkout |
+    </div>
+  </div>
+</div>
+<style>
+.marquee {
+  position: relative;
+  width: 100vw;
+  max-width: 100%;
+  height: 30px;
+  overflow-x: hidden;
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  opacity: 0.8;
+  {% comment %} color: #e0a435; {% endcomment %}
+   color:black !important;
+  display: flex;
+  align-items: center;
+  background:antiquewhite;
+}
+.marquee-track {
+  position: absolute;
+  display: inline-block;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee 30s linear infinite;
+}
+@media (max-width: 768px) {
+.marquee {
+  font-size: 18px;
+    height: 30px;
+}
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+</style>

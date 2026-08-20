@@ -1,0 +1,109 @@
+<div class="header__left">
+  {% render 'header-drawer', section: section %}
+
+  {% render 'header-desktop-burger', section: section %}
+  <div class="bb-menu-trigger desktop-hemburger-menu" onclick="toggleBBDrawer()">
+      <span></span><span></span><span></span>
+  </div>
+
+  <style>
+      .bb-menu-trigger {
+          cursor: pointer; width: 24px; height: 16px; 
+          display: inline-flex; flex-direction: column; justify-content: space-between;
+          z-index: 99999; position: relative; margin-right: 20px;
+      }
+      .bb-menu-trigger span { width: 100%; height: 1.5px; background: #000; transition: 0.3s; }
+      /* Transformation to X */
+      .bb-menu-trigger.active-trigger span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: #fff; }
+      .bb-menu-trigger.active-trigger span:nth-child(2) { opacity: 0; }
+      .bb-menu-trigger.active-trigger span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); background: #fff; }
+      
+      /* Make it black on scroll or if your header is white */
+      .shopify-section-header-sticky .bb-menu-trigger span { background: #FFF; }
+  </style>
+
+  {% render 'secondary-logo' %}
+
+  {% if section.settings.logo_position == 'left-logo' %}
+    {% render 'header-logo', tag: 'h1' %}
+  {% endif %}
+  {% render 'header-inline-menu', section: section %}
+
+{% comment %} {% render 'st-desktop-searchbar' %} {% endcomment %}
+
+{% if section.settings.logo_position == 'center-logo' %}
+  {% render 'header-logo', tag: 'h1', position: 'center' %}
+{% endif %}
+
+<div class="header__column">
+  <div class="header__icons">
+    {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
+      {% render 'header-localization' %}
+    {%- endif -%}
+
+    {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
+      {% render 'header-language' %}
+    {%- endif -%}
+
+    {% comment %} {% if template.name != 'index'%} {% endcomment %}
+      {% render 'st-searchicon-mobile' %}
+    {% comment %} {%- endif -%} {% endcomment %}
+
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'follow' %}
+          {% render 'follow-button', block: block %}
+      {% endcase %}
+    {% endfor %}
+
+    {% render 'header-color-scheme' %}
+     <a href="https://baccabucci.com/pages/wishlist" class="header__icon-wrapper tap-area whatsapp_icon">
+  <img src="https://cdn.shopify.com/s/files/1/0279/5133/3450/files/favorite.png?v=1779281293" width="100%" height="100%">
+  <span id="wishlist-count" class="wishlist-count">0</span>
+</a>
+<style>
+ .wishlist-count {
+    background-color: black;
+    color: #ffffff;
+    border-radius: 50%;
+    font-size: 9px;
+    padding: 1px 6px;
+    position: absolute;
+    /* top: 10px;
+    right: 185px; */
+    transform: translate(50%, -50%);
+}
+</style>
+
+
+    {% comment %} {%- if section.settings.enable_search -%}
+      {% render 'header-search', section: section %}
+    {%- endif -%} {% endcomment %}
+{% if template == 'index' %}
+    {%- if shop.customer_accounts_enabled -%}
+      {% render 'header-account' %}
+    {%- endif -%}
+    {% endif %}
+
+    {% render 'header-cart' %}
+
+    {% render 'secondary-logo' %}
+
+      <div class="bb-menu-trigger mobile-hemburger-menu" onclick="toggleBBDrawer()">
+      <span></span><span></span><span></span>
+  </div>
+  </div>
+</div>
+</div>
+
+{% comment %} {% if template.name == 'index'%}
+ {% render 'st-mobile-searchbar' %}
+ {% endif %} {% endcomment %}
+  {% comment %} {% if section.settings.menu != blank %}
+    {% render 'header-inline-menu', section: section %}
+  {% endif %} {% endcomment %}
+
+{% if section.settings.logo_position == 'center-logo' %}
+  {% render 'header-logo', tag: 'h1', position: 'center' %}
+{% endif %}
+

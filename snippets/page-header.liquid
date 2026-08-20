@@ -1,0 +1,33 @@
+{% comment %}
+  Renders a page header.
+
+  Accepts:
+  - title: {String} Page title.
+  - description: {String} Page description.
+  - class: {String} Class name(s).
+
+  Usage:
+  {% render 'page-header', title: {{ 'page.title' | t }}, description: {{ 'page.description' | t }}, class: 'some-class some-other-class' %}
+  {% render 'page-header', title: {{ blog.title | escape }}, class: 'some-class' %}
+{% endcomment %}
+
+{% if title or description %}
+  <div class="page-header{% if class %} {{ class }}{% endif %}">
+    {% if title %}
+      {% if heading_tag %}
+        <{{ heading_tag }} class="page-header__title h2">
+          {{ title | escape }}
+        </{{ heading_tag }}>
+      {% else %}
+        <h1 class="page-header__title h2">
+          {{ title | escape }}
+        </h1>
+      {% endif %}
+    {% endif %}
+    {% if description %}
+      <p class="page-header__description body-normal">
+        {{ description | escape }}
+      </p>
+    {% endif %}
+  </div>
+{% endif %}

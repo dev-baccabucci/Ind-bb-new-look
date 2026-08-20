@@ -1,0 +1,24 @@
+{
+  "sections": {
+    "main-article": {
+      "type": "main-article",
+      "blocks": {
+        "title": {
+          "type": "article-header",
+          "settings": {}
+        },
+        "content": {
+          "type": "content",
+          "settings": {}
+        },
+        "article_footer": {
+          "type": "article-footer",
+          "settings": {}
+        }
+      },
+      "block_order": ["title", "content", "article_footer"],
+      "settings": {}
+    }
+  },
+  "order": ["main-article"]
+}
