@@ -22,6 +22,13 @@
   # theme-check-enable VariableName
 
   assign product_form_id = 'product-form-' | append: section.id
+
+  # don't preselect a value for the "Size" option - the customer must pick one explicitly
+  assign skip_preselect = false
+  assign option_name_downcase = option.name | downcase
+  if option_name_downcase contains 'size'
+    assign skip_preselect = true
+  endif
 -%}
 
 {%- for value in option.values -%}
@@ -140,7 +147,7 @@
         {% if is_product_card != true %}
           form="{{ product_form_id }}"
         {% endif %}
-        {% if option.selected_value == value %}
+        {% if option.selected_value == value and skip_preselect != true %}
           checked
         {% endif %}
         class="{% if option_disabled and is_product_card != true %}disabled{% if unavailable_options_clickable == true %} always-clickable{% endif %}{% endif %}"
@@ -220,7 +227,7 @@
           {% if is_product_card != true %}
             form="{{ product_form_id }}"
           {% endif %}
-          {% if option.selected_value == value %}
+          {% if option.selected_value == value and skip_preselect != true %}
             checked
           {% endif %}
           class="{% if option_disabled and is_product_card != true %}disabled{% if unavailable_options_clickable == true %} always-clickable{% endif %}{% endif %}"
@@ -236,7 +243,7 @@
         {% comment %}
            <option
             value="{{ value | escape }}"
-            {% if option.selected_value == value %}
+            {% if option.selected_value == value and skip_preselect != true %}
               selected="selected"
             {% endif %}
           >
@@ -262,7 +269,7 @@
             {% if no_form_id != true %}
               form="{{ product_form_id }}"
             {% endif %}
-            {% if option.selected_value == value %}
+            {% if option.selected_value == value and skip_preselect != true %}
               checked
             {% endif %}
             class="{% if option_disabled and is_product_card != true %}disabled{% if unavailable_options_clickable == true %} always-clickable{% endif %}{% endif %}"

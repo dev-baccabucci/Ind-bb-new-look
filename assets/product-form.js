@@ -33,9 +33,54 @@ if (!customElements.get("product-form")) {
         );
       }
 
+      // Finds the variant picker (variant-radios / variant-selects) that
+      // belongs to this product form, even though it lives outside of it.
+      getVariantContainer() {
+        let node = this.parentElement;
+        while (node && node !== document.body) {
+          const variantEl = node.querySelector("variant-radios, variant-selects");
+          if (variantEl) return variantEl;
+          node = node.parentElement;
+        }
+        return null;
+      }
+
+      // The "Size" option is intentionally left unselected on page load, so
+      // we need to confirm the customer actually picked one before allowing
+      // the item to be added to the cart.
+      isSizeSelected() {
+        const variantContainer = this.getVariantContainer();
+        if (!variantContainer) return true;
+
+        const sizeGroup = Array.from(
+          variantContainer.querySelectorAll(".product-form__controls")
+        ).find((group) => {
+          const label = group.querySelector(
+            ".product-form__group-name, .select-label > div"
+          );
+          return label && /size/i.test(label.textContent);
+        });
+        if (!sizeGroup) return true;
+
+        if (sizeGroup.querySelector('input[type="radio"]:checked')) return true;
+
+        const select = sizeGroup.querySelector("select");
+        if (select) return select.value !== "";
+
+        return false;
+      }
+
       onSubmitHandler(evt) {
         evt.preventDefault();
         if (this.submitButton.getAttribute("aria-disabled") === "true") return;
+
+        if (!this.isSizeSelected()) {
+          this.handleErrorMessage(
+            (window.variantStrings && window.variantStrings.selectSize) ||
+              "Please select a size"
+          );
+          return;
+        }
 
         this.handleErrorMessage();
 

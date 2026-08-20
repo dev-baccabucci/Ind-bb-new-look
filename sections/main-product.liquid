@@ -1046,7 +1046,7 @@
                           {% comment %} {{ form | payment_button }} {% endcomment %}
                             <!-- {% render 'gokwik-buy-now' %} -->
 
-                           <button type="button" onclick="onBuyNowClick(this,'#{{ product_form_id }}')" id="gokwik-buy-now"{% if settings.hideFlow %} style="display:none !important;" {% endif %}>
+                           <button type="button" onclick="handleBuyNowClick(this,'#{{ product_form_id }}')" id="gokwik-buy-now"{% if settings.hideFlow %} style="display:none !important;" {% endif %}>
                             {{ settings.buynow-titile }}
                                 <span class="pay-opt-icon">
                                 <img src="https://cdn.gokwik.co/v4/images/upi-icons.svg">
