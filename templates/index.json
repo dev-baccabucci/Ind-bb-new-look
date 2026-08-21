@@ -147,7 +147,7 @@
             "image": "shopify://shop_images/Explore_sports2_result.webp",
             "mobile_image": "shopify://shop_images/Explore_sports1__result.webp",
             "link": "",
-            "button_lable": "View all Sports",
+            "button_lable": "View more",
             "hide_on_mobile": false,
             "hide_on_desktop": false
           }
