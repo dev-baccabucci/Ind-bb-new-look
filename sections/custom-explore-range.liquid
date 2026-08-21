@@ -15,14 +15,8 @@
     font-weight:600;
     letter-spacing: -0.03em;
   }
-  .explore-range-section #mobileHeading {
+  .explore-range-section .card-heading {
     display: none;
-    font-size: 1.6rem;
-    font-weight: 600;
-    margin-bottom: 15px;
-    transition: opacity 0.3s ease;
-    letter-spacing: -0.03em;
-    font-family:'Inter';
   }
   /* DESKTOP TABS */
   .explore-range-section .tab-wrapper {
@@ -55,6 +49,9 @@
   }
   .explore-range-section .tab-btn.active {
     color: var(--accent-color);
+  }
+  .explore-range-section .tab-btn.hide-on-desktop {
+    display: none;
   }
   .explore-range-section .tab-btn span {
     position: relative;
@@ -100,6 +97,11 @@
   .explore-range-section .explore-card.is-visible:not(.is-active) {
     flex: 0 0 25%;
   }
+  @media (min-width: 769px) {
+    .explore-range-section .explore-card.hide-on-desktop {
+      display: none !important;
+    }
+  }
   .explore-range-section .image-box {
     width: 100%;
     height: 100%;
@@ -136,19 +138,6 @@
     width: 20px;
     height: 20px;
   }
-  /* SWIPER NAVIGATION (mobile only) */
-  .explore-range-section .swiper-button-next,
-  .explore-range-section .swiper-button-prev {
-    width: 30px !important;
-    height: 30px !important;
-    border-radius: 50%;
-    display: none;
-  }
-  .explore-range-section .swiper-button-next::after,
-  .explore-range-section .swiper-button-prev::after {
-    font-size: 18px !important;
-  }
-
   span.button_label_more {
     position: relative;
     display: inline-block;
@@ -170,30 +159,86 @@
     transform-origin: bottom left;
   }
 
-  /* MOBILE OPTIMIZATION */
+  /* MOBILE OPTIMIZATION — static 2x2 grid */
   @media (max-width: 768px) {
     .explore-range-section .tab-wrapper {
       display: none;
     }
-    .explore-range-section #mobileHeading {
-      display: block;
-    }
-    .explore-range-section .swiper-button-next,
-    .explore-range-section .swiper-button-prev {
-      display: flex;
-    }
     .explore-range-section .explore-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
       height: auto;
-      gap: 0;
+      align-items: stretch;
     }
     .explore-range-section .explore-card {
-      display: block !important;
+      display: flex !important;
       width: 100% !important;
-      flex: 0 0 100% !important;
+      flex: none !important;
+      order: 0 !important;
       height: auto !important;
     }
+    .explore-range-section .explore-card.hide-on-mobile {
+      display: none !important;
+    }
     .explore-range-section .image-box {
-      aspect-ratio: 4/5;
+      aspect-ratio: 1/1;
+    }
+    /* Scrim so the heading/button stay readable over any image */
+    .explore-range-section .image-box::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.35) 0%,
+        rgba(0, 0, 0, 0) 30%,
+        rgba(0, 0, 0, 0) 65%,
+        rgba(0, 0, 0, 0.5) 100%
+      );
+    }
+    /* Heading overlaid on top of the card image */
+    .explore-range-section .card-heading {
+      display: block;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      z-index: 2;
+      font-family: 'Inter';
+      font-style: italic;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      color: #fff;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.55);
+    }
+    /* View more button overlaid at the bottom of the card image */
+    .explore-range-section .card-content {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 10px;
+      z-index: 2;
+      margin-top: 0;
+      display: flex;
+      justify-content: center;
+    }
+    .explore-range-section .view-more {
+      color: #fff;
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 30px;
+      padding: 7px 14px;
+      gap: 8px;
+      font-size: 0.75rem;
+    }
+    .explore-range-section .circle-arrow {
+      width: 16px;
+      height: 16px;
+      filter: invert(1) brightness(2);
     }
     .explore-range-section .section-title {
       font-size: 2.8rem;
@@ -207,18 +252,17 @@
     {% if section.settings.heading != blank %}
       <h2 class="section-title">{{ section.settings.heading | escape }}</h2>
     {% endif %}
-    <div id="mobileHeading" class="mobile-heading-text">{{ section.blocks[0].settings.title | default: 'Explore' }}</div>
 
     <nav class="tab-wrapper">
       {% for block in section.blocks %}
-        <button class="tab-btn {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}" data-block-id="{{ block.id }}">
+        <button class="tab-btn {% if forloop.first %}active{% endif %}{% if block.settings.hide_on_desktop %} hide-on-desktop{% endif %}" data-index="{{ forloop.index0 }}" data-block-id="{{ block.id }}">
           <span>{{ block.settings.title | escape }}</span>
         </button>
       {% endfor %}
     </nav>
 
-    <div class="swiper explore-swiper-{{ section.id }}">
-      <div class="swiper-wrapper explore-grid">
+    <div class="explore-range-wrapper-{{ section.id }}">
+      <div class="explore-grid">
         {% for block in section.blocks %}
           {% assign img_url = block.settings.image | img_url: '800x' %}
           {% assign link_url = block.settings.link | default: '#' %}
@@ -235,7 +279,12 @@
             {% assign mobile_img_url = img_url %}
           {% endif %}
 
-          <div class="swiper-slide explore-card" data-index="{{ forloop.index0 }}" data-title="{{ block.settings.title | escape }}">
+          {% assign card_classes = 'explore-card' %}
+          {% if block.settings.hide_on_mobile %}{% assign card_classes = card_classes | append: ' hide-on-mobile' %}{% endif %}
+          {% if block.settings.hide_on_desktop %}{% assign card_classes = card_classes | append: ' hide-on-desktop' %}{% endif %}
+
+          <div class="{{ card_classes }}" data-index="{{ forloop.index0 }}" data-title="{{ block.settings.title | escape }}">
+            <div class="card-heading">{{ block.settings.title | escape }}</div>
             <div class="image-box">
               {% if block.settings.image != blank or block.settings.mobile_image != blank %}
                 <picture>
@@ -263,48 +312,38 @@
           </div>
         {% endfor %}
       </div>
-      <div class="swiper-button-next"><img src="https://cdn.shopify.com/s/files/1/0279/5133/3450/files/Right_icon_16e729b1-5cba-43f2-b059-82c2db22ab28.png?v=1776338595" height="100%" width="100%"></div>
-      <div class="swiper-button-prev"><img src="https://cdn.shopify.com/s/files/1/0279/5133/3450/files/Left_icon_22f8d533-a35e-4e99-9f40-e04501b884cc.png?v=1776338596" height="100%" width="100%"></div>
     </div>
   </div>
 </div>
 
 <script>
   (function() {
-    function loadSwiper(callback) {
-      if (typeof Swiper !== 'undefined') { callback(); return; }
-      if (!document.querySelector('#swiper-css')) {
-        var link = document.createElement('link');
-        link.id = 'swiper-css';
-        link.rel = 'stylesheet';
-        link.href = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css';
-        document.head.appendChild(link);
-      }
-      var script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
-      script.onload = callback;
-      document.head.appendChild(script);
-    }
-
+    {%- comment -%}
+      Mobile now renders as a static CSS grid (2x2) showing every card that
+      isn't flagged "Hide on mobile" — no carousel/JS involved there.
+      This script only drives the desktop tab-rotation behaviour, and skips
+      any card/tab flagged "Hide on desktop" when rotating.
+    {%- endcomment -%}
     function initExploreRangeSection(sectionEl) {
       if (sectionEl.dataset.exploreInitialized === 'true') return;
       sectionEl.dataset.exploreInitialized = 'true';
 
-      const sectionId = sectionEl.dataset.sectionId;
       const tabs = Array.from(sectionEl.querySelectorAll('.tab-btn'));
       const cards = Array.from(sectionEl.querySelectorAll('.explore-card'));
-      const mobileHeading = sectionEl.querySelector('#mobileHeading');
-      const swiperContainer = sectionEl.querySelector('.explore-swiper-' + sectionId);
-      let swiperInstance = null;
-      let currentActiveIndex = 0;
-      let isMobileLayout = window.innerWidth <= 768;
+      const desktopIndices = cards.reduce((acc, card, idx) => {
+        if (!card.classList.contains('hide-on-desktop')) acc.push(idx);
+        return acc;
+      }, []);
+      let currentActiveIndex = desktopIndices[0] || 0;
 
       function applyDesktopLayout(activeIndex) {
-        const total = cards.length;
+        const total = desktopIndices.length;
         if (total === 0) return;
-        let visibleIndices = [activeIndex];
-        if (total > 1) visibleIndices.push((activeIndex + 1) % total);
-        if (total > 2) visibleIndices.push((activeIndex + 2) % total);
+        const pos = desktopIndices.indexOf(activeIndex);
+        const startPos = pos === -1 ? 0 : pos;
+        let visibleIndices = [desktopIndices[startPos]];
+        if (total > 1) visibleIndices.push(desktopIndices[(startPos + 1) % total]);
+        if (total > 2) visibleIndices.push(desktopIndices[(startPos + 2) % total]);
         visibleIndices = [...new Set(visibleIndices)];
         cards.forEach((card, idx) => {
           card.classList.remove('is-visible', 'is-active');
@@ -345,11 +384,11 @@
 
       function bindTabEvents() {
         tabs.forEach((tab, idx) => {
+          if (tab.classList.contains('hide-on-desktop')) return;
           tab.removeEventListener('click', tab._clickHandler);
           tab._clickHandler = () => {
-            if (isMobileLayout) return;
             const newIndex = parseInt(tab.dataset.index, 10);
-            if (isNaN(newIndex)) return;
+            if (isNaN(newIndex) || !desktopIndices.includes(newIndex)) return;
             currentActiveIndex = newIndex;
             setActiveTabUI(currentActiveIndex);
             applyDesktopLayout(currentActiveIndex);
@@ -358,73 +397,9 @@
         });
       }
 
-      function initMobileSwiper() {
-        if (swiperInstance) swiperInstance.destroy(true, true);
-        swiperInstance = new Swiper(swiperContainer, {
-          slidesPerView: 1,
-          spaceBetween: 20,
-          navigation: {
-            nextEl: swiperContainer.querySelector('.swiper-button-next'),
-            prevEl: swiperContainer.querySelector('.swiper-button-prev'),
-          },
-          on: {
-            slideChange: function () {
-              const activeSlide = this.slides[this.activeIndex];
-              if (activeSlide && mobileHeading) {
-                const title = activeSlide.getAttribute('data-title') || '';
-                mobileHeading.style.opacity = '0';
-                setTimeout(() => {
-                  mobileHeading.innerText = title;
-                  mobileHeading.style.opacity = '1';
-                }, 200);
-              }
-            },
-          },
-        });
-        if (mobileHeading && swiperInstance.slides.length) {
-          mobileHeading.innerText = swiperInstance.slides[0].getAttribute('data-title') || '';
-        }
-      }
-
-      function destroyMobileSwiper() {
-        if (swiperInstance) { swiperInstance.destroy(true, true); swiperInstance = null; }
-        const gridWrapper = sectionEl.querySelector('.explore-grid');
-        if (gridWrapper) gridWrapper.style.display = 'flex';
-        applyDesktopLayout(currentActiveIndex);
-      }
-
-      function handleResize() {
-        const nowMobile = window.innerWidth <= 768;
-        if (nowMobile === isMobileLayout) return;
-        isMobileLayout = nowMobile;
-        if (isMobileLayout) {
-          destroyMobileSwiper();
-          initMobileSwiper();
-        } else {
-          if (swiperInstance) { swiperInstance.destroy(true, true); swiperInstance = null; }
-          const gridWrapper = sectionEl.querySelector('.explore-grid');
-          if (gridWrapper) gridWrapper.style.display = 'flex';
-          applyDesktopLayout(currentActiveIndex);
-          bindTabEvents();
-        }
-      }
-
-      function initialSetup() {
-        currentActiveIndex = 0;
-        setActiveTabUI(0);
-        if (window.innerWidth <= 768) {
-          isMobileLayout = true;
-          initMobileSwiper();
-        } else {
-          isMobileLayout = false;
-          applyDesktopLayout(0);
-          bindTabEvents();
-        }
-        window.addEventListener('resize', () => {
-          clearTimeout(window._resizeTimer);
-          window._resizeTimer = setTimeout(handleResize, 150);
-        });
-      }
+      setActiveTabUI(currentActiveIndex);
+      applyDesktopLayout(currentActiveIndex);
+      bindTabEvents();
 
       if (window.Shopify && window.Shopify.designMode) {
         const observer = new MutationObserver(() => {
@@ -434,8 +409,6 @@
         });
         observer.observe(sectionEl, { childList: true, subtree: true });
       }
-
-      initialSetup();
     }
 
     function initAllSections() {
@@ -444,17 +417,15 @@
       });
     }
 
-    loadSwiper(function() {
-      initAllSections();
-      if (window.Shopify && window.Shopify.section) {
-        document.addEventListener('shopify:section:load', function(event) {
-          const section = event.target;
-          if (section.classList && section.classList.contains('explore-range-section')) {
-            initExploreRangeSection(section);
-          }
-        });
-      }
-    });
+    initAllSections();
+    if (window.Shopify && window.Shopify.section) {
+      document.addEventListener('shopify:section:load', function(event) {
+        const section = event.target;
+        if (section.classList && section.classList.contains('explore-range-section')) {
+          initExploreRangeSection(section);
+        }
+      });
+    }
   })();
 </script>
 
@@ -504,6 +475,18 @@
           "id": "button_lable",
           "label": "Button Lable",
           "default": "Category"
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_on_mobile",
+          "label": "Hide on mobile",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_on_desktop",
+          "label": "Hide on desktop",
+          "default": false
         }
       ]
     }
