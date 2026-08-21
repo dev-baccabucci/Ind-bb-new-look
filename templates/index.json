@@ -1,1 +1,1656 @@
-{"sections":{"hero":{"type":"hero","disabled":true,"settings":{"header_overlay":true,"color_scheme":"","aspect_ratio":"16\/9","aspect_ratio_mobile":"3\/4","animate":true,"show_background_media":true,"overlay_opacity":40,"overlay_as_gradient":false,"show_secondary_media":true,"secondary_image_border_radius":16,"secondary_image_overlay_opacity":20,"section_heading":"Some heading","section_heading_size":"h0","featured_heading_tag":"h2","section_heading_2":"Some secondary heading","section_heading_size_2":"h3","secondary_heading_tag":"p","show_button":true,"button_label":"Shop now","button_style":"primary","button_link":"","button_arrow":true,"margin_top":"no-indent","margin_bottom":"no-indent"}},"custom_buttons_AtU4Gp":{"type":"custom-buttons","blocks":{"button_iEwQjm":{"type":"button","settings":{"button_text":"Men","button_link":"shopify:\/\/collections\/men"}},"button_BqTUQE":{"type":"button","settings":{"button_text":"Women","button_link":"https:\/\/baccabucci.com\/collections\/bacca-bucci-women-sports-and-sneakers"}},"button_C7Rmig":{"type":"button","settings":{"button_text":"New Arrivals","button_link":"https:\/\/baccabucci.com\/collections\/shoes-for-men-bacca-bucci-trendy-footwear-accessories"}},"button_aJzHUj":{"type":"button","settings":{"button_text":"Character Drop","button_link":"shopify:\/\/collections\/character-drop"}}},"block_order":["button_iEwQjm","button_BqTUQE","button_C7Rmig","button_aJzHUj"],"disabled":true,"settings":{}},"custom_slideshow_j4Pyyz":{"type":"custom-slideshow","blocks":{"slide_LUGHGC":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/Desktop_Banner-1_result.webp","image1":"shopify:\/\/shop_images\/Mobile_banners_result.webp","button_link":"shopify:\/\/products\/founder-edition-low-top-lifestyle-sneakers-2"}},"slide_AGKD9n":{"type":"slide","disabled":true,"settings":{"image":"shopify:\/\/shop_images\/Founders-Edition-web-2_jpg.jpg","image1":"shopify:\/\/shop_images\/founders-edition-mob-final_jpg.jpg","button_link":"shopify:\/\/products\/founder-edition-low-top-lifestyle-sneakers-2"}},"slide_9pd9UP":{"type":"slide","disabled":true,"settings":{"image":"shopify:\/\/shop_images\/BB-on-the-go-web_jpg.jpg","image1":"shopify:\/\/shop_images\/bb-on-the-go-mob_jpg.jpg","button_link":"shopify:\/\/products\/bb-on-the-go-slip-on-2"}},"slide_ExWiWd":{"type":"slide","disabled":true,"settings":{"image":"shopify:\/\/shop_images\/HC2w_jpg.jpg","image1":"shopify:\/\/shop_images\/hc-mobile_jpg.jpg","button_link":"shopify:\/\/products\/hypercore"}},"slide_DNJKJW":{"type":"slide","disabled":true,"settings":{"image":"shopify:\/\/shop_images\/web_banner_rick_and_morty.jpg","image1":"shopify:\/\/shop_images\/02_Rick_Morty_mobile_banner.jpg","button_link":"shopify:\/\/products\/bacca-bucci-x-rick-morty-fear-hole-sneakers-official-licensed-collab"}}},"block_order":["slide_LUGHGC","slide_AGKD9n","slide_9pd9UP","slide_ExWiWd","slide_DNJKJW"],"settings":{}},"custom_explore_range_CiznPU":{"type":"custom-explore-range","blocks":{"tab_KiNaiy":{"type":"tab","settings":{"title":"Sports","image":"shopify:\/\/shop_images\/Explore_sports2_result.webp","mobile_image":"shopify:\/\/shop_images\/Explore_sports1__result.webp","link":"","button_lable":"View all Sports"}},"tab_YgCY7h":{"type":"tab","settings":{"title":"Sneaker","image":"shopify:\/\/shop_images\/Explore_sneaker2_result.webp","mobile_image":"shopify:\/\/shop_images\/Explore_sneaker1_result.webp","link":"","button_lable":"View all Sneakers"}},"tab_bbQB89":{"type":"tab","settings":{"title":"Boots","image":"shopify:\/\/shop_images\/Explore_boots2_result.webp","mobile_image":"shopify:\/\/shop_images\/Explore_boots1_result.webp","link":"","button_lable":"View all Boots"}},"tab_jT9MHT":{"type":"tab","settings":{"title":"Slides","image":"shopify:\/\/shop_images\/Explore_sliders2_result.webp","mobile_image":"shopify:\/\/shop_images\/Explore_sliders1_result.webp","link":"","button_lable":"View all Slides"}},"tab_MNCQwb":{"type":"tab","settings":{"title":"Belts & Wallets","image":"shopify:\/\/shop_images\/Explore_belt_wallet2_result.webp","mobile_image":"shopify:\/\/shop_images\/Explore_belt_wallet1_result.webp","link":"","button_lable":"View all Belts & Wallets"}}},"block_order":["tab_KiNaiy","tab_YgCY7h","tab_bbQB89","tab_jT9MHT","tab_MNCQwb"],"name":"Explore Range","settings":{"heading":"Explore Range"}},"feature_collection_new_qqFzdk":{"type":"feature-collection-new","blocks":{"tab_fGDaF9":{"type":"tab","settings":{"tab_label":"New In","collection":"shoes-for-men-bacca-bucci-trendy-footwear-accessories","sort_by":"","product_list":[]}}},"block_order":["tab_fGDaF9"],"custom_css":[".products-tabs__tabs {display: none;}",".products-tabs__title {font-size: 5.5rem; font-style: italic; margin-bottom: 10px; text-transform: capitalize; font-weight: 600; letter-spacing: -0.03em;}",".products-tabs--visible-overflow {padding-bottom: 3rem;}","@media (max-width: 768px) {h2.products-tabs__title {font-size: 2.8rem !important; margin-bottom: 0px !important; } .products-tabs__top {padding-bottom: 15px; }}"],"settings":{"color_scheme":"scheme-393a694c-6fa7-486e-9d94-e0473e1bf8de","products_count":8,"animate_on_scroll":true,"heading":"New Launch","heading_size":"h2","cards_layout":"bar","mobile_cards_layout":"slider","mobile_slider_layout_type":"visible_overflow","products_to_show":4,"gap":"small","image_ratio":"portrait","image_fit":"cover","show_secondary_image":true,"show_vendor":false,"show_desc":false,"product_heading_tag":"h3","button_show":false,"button_label":"Shop now","button_style":"primary","button_link":"","button_arrow":true,"padding_top":"no-indent","padding_bottom":"no-indent","margin_top":"no-indent","margin_bottom":"no-indent"}},"custom_slideshow_KthDzd":{"type":"custom-slideshow","blocks":{"slide_W6UNfn":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/WhatsApp_Image_2026-03-09_at_14.51.04_1.jpg","image1":"shopify:\/\/shop_images\/9dffd9bc-bcdd-48ff-98d7-bb43fae8dba8_1.jpg","button_link":"shopify:\/\/products\/founder-edition-low-top-lifestyle-sneakers-2"}},"slide_AUT3RD":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/WhatsApp_Image_2026-03-09_at_14.51.04_1.jpg","image1":"shopify:\/\/shop_images\/9dffd9bc-bcdd-48ff-98d7-bb43fae8dba8_1.jpg","button_link":"shopify:\/\/products\/founder-edition-low-top-lifestyle-sneakers-2"}},"slide_kpkEFf":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/WhatsApp_Image_2026-03-09_at_14.51.04_1.jpg","image1":"shopify:\/\/shop_images\/9dffd9bc-bcdd-48ff-98d7-bb43fae8dba8_1.jpg","button_link":"shopify:\/\/products\/founder-edition-low-top-lifestyle-sneakers-2"}}},"block_order":["slide_W6UNfn","slide_AUT3RD","slide_kpkEFf"],"disabled":true,"settings":{}},"custom_swiper_slider_PVUtqa":{"type":"custom-swiper-slider","blocks":{"slide_dhfLA3":{"type":"slide","settings":{"image_desktop":"shopify:\/\/shop_images\/batman_banner_desktop_1__result.webp","image_mobile":"shopify:\/\/shop_images\/Batman_banner_mob_result.webp","link":""}},"slide_JFNzYb":{"type":"slide","disabled":true,"settings":{"image_desktop":"shopify:\/\/shop_images\/WhatsApp_Image_2026-03-09_at_14.51.04_1.jpg","image_mobile":"shopify:\/\/shop_images\/9dffd9bc-bcdd-48ff-98d7-bb43fae8dba8_1.jpg","link":""}}},"block_order":["slide_dhfLA3","slide_JFNzYb"],"custom_css":["@media (max-width: 768px) {.section-title-wraper.container {padding-left: 0; padding-bottom: 15px; }}"],"name":"Custom Swiper Slider","settings":{"title_section":"Character Drop","padding_top":0,"padding_bottom":0,"padding_left":0,"padding_right":0,"padding_top_mobile":0,"padding_bottom_mobile":0,"padding_left_mobile":20,"padding_right_mobile":20,"border_radius":0,"height_mode":"adapt","custom_height_desktop":600,"custom_height_mobile":400,"image_fit":"cover","show_nav":true,"show_dots":false,"autoplay_speed":5,"background":"radial-gradient(rgba(219, 219, 219, 1), rgba(219, 219, 219, 1) 100%)"}},"layered_slider_CVLEzb":{"type":"layered-slider","blocks":{"product_ebB6fa":{"type":"product","settings":{"product_handle":"hypercore-1","image":"shopify:\/\/shop_images\/HYPERCORE_1__result.webp"}},"product_wkLbpQ":{"type":"product","settings":{"product_handle":"founder-edition-low-top-lifestyle-sneakers-3","image":"shopify:\/\/shop_images\/FOUNDERS_EDITION_result.webp"}},"product_aRyNRb":{"type":"product","settings":{"product_handle":"bacca-bucci-x-house-of-the-dragon-sneakers-fire-blood-edition-all-terrain-lifestyle-trainers","image":"shopify:\/\/shop_images\/HOUSE_OF_DRAGON_result.webp"}},"product_PNyXpF":{"type":"product","settings":{"product_handle":"powerpuff-girls-x-bacca-bucci-hero-sneakers-collection-blossom","image":"shopify:\/\/shop_images\/POWERPUFF_result.webp"}},"product_MnyV3c":{"type":"product","settings":{"product_handle":"hypercore-3","image":"shopify:\/\/shop_images\/hypercore.png"}}},"block_order":["product_ebB6fa","product_wkLbpQ","product_aRyNRb","product_PNyXpF","product_MnyV3c"],"name":"Layered slider","settings":{"title":"Standout Sneakers"}},"feature_collection_new_7EMc4A":{"type":"feature-collection-new","blocks":{"tab_JtCEEM":{"type":"tab","settings":{"tab_label":"New In","collection":"shoes-for-men-bacca-bucci-trendy-footwear-accessories","sort_by":"","product_list":[]}}},"block_order":["tab_JtCEEM"],"custom_css":[".products-tabs__tabs {display: none;}",".products-tabs__title {font-size: 5.5rem; font-style: italic; margin-bottom: 10px; text-transform: capitalize; font-weight: 600; letter-spacing: -0.03em;}",".products-tabs--visible-overflow {padding-bottom: 3rem;}","@media (max-width: 768px) {h2.products-tabs__title {font-size: 2.8rem !important; margin-bottom: 0px !important; } .products-tabs__top {padding-bottom: 15px; }}"],"settings":{"color_scheme":"scheme-393a694c-6fa7-486e-9d94-e0473e1bf8de","products_count":8,"animate_on_scroll":true,"heading":"Bestsellers","heading_size":"h2","cards_layout":"bar","mobile_cards_layout":"slider","mobile_slider_layout_type":"visible_overflow","products_to_show":4,"gap":"small","image_ratio":"portrait","image_fit":"cover","show_secondary_image":true,"show_vendor":false,"show_desc":false,"product_heading_tag":"h3","button_show":false,"button_label":"Shop now","button_style":"primary","button_link":"","button_arrow":true,"padding_top":"xs","padding_bottom":"m","margin_top":"no-indent","margin_bottom":"no-indent"}},"products_grid_mtRq6b":{"type":"products-grid","disabled":true,"name":"t:sections.products-grid.name","settings":{"collection":"all","product_list":[],"products_per_page":4,"columns":4,"columns_mobile":"2","sort":"alphabetical","image_ratio":"portrait","image_fit":"cover","show_secondary_image":true,"show_vendor":false,"show_desc":false,"product_heading_tag":"h3","subheading":"","heading":"Products grid title","heading_size":"h3","heading_tag":"h2","description":"","button_show":false,"button_label":"View all","button_style":"primary","button_link":"","button_arrow":true,"padding_top":"no-indent","padding_bottom":"xl","margin_top":"no-indent","margin_bottom":"no-indent"}},"new_all_collections_DQxVNW":{"type":"new-all-collections","blocks":{"slide_fUnQyy":{"type":"slide","settings":{"slide_title":"","slide_image_desktop":"shopify:\/\/shop_images\/1Asset_1_1.png","slide_image_mobile":"shopify:\/\/shop_images\/1Asset_1.jpg","slide_text":"","slide_link":"https:\/\/baccabucci.com\/collections\/bacca-bucci-sneakers"}},"slide_VRyrDb":{"type":"slide","settings":{"slide_title":"","slide_image_desktop":"shopify:\/\/shop_images\/1Asset_8_1.png","slide_image_mobile":"shopify:\/\/shop_images\/1Asset_8.jpg","slide_text":"","slide_link":"https:\/\/baccabucci.com\/collections\/bacca-bucci-casuals-shoes"}},"slide_Q7Yq7A":{"type":"slide","settings":{"slide_title":"","slide_image_desktop":"shopify:\/\/shop_images\/1Asset_14_1.png","slide_image_mobile":"shopify:\/\/shop_images\/1Asset_14.jpg","slide_text":"","slide_link":"https:\/\/baccabucci.com\/collections\/bacca-bucci-boots"}},"slide_TVhqN3":{"type":"slide","settings":{"slide_title":"","slide_image_desktop":"shopify:\/\/shop_images\/1Asset_9_1.png","slide_image_mobile":"shopify:\/\/shop_images\/1Asset_9.jpg","slide_text":"","slide_link":"https:\/\/baccabucci.com\/collections\/sports-and-athleisure-footwear"}},"slide_6jRJq4":{"type":"slide","settings":{"slide_title":"","slide_image_desktop":"shopify:\/\/shop_images\/1Asset_10_1.png","slide_image_mobile":"shopify:\/\/shop_images\/1Asset_10.jpg","slide_text":"","slide_link":"https:\/\/baccabucci.com\/collections\/bacca-bucci-women-sports-and-sneakers"}},"slide_bfHRDh":{"type":"slide","settings":{"slide_title":"","slide_image_desktop":"shopify:\/\/shop_images\/1Asset_7_1.png","slide_image_mobile":"shopify:\/\/shop_images\/1Asset_7.jpg","slide_text":"","slide_link":"https:\/\/baccabucci.com\/collections\/plus-size-shoes"}},"slide_fkJYzD":{"type":"slide","settings":{"slide_title":"","slide_image_desktop":"shopify:\/\/shop_images\/1Asset_17.png","slide_image_mobile":"shopify:\/\/shop_images\/1Asset_17.jpg","slide_text":"","slide_link":"https:\/\/baccabucci.com\/collections\/bacca-bucci-belts"}},"slide_E9MkTg":{"type":"slide","settings":{"slide_title":"","slide_image_desktop":"shopify:\/\/shop_images\/1Asset_11_1.png","slide_image_mobile":"shopify:\/\/shop_images\/1Asset_11.jpg","slide_text":"","slide_link":"https:\/\/baccabucci.com\/collections\/oversized-t-shirts"}},"slide_rKjHJi":{"type":"slide","settings":{"slide_title":"","slide_image_desktop":"shopify:\/\/shop_images\/1Asset_5_1.png","slide_image_mobile":"shopify:\/\/shop_images\/1Asset_5.jpg","slide_text":"","slide_link":"https:\/\/baccabucci.com\/collections\/bacca-bucci-loafers-and-slip-ons"}},"slide_R4eEfW":{"type":"slide","settings":{"slide_title":"","slide_image_desktop":"shopify:\/\/shop_images\/1Asset_4_1.png","slide_image_mobile":"shopify:\/\/shop_images\/1Asset_4.jpg","slide_text":"","slide_link":"https:\/\/baccabucci.com\/collections\/men-formal-shoes"}},"slide_EHxr3r":{"type":"slide","settings":{"slide_title":"","slide_image_desktop":"shopify:\/\/shop_images\/1Asset_3_1.png","slide_image_mobile":"shopify:\/\/shop_images\/1Asset_3.jpg","slide_text":"","slide_link":"https:\/\/baccabucci.com\/collections\/flip-flops"}},"slide_tMtnLP":{"type":"slide","settings":{"slide_title":"","slide_image_desktop":"shopify:\/\/shop_images\/1Asset_6_1.png","slide_image_mobile":"shopify:\/\/shop_images\/1Asset_6.jpg","slide_text":"","slide_link":"https:\/\/baccabucci.com\/collections\/shoes-for-boys-girls-boys-shoes-online-bacca-bucci"}},"slide_xcGHGz":{"type":"slide","settings":{"slide_title":"","slide_image_desktop":"shopify:\/\/shop_images\/1Asset_2_1.png","slide_image_mobile":"shopify:\/\/shop_images\/1Asset_2.jpg","slide_text":"","slide_link":"https:\/\/baccabucci.com\/collections\/wallet"}},"slide_kmiKwF":{"type":"slide","settings":{"slide_title":"","slide_image_desktop":"shopify:\/\/shop_images\/1Asset_16.png","slide_image_mobile":"shopify:\/\/shop_images\/1Asset_16.jpg","slide_text":"","slide_link":"https:\/\/baccabucci.com\/collections\/shoes-laces"}},"slide_4hpjed":{"type":"slide","settings":{"slide_title":"","slide_image_desktop":"shopify:\/\/shop_images\/1Asset_12_1.png","slide_image_mobile":"shopify:\/\/shop_images\/1Asset_12.jpg","slide_text":"","slide_link":"https:\/\/baccabucci.com\/collections\/bacca-bucci-socks-collection"}},"slide_YqANRW":{"type":"slide","settings":{"slide_title":"","slide_image_desktop":"shopify:\/\/shop_images\/1Asset_13_1.png","slide_image_mobile":"shopify:\/\/shop_images\/1Asset_13.jpg","slide_text":"","slide_link":"https:\/\/baccabucci.com\/collections\/all-under-999"}}},"block_order":["slide_fUnQyy","slide_VRyrDb","slide_Q7Yq7A","slide_TVhqN3","slide_6jRJq4","slide_bfHRDh","slide_fkJYzD","slide_E9MkTg","slide_rKjHJi","slide_R4eEfW","slide_EHxr3r","slide_tMtnLP","slide_xcGHGz","slide_kmiKwF","slide_4hpjed","slide_YqANRW"],"disabled":true,"custom_css":["{padding-top: 30px; padding-bottom: 35px;}"],"settings":{"heading":""}},"collections-list":{"type":"collections-list","blocks":{"block_1":{"type":"collection_item","settings":{"collection":"bacca-bucci-sneakers","title":"Sneakers","image":"shopify:\/\/shop_images\/Colossus_Sneaker_jpg.jpg","image_2":"shopify:\/\/shop_images\/BB_ON_THE_GO_Sneaker_jpg.jpg"}},"block_2":{"type":"collection_item","settings":{"collection":"sports-and-athleisure-footwear","title":"Active Shoes","image":"shopify:\/\/shop_images\/axiom_sports.jpg","image_2":"shopify:\/\/shop_images\/Balance_Active_jpg.jpg"}},"block_3":{"type":"collection_item","settings":{"collection":"new-in-boots","title":"Adventure","image":"shopify:\/\/shop_images\/DSC01974-Edit.webp","image_2":"shopify:\/\/shop_images\/Discovery_Trek_0_1_Boot_jpg.jpg"}},"collection_item_GHa3Xb":{"type":"collection_item","settings":{"collection":"belts-wallet-for-men","title":"Belts & Wallets","image":"shopify:\/\/shop_images\/DSC01978-Edit.webp","image_2":"shopify:\/\/shop_images\/MG_3334.jpg"}},"collection_item_6bhFQ8":{"type":"collection_item","settings":{"collection":"oversized-t-shirts","title":"","image":"shopify:\/\/shop_images\/6_028e6444-f1b7-4ddd-9427-bec6faa9e985.jpg","image_2":"shopify:\/\/shop_images\/Screen_Shot_2023-08-28_at.webp"}}},"block_order":["block_1","block_2","block_3","collection_item_GHa3Xb","collection_item_6bhFQ8"],"disabled":true,"custom_css":[".collections-list-titles-container.collections-list-titles-container--visible-overflow.swiper.swiper-initialized.swiper-horizontal.swiper-backface-hidden {display: none;}"],"settings":{"color_scheme":"","layout_type":"two_images","mobile_slider_layout_type":"visible_overflow","animate_on_scroll":false,"subheading":"","heading":"","heading_size":"h3","heading_tag":"h2","description":"","text_align":"center","show_products_count":false,"aspect_ratio":"adapt","object_fit":"cover","collections_titles_size":"h2","collections_title_tag":"h2","padding_top":"s","padding_bottom":"s","margin_top":"no-indent","margin_bottom":"no-indent"}},"173864854049c1c459":{"type":"apps","blocks":{"instafeed_app_block_NT3qcA":{"type":"shopify:\/\/apps\/instafeed\/blocks\/app-block\/c447db20-095d-4a10-9725-b5977662c9d5","settings":{"title":"","title_color":"","title_size_v2":0,"alignment":"center","instafeed_margin_top":0,"instafeed_margin_bottom":0,"instafeed_margin_sides":0,"show_instagram_link":false,"link_alignment":"left","link_color":"#000000","background_color":"#222222","feed_id":"","html_area":"<style>\nsection#shopify-section-template--20103595000054__173864854049c1c459{\n        padding: 25px 0;\n    padding-bottom: 35px;\n}\ndiv#shopify-block-AcXV0MDBrRkR6UXkxO__instafeed_app_block_NT3qcA h2 {\n    color: white;\n}\n\n<\/style>"}}},"block_order":["instafeed_app_block_NT3qcA"],"custom_css":["#insta-feed h2,.instafeed-shopify h2 {color: white; font-size: 30px;}"," {padding-top: 20px; padding-bottom: 35px;}","@media screen and (max-width: 575px) {#insta-feed h2, .instafeed-shopify h2 {font-size: 23px; margin-bottom: 15px; }}"],"settings":{"include_margins":true}},"feature_collection_new_CqktXy":{"type":"feature-collection-new","blocks":{"tab_g6Fxz8":{"type":"tab","settings":{"tab_label":"New In","collection":"shoes-for-men-bacca-bucci-trendy-footwear-accessories","sort_by":"","product_list":[]}},"tab_zW3wkn":{"type":"tab","settings":{"tab_label":"Best Seller","collection":"bacca-bucci-best-seller-collection","sort_by":"","product_list":[]}},"tab_hMQTyq":{"type":"tab","settings":{"tab_label":"Women","collection":"sneakers-for-women-bacca-bucci-sports-shoes-for-women","sort_by":"","product_list":[]}},"tab_HVDXWJ":{"type":"tab","settings":{"tab_label":"Oversized Tee","collection":"oversized-t-shirts","sort_by":"","product_list":[]}},"tab_9MqtcV":{"type":"tab","settings":{"tab_label":"Women Belts","collection":"women-belt-collection","sort_by":"","product_list":[]}}},"block_order":["tab_g6Fxz8","tab_zW3wkn","tab_hMQTyq","tab_HVDXWJ","tab_9MqtcV"],"disabled":true,"settings":{"color_scheme":"scheme-393a694c-6fa7-486e-9d94-e0473e1bf8de","products_count":8,"animate_on_scroll":true,"heading":"Explore","heading_size":"h2","cards_layout":"bar","mobile_cards_layout":"slider","mobile_slider_layout_type":"visible_overflow","products_to_show":4,"gap":"small","image_ratio":"portrait","image_fit":"cover","show_secondary_image":true,"show_vendor":false,"show_desc":false,"product_heading_tag":"h3","button_show":false,"button_label":"Shop now","button_style":"primary","button_link":"","button_arrow":true,"padding_top":"xs","padding_bottom":"m","margin_top":"no-indent","margin_bottom":"no-indent"}},"product_card_slider_xEjQ7R":{"type":"product-card-slider","disabled":true,"custom_css":[".swiper-pagination {position: relative;}",".product-card-slider__pagination .swiper-pagination-bullet-active {background-color: #dca23f; border-color: #dca23f;}",".product-card-slider__products {gap: 0.8rem;}","@media (min-width: 750px) {.product-card-slider__products {gap: 0.8rem; }}"],"name":"t:sections.product-card-slider.name","settings":{"color_scheme":"scheme-a8aa7f5b-5966-4bb1-8bb4-a736e7f9fdd7","subheading":"","heading":"Character Drop","heading_size":"h3","heading_tag":"h2","description":"","heading_text_align":"center","section_layout_type":"cards","gap":"small","content_order":"text","full_width":false,"animate_on_scroll":true,"layer_color_scheme":"background-1","content_subheading":"","content_heading":"","content_heading_size":"h2","content_heading_tag":"h2","content_description":"","show_button":false,"button_label":"Shop now","button_link":"","button_style":"primary","button_arrow":true,"horizontal_align":"left","vertical_align":"space-between","image":"shopify:\/\/shop_images\/MATCHING_WITH_ASSETS_6.jpg","image_ratio_desktop":"adapt","overlay_opacity":20,"overlay_as_gradient":true,"product_source":"collection","product_list":[],"collection":"character-drop","product_limit":7,"product_list_heading":"","product_color_scheme":"background-1","products_vertical_align":"end","card_image_ratio":"portrait","card_image_fit":"cover","enable_autoplay":true,"slide_duration":3,"product_heading_tag":"h3","padding_top":"xs","padding_bottom":"s","margin_top":"no-indent","margin_bottom":"no-indent"}},"feature_collection_new_UaiQzk":{"type":"feature-collection-new","blocks":{"tab_VTrLXK":{"type":"tab","disabled":true,"settings":{"tab_label":"Color Blocking","collection":"color-blocked-sneakers","sort_by":"","product_list":[]}},"tab_XTtD9N":{"type":"tab","settings":{"tab_label":"Running","collection":"sports-and-athleisure-footwear","sort_by":"","product_list":[]}},"tab_bqDy6C":{"type":"tab","settings":{"tab_label":"Character Drop","collection":"character-drop","sort_by":"","product_list":[]}},"tab_C8Qjjp":{"type":"tab","disabled":true,"settings":{"tab_label":"Everyday Shoe","collection":"everyday-wearing-shoes","sort_by":"","product_list":[]}},"tab_aAR6At":{"type":"tab","settings":{"tab_label":"Chunky Soles","collection":"chunky-soles","sort_by":"","product_list":[]}},"tab_86xyPN":{"type":"tab","settings":{"tab_label":"Riding Boots","collection":"biker-boots","sort_by":"","product_list":[]}}},"block_order":["tab_VTrLXK","tab_XTtD9N","tab_bqDy6C","tab_C8Qjjp","tab_aAR6At","tab_86xyPN"],"disabled":true,"custom_css":["a.button.button--primary {padding: 0.9rem 2.6rem !important;}"],"settings":{"color_scheme":"scheme-393a694c-6fa7-486e-9d94-e0473e1bf8de","products_count":8,"animate_on_scroll":true,"heading":"Best of Bacca Bucci","heading_size":"h2","cards_layout":"bar","mobile_cards_layout":"slider","mobile_slider_layout_type":"visible_overflow","products_to_show":4,"gap":"small","image_ratio":"portrait","image_fit":"cover","show_secondary_image":true,"show_vendor":false,"show_desc":false,"product_heading_tag":"h3","button_show":false,"button_label":"Shop now","button_style":"primary","button_link":"","button_arrow":true,"padding_top":"xs","padding_bottom":"no-indent","margin_top":"no-indent","margin_bottom":"no-indent"}},"products-tabs":{"type":"products-tabs","blocks":{"tab_1":{"type":"tab","settings":{"tab_label":"Best Seller","product_list":["superman-with-bacca-bucci-step-into-the-legend","bacca-bucci-zypher-mens-low-top-sneakers","bacca-bucci-torque-rugged-edge-activewear-sneaks","bacca-bucci-speed-pro-athleisure-running-shoes-2","bacca-bucci-vibe-step-mens-low-top-sneakers-2","bacca-bucci-spectra-mens-sneakers","bacca-bucci-swagger-high-top-sneakers","bacca-bucci-groove-low-top-sneakers-1","bacca-bucci-manhattan-low-top-sneakers","bacca-bucci-mid-top-patch-play-mens-sneakers-1","bacca-bucci-jackson-mens-low-top-sneakers"]}},"tab_2":{"type":"tab","settings":{"tab_label":"New In","product_list":["bacca-bucci-torque-rugged-edge-activewear-sneaks","bacca-bucci-groove-low-top-sneakers-1","bacca-bucci-denver-high-top-sneakers-1","bacca-bucci-swagger-high-top-sneakers-1","bacca-bucci-mens-sylvia-chunky-sole-sneakers","bacca-bucci-manhattan-low-top-sneakers-1","bacca-bucci-mid-top-patch-play-mens-sneakers-1","bacca-bucci-trailblazer-mens-all-terrain-high-top-trekking-boots","bacca-bucci-night-glider-the-elite-sportspersons-versatile-footwear"]}},"tab_jTEmTC":{"type":"tab","settings":{"tab_label":"Women","product_list":["bacca-bucci-tamra-low-top-womens-sneakers","bacca-bucci-nyc-low-top-women-s-sneakers-for-gen-z-fashionistas","bacca-bucci-endeavor-womens-running-shoes-1","bacca-bucci-women-vibe-city-sneakers-lavender-and-blush-pink","bacca-bucci-sprint-mystique","bacca-bucci-womens-high-top-sneakers-kawaii-kicks-collection","bacca-bucci-nyra-mid-top-platform-fashion-sneakers-for-women-streetwear-chunky-sneakers","bacca-bucci-runway-women-s-running-shoes"]}},"tab_3":{"type":"tab","settings":{"tab_label":"Oversized Tee","product_list":["alchemy-oversized-t-shirt","sick-oversized-t-shirt","overcome-evil-with-good-oversized-t-shirt","bartman-fan-art-oversized-t-shirt","onepiece-fan-art-oversized-t-shirt","bacca-bucci-street-future-oversized-t-shirt","wanderer-oversized-t-shirt","bb-oversized-t-shirt","resonate-oversized-t-shirt","paisley-23-oversized-t-shirt","disclaimer-oversized-t-shirt","physical-touch-oversized-t-shirt"]}},"tab_8ga6EQ":{"type":"tab","settings":{"tab_label":"Women Belts","product_list":["bacca-bucci-womens-belts-for-pants-jeans","bacca-bucci-striato-slim-belt-glossy-finish-elegance-for-versatile-styling-18-mm","bacca-bucci-elegante-slim-genuine-leather-belt-textured-elegance-for-versatile-styling-28-mm","bacca-bucci-women-genuine-leather-belt-for-jeans-pants","bacca-bucci-women-genuine-leather-belts-with-imported-nickle-free-buckle-width-28-mm-two-tone-finish-belt","bacca-bucci-vivace-slim-belt-matte-finish-elegance-for-versatile-styling-18-mm","bacca-bucci-azure-serpentine-22mm-textured-fashion-belt-for-women","bacca-bucci-stardust-splatter-womens-belt","bacca-bucci-aurelia-virentis-elite-series-women-s-textured-genuine-leather-belt-with-artisanal-pattern-ideal-for-stylish-cinching-and-versatile-fashion-pairing","bacca-bucci-women-genuine-leather-belt-for-jeans-pants-1"]}}},"block_order":["tab_1","tab_2","tab_jTEmTC","tab_3","tab_8ga6EQ"],"disabled":true,"custom_css":[".product-parameters {display: none;}"],"settings":{"color_scheme":"background-1","animate_on_scroll":true,"heading":"explore","heading_size":"h3","heading_tag":"h2","cards_layout":"bar","mobile_cards_layout":"slider","mobile_slider_layout_type":"visible_overflow","products_to_show":4,"gap":"small","image_ratio":"portrait","image_fit":"cover","show_secondary_image":true,"show_vendor":false,"show_desc":false,"product_heading_tag":"h3","button_show":false,"button_label":"Button label","button_style":"primary","button_link":"","button_arrow":true,"padding_top":"no-indent","padding_bottom":"no-indent","margin_top":"no-indent","margin_bottom":"no-indent"}},"products_tabs_RDmcBk":{"type":"products-tabs","blocks":{"tab_DDgNa9":{"type":"tab","settings":{"tab_label":"Riding Boots","product_list":["bacca-bucci-maverick-brushed-leather-chealsea-fashion-boots-for-men","bacca-bucci-pathfinder-combat-boots-for-men-with-chunky-rubber-lug-sole","bacca-bucci-flame-7-eye-moto-inspired-olive-snow-boots-mild-water-proof-boots-for-menmoto-inspired-boots-flame-7-eye-mild-water-proof-snow-boots-bacca-bucci","bacca-bucci-dragon-splash-proof-leather-classic-fashion-boots-for-biking-trekking-hiking","bacca-bucci-mens-bullet-leather-boots-for-biking-trekking-and-hiking","trekking-shoes-for-men-wolf-adaptive-cushioning-boots-bacca-bucci","leather-boots-for-men-brown-lace-up-boots-bacca-bucci","bacca-bucci-dragon-leather-fashion-boots"]}},"tab_PPFicT":{"type":"tab","settings":{"tab_label":"Kawaii","product_list":["bacca-bucci-kawaii-kicks-lace-up-sneakers","bacca-bucci-kawaii-sakura-slip-on-sneakers","bacca-bucci-womens-high-top-sneakers-kawaii-kicks-collection","bacca-bucci-kawaii-sakura-slip-on-sneakers-1","bacca-bucci-kawaii-kicks-lace-up-sneakers-1","bacca-bucci-womens-high-top-sneakers-kawaii-kicks-collection-1","bacca-bucci-womens-high-top-sneakers-kawaii-kicks-collection-2","bacca-bucci-kawaii-kicks-lace-up-sneakers-2","bacca-bucci-kawaii-sakura-slip-on-sneakers-2"]}},"tab_xMjkqr":{"type":"tab","settings":{"tab_label":"Color Blocking","product_list":["bacca-bucci-downtown-dynamo-low-top-sneakers","bacca-bucci-mens-xoxo-high-top-elevated-high-street-fashion-sneakers","bacca-bucci-vengeance-korean-style-high-top-streetwear-sneakers","bacca-bucci-tiger-mens-comfy-mid-top-casual-chunky-streetwear-fashion-sneakers-1","bacca-bucci-veera-mid-top-white-sneakers-for-men-1","bacca-bucci-mens-offbeat-mid-top-urban-streetwear-socks-sneaker-shoes","bacca-bucci-skyline-chunk-hi-top-street-fashion-flat-sole-sneakers","bacca-bucci-urban-nomad-the-ultimate-mens-chunky-street-style-sneakers","bacca-bucci-stunner-hi-top-streetwear-sneakers-with-360-degree-cushioning-2","best-sneakers-for-men-redfox-casual-shoes-for-men-bacca-bucci","bacca-bucci-urban-retro-series-2-0-color-blocked-sneakers-shoes-for-men"]}},"tab_PCd3LN":{"type":"tab","settings":{"tab_label":"Running","product_list":["bacca-bucci-striker-cricket-shoes","bacca-bucci-horizon-athletic-and-casual-shoes","bacca-bucci-pacer-edge-elite-performance-running-shoes-1","bacca-bucci-helix-mens-low-top-casual-athleisure-shoes","bacca-bucci-apex-athletic-running-shoes-ultra-lightweight-breathable-knit-upper-with-memory-stride-insocks","bacca-bucci-hypersoft-series-with-ultra-rebounce-outsole-iconic-breathable-engineered-knit-upper-running-shoes-6","bacca-bucci-fly-everyday-running-training-shoe-1"]}},"tab_ahRtzd":{"type":"tab","settings":{"tab_label":"Everyday Shoe","product_list":["bacca-bucci-essential-all-purpose-walking-running-sports-shoes-for-men-1","bacca-bucci-velocity-white-sky-blue","bacca-bucci-pulse-walking-slip-on-shoes-with-max-cushioned-padded-insoles","bacca-bucci-ironman-running-walking-training-shoe-3","bacca-bucci-runway-women-s-running-shoes"]}},"tab_xYLcMG":{"type":"tab","settings":{"tab_label":"Chunky Soles","product_list":["white-shoes-for-men-afterburn-white-sneakers-for-men-bacca-bucci","bacca-bucci-og-terraforge-low-top-series-bold-street-ready-sneakers-with-signature-chunky-traction-sole","bacca-bucci-boom-platform-mid-top-chunky-white-sneakers-shoes-for-men","bacca-bucci-urban-retro-blocked-fashion-sneakers-shoes-for-men-1","best-sneakers-for-men-redfox-casual-shoes-for-men-bacca-bucci","bacca-bucci-urban-retro-series-2-0-color-blocked-sneakers-shoes-for-men"]}}},"block_order":["tab_DDgNa9","tab_PPFicT","tab_xMjkqr","tab_PCd3LN","tab_ahRtzd","tab_xYLcMG"],"disabled":true,"custom_css":[".product-parameters {display: none;}"],"settings":{"color_scheme":"","animate_on_scroll":true,"heading":"Best of Bacca Bucci","heading_size":"h3","heading_tag":"h2","cards_layout":"bar","mobile_cards_layout":"slider","mobile_slider_layout_type":"visible_overflow","products_to_show":4,"gap":"small","image_ratio":"portrait","image_fit":"cover","show_secondary_image":true,"show_vendor":false,"show_desc":false,"product_heading_tag":"h3","button_show":false,"button_label":"Button label","button_style":"primary","button_link":"","button_arrow":true,"padding_top":"s","padding_bottom":"no-indent","margin_top":"no-indent","margin_bottom":"no-indent"}},"featured-product":{"type":"featured-product","blocks":{"title":{"type":"title","settings":{"heading_size":"h2","heading_tag":"h2"}},"price":{"type":"price","settings":{"show_tax_info":false}},"variant_picker":{"type":"variant_picker","settings":{"picker_type":"button","swatch_type":"variant_image","variant_image_size":"square","unavailable_options_clickable":true}},"inventory":{"type":"inventory","disabled":true,"settings":{"show_inventory_amount":true,"limited_stock":10}},"buy_buttons":{"type":"buy_buttons","settings":{"show_dynamic_checkout":false,"show_quantity":true}}},"block_order":["title","price","variant_picker","inventory","buy_buttons"],"disabled":true,"custom_css":["svg.loox-icon {display: flex; width: 1.5rem; height: 1.5rem;}","span.loox-rating-label {font-size: 14px;}",".product-form__submit span.button__label {color: #fff;}",".loox-rating .loox-icon {color: #e89f2a;}"],"settings":{"main_title":"<div class=\"section__title\">\n<p class=\"headingsmall\">Pick of the Month<\/p>\n<h3 class=\"heading h2\">featured product<\/h3>\n<\/div>\n\n<style>\n.section__title {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-direction: column;\n    gap: 9px;\n    padding-bottom: 30px;\n}\np.headingsmall {\n    font-size: 13px;\n    font-family: 'lato';\n    text-align: center;\n    line-height: 1.5;\n    letter-spacing: 1px;\n}\n @media (max-width: 767px) {\np.headingsmall {\n    font-size: 11px;\n}\n}\n<\/style>","product_item":"founder-edition-low-top-lifestyle-sneakers-2","color_scheme":"","desktop_alignment":"left","mobile_alignment":"before","aspect_ratio":"portrait","image_fit":"cover","thumbs_direction":"vertical","thumbs_aspect_ratio":"square","thumbs_image_fit":"cover","enable_video_looping":false,"enable_video_autoplay":false,"enable_full_details":false,"arrow_color_scheme":"","padding_top":"s","padding_bottom":"xs"}},"banner_grid_UftmfP":{"type":"banner-grid","blocks":{"card_YxBK7X":{"type":"card","settings":{"color_scheme":"","column_start":1,"column_end":2,"row_start":1,"row_end":3,"image":"shopify:\/\/shop_images\/women_collection_8dc47a04-3ae4-424b-861f-123d52e74a19.jpg","overlay_opacity":0,"overlay_as_gradient":true,"mobile_aspect_ratio":"adapt","heading":"","heading_size":"h3","heading_tag":"h2","text":"","show_button":true,"button_label":"","button_link":"https:\/\/baccabucci.com\/collections\/sneakers-for-women-bacca-bucci-sports-shoes-for-women","button_style":"primary","button_arrow":true,"content_horizontal_alignment":"center","content_vertical_alignment":"bottom","card_padding":"medium"}},"card_jAtU7z":{"type":"card","settings":{"color_scheme":"","column_start":2,"column_end":3,"row_start":1,"row_end":2,"image":"shopify:\/\/shop_images\/laces-collection_1.png","overlay_opacity":0,"overlay_as_gradient":true,"mobile_aspect_ratio":"adapt","heading":"","heading_size":"h3","heading_tag":"h2","text":"","show_button":true,"button_label":"","button_link":"https:\/\/baccabucci.com\/collections\/shoes-laces","button_style":"primary","button_arrow":true,"content_horizontal_alignment":"center","content_vertical_alignment":"bottom","card_padding":"medium"}},"card_9MtFNQ":{"type":"card","settings":{"color_scheme":"","column_start":2,"column_end":3,"row_start":2,"row_end":3,"image":"shopify:\/\/shop_images\/belts-collection_2.png","overlay_opacity":0,"overlay_as_gradient":true,"mobile_aspect_ratio":"adapt","heading":"","heading_size":"h3","heading_tag":"h2","text":"","show_button":true,"button_label":"","button_link":"https:\/\/baccabucci.com\/collections\/belts-wallet-for-men","button_style":"primary","button_arrow":true,"content_horizontal_alignment":"center","content_vertical_alignment":"bottom","card_padding":"medium"}}},"block_order":["card_YxBK7X","card_jAtU7z","card_9MtFNQ"],"disabled":true,"settings":{"color_scheme":"","subheading":"","heading":"","heading_size":"h3","heading_tag":"h2","description":"","text_align":"center","columns":2,"section_aspect_ratio":"2\/1","padding_top":"xs","padding_bottom":"no-indent","margin_top":"no-indent","margin_bottom":"s"}},"blog-posts":{"type":"blog-posts","disabled":true,"settings":{"blog":"","color_scheme":"","animate_on_scroll":true,"section_header_text":"Blog","section_header_size":"h3","section_heading_tag":"h2","show_read_all_button":true,"read_all_button_label":"","button_style":"primary","button_arrow":true,"slider_on_mobile":false,"mobile_slider_layout_type":"visible_overflow","posts_per_row":3,"posts_count":3,"show_image":true,"aspect_ratio":"square","object_fit":"cover","article_heading_font_family":"heading","article_heading_font_size":"h4","article_heading_tag":"h3","show_date":true,"show_tags":true,"show_author":true,"show_excerpt":true,"show_read_article_button":true,"read_article_button_label":"","show_comments_count":false,"padding_top":"l","padding_bottom":"no-indent","margin_top":"no-indent","margin_bottom":"no-indent"}},"countdown_Mgggxw":{"type":"countdown","disabled":true,"custom_css":[".countdown__image {aspect-ratio: 195 \/ 60;}",".countdown__image img {object-fit: contain;}",".countdown__block {margin: 10px 0; aspect-ratio: 75 \/ 70; border: 4px dotted #dca23f; background-color: #fff9f2;}",".extra-content {display: flex; flex-direction: column;}",".countdown__container.gap--small.order--image.container {border: 5px dotted #dca23f; padding: 0;}","@media (max-width: 750px) {.countdown__block {margin: 15px 0; } .onespn {margin-bottom: 5px; }}"],"name":"t:sections.countdown.presets.name","settings":{"mock_timer":true,"color_scheme":"","content_color_scheme":"background-1","gap":"small","content_order":"image","animate_on_scroll":true,"date_picker":"2025-12-01","time_picker":"00:00","countdown_block_font":"normal","completed_countdown":"hide_section","countdown_heading":"","subheading":"","heading":"","heading_size":"h3","heading_tag":"h2","description":"","show_link":true,"button_label":"Shop now","button_style":"primary","button_link":"shopify:\/\/collections\/weekend-flash-sale","button_arrow":true,"content_alignment":"center","enable_image":true,"image":"shopify:\/\/shop_images\/logowide.png","overlay_opacity":0,"padding_top":"no-indent","padding_bottom":"no-indent","margin_top":"no-indent","margin_bottom":"xs"}},"custom_liquid_yApaLY":{"type":"custom-liquid","settings":{"custom_liquid":"<style>\nspan.collections-list-titles-item__heading-span.h1 {\n    font-size: 40px;\n}\nh2.collections-list-titles-item__heading.h1 {\n    font-size: 40px !important;\n}\n.collections-list-titles-item__heading-span:after {\n    top: 130%;\n    color: #d49222;\n}\n.products-tabs__tabs {\n        max-width: 100%;\n        justify-content: center;\n    }\n    .products-tabs__top {\n        justify-content: left;\npadding-bottom:30px;\n    }\n\n.cards-grid-item__image {\n    object-fit: inherit;\n}\n.subtitle.products-tabs__tab.active.focus-inset {\n    background: #dca23f;\n    color: #fff;\n    border-color: #dca23f;\n}\n@media screen and (max-width: 575px) {\n    .products-tabs--visible-overflow .products-tabs__item {\n        width: calc(65% - 9px);\n    }\n\n.products-tabs__tabs {\nmax-width: 100%;\n        overflow: auto;\n        width: 100%;\n        position: relative;\n        white-space: nowrap;\n        display: inline-grid;\n        grid-auto-flow: column;\n        grid-auto-columns: max-content;\n        justify-content: flex-start;\n}\n.products-tabs__tab {\n    margin-right: 10px;\n}\n}\n\n<\/style>"}},"newsletter_new_JbxaFr":{"type":"newsletter-new","disabled":true,"settings":{"subheading":"","heading":"Subscribe to our newsletter","heading_size":"h2","heading_tag":"h2","description":"<b>Promotions, new products and sales. Directly to your inbox.<\/b>","text_align":"center","newsletter_text":"","button_style":"primary","image":"shopify:\/\/shop_images\/Untitled-1_1_5c8c7213-15cd-4808-8b81-fed83308e0eb.jpg","align_content":"left","padding_top":"no-indent","padding_bottom":"xs"}},"image_gallery_JNrTXi":{"type":"image-gallery","blocks":{"image_gallery_slide_nArkye":{"type":"image-gallery-slide","settings":{"image":"shopify:\/\/shop_images\/Group_144.png","overlay_opacity":0}}},"block_order":["image_gallery_slide_nArkye"],"disabled":true,"name":"t:sections.image-gallery.name","settings":{"main_color_scheme":"","subheading":"","heading":"","heading_size":"h3","heading_tag":"h2","description":"","text_align":"center","mobile_image_ratio":"adapt","desktop_image_ratio":"adapt","enable_freemode":false,"enable_loop":false,"enable_pagination":false,"enable_navigation":false,"arrow_color":"#ffffff","enable_autoplay":false,"slide_duration":5,"padding_top":"no-indent","padding_bottom":"no-indent","margin_top":"no-indent","margin_bottom":"no-indent"}}},"order":["hero","custom_buttons_AtU4Gp","custom_slideshow_j4Pyyz","custom_explore_range_CiznPU","feature_collection_new_qqFzdk","custom_slideshow_KthDzd","custom_swiper_slider_PVUtqa","layered_slider_CVLEzb","feature_collection_new_7EMc4A","products_grid_mtRq6b","new_all_collections_DQxVNW","collections-list","173864854049c1c459","feature_collection_new_CqktXy","product_card_slider_xEjQ7R","feature_collection_new_UaiQzk","products-tabs","products_tabs_RDmcBk","featured-product","banner_grid_UftmfP","blog-posts","countdown_Mgggxw","custom_liquid_yApaLY","newsletter_new_JbxaFr","image_gallery_JNrTXi"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "disabled": true,
+      "settings": {
+        "header_overlay": true,
+        "color_scheme": "",
+        "aspect_ratio": "16/9",
+        "aspect_ratio_mobile": "3/4",
+        "animate": true,
+        "show_background_media": true,
+        "overlay_opacity": 40,
+        "overlay_as_gradient": false,
+        "show_secondary_media": true,
+        "secondary_image_border_radius": 16,
+        "secondary_image_overlay_opacity": 20,
+        "section_heading": "Some heading",
+        "section_heading_size": "h0",
+        "featured_heading_tag": "h2",
+        "section_heading_2": "Some secondary heading",
+        "section_heading_size_2": "h3",
+        "secondary_heading_tag": "p",
+        "show_button": true,
+        "button_label": "Shop now",
+        "button_style": "primary",
+        "button_link": "",
+        "button_arrow": true,
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "custom_buttons_AtU4Gp": {
+      "type": "custom-buttons",
+      "blocks": {
+        "button_iEwQjm": {
+          "type": "button",
+          "settings": {
+            "button_text": "Men",
+            "button_link": "shopify://collections/men"
+          }
+        },
+        "button_BqTUQE": {
+          "type": "button",
+          "settings": {
+            "button_text": "Women",
+            "button_link": "https://baccabucci.com/collections/bacca-bucci-women-sports-and-sneakers"
+          }
+        },
+        "button_C7Rmig": {
+          "type": "button",
+          "settings": {
+            "button_text": "New Arrivals",
+            "button_link": "https://baccabucci.com/collections/shoes-for-men-bacca-bucci-trendy-footwear-accessories"
+          }
+        },
+        "button_aJzHUj": {
+          "type": "button",
+          "settings": {
+            "button_text": "Character Drop",
+            "button_link": "shopify://collections/character-drop"
+          }
+        }
+      },
+      "block_order": [
+        "button_iEwQjm",
+        "button_BqTUQE",
+        "button_C7Rmig",
+        "button_aJzHUj"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "custom_slideshow_j4Pyyz": {
+      "type": "custom-slideshow",
+      "blocks": {
+        "slide_LUGHGC": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Desktop_Banner-1_result.webp",
+            "image1": "shopify://shop_images/Mobile_banners_result.webp",
+            "button_link": "shopify://products/founder-edition-low-top-lifestyle-sneakers-2"
+          }
+        },
+        "slide_AGKD9n": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Founders-Edition-web-2_jpg.jpg",
+            "image1": "shopify://shop_images/founders-edition-mob-final_jpg.jpg",
+            "button_link": "shopify://products/founder-edition-low-top-lifestyle-sneakers-2"
+          }
+        },
+        "slide_9pd9UP": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/BB-on-the-go-web_jpg.jpg",
+            "image1": "shopify://shop_images/bb-on-the-go-mob_jpg.jpg",
+            "button_link": "shopify://products/bb-on-the-go-slip-on-2"
+          }
+        },
+        "slide_ExWiWd": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/HC2w_jpg.jpg",
+            "image1": "shopify://shop_images/hc-mobile_jpg.jpg",
+            "button_link": "shopify://products/hypercore"
+          }
+        },
+        "slide_DNJKJW": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/web_banner_rick_and_morty.jpg",
+            "image1": "shopify://shop_images/02_Rick_Morty_mobile_banner.jpg",
+            "button_link": "shopify://products/bacca-bucci-x-rick-morty-fear-hole-sneakers-official-licensed-collab"
+          }
+        }
+      },
+      "block_order": [
+        "slide_LUGHGC",
+        "slide_AGKD9n",
+        "slide_9pd9UP",
+        "slide_ExWiWd",
+        "slide_DNJKJW"
+      ],
+      "settings": {}
+    },
+    "custom_explore_range_CiznPU": {
+      "type": "custom-explore-range",
+      "blocks": {
+        "tab_KiNaiy": {
+          "type": "tab",
+          "settings": {
+            "title": "Sports",
+            "image": "shopify://shop_images/Explore_sports2_result.webp",
+            "mobile_image": "shopify://shop_images/Explore_sports1__result.webp",
+            "link": "",
+            "button_lable": "View all Sports",
+            "hide_on_mobile": false,
+            "hide_on_desktop": false
+          }
+        },
+        "tab_YgCY7h": {
+          "type": "tab",
+          "settings": {
+            "title": "Sneaker",
+            "image": "shopify://shop_images/Explore_sneaker2_result.webp",
+            "mobile_image": "shopify://shop_images/Explore_sneaker1_result.webp",
+            "link": "",
+            "button_lable": "View all Sneakers",
+            "hide_on_mobile": false,
+            "hide_on_desktop": false
+          }
+        },
+        "tab_bbQB89": {
+          "type": "tab",
+          "settings": {
+            "title": "Boots",
+            "image": "shopify://shop_images/Explore_boots2_result.webp",
+            "mobile_image": "shopify://shop_images/Explore_boots1_result.webp",
+            "link": "",
+            "button_lable": "View all Boots",
+            "hide_on_mobile": false,
+            "hide_on_desktop": false
+          }
+        },
+        "tab_jT9MHT": {
+          "type": "tab",
+          "settings": {
+            "title": "Slides",
+            "image": "shopify://shop_images/Explore_sliders2_result.webp",
+            "mobile_image": "shopify://shop_images/Explore_sliders1_result.webp",
+            "link": "",
+            "button_lable": "View all Slides",
+            "hide_on_mobile": false,
+            "hide_on_desktop": false
+          }
+        },
+        "tab_MNCQwb": {
+          "type": "tab",
+          "settings": {
+            "title": "Belts & Wallets",
+            "image": "shopify://shop_images/Explore_belt_wallet2_result.webp",
+            "mobile_image": "shopify://shop_images/Explore_belt_wallet1_result.webp",
+            "link": "",
+            "button_lable": "View all Belts & Wallets",
+            "hide_on_mobile": true,
+            "hide_on_desktop": false
+          }
+        }
+      },
+      "block_order": [
+        "tab_KiNaiy",
+        "tab_YgCY7h",
+        "tab_bbQB89",
+        "tab_jT9MHT",
+        "tab_MNCQwb"
+      ],
+      "name": "Explore Range",
+      "settings": {
+        "heading": "Explore Range"
+      }
+    },
+    "feature_collection_new_qqFzdk": {
+      "type": "feature-collection-new",
+      "blocks": {
+        "tab_fGDaF9": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "New In",
+            "collection": "shoes-for-men-bacca-bucci-trendy-footwear-accessories",
+            "sort_by": "",
+            "product_list": []
+          }
+        }
+      },
+      "block_order": [
+        "tab_fGDaF9"
+      ],
+      "custom_css": [
+        ".products-tabs__tabs {display: none;}",
+        ".products-tabs__title {font-size: 5.5rem; font-style: italic; margin-bottom: 10px; text-transform: capitalize; font-weight: 600; letter-spacing: -0.03em;}",
+        ".products-tabs--visible-overflow {padding-bottom: 3rem;}",
+        "@media (max-width: 768px) {h2.products-tabs__title {font-size: 2.8rem !important; margin-bottom: 0px !important; } .products-tabs__top {padding-bottom: 15px; }}"
+      ],
+      "settings": {
+        "color_scheme": "scheme-393a694c-6fa7-486e-9d94-e0473e1bf8de",
+        "products_count": 8,
+        "animate_on_scroll": true,
+        "heading": "New Launch",
+        "heading_size": "h2",
+        "cards_layout": "bar",
+        "mobile_cards_layout": "slider",
+        "mobile_slider_layout_type": "visible_overflow",
+        "products_to_show": 4,
+        "gap": "small",
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_desc": false,
+        "product_heading_tag": "h3",
+        "button_show": false,
+        "button_label": "Shop now",
+        "button_style": "primary",
+        "button_link": "",
+        "button_arrow": true,
+        "padding_top": "no-indent",
+        "padding_bottom": "no-indent",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "custom_slideshow_KthDzd": {
+      "type": "custom-slideshow",
+      "blocks": {
+        "slide_W6UNfn": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-03-09_at_14.51.04_1.jpg",
+            "image1": "shopify://shop_images/9dffd9bc-bcdd-48ff-98d7-bb43fae8dba8_1.jpg",
+            "button_link": "shopify://products/founder-edition-low-top-lifestyle-sneakers-2"
+          }
+        },
+        "slide_AUT3RD": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-03-09_at_14.51.04_1.jpg",
+            "image1": "shopify://shop_images/9dffd9bc-bcdd-48ff-98d7-bb43fae8dba8_1.jpg",
+            "button_link": "shopify://products/founder-edition-low-top-lifestyle-sneakers-2"
+          }
+        },
+        "slide_kpkEFf": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-03-09_at_14.51.04_1.jpg",
+            "image1": "shopify://shop_images/9dffd9bc-bcdd-48ff-98d7-bb43fae8dba8_1.jpg",
+            "button_link": "shopify://products/founder-edition-low-top-lifestyle-sneakers-2"
+          }
+        }
+      },
+      "block_order": [
+        "slide_W6UNfn",
+        "slide_AUT3RD",
+        "slide_kpkEFf"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "custom_swiper_slider_PVUtqa": {
+      "type": "custom-swiper-slider",
+      "blocks": {
+        "slide_dhfLA3": {
+          "type": "slide",
+          "settings": {
+            "image_desktop": "shopify://shop_images/batman_banner_desktop_1__result.webp",
+            "image_mobile": "shopify://shop_images/Batman_banner_mob_result.webp",
+            "link": ""
+          }
+        },
+        "slide_JFNzYb": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image_desktop": "shopify://shop_images/WhatsApp_Image_2026-03-09_at_14.51.04_1.jpg",
+            "image_mobile": "shopify://shop_images/9dffd9bc-bcdd-48ff-98d7-bb43fae8dba8_1.jpg",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_dhfLA3",
+        "slide_JFNzYb"
+      ],
+      "custom_css": [
+        "@media (max-width: 768px) {.section-title-wraper.container {padding-left: 0; padding-bottom: 15px; }}"
+      ],
+      "name": "Custom Swiper Slider",
+      "settings": {
+        "title_section": "Character Drop",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_left": 0,
+        "padding_right": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "padding_left_mobile": 20,
+        "padding_right_mobile": 20,
+        "border_radius": 0,
+        "height_mode": "adapt",
+        "custom_height_desktop": 600,
+        "custom_height_mobile": 400,
+        "image_fit": "cover",
+        "show_nav": true,
+        "show_dots": false,
+        "autoplay_speed": 5,
+        "background": "radial-gradient(rgba(219, 219, 219, 1), rgba(219, 219, 219, 1) 100%)"
+      }
+    },
+    "layered_slider_CVLEzb": {
+      "type": "layered-slider",
+      "blocks": {
+        "product_ebB6fa": {
+          "type": "product",
+          "settings": {
+            "product_handle": "hypercore-1",
+            "image": "shopify://shop_images/HYPERCORE_1__result.webp"
+          }
+        },
+        "product_wkLbpQ": {
+          "type": "product",
+          "settings": {
+            "product_handle": "founder-edition-low-top-lifestyle-sneakers-3",
+            "image": "shopify://shop_images/FOUNDERS_EDITION_result.webp"
+          }
+        },
+        "product_aRyNRb": {
+          "type": "product",
+          "settings": {
+            "product_handle": "bacca-bucci-x-house-of-the-dragon-sneakers-fire-blood-edition-all-terrain-lifestyle-trainers",
+            "image": "shopify://shop_images/HOUSE_OF_DRAGON_result.webp"
+          }
+        },
+        "product_PNyXpF": {
+          "type": "product",
+          "settings": {
+            "product_handle": "powerpuff-girls-x-bacca-bucci-hero-sneakers-collection-blossom",
+            "image": "shopify://shop_images/POWERPUFF_result.webp"
+          }
+        },
+        "product_MnyV3c": {
+          "type": "product",
+          "settings": {
+            "product_handle": "hypercore-3",
+            "image": "shopify://shop_images/hypercore.png"
+          }
+        }
+      },
+      "block_order": [
+        "product_ebB6fa",
+        "product_wkLbpQ",
+        "product_aRyNRb",
+        "product_PNyXpF",
+        "product_MnyV3c"
+      ],
+      "name": "Layered slider",
+      "settings": {
+        "title": "Standout Sneakers"
+      }
+    },
+    "feature_collection_new_7EMc4A": {
+      "type": "feature-collection-new",
+      "blocks": {
+        "tab_JtCEEM": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "New In",
+            "collection": "shoes-for-men-bacca-bucci-trendy-footwear-accessories",
+            "sort_by": "",
+            "product_list": []
+          }
+        }
+      },
+      "block_order": [
+        "tab_JtCEEM"
+      ],
+      "custom_css": [
+        ".products-tabs__tabs {display: none;}",
+        ".products-tabs__title {font-size: 5.5rem; font-style: italic; margin-bottom: 10px; text-transform: capitalize; font-weight: 600; letter-spacing: -0.03em;}",
+        ".products-tabs--visible-overflow {padding-bottom: 3rem;}",
+        "@media (max-width: 768px) {h2.products-tabs__title {font-size: 2.8rem !important; margin-bottom: 0px !important; } .products-tabs__top {padding-bottom: 15px; }}"
+      ],
+      "settings": {
+        "color_scheme": "scheme-393a694c-6fa7-486e-9d94-e0473e1bf8de",
+        "products_count": 8,
+        "animate_on_scroll": true,
+        "heading": "Bestsellers",
+        "heading_size": "h2",
+        "cards_layout": "bar",
+        "mobile_cards_layout": "slider",
+        "mobile_slider_layout_type": "visible_overflow",
+        "products_to_show": 4,
+        "gap": "small",
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_desc": false,
+        "product_heading_tag": "h3",
+        "button_show": false,
+        "button_label": "Shop now",
+        "button_style": "primary",
+        "button_link": "",
+        "button_arrow": true,
+        "padding_top": "xs",
+        "padding_bottom": "m",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "products_grid_mtRq6b": {
+      "type": "products-grid",
+      "disabled": true,
+      "name": "t:sections.products-grid.name",
+      "settings": {
+        "collection": "all",
+        "product_list": [],
+        "products_per_page": 4,
+        "columns": 4,
+        "columns_mobile": "2",
+        "sort": "alphabetical",
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_desc": false,
+        "product_heading_tag": "h3",
+        "subheading": "",
+        "heading": "Products grid title",
+        "heading_size": "h3",
+        "heading_tag": "h2",
+        "description": "",
+        "button_show": false,
+        "button_label": "View all",
+        "button_style": "primary",
+        "button_link": "",
+        "button_arrow": true,
+        "padding_top": "no-indent",
+        "padding_bottom": "xl",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "new_all_collections_DQxVNW": {
+      "type": "new-all-collections",
+      "blocks": {
+        "slide_fUnQyy": {
+          "type": "slide",
+          "settings": {
+            "slide_title": "",
+            "slide_image_desktop": "shopify://shop_images/1Asset_1_1.png",
+            "slide_image_mobile": "shopify://shop_images/1Asset_1.jpg",
+            "slide_text": "",
+            "slide_link": "https://baccabucci.com/collections/bacca-bucci-sneakers"
+          }
+        },
+        "slide_VRyrDb": {
+          "type": "slide",
+          "settings": {
+            "slide_title": "",
+            "slide_image_desktop": "shopify://shop_images/1Asset_8_1.png",
+            "slide_image_mobile": "shopify://shop_images/1Asset_8.jpg",
+            "slide_text": "",
+            "slide_link": "https://baccabucci.com/collections/bacca-bucci-casuals-shoes"
+          }
+        },
+        "slide_Q7Yq7A": {
+          "type": "slide",
+          "settings": {
+            "slide_title": "",
+            "slide_image_desktop": "shopify://shop_images/1Asset_14_1.png",
+            "slide_image_mobile": "shopify://shop_images/1Asset_14.jpg",
+            "slide_text": "",
+            "slide_link": "https://baccabucci.com/collections/bacca-bucci-boots"
+          }
+        },
+        "slide_TVhqN3": {
+          "type": "slide",
+          "settings": {
+            "slide_title": "",
+            "slide_image_desktop": "shopify://shop_images/1Asset_9_1.png",
+            "slide_image_mobile": "shopify://shop_images/1Asset_9.jpg",
+            "slide_text": "",
+            "slide_link": "https://baccabucci.com/collections/sports-and-athleisure-footwear"
+          }
+        },
+        "slide_6jRJq4": {
+          "type": "slide",
+          "settings": {
+            "slide_title": "",
+            "slide_image_desktop": "shopify://shop_images/1Asset_10_1.png",
+            "slide_image_mobile": "shopify://shop_images/1Asset_10.jpg",
+            "slide_text": "",
+            "slide_link": "https://baccabucci.com/collections/bacca-bucci-women-sports-and-sneakers"
+          }
+        },
+        "slide_bfHRDh": {
+          "type": "slide",
+          "settings": {
+            "slide_title": "",
+            "slide_image_desktop": "shopify://shop_images/1Asset_7_1.png",
+            "slide_image_mobile": "shopify://shop_images/1Asset_7.jpg",
+            "slide_text": "",
+            "slide_link": "https://baccabucci.com/collections/plus-size-shoes"
+          }
+        },
+        "slide_fkJYzD": {
+          "type": "slide",
+          "settings": {
+            "slide_title": "",
+            "slide_image_desktop": "shopify://shop_images/1Asset_17.png",
+            "slide_image_mobile": "shopify://shop_images/1Asset_17.jpg",
+            "slide_text": "",
+            "slide_link": "https://baccabucci.com/collections/bacca-bucci-belts"
+          }
+        },
+        "slide_E9MkTg": {
+          "type": "slide",
+          "settings": {
+            "slide_title": "",
+            "slide_image_desktop": "shopify://shop_images/1Asset_11_1.png",
+            "slide_image_mobile": "shopify://shop_images/1Asset_11.jpg",
+            "slide_text": "",
+            "slide_link": "https://baccabucci.com/collections/oversized-t-shirts"
+          }
+        },
+        "slide_rKjHJi": {
+          "type": "slide",
+          "settings": {
+            "slide_title": "",
+            "slide_image_desktop": "shopify://shop_images/1Asset_5_1.png",
+            "slide_image_mobile": "shopify://shop_images/1Asset_5.jpg",
+            "slide_text": "",
+            "slide_link": "https://baccabucci.com/collections/bacca-bucci-loafers-and-slip-ons"
+          }
+        },
+        "slide_R4eEfW": {
+          "type": "slide",
+          "settings": {
+            "slide_title": "",
+            "slide_image_desktop": "shopify://shop_images/1Asset_4_1.png",
+            "slide_image_mobile": "shopify://shop_images/1Asset_4.jpg",
+            "slide_text": "",
+            "slide_link": "https://baccabucci.com/collections/men-formal-shoes"
+          }
+        },
+        "slide_EHxr3r": {
+          "type": "slide",
+          "settings": {
+            "slide_title": "",
+            "slide_image_desktop": "shopify://shop_images/1Asset_3_1.png",
+            "slide_image_mobile": "shopify://shop_images/1Asset_3.jpg",
+            "slide_text": "",
+            "slide_link": "https://baccabucci.com/collections/flip-flops"
+          }
+        },
+        "slide_tMtnLP": {
+          "type": "slide",
+          "settings": {
+            "slide_title": "",
+            "slide_image_desktop": "shopify://shop_images/1Asset_6_1.png",
+            "slide_image_mobile": "shopify://shop_images/1Asset_6.jpg",
+            "slide_text": "",
+            "slide_link": "https://baccabucci.com/collections/shoes-for-boys-girls-boys-shoes-online-bacca-bucci"
+          }
+        },
+        "slide_xcGHGz": {
+          "type": "slide",
+          "settings": {
+            "slide_title": "",
+            "slide_image_desktop": "shopify://shop_images/1Asset_2_1.png",
+            "slide_image_mobile": "shopify://shop_images/1Asset_2.jpg",
+            "slide_text": "",
+            "slide_link": "https://baccabucci.com/collections/wallet"
+          }
+        },
+        "slide_kmiKwF": {
+          "type": "slide",
+          "settings": {
+            "slide_title": "",
+            "slide_image_desktop": "shopify://shop_images/1Asset_16.png",
+            "slide_image_mobile": "shopify://shop_images/1Asset_16.jpg",
+            "slide_text": "",
+            "slide_link": "https://baccabucci.com/collections/shoes-laces"
+          }
+        },
+        "slide_4hpjed": {
+          "type": "slide",
+          "settings": {
+            "slide_title": "",
+            "slide_image_desktop": "shopify://shop_images/1Asset_12_1.png",
+            "slide_image_mobile": "shopify://shop_images/1Asset_12.jpg",
+            "slide_text": "",
+            "slide_link": "https://baccabucci.com/collections/bacca-bucci-socks-collection"
+          }
+        },
+        "slide_YqANRW": {
+          "type": "slide",
+          "settings": {
+            "slide_title": "",
+            "slide_image_desktop": "shopify://shop_images/1Asset_13_1.png",
+            "slide_image_mobile": "shopify://shop_images/1Asset_13.jpg",
+            "slide_text": "",
+            "slide_link": "https://baccabucci.com/collections/all-under-999"
+          }
+        }
+      },
+      "block_order": [
+        "slide_fUnQyy",
+        "slide_VRyrDb",
+        "slide_Q7Yq7A",
+        "slide_TVhqN3",
+        "slide_6jRJq4",
+        "slide_bfHRDh",
+        "slide_fkJYzD",
+        "slide_E9MkTg",
+        "slide_rKjHJi",
+        "slide_R4eEfW",
+        "slide_EHxr3r",
+        "slide_tMtnLP",
+        "slide_xcGHGz",
+        "slide_kmiKwF",
+        "slide_4hpjed",
+        "slide_YqANRW"
+      ],
+      "disabled": true,
+      "custom_css": [
+        "{padding-top: 30px; padding-bottom: 35px;}"
+      ],
+      "settings": {
+        "heading": ""
+      }
+    },
+    "collections-list": {
+      "type": "collections-list",
+      "blocks": {
+        "block_1": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "bacca-bucci-sneakers",
+            "title": "Sneakers",
+            "image": "shopify://shop_images/Colossus_Sneaker_jpg.jpg",
+            "image_2": "shopify://shop_images/BB_ON_THE_GO_Sneaker_jpg.jpg"
+          }
+        },
+        "block_2": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "sports-and-athleisure-footwear",
+            "title": "Active Shoes",
+            "image": "shopify://shop_images/axiom_sports.jpg",
+            "image_2": "shopify://shop_images/Balance_Active_jpg.jpg"
+          }
+        },
+        "block_3": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "new-in-boots",
+            "title": "Adventure",
+            "image": "shopify://shop_images/DSC01974-Edit.webp",
+            "image_2": "shopify://shop_images/Discovery_Trek_0_1_Boot_jpg.jpg"
+          }
+        },
+        "collection_item_GHa3Xb": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "belts-wallet-for-men",
+            "title": "Belts & Wallets",
+            "image": "shopify://shop_images/DSC01978-Edit.webp",
+            "image_2": "shopify://shop_images/MG_3334.jpg"
+          }
+        },
+        "collection_item_6bhFQ8": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "oversized-t-shirts",
+            "title": "",
+            "image": "shopify://shop_images/6_028e6444-f1b7-4ddd-9427-bec6faa9e985.jpg",
+            "image_2": "shopify://shop_images/Screen_Shot_2023-08-28_at.webp"
+          }
+        }
+      },
+      "block_order": [
+        "block_1",
+        "block_2",
+        "block_3",
+        "collection_item_GHa3Xb",
+        "collection_item_6bhFQ8"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".collections-list-titles-container.collections-list-titles-container--visible-overflow.swiper.swiper-initialized.swiper-horizontal.swiper-backface-hidden {display: none;}"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "layout_type": "two_images",
+        "mobile_slider_layout_type": "visible_overflow",
+        "animate_on_scroll": false,
+        "subheading": "",
+        "heading": "",
+        "heading_size": "h3",
+        "heading_tag": "h2",
+        "description": "",
+        "text_align": "center",
+        "show_products_count": false,
+        "aspect_ratio": "adapt",
+        "object_fit": "cover",
+        "collections_titles_size": "h2",
+        "collections_title_tag": "h2",
+        "padding_top": "s",
+        "padding_bottom": "s",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "173864854049c1c459": {
+      "type": "apps",
+      "blocks": {
+        "instafeed_app_block_NT3qcA": {
+          "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
+          "settings": {
+            "title": "",
+            "title_color": "",
+            "title_size_v2": 0,
+            "alignment": "center",
+            "instafeed_margin_top": 0,
+            "instafeed_margin_bottom": 0,
+            "instafeed_margin_sides": 0,
+            "show_instagram_link": false,
+            "link_alignment": "left",
+            "link_color": "#000000",
+            "background_color": "#222222",
+            "feed_id": "",
+            "html_area": "<style>\nsection#shopify-section-template--20103595000054__173864854049c1c459{\n        padding: 25px 0;\n    padding-bottom: 35px;\n}\ndiv#shopify-block-AcXV0MDBrRkR6UXkxO__instafeed_app_block_NT3qcA h2 {\n    color: white;\n}\n\n</style>"
+          }
+        }
+      },
+      "block_order": [
+        "instafeed_app_block_NT3qcA"
+      ],
+      "custom_css": [
+        "#insta-feed h2,.instafeed-shopify h2 {color: white; font-size: 30px;}",
+        " {padding-top: 20px; padding-bottom: 35px;}",
+        "@media screen and (max-width: 575px) {#insta-feed h2, .instafeed-shopify h2 {font-size: 23px; margin-bottom: 15px; }}"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "feature_collection_new_CqktXy": {
+      "type": "feature-collection-new",
+      "blocks": {
+        "tab_g6Fxz8": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "New In",
+            "collection": "shoes-for-men-bacca-bucci-trendy-footwear-accessories",
+            "sort_by": "",
+            "product_list": []
+          }
+        },
+        "tab_zW3wkn": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Best Seller",
+            "collection": "bacca-bucci-best-seller-collection",
+            "sort_by": "",
+            "product_list": []
+          }
+        },
+        "tab_hMQTyq": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Women",
+            "collection": "sneakers-for-women-bacca-bucci-sports-shoes-for-women",
+            "sort_by": "",
+            "product_list": []
+          }
+        },
+        "tab_HVDXWJ": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Oversized Tee",
+            "collection": "oversized-t-shirts",
+            "sort_by": "",
+            "product_list": []
+          }
+        },
+        "tab_9MqtcV": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Women Belts",
+            "collection": "women-belt-collection",
+            "sort_by": "",
+            "product_list": []
+          }
+        }
+      },
+      "block_order": [
+        "tab_g6Fxz8",
+        "tab_zW3wkn",
+        "tab_hMQTyq",
+        "tab_HVDXWJ",
+        "tab_9MqtcV"
+      ],
+      "disabled": true,
+      "settings": {
+        "color_scheme": "scheme-393a694c-6fa7-486e-9d94-e0473e1bf8de",
+        "products_count": 8,
+        "animate_on_scroll": true,
+        "heading": "Explore",
+        "heading_size": "h2",
+        "cards_layout": "bar",
+        "mobile_cards_layout": "slider",
+        "mobile_slider_layout_type": "visible_overflow",
+        "products_to_show": 4,
+        "gap": "small",
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_desc": false,
+        "product_heading_tag": "h3",
+        "button_show": false,
+        "button_label": "Shop now",
+        "button_style": "primary",
+        "button_link": "",
+        "button_arrow": true,
+        "padding_top": "xs",
+        "padding_bottom": "m",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "product_card_slider_xEjQ7R": {
+      "type": "product-card-slider",
+      "disabled": true,
+      "custom_css": [
+        ".swiper-pagination {position: relative;}",
+        ".product-card-slider__pagination .swiper-pagination-bullet-active {background-color: #dca23f; border-color: #dca23f;}",
+        ".product-card-slider__products {gap: 0.8rem;}",
+        "@media (min-width: 750px) {.product-card-slider__products {gap: 0.8rem; }}"
+      ],
+      "name": "t:sections.product-card-slider.name",
+      "settings": {
+        "color_scheme": "scheme-a8aa7f5b-5966-4bb1-8bb4-a736e7f9fdd7",
+        "subheading": "",
+        "heading": "Character Drop",
+        "heading_size": "h3",
+        "heading_tag": "h2",
+        "description": "",
+        "heading_text_align": "center",
+        "section_layout_type": "cards",
+        "gap": "small",
+        "content_order": "text",
+        "full_width": false,
+        "animate_on_scroll": true,
+        "layer_color_scheme": "background-1",
+        "content_subheading": "",
+        "content_heading": "",
+        "content_heading_size": "h2",
+        "content_heading_tag": "h2",
+        "content_description": "",
+        "show_button": false,
+        "button_label": "Shop now",
+        "button_link": "",
+        "button_style": "primary",
+        "button_arrow": true,
+        "horizontal_align": "left",
+        "vertical_align": "space-between",
+        "image": "shopify://shop_images/MATCHING_WITH_ASSETS_6.jpg",
+        "image_ratio_desktop": "adapt",
+        "overlay_opacity": 20,
+        "overlay_as_gradient": true,
+        "product_source": "collection",
+        "product_list": [],
+        "collection": "character-drop",
+        "product_limit": 7,
+        "product_list_heading": "",
+        "product_color_scheme": "background-1",
+        "products_vertical_align": "end",
+        "card_image_ratio": "portrait",
+        "card_image_fit": "cover",
+        "enable_autoplay": true,
+        "slide_duration": 3,
+        "product_heading_tag": "h3",
+        "padding_top": "xs",
+        "padding_bottom": "s",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "feature_collection_new_UaiQzk": {
+      "type": "feature-collection-new",
+      "blocks": {
+        "tab_VTrLXK": {
+          "type": "tab",
+          "disabled": true,
+          "settings": {
+            "tab_label": "Color Blocking",
+            "collection": "color-blocked-sneakers",
+            "sort_by": "",
+            "product_list": []
+          }
+        },
+        "tab_XTtD9N": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Running",
+            "collection": "sports-and-athleisure-footwear",
+            "sort_by": "",
+            "product_list": []
+          }
+        },
+        "tab_bqDy6C": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Character Drop",
+            "collection": "character-drop",
+            "sort_by": "",
+            "product_list": []
+          }
+        },
+        "tab_C8Qjjp": {
+          "type": "tab",
+          "disabled": true,
+          "settings": {
+            "tab_label": "Everyday Shoe",
+            "collection": "everyday-wearing-shoes",
+            "sort_by": "",
+            "product_list": []
+          }
+        },
+        "tab_aAR6At": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Chunky Soles",
+            "collection": "chunky-soles",
+            "sort_by": "",
+            "product_list": []
+          }
+        },
+        "tab_86xyPN": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Riding Boots",
+            "collection": "biker-boots",
+            "sort_by": "",
+            "product_list": []
+          }
+        }
+      },
+      "block_order": [
+        "tab_VTrLXK",
+        "tab_XTtD9N",
+        "tab_bqDy6C",
+        "tab_C8Qjjp",
+        "tab_aAR6At",
+        "tab_86xyPN"
+      ],
+      "disabled": true,
+      "custom_css": [
+        "a.button.button--primary {padding: 0.9rem 2.6rem !important;}"
+      ],
+      "settings": {
+        "color_scheme": "scheme-393a694c-6fa7-486e-9d94-e0473e1bf8de",
+        "products_count": 8,
+        "animate_on_scroll": true,
+        "heading": "Best of Bacca Bucci",
+        "heading_size": "h2",
+        "cards_layout": "bar",
+        "mobile_cards_layout": "slider",
+        "mobile_slider_layout_type": "visible_overflow",
+        "products_to_show": 4,
+        "gap": "small",
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_desc": false,
+        "product_heading_tag": "h3",
+        "button_show": false,
+        "button_label": "Shop now",
+        "button_style": "primary",
+        "button_link": "",
+        "button_arrow": true,
+        "padding_top": "xs",
+        "padding_bottom": "no-indent",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "products-tabs": {
+      "type": "products-tabs",
+      "blocks": {
+        "tab_1": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Best Seller",
+            "product_list": [
+              "superman-with-bacca-bucci-step-into-the-legend",
+              "bacca-bucci-zypher-mens-low-top-sneakers",
+              "bacca-bucci-torque-rugged-edge-activewear-sneaks",
+              "bacca-bucci-speed-pro-athleisure-running-shoes-2",
+              "bacca-bucci-vibe-step-mens-low-top-sneakers-2",
+              "bacca-bucci-spectra-mens-sneakers",
+              "bacca-bucci-swagger-high-top-sneakers",
+              "bacca-bucci-groove-low-top-sneakers-1",
+              "bacca-bucci-manhattan-low-top-sneakers",
+              "bacca-bucci-mid-top-patch-play-mens-sneakers-1",
+              "bacca-bucci-jackson-mens-low-top-sneakers"
+            ]
+          }
+        },
+        "tab_2": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "New In",
+            "product_list": [
+              "bacca-bucci-torque-rugged-edge-activewear-sneaks",
+              "bacca-bucci-groove-low-top-sneakers-1",
+              "bacca-bucci-denver-high-top-sneakers-1",
+              "bacca-bucci-swagger-high-top-sneakers-1",
+              "bacca-bucci-mens-sylvia-chunky-sole-sneakers",
+              "bacca-bucci-manhattan-low-top-sneakers-1",
+              "bacca-bucci-mid-top-patch-play-mens-sneakers-1",
+              "bacca-bucci-trailblazer-mens-all-terrain-high-top-trekking-boots",
+              "bacca-bucci-night-glider-the-elite-sportspersons-versatile-footwear"
+            ]
+          }
+        },
+        "tab_jTEmTC": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Women",
+            "product_list": [
+              "bacca-bucci-tamra-low-top-womens-sneakers",
+              "bacca-bucci-nyc-low-top-women-s-sneakers-for-gen-z-fashionistas",
+              "bacca-bucci-endeavor-womens-running-shoes-1",
+              "bacca-bucci-women-vibe-city-sneakers-lavender-and-blush-pink",
+              "bacca-bucci-sprint-mystique",
+              "bacca-bucci-womens-high-top-sneakers-kawaii-kicks-collection",
+              "bacca-bucci-nyra-mid-top-platform-fashion-sneakers-for-women-streetwear-chunky-sneakers",
+              "bacca-bucci-runway-women-s-running-shoes"
+            ]
+          }
+        },
+        "tab_3": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Oversized Tee",
+            "product_list": [
+              "alchemy-oversized-t-shirt",
+              "sick-oversized-t-shirt",
+              "overcome-evil-with-good-oversized-t-shirt",
+              "bartman-fan-art-oversized-t-shirt",
+              "onepiece-fan-art-oversized-t-shirt",
+              "bacca-bucci-street-future-oversized-t-shirt",
+              "wanderer-oversized-t-shirt",
+              "bb-oversized-t-shirt",
+              "resonate-oversized-t-shirt",
+              "paisley-23-oversized-t-shirt",
+              "disclaimer-oversized-t-shirt",
+              "physical-touch-oversized-t-shirt"
+            ]
+          }
+        },
+        "tab_8ga6EQ": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Women Belts",
+            "product_list": [
+              "bacca-bucci-womens-belts-for-pants-jeans",
+              "bacca-bucci-striato-slim-belt-glossy-finish-elegance-for-versatile-styling-18-mm",
+              "bacca-bucci-elegante-slim-genuine-leather-belt-textured-elegance-for-versatile-styling-28-mm",
+              "bacca-bucci-women-genuine-leather-belt-for-jeans-pants",
+              "bacca-bucci-women-genuine-leather-belts-with-imported-nickle-free-buckle-width-28-mm-two-tone-finish-belt",
+              "bacca-bucci-vivace-slim-belt-matte-finish-elegance-for-versatile-styling-18-mm",
+              "bacca-bucci-azure-serpentine-22mm-textured-fashion-belt-for-women",
+              "bacca-bucci-stardust-splatter-womens-belt",
+              "bacca-bucci-aurelia-virentis-elite-series-women-s-textured-genuine-leather-belt-with-artisanal-pattern-ideal-for-stylish-cinching-and-versatile-fashion-pairing",
+              "bacca-bucci-women-genuine-leather-belt-for-jeans-pants-1"
+            ]
+          }
+        }
+      },
+      "block_order": [
+        "tab_1",
+        "tab_2",
+        "tab_jTEmTC",
+        "tab_3",
+        "tab_8ga6EQ"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".product-parameters {display: none;}"
+      ],
+      "settings": {
+        "color_scheme": "background-1",
+        "animate_on_scroll": true,
+        "heading": "explore",
+        "heading_size": "h3",
+        "heading_tag": "h2",
+        "cards_layout": "bar",
+        "mobile_cards_layout": "slider",
+        "mobile_slider_layout_type": "visible_overflow",
+        "products_to_show": 4,
+        "gap": "small",
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_desc": false,
+        "product_heading_tag": "h3",
+        "button_show": false,
+        "button_label": "Button label",
+        "button_style": "primary",
+        "button_link": "",
+        "button_arrow": true,
+        "padding_top": "no-indent",
+        "padding_bottom": "no-indent",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "products_tabs_RDmcBk": {
+      "type": "products-tabs",
+      "blocks": {
+        "tab_DDgNa9": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Riding Boots",
+            "product_list": [
+              "bacca-bucci-maverick-brushed-leather-chealsea-fashion-boots-for-men",
+              "bacca-bucci-pathfinder-combat-boots-for-men-with-chunky-rubber-lug-sole",
+              "bacca-bucci-flame-7-eye-moto-inspired-olive-snow-boots-mild-water-proof-boots-for-menmoto-inspired-boots-flame-7-eye-mild-water-proof-snow-boots-bacca-bucci",
+              "bacca-bucci-dragon-splash-proof-leather-classic-fashion-boots-for-biking-trekking-hiking",
+              "bacca-bucci-mens-bullet-leather-boots-for-biking-trekking-and-hiking",
+              "trekking-shoes-for-men-wolf-adaptive-cushioning-boots-bacca-bucci",
+              "leather-boots-for-men-brown-lace-up-boots-bacca-bucci",
+              "bacca-bucci-dragon-leather-fashion-boots"
+            ]
+          }
+        },
+        "tab_PPFicT": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Kawaii",
+            "product_list": [
+              "bacca-bucci-kawaii-kicks-lace-up-sneakers",
+              "bacca-bucci-kawaii-sakura-slip-on-sneakers",
+              "bacca-bucci-womens-high-top-sneakers-kawaii-kicks-collection",
+              "bacca-bucci-kawaii-sakura-slip-on-sneakers-1",
+              "bacca-bucci-kawaii-kicks-lace-up-sneakers-1",
+              "bacca-bucci-womens-high-top-sneakers-kawaii-kicks-collection-1",
+              "bacca-bucci-womens-high-top-sneakers-kawaii-kicks-collection-2",
+              "bacca-bucci-kawaii-kicks-lace-up-sneakers-2",
+              "bacca-bucci-kawaii-sakura-slip-on-sneakers-2"
+            ]
+          }
+        },
+        "tab_xMjkqr": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Color Blocking",
+            "product_list": [
+              "bacca-bucci-downtown-dynamo-low-top-sneakers",
+              "bacca-bucci-mens-xoxo-high-top-elevated-high-street-fashion-sneakers",
+              "bacca-bucci-vengeance-korean-style-high-top-streetwear-sneakers",
+              "bacca-bucci-tiger-mens-comfy-mid-top-casual-chunky-streetwear-fashion-sneakers-1",
+              "bacca-bucci-veera-mid-top-white-sneakers-for-men-1",
+              "bacca-bucci-mens-offbeat-mid-top-urban-streetwear-socks-sneaker-shoes",
+              "bacca-bucci-skyline-chunk-hi-top-street-fashion-flat-sole-sneakers",
+              "bacca-bucci-urban-nomad-the-ultimate-mens-chunky-street-style-sneakers",
+              "bacca-bucci-stunner-hi-top-streetwear-sneakers-with-360-degree-cushioning-2",
+              "best-sneakers-for-men-redfox-casual-shoes-for-men-bacca-bucci",
+              "bacca-bucci-urban-retro-series-2-0-color-blocked-sneakers-shoes-for-men"
+            ]
+          }
+        },
+        "tab_PCd3LN": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Running",
+            "product_list": [
+              "bacca-bucci-striker-cricket-shoes",
+              "bacca-bucci-horizon-athletic-and-casual-shoes",
+              "bacca-bucci-pacer-edge-elite-performance-running-shoes-1",
+              "bacca-bucci-helix-mens-low-top-casual-athleisure-shoes",
+              "bacca-bucci-apex-athletic-running-shoes-ultra-lightweight-breathable-knit-upper-with-memory-stride-insocks",
+              "bacca-bucci-hypersoft-series-with-ultra-rebounce-outsole-iconic-breathable-engineered-knit-upper-running-shoes-6",
+              "bacca-bucci-fly-everyday-running-training-shoe-1"
+            ]
+          }
+        },
+        "tab_ahRtzd": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Everyday Shoe",
+            "product_list": [
+              "bacca-bucci-essential-all-purpose-walking-running-sports-shoes-for-men-1",
+              "bacca-bucci-velocity-white-sky-blue",
+              "bacca-bucci-pulse-walking-slip-on-shoes-with-max-cushioned-padded-insoles",
+              "bacca-bucci-ironman-running-walking-training-shoe-3",
+              "bacca-bucci-runway-women-s-running-shoes"
+            ]
+          }
+        },
+        "tab_xYLcMG": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Chunky Soles",
+            "product_list": [
+              "white-shoes-for-men-afterburn-white-sneakers-for-men-bacca-bucci",
+              "bacca-bucci-og-terraforge-low-top-series-bold-street-ready-sneakers-with-signature-chunky-traction-sole",
+              "bacca-bucci-boom-platform-mid-top-chunky-white-sneakers-shoes-for-men",
+              "bacca-bucci-urban-retro-blocked-fashion-sneakers-shoes-for-men-1",
+              "best-sneakers-for-men-redfox-casual-shoes-for-men-bacca-bucci",
+              "bacca-bucci-urban-retro-series-2-0-color-blocked-sneakers-shoes-for-men"
+            ]
+          }
+        }
+      },
+      "block_order": [
+        "tab_DDgNa9",
+        "tab_PPFicT",
+        "tab_xMjkqr",
+        "tab_PCd3LN",
+        "tab_ahRtzd",
+        "tab_xYLcMG"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".product-parameters {display: none;}"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "animate_on_scroll": true,
+        "heading": "Best of Bacca Bucci",
+        "heading_size": "h3",
+        "heading_tag": "h2",
+        "cards_layout": "bar",
+        "mobile_cards_layout": "slider",
+        "mobile_slider_layout_type": "visible_overflow",
+        "products_to_show": 4,
+        "gap": "small",
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_desc": false,
+        "product_heading_tag": "h3",
+        "button_show": false,
+        "button_label": "Button label",
+        "button_style": "primary",
+        "button_link": "",
+        "button_arrow": true,
+        "padding_top": "s",
+        "padding_bottom": "no-indent",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "featured-product": {
+      "type": "featured-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h2",
+            "heading_tag": "h2"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_tax_info": false
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_type": "variant_image",
+            "variant_image_size": "square",
+            "unavailable_options_clickable": true
+          }
+        },
+        "inventory": {
+          "type": "inventory",
+          "disabled": true,
+          "settings": {
+            "show_inventory_amount": true,
+            "limited_stock": 10
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "show_quantity": true
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "price",
+        "variant_picker",
+        "inventory",
+        "buy_buttons"
+      ],
+      "disabled": true,
+      "custom_css": [
+        "svg.loox-icon {display: flex; width: 1.5rem; height: 1.5rem;}",
+        "span.loox-rating-label {font-size: 14px;}",
+        ".product-form__submit span.button__label {color: #fff;}",
+        ".loox-rating .loox-icon {color: #e89f2a;}"
+      ],
+      "settings": {
+        "main_title": "<div class=\"section__title\">\n<p class=\"headingsmall\">Pick of the Month</p>\n<h3 class=\"heading h2\">featured product</h3>\n</div>\n\n<style>\n.section__title {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-direction: column;\n    gap: 9px;\n    padding-bottom: 30px;\n}\np.headingsmall {\n    font-size: 13px;\n    font-family: 'lato';\n    text-align: center;\n    line-height: 1.5;\n    letter-spacing: 1px;\n}\n @media (max-width: 767px) {\np.headingsmall {\n    font-size: 11px;\n}\n}\n</style>",
+        "product_item": "founder-edition-low-top-lifestyle-sneakers-2",
+        "color_scheme": "",
+        "desktop_alignment": "left",
+        "mobile_alignment": "before",
+        "aspect_ratio": "portrait",
+        "image_fit": "cover",
+        "thumbs_direction": "vertical",
+        "thumbs_aspect_ratio": "square",
+        "thumbs_image_fit": "cover",
+        "enable_video_looping": false,
+        "enable_video_autoplay": false,
+        "enable_full_details": false,
+        "arrow_color_scheme": "",
+        "padding_top": "s",
+        "padding_bottom": "xs"
+      }
+    },
+    "banner_grid_UftmfP": {
+      "type": "banner-grid",
+      "blocks": {
+        "card_YxBK7X": {
+          "type": "card",
+          "settings": {
+            "color_scheme": "",
+            "column_start": 1,
+            "column_end": 2,
+            "row_start": 1,
+            "row_end": 3,
+            "image": "shopify://shop_images/women_collection_8dc47a04-3ae4-424b-861f-123d52e74a19.jpg",
+            "overlay_opacity": 0,
+            "overlay_as_gradient": true,
+            "mobile_aspect_ratio": "adapt",
+            "heading": "",
+            "heading_size": "h3",
+            "heading_tag": "h2",
+            "text": "",
+            "show_button": true,
+            "button_label": "",
+            "button_link": "https://baccabucci.com/collections/sneakers-for-women-bacca-bucci-sports-shoes-for-women",
+            "button_style": "primary",
+            "button_arrow": true,
+            "content_horizontal_alignment": "center",
+            "content_vertical_alignment": "bottom",
+            "card_padding": "medium"
+          }
+        },
+        "card_jAtU7z": {
+          "type": "card",
+          "settings": {
+            "color_scheme": "",
+            "column_start": 2,
+            "column_end": 3,
+            "row_start": 1,
+            "row_end": 2,
+            "image": "shopify://shop_images/laces-collection_1.png",
+            "overlay_opacity": 0,
+            "overlay_as_gradient": true,
+            "mobile_aspect_ratio": "adapt",
+            "heading": "",
+            "heading_size": "h3",
+            "heading_tag": "h2",
+            "text": "",
+            "show_button": true,
+            "button_label": "",
+            "button_link": "https://baccabucci.com/collections/shoes-laces",
+            "button_style": "primary",
+            "button_arrow": true,
+            "content_horizontal_alignment": "center",
+            "content_vertical_alignment": "bottom",
+            "card_padding": "medium"
+          }
+        },
+        "card_9MtFNQ": {
+          "type": "card",
+          "settings": {
+            "color_scheme": "",
+            "column_start": 2,
+            "column_end": 3,
+            "row_start": 2,
+            "row_end": 3,
+            "image": "shopify://shop_images/belts-collection_2.png",
+            "overlay_opacity": 0,
+            "overlay_as_gradient": true,
+            "mobile_aspect_ratio": "adapt",
+            "heading": "",
+            "heading_size": "h3",
+            "heading_tag": "h2",
+            "text": "",
+            "show_button": true,
+            "button_label": "",
+            "button_link": "https://baccabucci.com/collections/belts-wallet-for-men",
+            "button_style": "primary",
+            "button_arrow": true,
+            "content_horizontal_alignment": "center",
+            "content_vertical_alignment": "bottom",
+            "card_padding": "medium"
+          }
+        }
+      },
+      "block_order": [
+        "card_YxBK7X",
+        "card_jAtU7z",
+        "card_9MtFNQ"
+      ],
+      "disabled": true,
+      "settings": {
+        "color_scheme": "",
+        "subheading": "",
+        "heading": "",
+        "heading_size": "h3",
+        "heading_tag": "h2",
+        "description": "",
+        "text_align": "center",
+        "columns": 2,
+        "section_aspect_ratio": "2/1",
+        "padding_top": "xs",
+        "padding_bottom": "no-indent",
+        "margin_top": "no-indent",
+        "margin_bottom": "s"
+      }
+    },
+    "blog-posts": {
+      "type": "blog-posts",
+      "disabled": true,
+      "settings": {
+        "blog": "",
+        "color_scheme": "",
+        "animate_on_scroll": true,
+        "section_header_text": "Blog",
+        "section_header_size": "h3",
+        "section_heading_tag": "h2",
+        "show_read_all_button": true,
+        "read_all_button_label": "",
+        "button_style": "primary",
+        "button_arrow": true,
+        "slider_on_mobile": false,
+        "mobile_slider_layout_type": "visible_overflow",
+        "posts_per_row": 3,
+        "posts_count": 3,
+        "show_image": true,
+        "aspect_ratio": "square",
+        "object_fit": "cover",
+        "article_heading_font_family": "heading",
+        "article_heading_font_size": "h4",
+        "article_heading_tag": "h3",
+        "show_date": true,
+        "show_tags": true,
+        "show_author": true,
+        "show_excerpt": true,
+        "show_read_article_button": true,
+        "read_article_button_label": "",
+        "show_comments_count": false,
+        "padding_top": "l",
+        "padding_bottom": "no-indent",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "countdown_Mgggxw": {
+      "type": "countdown",
+      "disabled": true,
+      "custom_css": [
+        ".countdown__image {aspect-ratio: 195 / 60;}",
+        ".countdown__image img {object-fit: contain;}",
+        ".countdown__block {margin: 10px 0; aspect-ratio: 75 / 70; border: 4px dotted #dca23f; background-color: #fff9f2;}",
+        ".extra-content {display: flex; flex-direction: column;}",
+        ".countdown__container.gap--small.order--image.container {border: 5px dotted #dca23f; padding: 0;}",
+        "@media (max-width: 750px) {.countdown__block {margin: 15px 0; } .onespn {margin-bottom: 5px; }}"
+      ],
+      "name": "t:sections.countdown.presets.name",
+      "settings": {
+        "mock_timer": true,
+        "color_scheme": "",
+        "content_color_scheme": "background-1",
+        "gap": "small",
+        "content_order": "image",
+        "animate_on_scroll": true,
+        "date_picker": "2025-12-01",
+        "time_picker": "00:00",
+        "countdown_block_font": "normal",
+        "completed_countdown": "hide_section",
+        "countdown_heading": "",
+        "subheading": "",
+        "heading": "",
+        "heading_size": "h3",
+        "heading_tag": "h2",
+        "description": "",
+        "show_link": true,
+        "button_label": "Shop now",
+        "button_style": "primary",
+        "button_link": "shopify://collections/weekend-flash-sale",
+        "button_arrow": true,
+        "content_alignment": "center",
+        "enable_image": true,
+        "image": "shopify://shop_images/logowide.png",
+        "overlay_opacity": 0,
+        "padding_top": "no-indent",
+        "padding_bottom": "no-indent",
+        "margin_top": "no-indent",
+        "margin_bottom": "xs"
+      }
+    },
+    "custom_liquid_yApaLY": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<style>\nspan.collections-list-titles-item__heading-span.h1 {\n    font-size: 40px;\n}\nh2.collections-list-titles-item__heading.h1 {\n    font-size: 40px !important;\n}\n.collections-list-titles-item__heading-span:after {\n    top: 130%;\n    color: #d49222;\n}\n.products-tabs__tabs {\n        max-width: 100%;\n        justify-content: center;\n    }\n    .products-tabs__top {\n        justify-content: left;\npadding-bottom:30px;\n    }\n\n.cards-grid-item__image {\n    object-fit: inherit;\n}\n.subtitle.products-tabs__tab.active.focus-inset {\n    background: #dca23f;\n    color: #fff;\n    border-color: #dca23f;\n}\n@media screen and (max-width: 575px) {\n    .products-tabs--visible-overflow .products-tabs__item {\n        width: calc(65% - 9px);\n    }\n\n.products-tabs__tabs {\nmax-width: 100%;\n        overflow: auto;\n        width: 100%;\n        position: relative;\n        white-space: nowrap;\n        display: inline-grid;\n        grid-auto-flow: column;\n        grid-auto-columns: max-content;\n        justify-content: flex-start;\n}\n.products-tabs__tab {\n    margin-right: 10px;\n}\n}\n\n</style>"
+      }
+    },
+    "newsletter_new_JbxaFr": {
+      "type": "newsletter-new",
+      "disabled": true,
+      "settings": {
+        "subheading": "",
+        "heading": "Subscribe to our newsletter",
+        "heading_size": "h2",
+        "heading_tag": "h2",
+        "description": "<b>Promotions, new products and sales. Directly to your inbox.</b>",
+        "text_align": "center",
+        "newsletter_text": "",
+        "button_style": "primary",
+        "image": "shopify://shop_images/Untitled-1_1_5c8c7213-15cd-4808-8b81-fed83308e0eb.jpg",
+        "align_content": "left",
+        "padding_top": "no-indent",
+        "padding_bottom": "xs"
+      }
+    },
+    "image_gallery_JNrTXi": {
+      "type": "image-gallery",
+      "blocks": {
+        "image_gallery_slide_nArkye": {
+          "type": "image-gallery-slide",
+          "settings": {
+            "image": "shopify://shop_images/Group_144.png",
+            "overlay_opacity": 0
+          }
+        }
+      },
+      "block_order": [
+        "image_gallery_slide_nArkye"
+      ],
+      "disabled": true,
+      "name": "t:sections.image-gallery.name",
+      "settings": {
+        "main_color_scheme": "",
+        "subheading": "",
+        "heading": "",
+        "heading_size": "h3",
+        "heading_tag": "h2",
+        "description": "",
+        "text_align": "center",
+        "mobile_image_ratio": "adapt",
+        "desktop_image_ratio": "adapt",
+        "enable_freemode": false,
+        "enable_loop": false,
+        "enable_pagination": false,
+        "enable_navigation": false,
+        "arrow_color": "#ffffff",
+        "enable_autoplay": false,
+        "slide_duration": 5,
+        "padding_top": "no-indent",
+        "padding_bottom": "no-indent",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "custom_buttons_AtU4Gp",
+    "custom_slideshow_j4Pyyz",
+    "custom_explore_range_CiznPU",
+    "feature_collection_new_qqFzdk",
+    "custom_slideshow_KthDzd",
+    "custom_swiper_slider_PVUtqa",
+    "layered_slider_CVLEzb",
+    "feature_collection_new_7EMc4A",
+    "products_grid_mtRq6b",
+    "new_all_collections_DQxVNW",
+    "collections-list",
+    "173864854049c1c459",
+    "feature_collection_new_CqktXy",
+    "product_card_slider_xEjQ7R",
+    "feature_collection_new_UaiQzk",
+    "products-tabs",
+    "products_tabs_RDmcBk",
+    "featured-product",
+    "banner_grid_UftmfP",
+    "blog-posts",
+    "countdown_Mgggxw",
+    "custom_liquid_yApaLY",
+    "newsletter_new_JbxaFr",
+    "image_gallery_JNrTXi"
+  ]
+}
