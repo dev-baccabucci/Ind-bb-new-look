@@ -64,11 +64,11 @@ const sliderInit = (section) => {
             this.params.noSwiping = false;
 
             if (
-              section.querySelector(".js-popup-slider") &&
-              section.querySelector(".js-popup-slider").swiper
+              section.querySelectorAll(".js-popup-slider") &&
+              section.querySelectorAll(".js-popup-slider").swiper
             ) {
               section
-                .querySelector(".js-popup-slider")
+                .querySelectorAll(".js-popup-slider")
                 .swiper.slideTo(this.activeIndex);
             }
           },
