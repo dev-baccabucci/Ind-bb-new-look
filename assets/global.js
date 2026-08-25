@@ -137,13 +137,13 @@ const subSliderInit = (section) => {
 };
 
 const popupSliderInit = (section) => {
-  const sliderWrapper = document.querySelector(".js-popup-slider");
+  const sliderWrapper = document.querySelectorAll(".js-popup-slider");
 
   if (sliderWrapper) {
-    const buttonPrev = document.querySelector(
+    const buttonPrev = document.querySelectorAll(
       ".product-media-modal__slider-nav-prev"
     );
-    const buttonNext = document.querySelector(
+    const buttonNext = document.querySelectorAll(
       ".product-media-modal__slider-nav-next"
     );
 
