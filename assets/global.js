@@ -5,13 +5,13 @@ const sliderInit = (section) => {
     section.querySelectorAll(".js-media-list").length > 0
   ) {
     section.querySelectorAll(".js-media-list").forEach((elem, index) => {
-      const navPrev = section.querySelector(
+      const navPrev = section.querySelectorAll(
         ".product__slider-nav .swiper-button-prev"
       );
-      const navNext = section.querySelector(
+      const navNext = section.querySelectorAll(
         ".product__slider-nav .swiper-button-next"
       );
-      const pagination = section.querySelector(".product__pagination");
+      const pagination = section.querySelectorAll(".product__pagination");
       let slider = new Swiper(elem, {
         slidesPerView: 1,
         spaceBetween: 8,
@@ -840,7 +840,7 @@ class ModalDialog extends HTMLElement {
       document.body.dispatchEvent(new CustomEvent("modalClosed"));
     }
 
-    const images = document.querySelector(".product-media-modal__content");
+    const images = document.querySelectorAll(".product-media-modal__content");
 
     if (images) {
       images.classList.remove("zoom");
