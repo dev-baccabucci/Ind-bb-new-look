@@ -147,7 +147,23 @@ const popupSliderInit = (section) => {
       ".product-media-modal__slider-nav-next"
     );
 
-    let popupSlider = new Swiper(sliderWrapper, {
+    let popupSlider;
+
+    // Zoomed images can leave Swiper's zoom/touch state stuck (a known
+    // limitation of the zoom module), which stops the next/prev arrows
+    // from responding until the zoom is explicitly cleared. Reset zoom
+    // before Swiper's own navigation click handler runs the slide change.
+    [buttonPrev, buttonNext].forEach((button) => {
+      if (!button) return;
+      button.addEventListener("click", () => {
+        if (popupSlider && popupSlider.zoom) {
+          popupSlider.zoom.out();
+          sliderWrapper.classList.remove("zoom");
+        }
+      });
+    });
+
+    popupSlider = new Swiper(sliderWrapper, {
       slidesPerView: 1,
       speed: 500,
       zoom: {
