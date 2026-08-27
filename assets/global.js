@@ -982,21 +982,23 @@ class VariantSelects extends HTMLElement {
   onVariantChange() {
     this.updateOptions();
     this.updateMasterId();
-    this.toggleAddButton(true, "");
-    this.updatePickupAvailability();
     this.updateVariantStatuses();
 
-    // Update media if we have a variant (even partial match for color-only selection)
-    if (this.currentVariant?.featured_media) {
+    // Check if a partial/preview variant exists for media updating (e.g., Color selected)
+    const previewVariant = this.getPreviewVariant();
+    if (previewVariant?.featured_media) {
       this.updateMedia(
-        `${this.dataset.section}-${this.currentVariant.featured_media.id}`
+        `${this.dataset.section}-${previewVariant.featured_media.id}`
       );
     }
 
+    // Only enable Add to Cart if an EXACT full variant is selected
     if (!this.currentVariant) {
-      this.toggleAddButton(true, "");
+      this.toggleAddButton(true, window.variantStrings?.selectOption || "Select options");
       this.setUnavailable();
     } else {
+      this.toggleAddButton(!this.currentVariant.available, window.variantStrings?.soldOut || "Sold out");
+      this.updatePickupAvailability();
       this.updateURL();
       this.updateVariantInput();
       this.renderProductInfo();
@@ -1008,38 +1010,45 @@ class VariantSelects extends HTMLElement {
       this.querySelectorAll(".product-form__controls--dropdown")
     );
 
-    this.options = Array.from(
+    const selectOptions = Array.from(
       this.querySelectorAll("select"),
-      (select) => select.value
-    ).concat(
-      fieldsets.map((fieldset) => {
-        return Array.from(fieldset.querySelectorAll("input")).find(
-          (radio) => radio.checked
-        ).value;
-      })
+      (select) => select.value || null
     );
+
+    const radioOptions = fieldsets.map((fieldset) => {
+      const checked = fieldset.querySelector("input:checked");
+      return checked ? checked.value : null;
+    });
+
+    this.options = selectOptions.concat(radioOptions);
   }
 
   updateMasterId() {
     if (this.variantData || this.querySelector('[type="application/json"]')) {
-      this.currentVariant = this.getVariantData().find((variant) => {
-        return !variant.options
-          .map((option, index) => {
-            return this.options[index] === option;
-          })
-          .includes(false);
-      });
-      
-      // If no exact match found and we have at least one option selected,
-      // find the first variant that matches the selected options (partial match)
-      if (!this.currentVariant && this.options.length > 0) {
-        this.currentVariant = this.getVariantData().find((variant) => {
-          return this.options.every((selectedOption, index) => {
-            return selectedOption === variant.options[index];
-          });
-        });
+      // Must have selected all options (no nulls or empty values)
+      const allSelected = this.options.length > 0 && this.options.every((opt) => opt !== null && opt !== "");
+
+      if (!allSelected) {
+        this.currentVariant = null;
+        return;
       }
+
+      this.currentVariant = this.getVariantData().find((variant) => {
+        return variant.options.every((option, index) => this.options[index] === option);
+      }) || null;
     }
+  }
+
+  // Used strictly for image switching without affecting Add to Cart
+  getPreviewVariant() {
+    if (this.currentVariant) return this.currentVariant;
+
+    const selectedOptions = this.options;
+    return this.getVariantData().find((variant) => {
+      return selectedOptions.every((opt, index) => {
+        return !opt || opt === variant.options[index];
+      });
+    });
   }
 
   isHidden(elem) {
@@ -1378,39 +1387,19 @@ class VariantSelects extends HTMLElement {
   }
 }
 
-customElements.define("variant-selects", VariantSelects);
-
 class VariantRadios extends VariantSelects {
   constructor() {
     super();
   }
 
-  setInputAvailability(listOfOptions, listOfAvailableOptions) {
-    listOfOptions.forEach((input) => {
-      if (listOfAvailableOptions.includes(input.getAttribute("value"))) {
-        input.classList.remove("disabled", "always-clickable");
-        input.disabled = false;
-      } else {
-        input.classList.add("disabled");
-
-        if (this.dataset.unavailableOptionsClickable === "true") {
-          input.classList.add("always-clickable");
-        } else {
-          input.disabled = true;
-        }
-      }
-    });
-  }
-
   updateOptions() {
     const fieldsets = Array.from(this.querySelectorAll("fieldset"));
+    // Preserve null for unselected option groups (DO NOT .filter out null)
     this.options = fieldsets.map((fieldset) => {
-      const checkedInput = Array.from(fieldset.querySelectorAll("input")).find(
-        (radio) => radio.checked
-      );
+      const checkedInput = fieldset.querySelector("input:checked");
       return checkedInput ? checkedInput.value : null;
-    }).filter(option => option !== null);
- }
+    });
+  }
 }
 
 customElements.define("variant-radios", VariantRadios);
