@@ -966,11 +966,16 @@ class VariantSelects extends HTMLElement {
   onVariantChange() {
     this.updateOptions();
     this.updateMasterId();
-    this.toggleAddButton(true, "");
     this.updatePickupAvailability();
     this.updateVariantStatuses();
 
-    // Update media if we have a variant (even partial match for color-only selection)
+    // Clear error message when user selects options
+    const productForm = this.closest('.product')?.querySelector('product-form') || document.querySelector('product-form');
+    if (productForm && typeof productForm.handleErrorMessage === 'function') {
+      productForm.handleErrorMessage(false);
+    }
+
+    // Update media if variant is selected
     if (this.currentVariant?.featured_media) {
       this.updateMedia(
         `${this.dataset.section}-${this.currentVariant.featured_media.id}`
@@ -978,9 +983,9 @@ class VariantSelects extends HTMLElement {
     }
 
     if (!this.currentVariant) {
-      this.toggleAddButton(true, "");
-      this.setUnavailable();
+      this.updateVariantInput();
     } else {
+      this.toggleAddButton(false);
       this.updateURL();
       this.updateVariantInput();
       this.renderProductInfo();
@@ -997,30 +1002,31 @@ class VariantSelects extends HTMLElement {
       (select) => select.value
     ).concat(
       fieldsets.map((fieldset) => {
-        return Array.from(fieldset.querySelectorAll("input")).find(
-          (radio) => radio.checked
-        ).value;
+        const checked = fieldset.querySelector("input:checked");
+        return checked ? checked.value : null;
       })
     );
   }
 
- updateMasterId() {
-  if (this.variantData || this.querySelector('[type="application/json"]')) {
-    // Check if any option is unselected (null or empty)
-    const hasUnselectedOption = this.options.some((opt) => opt === null || opt === "");
-    if (hasUnselectedOption) {
-      this.currentVariant = null;
-      return;
+  updateMasterId() {
+    if (this.variantData || this.querySelector('[type="application/json"]')) {
+      // If any option is unselected (null or blank), do NOT auto-assign a variant
+      const hasUnselectedOption = this.options.some((opt) => opt === null || opt === "");
+
+      if (hasUnselectedOption) {
+        this.currentVariant = null;
+        return;
+      }
+
+      this.currentVariant = this.getVariantData().find((variant) => {
+        return !variant.options
+          .map((option, index) => {
+            return this.options[index] === option;
+          })
+          .includes(false);
+      });
     }
-    this.currentVariant = this.getVariantData().find((variant) => {
-      return !variant.options
-        .map((option, index) => {
-          return this.options[index] === option;
-        })
-        .includes(false);
-    });
   }
-}
 
   isHidden(elem) {
     const styles = window.getComputedStyle(elem);
@@ -1032,7 +1038,10 @@ class VariantSelects extends HTMLElement {
     const currentSection = document.querySelector(
       `[data-section="main-${this.dataset.section}"]`
     );
+    if (!currentSection) return;
     this.mediaList = currentSection.querySelector(".product__media-list");
+    if (!this.mediaList) return;
+
     const activeMedia = this.mediaList.querySelector(
       `[data-media-id="${mediaId}"]`
     );
@@ -1049,7 +1058,7 @@ class VariantSelects extends HTMLElement {
           `[data-media-id="${this.dataset.section}-${this.currentVariant.featured_media.id}"]`
         );
 
-        if (elem.querySelector(".js-media-list")) {
+        if (elem.querySelector(".js-media-list") && elem.querySelector(".js-media-list").swiper) {
           elem
             .querySelector(".js-media-list")
             .swiper.slideTo(
@@ -1072,30 +1081,36 @@ class VariantSelects extends HTMLElement {
   }
 
   updateVariantInput() {
-  const productForms = document.querySelectorAll(
-    `#product-form-${this.dataset.section}, #product-form-installment-${this.dataset.section}, #product-countdown-form-${this.dataset.section}`
-  );
-  productForms.forEach((productForm) => {
-    const input = productForm.querySelector('input[name="id"]');
-    if (input) {
-      input.value = this.currentVariant ? this.currentVariant.id : "";
-      input.dispatchEvent(new Event("change", { bubbles: true }));
-    }
-  });
-}
+    const productForms = document.querySelectorAll(
+      `#product-form-${this.dataset.section}, #product-form-installment-${this.dataset.section}, #product-countdown-form-${this.dataset.section}`
+    );
+    productForms.forEach((productForm) => {
+      const input = productForm.querySelector('input[name="id"]');
+      if (input) {
+        input.value = this.currentVariant ? this.currentVariant.id : "";
+        input.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    });
+  }
 
   updateVariantStatuses() {
+    const checkedOption1 = this.querySelector('fieldset[id="SingleOptionSelector-0"] :checked');
+    if (!checkedOption1) return;
+
     const selectedOptionOneVariants = this.variantData.filter(
-      (variant) => this.querySelector(":checked").value === variant.option1
+      (variant) => checkedOption1.value === variant.option1
     );
+
     const inputWrappers = [...this.querySelectorAll(".product-form__controls")];
     inputWrappers.forEach((option, index) => {
       if (index === 0) return;
       const optionInputs = [
         ...option.querySelectorAll('input[type="radio"], option'),
       ];
-      const previousOptionSelected =
-        inputWrappers[index - 1].querySelector(":checked").value;
+      const prevChecked = inputWrappers[index - 1].querySelector(":checked");
+      if (!prevChecked) return;
+
+      const previousOptionSelected = prevChecked.value;
       const availableOptionInputsValue = selectedOptionOneVariants
         .filter(
           (variant) =>
@@ -1119,10 +1134,10 @@ class VariantSelects extends HTMLElement {
       } else {
         if (input.tagName === "OPTION") {
           input.innerText =
-            window.variantStrings.unavailable_with_option.replace(
+            window.variantStrings?.unavailable_with_option?.replace(
               "[value]",
               input.getAttribute("value")
-            );
+            ) || input.getAttribute("value");
         } else if (input.tagName === "INPUT") {
           input.classList.add("disabled");
 
@@ -1149,67 +1164,26 @@ class VariantSelects extends HTMLElement {
   }
 
   renderProductInfo() {
+    if (!this.currentVariant) return;
     const requestedVariantId = this.currentVariant.id;
     const sectionId = this.dataset.originalSection
       ? this.dataset.originalSection
       : this.dataset.section;
+
     fetch(
-      `${this.dataset.url}?variant=${this.currentVariant.id}&section_id=${
-        this.dataset.originalSection
-          ? this.dataset.originalSection
-          : this.dataset.section
-      }`
+      `${this.dataset.url}?variant=${this.currentVariant.id}&section_id=${sectionId}`
     )
       .then((response) => response.text())
       .then((responseText) => {
-        // prevent unnecessary ui changes from abandoned selections
         if (this.currentVariant?.id !== requestedVariantId) return;
 
         const html = new DOMParser().parseFromString(responseText, "text/html");
-        const destination = document.getElementById(
-          `price-${this.dataset.section}`
-        );
-        const source = html.getElementById(
-          `price-${
-            this.dataset.originalSection
-              ? this.dataset.originalSection
-              : this.dataset.section
-          }`
-        );
-        const skuSource = html.getElementById(
-          `Sku-${
-            this.dataset.originalSection
-              ? this.dataset.originalSection
-              : this.dataset.section
-          }`
-        );
-        const skuDestination = document.getElementById(
-          `Sku-${this.dataset.section}`
-        );
-        const inventorySource = html.getElementById(
-          `Inventory-${
-            this.dataset.originalSection
-              ? this.dataset.originalSection
-              : this.dataset.section
-          }`
-        );
-        const inventoryDestination = document.getElementById(
-          `Inventory-${this.dataset.section}`
-        );
-        const colorNameSources = html.querySelectorAll(
-          `[id^="ColorName-${
-            this.dataset.originalSection
-              ? this.dataset.originalSection
-              : this.dataset.section
-          }"]`
-        );
-        const colorNameDestinations = document.querySelectorAll(
-          `[id^="ColorName-${
-            this.dataset.originalSection && !this.closest("quick-add-modal")
-              ? this.dataset.originalSection
-              : this.dataset.section
-          }"]`
-        );
+        const destination = document.getElementById(`price-${this.dataset.section}`);
+        const source = html.getElementById(`price-${sectionId}`);
+        const skuSource = html.getElementById(`Sku-${sectionId}`);
+        const skuDestination = document.getElementById(`Sku-${this.dataset.section}`);
+        const inventorySource = html.getElementById(`Inventory-${sectionId}`);
+        const inventoryDestination = document.getElementById(`Inventory-${this.dataset.section}`);
 
         if (source && destination) destination.innerHTML = source.innerHTML;
         if (inventorySource && inventoryDestination)
@@ -1221,67 +1195,14 @@ class VariantSelects extends HTMLElement {
             skuSource.classList.contains("visibility-hidden")
           );
         }
-        if (colorNameSources?.length === colorNameDestinations?.length) {
-          colorNameDestinations.forEach((colorNameDestination, index) => {
-            colorNameDestination.innerHTML = colorNameSources[index].innerHTML;
-          });
-        }
 
         const price = document.getElementById(`price-${this.dataset.section}`);
-
         if (price) price.classList.remove("visibility-hidden");
-
-        if (inventoryDestination)
-          inventoryDestination.classList.toggle(
-            "visibility-hidden",
-            inventorySource.innerText === ""
-          );
 
         this.toggleAddButton(
           !this.currentVariant.available,
-          window.variantStrings.soldOut
+          window.variantStrings?.soldOut || "Sold out"
         );
-
-        // product media
-        if (this.dataset?.variantMediaDisplay !== "show_all") {
-          const sourceSectionId = this.dataset.originalSection
-            ? this.dataset.originalSection
-            : this.dataset.section;
-          const currentSectionId = this.dataset.section;
-
-          const mediaSource = html.querySelector(
-            `[data-section="product-media-${sourceSectionId}"]`
-          );
-          const mediaDestination = document.querySelector(
-            `[data-section="product-media-${currentSectionId}"]`
-          );
-
-          if (mediaSource && mediaDestination) {
-            mediaDestination.innerHTML = mediaSource.innerHTML;
-
-            const parentQuickView = this.closest("quick-view-modal");
-            if (parentQuickView) {
-              if (typeof parentQuickView.removeDOMElements === "function") {
-                parentQuickView.removeDOMElements(mediaDestination);
-              }
-              if (typeof parentQuickView.initSlider === "function") {
-                parentQuickView.initSlider();
-              }
-            } else {
-              const section = document.getElementById(
-                `shopify-section-${currentSectionId}`
-              );
-
-              if (section && typeof initProductPage === "function") {
-                initProductPage(section);
-              }
-            }
-            if (document.querySelector(".js-media-list")) {
-              subSliderInit(true);
-              sliderInit(true);
-            }
-          }
-        }
       });
   }
 
@@ -1299,28 +1220,11 @@ class VariantSelects extends HTMLElement {
 
     if (disable) {
       addButton.setAttribute("disabled", "disabled");
-      if (text) addButtonText.textContent = text;
+      if (text && addButtonText) addButtonText.textContent = text;
     } else {
       addButton.removeAttribute("disabled");
-      addButtonText.textContent = window.variantStrings.addToCart;
+      if (addButtonText) addButtonText.textContent = window.variantStrings?.addToCart || "Add to cart";
     }
-  }
-
-  setUnavailable() {
-    const button = document.getElementById(
-      `product-form-${this.dataset.section}`
-    );
-    const addButton = button.querySelector('[name="add"]');
-    const inventory = document.getElementById(
-      `Inventory-${this.dataset.section}`
-    );
-    const sku = document.getElementById(`Sku-${this.dataset.section}`);
-
-    if (!addButton) return;
-
-    this.toggleAddButton(true, window.variantStrings.unavailable);
-    if (inventory) inventory.classList.add("visibility-hidden");
-    if (sku) sku.classList.add("visibility-hidden");
   }
 
   getVariantData() {
@@ -1328,35 +1232,6 @@ class VariantSelects extends HTMLElement {
       this.variantData ||
       JSON.parse(this.querySelector('[type="application/json"]').textContent);
     return this.variantData;
-  }
-
-  updateVariantSwatches(html) {
-    const currentSectionId = this.dataset.section;
-    const sourceSectionId = this.dataset.originalSection
-      ? this.dataset.originalSection
-      : this.dataset.section;
-
-    const variantSwatchesSource = html.querySelector(
-      `#variant-radios-${sourceSectionId} [data-is-variant-image-swatch]`
-    );
-
-    const variantSwatchesDestination = document.querySelector(
-      `#variant-radios-${currentSectionId} [data-is-variant-image-swatch]`
-    );
-
-    const quickAddModal = this.closest("quick-add-modal");
-
-    if (variantSwatchesSource && variantSwatchesDestination) {
-      if (quickAddModal) {
-        variantSwatchesDestination.innerHTML =
-          variantSwatchesSource.innerHTML.replaceAll(
-            sourceSectionId,
-            `quickadd-${sourceSectionId}`
-          );
-      } else {
-        variantSwatchesDestination.innerHTML = variantSwatchesSource.innerHTML;
-      }
-    }
   }
 }
 
@@ -1367,26 +1242,8 @@ class VariantRadios extends VariantSelects {
     super();
   }
 
-  setInputAvailability(listOfOptions, listOfAvailableOptions) {
-    listOfOptions.forEach((input) => {
-      if (listOfAvailableOptions.includes(input.getAttribute("value"))) {
-        input.classList.remove("disabled", "always-clickable");
-        input.disabled = false;
-      } else {
-        input.classList.add("disabled");
-
-        if (this.dataset.unavailableOptionsClickable === "true") {
-          input.classList.add("always-clickable");
-        } else {
-          input.disabled = true;
-        }
-      }
-    });
-  }
-
   updateOptions() {
     const fieldsets = Array.from(this.querySelectorAll("fieldset"));
-    // Keep array index aligned with option positions
     this.options = fieldsets.map((fieldset) => {
       const checkedInput = fieldset.querySelector("input:checked");
       return checkedInput ? checkedInput.value : null;

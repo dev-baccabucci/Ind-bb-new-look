@@ -33,73 +33,40 @@ if (!customElements.get("product-form")) {
         );
       }
 
-      // Finds the variant picker (variant-radios / variant-selects) that
-      // belongs to this product form, even though it lives outside of it.
-      getVariantContainer() {
-        let node = this.parentElement;
-        while (node && node !== document.body) {
-          const variantEl = node.querySelector("variant-radios, variant-selects");
-          if (variantEl) return variantEl;
-          node = node.parentElement;
-        }
-        return null;
-      }
-
-      // The "Size" option is intentionally left unselected on page load, so
-      // we need to confirm the customer actually picked one before allowing
-      // the item to be added to the cart.
-      isSizeSelected() {
-        const variantContainer = this.getVariantContainer();
-        if (!variantContainer) return true;
-
-        const sizeGroup = Array.from(
-          variantContainer.querySelectorAll(".product-form__controls")
-        ).find((group) => {
-          const label = group.querySelector(
-            ".product-form__group-name, .select-label > div"
-          );
-          return label && /size/i.test(label.textContent);
-        });
-        if (!sizeGroup) return true;
-
-        if (sizeGroup.querySelector('input[type="radio"]:checked')) return true;
-
-        const select = sizeGroup.querySelector("select");
-        if (select) return select.value !== "";
-
-        return false;
-      }
-
       onSubmitHandler(evt) {
         evt.preventDefault();
-         // 1. Check if size / variant ID is missing
-  const variantInput = this.form ? this.form.querySelector('[name="id"]') : this.querySelector('[name="id"]');
-  const variantId = variantInput ? variantInput.value : '';
-  // Check if there is an unselected size option
-  const sizeFieldset = document.querySelector(
-    `[data-section="${this.dataset.section}"] fieldset[data-option-name*="size"], #MainProduct-${this.dataset.section} fieldset[data-option-name*="size"]`
-  );
-  const hasUnselectedSize = sizeFieldset && !sizeFieldset.querySelector('input:checked');
-  if (!variantId || hasUnselectedSize) {
-    // Show error message
-    this.handleErrorMessage("Please select a size");
-    // Highlight / shake the size selector for great UX
-    if (sizeFieldset) {
-      sizeFieldset.classList.add('size-error-shake');
-      sizeFieldset.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      setTimeout(() => {
-        sizeFieldset.classList.remove('size-error-shake');
-      }, 800);
-    }
-    return; // STOP execution, do not add to cart
-  }
-  // Clear any previous error message
-  this.handleErrorMessage(false);
-  if (this.submitButton.getAttribute("aria-disabled") === "true") return;
-  this.submitButton.setAttribute("aria-disabled", true);
-  this.submitButton.classList.add("loading");
-  this.querySelector(".loading-overlay__spinner")?.classList.remove("hidden");
 
+        // 1. Check for Size / Variant Selection
+        const variantInput = this.form ? this.form.querySelector('[name="id"]') : this.querySelector('[name="id"]');
+        const variantId = variantInput ? variantInput.value : '';
+
+        const sizeFieldset = document.querySelector('fieldset[data-option-name*="size"]');
+        const hasUnselectedSize = sizeFieldset && !sizeFieldset.querySelector('input:checked');
+
+        if (!variantId || hasUnselectedSize) {
+          // Display the alert
+          this.handleErrorMessage("Please select a size");
+
+          // Shake and scroll the size selector into view
+          if (sizeFieldset) {
+            sizeFieldset.classList.add('size-error-shake');
+            sizeFieldset.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => {
+              sizeFieldset.classList.remove('size-error-shake');
+            }, 800);
+          }
+          return; // STOP execution
+        }
+
+        // Clear any previous error message
+        this.handleErrorMessage(false);
+
+        if (this.submitButton.getAttribute("aria-disabled") === "true") return;
+
+        this.submitButton.setAttribute("aria-disabled", true);
+        this.submitButton.classList.add("loading");
+
+        this.querySelector(".loading-overlay__spinner")?.classList.remove("hidden");
 
         const config = fetchConfig("javascript");
         config.headers["X-Requested-With"] = "XMLHttpRequest";
@@ -119,8 +86,7 @@ if (!customElements.get("product-form")) {
         }
         config.body = formData;
 
-        //--------------------------------------------------
-        // changing body of request if additional service is selected
+        // Additional service bundle handler
         if (
           this.productAdditionalService &&
           this.productAdditionalService instanceof ProductAdditionalService &&
@@ -130,9 +96,7 @@ if (!customElements.get("product-form")) {
         ) {
           const items = this.productAdditionalService.getItems(formData);
           if (items?.length > 0) {
-            const bodyData = {
-              items: items,
-            };
+            const bodyData = { items: items };
             if (this.cart) {
               bodyData.sections = this.cart
                 .getSectionsToRender()
@@ -145,38 +109,12 @@ if (!customElements.get("product-form")) {
             config.body = JSON.stringify(bodyData);
           }
         }
-        //--------------------------------------------------
 
         fetch(`${routes.cart_add_url}`, config)
           .then((response) => response.json())
           .then((response) => {
-            // CART ERROR EVENT
             if (response.status) {
-              document.dispatchEvent(
-                new CustomEvent("cart:error", {
-                  detail: {
-                    source: "product-form",
-                    productVariantId: formData.get("id"),
-                    errors: response.description,
-                    message: response.message,
-                  },
-                })
-              );
-              // -------------------------------------------
-
-              publish(PUB_SUB_EVENTS.cartError, {
-                source: "product-form",
-                productVariantId: formData.get("id"),
-                errors: response.description,
-                message: response.message,
-              });
               this.handleErrorMessage(response.description);
-              const soldOutMessage =
-                this.submitButton.querySelector(".sold-out-message");
-              if (!soldOutMessage) return;
-              this.submitButton.setAttribute("aria-disabled", true);
-              this.submitButton.querySelector("span").classList.add("hidden");
-              soldOutMessage.classList.remove("hidden");
               this.error = true;
               return;
             } else if (!this.cart) {
@@ -184,35 +122,6 @@ if (!customElements.get("product-form")) {
               return;
             }
 
-            // VARIANT ADDED EVENT
-            document.dispatchEvent(
-              new CustomEvent("variant:add", {
-                detail: {
-                  variant: {
-                    id: formData.get("id"),
-                  },
-                  quantity: Number(formData.get("quantity") || 1),
-                  formElement: this.form,
-                  sectionId: this.dataset.section,
-                },
-              })
-            );
-            // -------------------------------------------
-
-            if (!this.error) {
-              publish(PUB_SUB_EVENTS.cartUpdate, {
-                source: "product-form",
-                productVariantId: formData.get("id"),
-              });
-
-              // CART CHANGE EVENT
-              document.dispatchEvent(
-                new CustomEvent("cart:change", {
-                  detail: response,
-                  bubbles: true,
-                })
-              );
-            }
             this.error = false;
             const quickAddModal = this.closest("quick-add-modal");
             let activeElement = document.activeElement;
@@ -228,32 +137,7 @@ if (!customElements.get("product-form")) {
                 { once: true }
               );
               quickAddModal.hide(true);
-              if (
-                this.productAdditionalService &&
-                this.productAdditionalService instanceof
-                  ProductAdditionalService &&
-                typeof this.productAdditionalService.clearItems ===
-                  "function" &&
-                Array.isArray(ProductAdditionalService.selectedServices) &&
-                ProductAdditionalService.selectedServices.length > 0
-              ) {
-                this.productAdditionalService.clearItems();
-              }
             } else {
-              if (this.closest(".header")) {
-                const cartLink = document.querySelector("#cart-icon-bubble");
-                if (cartLink) {
-                  activeElement = cartLink;
-                }
-                activeElement = document.querySelector("#cart-icon-bubble");
-              } else if (this.closest(".collection-product-card")) {
-                const productCard = this.closest(".collection-product-card");
-                const linkTitle = productCard.querySelector(".card__title > a");
-                if (linkTitle) {
-                  activeElement = linkTitle;
-                }
-              }
-
               this.cart.setActiveElement(activeElement);
               this.cart.renderContents(response);
             }
@@ -266,9 +150,7 @@ if (!customElements.get("product-form")) {
             if (this.cart && this.cart.classList.contains("is-empty"))
               this.cart.classList.remove("is-empty");
             if (!this.error) this.submitButton.removeAttribute("aria-disabled");
-            this.querySelector(".loading-overlay__spinner").classList.add(
-              "hidden"
-            );
+            this.querySelector(".loading-overlay__spinner")?.classList.add("hidden");
           });
       }
 
