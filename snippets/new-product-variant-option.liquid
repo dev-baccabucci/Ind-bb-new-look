@@ -147,7 +147,7 @@
         {% if is_product_card != true %}
           form="{{ product_form_id }}"
         {% endif %}
-        {% if option.selected_value == value and skip_preselect != false %}
+        {% if option.selected_value == value and skip_preselect != true %}
           checked
         {% endif %}
         class="{% if option_disabled and is_product_card != true %}disabled{% if unavailable_options_clickable == true %} always-clickable{% endif %}{% endif %}"
