@@ -72,24 +72,34 @@ if (!customElements.get("product-form")) {
 
       onSubmitHandler(evt) {
         evt.preventDefault();
-        if (this.submitButton.getAttribute("aria-disabled") === "true") return;
+         // 1. Check if size / variant ID is missing
+  const variantInput = this.form ? this.form.querySelector('[name="id"]') : this.querySelector('[name="id"]');
+  const variantId = variantInput ? variantInput.value : '';
+  // Check if there is an unselected size option
+  const sizeFieldset = document.querySelector(
+    `[data-section="${this.dataset.section}"] fieldset[data-option-name*="size"], #MainProduct-${this.dataset.section} fieldset[data-option-name*="size"]`
+  );
+  const hasUnselectedSize = sizeFieldset && !sizeFieldset.querySelector('input:checked');
+  if (!variantId || hasUnselectedSize) {
+    // Show error message
+    this.handleErrorMessage("Please select a size");
+    // Highlight / shake the size selector for great UX
+    if (sizeFieldset) {
+      sizeFieldset.classList.add('size-error-shake');
+      sizeFieldset.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => {
+        sizeFieldset.classList.remove('size-error-shake');
+      }, 800);
+    }
+    return; // STOP execution, do not add to cart
+  }
+  // Clear any previous error message
+  this.handleErrorMessage(false);
+  if (this.submitButton.getAttribute("aria-disabled") === "true") return;
+  this.submitButton.setAttribute("aria-disabled", true);
+  this.submitButton.classList.add("loading");
+  this.querySelector(".loading-overlay__spinner")?.classList.remove("hidden");
 
-        if (!this.isSizeSelected()) {
-          this.handleErrorMessage(
-            (window.variantStrings && window.variantStrings.selectSize) ||
-              "Please select a size"
-          );
-          return;
-        }
-
-        this.handleErrorMessage();
-
-        this.submitButton.setAttribute("aria-disabled", true);
-        this.submitButton.classList.add("loading");
-
-        this.querySelector(".loading-overlay__spinner").classList.remove(
-          "hidden"
-        );
 
         const config = fetchConfig("javascript");
         config.headers["X-Requested-With"] = "XMLHttpRequest";

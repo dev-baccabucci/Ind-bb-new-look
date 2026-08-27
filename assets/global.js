@@ -5,13 +5,13 @@ const sliderInit = (section) => {
     section.querySelectorAll(".js-media-list").length > 0
   ) {
     section.querySelectorAll(".js-media-list").forEach((elem, index) => {
-      const navPrev = section.querySelectorAll(
+      const navPrev = section.querySelector(
         ".product__slider-nav .swiper-button-prev"
       );
-      const navNext = section.querySelectorAll(
+      const navNext = section.querySelector(
         ".product__slider-nav .swiper-button-next"
       );
-      const pagination = section.querySelectorAll(".product__pagination");
+      const pagination = section.querySelector(".product__pagination");
       let slider = new Swiper(elem, {
         slidesPerView: 1,
         spaceBetween: 8,
@@ -64,11 +64,11 @@ const sliderInit = (section) => {
             this.params.noSwiping = false;
 
             if (
-              section.querySelectorAll(".js-popup-slider") &&
-              section.querySelectorAll(".js-popup-slider").swiper
+              section.querySelector(".js-popup-slider") &&
+              section.querySelector(".js-popup-slider").swiper
             ) {
               section
-                .querySelectorAll(".js-popup-slider")
+                .querySelector(".js-popup-slider")
                 .swiper.slideTo(this.activeIndex);
             }
           },
@@ -137,33 +137,17 @@ const subSliderInit = (section) => {
 };
 
 const popupSliderInit = (section) => {
-  const sliderWrapper = document.querySelectorAll(".js-popup-slider");
+  const sliderWrapper = document.querySelector(".js-popup-slider");
 
   if (sliderWrapper) {
-    const buttonPrev = document.querySelectorAll(
+    const buttonPrev = document.querySelector(
       ".product-media-modal__slider-nav-prev"
     );
-    const buttonNext = document.querySelectorAll(
+    const buttonNext = document.querySelector(
       ".product-media-modal__slider-nav-next"
     );
 
-    let popupSlider;
-
-    // Zoomed images can leave Swiper's zoom/touch state stuck (a known
-    // limitation of the zoom module), which stops the next/prev arrows
-    // from responding until the zoom is explicitly cleared. Reset zoom
-    // before Swiper's own navigation click handler runs the slide change.
-    [buttonPrev, buttonNext].forEach((button) => {
-      if (!button) return;
-      button.addEventListener("click", () => {
-        if (popupSlider && popupSlider.zoom) {
-          popupSlider.zoom.out();
-          sliderWrapper.classList.remove("zoom");
-        }
-      });
-    });
-
-    popupSlider = new Swiper(sliderWrapper, {
+    let popupSlider = new Swiper(sliderWrapper, {
       slidesPerView: 1,
       speed: 500,
       zoom: {
@@ -840,7 +824,7 @@ class ModalDialog extends HTMLElement {
       document.body.dispatchEvent(new CustomEvent("modalClosed"));
     }
 
-    const images = document.querySelectorAll(".product-media-modal__content");
+    const images = document.querySelector(".product-media-modal__content");
 
     if (images) {
       images.classList.remove("zoom");
@@ -982,23 +966,21 @@ class VariantSelects extends HTMLElement {
   onVariantChange() {
     this.updateOptions();
     this.updateMasterId();
+    this.toggleAddButton(true, "");
+    this.updatePickupAvailability();
     this.updateVariantStatuses();
 
-    // Check if a partial/preview variant exists for media updating (e.g., Color selected)
-    const previewVariant = this.getPreviewVariant();
-    if (previewVariant?.featured_media) {
+    // Update media if we have a variant (even partial match for color-only selection)
+    if (this.currentVariant?.featured_media) {
       this.updateMedia(
-        `${this.dataset.section}-${previewVariant.featured_media.id}`
+        `${this.dataset.section}-${this.currentVariant.featured_media.id}`
       );
     }
 
-    // Only enable Add to Cart if an EXACT full variant is selected
     if (!this.currentVariant) {
-      this.toggleAddButton(true, window.variantStrings?.selectOption || "Select options");
+      this.toggleAddButton(true, "");
       this.setUnavailable();
     } else {
-      this.toggleAddButton(!this.currentVariant.available, window.variantStrings?.soldOut || "Sold out");
-      this.updatePickupAvailability();
       this.updateURL();
       this.updateVariantInput();
       this.renderProductInfo();
@@ -1010,46 +992,35 @@ class VariantSelects extends HTMLElement {
       this.querySelectorAll(".product-form__controls--dropdown")
     );
 
-    const selectOptions = Array.from(
+    this.options = Array.from(
       this.querySelectorAll("select"),
-      (select) => select.value || null
+      (select) => select.value
+    ).concat(
+      fieldsets.map((fieldset) => {
+        return Array.from(fieldset.querySelectorAll("input")).find(
+          (radio) => radio.checked
+        ).value;
+      })
     );
-
-    const radioOptions = fieldsets.map((fieldset) => {
-      const checked = fieldset.querySelector("input:checked");
-      return checked ? checked.value : null;
-    });
-
-    this.options = selectOptions.concat(radioOptions);
   }
 
-  updateMasterId() {
-    if (this.variantData || this.querySelector('[type="application/json"]')) {
-      // Must have selected all options (no nulls or empty values)
-      const allSelected = this.options.length > 0 && this.options.every((opt) => opt !== null && opt !== "");
-
-      if (!allSelected) {
-        this.currentVariant = null;
-        return;
-      }
-
-      this.currentVariant = this.getVariantData().find((variant) => {
-        return variant.options.every((option, index) => this.options[index] === option);
-      }) || null;
+ updateMasterId() {
+  if (this.variantData || this.querySelector('[type="application/json"]')) {
+    // Check if any option is unselected (null or empty)
+    const hasUnselectedOption = this.options.some((opt) => opt === null || opt === "");
+    if (hasUnselectedOption) {
+      this.currentVariant = null;
+      return;
     }
-  }
-
-  // Used strictly for image switching without affecting Add to Cart
-  getPreviewVariant() {
-    if (this.currentVariant) return this.currentVariant;
-
-    const selectedOptions = this.options;
-    return this.getVariantData().find((variant) => {
-      return selectedOptions.every((opt, index) => {
-        return !opt || opt === variant.options[index];
-      });
+    this.currentVariant = this.getVariantData().find((variant) => {
+      return !variant.options
+        .map((option, index) => {
+          return this.options[index] === option;
+        })
+        .includes(false);
     });
   }
+}
 
   isHidden(elem) {
     const styles = window.getComputedStyle(elem);
@@ -1101,15 +1072,17 @@ class VariantSelects extends HTMLElement {
   }
 
   updateVariantInput() {
-    const productForms = document.querySelectorAll(
-      `#product-form-${this.dataset.section}, #product-form-installment-${this.dataset.section}, #product-countdown-form-${this.dataset.section}`
-    );
-    productForms.forEach((productForm) => {
-      const input = productForm.querySelector('input[name="id"]');
-      input.value = this.currentVariant.id;
+  const productForms = document.querySelectorAll(
+    `#product-form-${this.dataset.section}, #product-form-installment-${this.dataset.section}, #product-countdown-form-${this.dataset.section}`
+  );
+  productForms.forEach((productForm) => {
+    const input = productForm.querySelector('input[name="id"]');
+    if (input) {
+      input.value = this.currentVariant ? this.currentVariant.id : "";
       input.dispatchEvent(new Event("change", { bubbles: true }));
-    });
-  }
+    }
+  });
+}
 
   updateVariantStatuses() {
     const selectedOptionOneVariants = this.variantData.filter(
@@ -1387,14 +1360,33 @@ class VariantSelects extends HTMLElement {
   }
 }
 
+customElements.define("variant-selects", VariantSelects);
+
 class VariantRadios extends VariantSelects {
   constructor() {
     super();
   }
 
+  setInputAvailability(listOfOptions, listOfAvailableOptions) {
+    listOfOptions.forEach((input) => {
+      if (listOfAvailableOptions.includes(input.getAttribute("value"))) {
+        input.classList.remove("disabled", "always-clickable");
+        input.disabled = false;
+      } else {
+        input.classList.add("disabled");
+
+        if (this.dataset.unavailableOptionsClickable === "true") {
+          input.classList.add("always-clickable");
+        } else {
+          input.disabled = true;
+        }
+      }
+    });
+  }
+
   updateOptions() {
     const fieldsets = Array.from(this.querySelectorAll("fieldset"));
-    // Preserve null for unselected option groups (DO NOT .filter out null)
+    // Keep array index aligned with option positions
     this.options = fieldsets.map((fieldset) => {
       const checkedInput = fieldset.querySelector("input:checked");
       return checkedInput ? checkedInput.value : null;

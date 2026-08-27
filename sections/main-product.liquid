@@ -698,6 +698,7 @@
                           <fieldset
                             class="product-form__controls{% if is_color_option %} product-form__controls--colors{% endif %}"
                             id="SingleOptionSelector-{{ forloop.index0 }}"
+                            data-option-name="{{ option.name | downcase }}"
                             {% if is_color_option and block.settings.swatch_type == 'variant_image' %} 
                               data-is-variant-image-swatch="true"                                    
                             {% endif %} 
@@ -929,14 +930,30 @@
                     novalidate: 'novalidate',
                     data-type: 'add-to-cart-form'
                   -%}
-                    <input
+                    {% comment %} <input
                       type="hidden"
                       name="id"
                       value="{{ product.selected_or_first_available_variant.id }}"
                       {% if product.selected_or_first_available_variant.available == false %}
                         disabled
                       {% endif %}
-                    >
+                    > {% endcomment %}
+
+                    {% liquid
+  assign initial_variant_id = ''
+  # If a specific variant is in the URL, use it; otherwise leave empty if product has variants with sizes
+  if product.selected_variant != blank or product.has_only_default_variant
+    assign initial_variant_id = product.selected_or_first_available_variant.id
+  endif
+%}
+<input
+  type="hidden"
+  name="id"
+  value="{{ initial_variant_id }}"
+  {% if product.has_only_default_variant and product.selected_or_first_available_variant.available == false %}
+    disabled
+  {% endif %}
+>
 
                     {%- if gift_card_recipient_feature_active -%}
                       {%- render 'gift-card-recipient-form', product: product, form: form, section: section -%}
